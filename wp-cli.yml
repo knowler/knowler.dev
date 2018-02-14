@@ -1,1 +1,13 @@
 path: web/wp
+
+@d:
+    ssh: vagrant@knowlerkno.test/srv/www/knowlerkno.ws/current
+
+@dev:
+    ssh: vagrant@knowlerkno.test/srv/www/knowlerkno.ws/current
+
+@development:
+    ssh: vagrant@knowlerkno.test/srv/www/knowlerkno.ws/current
+
+@production:
+  ssh: admin@knowlerkno.ws/srv/www/knowlerkno.ws/current
