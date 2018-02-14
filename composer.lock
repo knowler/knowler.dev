@@ -4,8 +4,40 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "327dfc5c0193e2ce0d98bd111f24fab8",
+    "content-hash": "a01f26a7d1d6f5ccf74aed334a623699",
     "packages": [
+        {
+            "name": "aaemnnosttv/wp-cli-login-server",
+            "version": "v1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aaemnnosttv/wp-cli-login-server.git",
+                "reference": "bd63ad4a179d27992f9b9dfc976809598e3985fd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aaemnnosttv/wp-cli-login-server/zipball/bd63ad4a179d27992f9b9dfc976809598e3985fd",
+                "reference": "bd63ad4a179d27992f9b9dfc976809598e3985fd",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "^1.0"
+            },
+            "type": "wordpress-plugin",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Evan Mattson",
+                    "email": "me@aaemnnost.tv",
+                    "homepage": "https://aaemnnost.tv"
+                }
+            ],
+            "description": "Companion plugin to the WP-CLI Login Command to handle magic passwordless sign-in requests.",
+            "time": "2017-04-16T20:08:30+00:00"
+        },
         {
             "name": "composer/installers",
             "version": "v1.5.0",
