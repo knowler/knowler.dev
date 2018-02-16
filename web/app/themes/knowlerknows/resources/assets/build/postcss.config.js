@@ -1,15 +1,11 @@
 /* eslint-disable */
-
-const cssnanoConfig = {
-  preset: ['default', { discardComments: { removeAll: true } }]
-};
+const { getPlugins } = require('tachyons-build-css')
 
 module.exports = ({ file, options }) => {
   return {
     parser: options.enabled.optimize ? 'postcss-safe-parser' : undefined,
-    plugins: {
-      cssnano: options.enabled.optimize ? cssnanoConfig : false,
-      autoprefixer: true,
-    },
+    plugins: getPlugins({
+      minify: options.enabled.optimize ? true : false,
+    }),
   };
 };
