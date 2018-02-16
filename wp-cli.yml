@@ -9,5 +9,11 @@ path: web/wp
 @development:
     ssh: vagrant@knowlerkno.test/srv/www/knowlerkno.ws/current
 
+@p:
+  ssh: admin@knowlerkno.ws/srv/www/knowlerkno.ws/current
+
+@prod:
+  ssh: admin@knowlerkno.ws/srv/www/knowlerkno.ws/current
+
 @production:
   ssh: admin@knowlerkno.ws/srv/www/knowlerkno.ws/current
