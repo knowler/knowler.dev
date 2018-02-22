@@ -8,7 +8,7 @@
       "./scripts/customizer.js"
     ]
   },
-  "publicPath": "/app/themes/knowlerknows",
+  "publicPath": "/app/themes/sage",
   "devUrl": "http://knowlerkno.test",
   "proxyUrl": "http://localhost:3000",
   "cacheBusting": "[name]_[hash:8]",

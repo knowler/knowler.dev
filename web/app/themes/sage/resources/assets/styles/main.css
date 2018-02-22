@@ -1,5 +1,3 @@
-@import "./common/_variables";
-
 /** Import everything from autoload */
 @import "./autoload/**/*";
 
@@ -12,4 +10,3 @@
 
 /** Import theme styles */
 @import "./tachyons/tachyons";
-@import "./common/_global";
