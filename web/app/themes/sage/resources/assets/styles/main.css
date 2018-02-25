@@ -1,12 +1,19 @@
-/** Import everything from autoload */
-@import "./autoload/**/*";
+/**
+ * This injects Tailwind's base styles, which is a combination of
+ * Normalize.css and some additional base styles.
+ *
+ * You can see the styles here:
+ * https://github.com/tailwindcss/tailwindcss/blob/master/css/preflight.css
+ */
+@tailwind preflight;
 
 /**
- * Import npm dependencies
- *
- * Prefix your imports with `~` to grab from node_modules/
- * @see https://github.com/webpack-contrib/sass-loader#imports
+ * Import extracted components here for specitivity’s sake
+ * Please read https://tailwindcss.com/docs/extracting-components
  */
 
-/** Import theme styles */
-@import "./tachyons/tachyons";
+/**
+ * This injects all of Tailwind's utility classes, generated based on your
+ * config file.
+ */
+@tailwind utilities;

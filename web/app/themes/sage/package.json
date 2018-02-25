@@ -44,7 +44,8 @@
             "include",
             "content",
             "return",
-            "function"
+            "function",
+            "tailwind"
           ]
         }
       ]
@@ -97,6 +98,7 @@
     "stylelint-config-standard": "~18.0.0",
     "stylelint-webpack-plugin": "^0.10.1",
     "tachyons-build-css": "^1.6.0",
+    "tailwindcss": "^0.4.1",
     "url-loader": "^0.6.2",
     "webpack": "~3.10.0",
     "webpack-assets-manifest": "^1.0.0",

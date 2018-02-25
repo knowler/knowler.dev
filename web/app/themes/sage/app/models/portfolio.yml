@@ -1,0 +1,12 @@
+---
+- type: cpt
+  name: portfolio piece
+  labels:
+    has_one: Piece
+    has_many: Pieces
+    overrides:
+      name: Portfolio
+      menu_name: Portfolio
+      name_admin_bar: Portfolio Piece
+  config:
+    menu_icon: dashicons-layout

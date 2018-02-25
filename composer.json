@@ -39,7 +39,8 @@
     "johnpbloch/wordpress": "4.9.4",
     "oscarotero/env": "^1.1.0",
     "roots/wp-password-bcrypt": "1.0.0",
-    "aaemnnosttv/wp-cli-login-server": "^1.2"
+    "aaemnnosttv/wp-cli-login-server": "^1.2",
+    "soberwp/models": "1.0.6"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0.2"

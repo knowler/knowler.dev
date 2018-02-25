@@ -1,0 +1,11 @@
+---
+- type: cpt
+  name: music
+  labels:
+    has_one: Music
+    has_many: Music
+  config:
+    menu_icon: dashicons-format-audio
+- type: tax
+  name: genre
+  links: music
