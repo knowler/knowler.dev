@@ -35,6 +35,7 @@
 
   & a {
     @apply .text-green .font-semibold .quick .ease .props-all;
+
     text-decoration: none;
     border-bottom: 1px dashed;
 
@@ -50,16 +51,16 @@
  */
 @tailwind utilities;
 
-.quicker { transition-duration: .1s; }
-.quick { transition-duration: .2s; }
-.slow { transition-duration: .5s; }
+.quicker { transition-duration: 0.1s; }
+.quick { transition-duration: 0.2s; }
+.slow { transition-duration: 0.5s; }
 
 .ease { transition-timing-function: ease; }
 .ease-in { transition-timing-function: ease-in; }
 .ease-out { transition-timing-function: ease-out; }
 
-.delay-short { transition-delay: .1s; }
-.delay-long { transition-delay: .2s; }
+.delay-short { transition-delay: 0.1s; }
+.delay-long { transition-delay: 0.2s; }
 
 .props-all { transition-property: all; }
 .props-transform { transition-property: transform; }
