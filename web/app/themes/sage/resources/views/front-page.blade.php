@@ -11,6 +11,18 @@
 
 <div class="bg-green-washed text-green-darkest p-4 md:p-5 sm:text-lg flex flex-wrap justify-center">
 
+  <section class="rich-text max-w-lg w-full">
+    <h3 class="text-xl sm:text-2xl">👋 Hello friend.</h3>
+    <p>My name is Nathan. I am a web designer and developer living in Calgary.
+    Brrrr ⛄ is right! I’m originally from Vancouver so I’m not super used to
+    the cold. I never went to school for programming, but I had the rare
+    privilege of being born into a <em>very</em> technology friendly family
+    &mdash; so I grew up hacking computers from a young age.</p> <p>I intend to
+    make this website a blog, a portfolio, and a place to share a part of me to
+    the web. For now you can follow <a href="https://twitter.com/kn_wler">@@kn_wler on Twitter</a> for a random and sporadic stream of my thoughts. Checkout <a href="https://github.com/knowler">@@knowler on GitHub</a> to see what I’m currently hacking. And finally, <a href="https://soundcloud.com/knojo">listen to me try to play guitar</a> on SoundCloud. If you need to get ahold of me, you can do so by <a href="mailto:nathan@knowler.me">emailing nathan@knowler.me</a>. I would love to connect with you!</p>
+  </section>
+
+  {{--
   <div class="rich-text max-w-lg w-full">
     <h2>My Values</h2>
     <ul>
@@ -22,7 +34,6 @@
       <li>Your website should be findable. My best practises combined with your awesome content will bring you to the top of the search results.</li>
     </ul>
   </div>
-
 
   <div class="rich-text max-w-lg w-full">
     <h2>Products &amp; Services I Provide</h2>
@@ -44,6 +55,7 @@
       <li><strong>React</strong> &ndash; </li>
     </ul>
   </div>
+  --}}
 
 </div>
 

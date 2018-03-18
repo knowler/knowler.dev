@@ -13,10 +13,11 @@
 
 .rich-text {
   & > p {
-    @apply .leading-loose .my-2;
+    @apply .leading-loose .my-3;
   }
 
-  & > h2 {
+  & > h2,
+  & > h3 {
     @apply .leading-loose .mt-4 .mb-1;
   }
 
