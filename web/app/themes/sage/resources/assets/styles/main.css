@@ -7,13 +7,61 @@
  */
 @tailwind preflight;
 
-/**
- * Import extracted components here for specitivity’s sake
- * Please read https://tailwindcss.com/docs/extracting-components
- */
+.heading:hover {
+  transform: scale(1.1);
+}
+
+.rich-text {
+  & > p {
+    @apply .leading-loose .my-2;
+  }
+
+  & > h2 {
+    @apply .leading-loose .mt-4 .mb-1;
+  }
+
+  & ul {
+    @apply .leading-normal .my-2 .pl-3;
+  }
+
+  & ul p {
+    @apply .leading-normal;
+  }
+
+  & li {
+    @apply .leading-normal .my-1;
+  }
+
+  & a {
+    @apply .text-green .font-semibold .quick .ease .props-all;
+    text-decoration: none;
+    border-bottom: 1px dashed;
+
+    &:hover {
+      @apply .text-green-dark;
+    }
+  }
+}
 
 /**
  * This injects all of Tailwind's utility classes, generated based on your
  * config file.
  */
 @tailwind utilities;
+
+.quicker { transition-duration: .1s; }
+.quick { transition-duration: .2s; }
+.slow { transition-duration: .5s; }
+
+.ease { transition-timing-function: ease; }
+.ease-in { transition-timing-function: ease-in; }
+.ease-out { transition-timing-function: ease-out; }
+
+.delay-short { transition-delay: .1s; }
+.delay-long { transition-delay: .2s; }
+
+.props-all { transition-property: all; }
+.props-transform { transition-property: transform; }
+.props-colors { transition-property: background-color, color; }
+.props-color { transition-property: color; }
+.props-bg { transition-property: background-color; }

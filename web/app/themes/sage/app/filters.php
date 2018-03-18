@@ -18,7 +18,7 @@ add_filter('body_class', function (array $classes) {
         $classes[] = 'sidebar-primary';
     }
 
-    $classes[] = 'h-full bg-green bg-circuit-image tk-brother-1816 text-green-darkest';
+    $classes[] = 'bg-green tk-brother-1816 text-green-darkest';
 
     /** Clean up class names for custom templates */
     $classes = array_map(function ($class) {
