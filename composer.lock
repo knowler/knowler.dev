@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b1923e0a4118a79dc2c26b8ce354d3e5",
+    "content-hash": "0df9341bbdfcbadac7d4f0da2b71065f",
     "packages": [
         {
             "name": "aaemnnosttv/wp-cli-login-server",
@@ -217,20 +217,20 @@
         },
         {
             "name": "johnpbloch/wordpress",
-            "version": "4.9.4",
+            "version": "4.9.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/johnpbloch/wordpress.git",
-                "reference": "5394373d26a8e304eb293c2a9359701a7ab03131"
+                "reference": "ecca35c283591e3f40732522334415521f5aa4b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/johnpbloch/wordpress/zipball/5394373d26a8e304eb293c2a9359701a7ab03131",
-                "reference": "5394373d26a8e304eb293c2a9359701a7ab03131",
+                "url": "https://api.github.com/repos/johnpbloch/wordpress/zipball/ecca35c283591e3f40732522334415521f5aa4b7",
+                "reference": "ecca35c283591e3f40732522334415521f5aa4b7",
                 "shasum": ""
             },
             "require": {
-                "johnpbloch/wordpress-core": "4.9.4",
+                "johnpbloch/wordpress-core": "4.9.6",
                 "johnpbloch/wordpress-core-installer": "^1.0",
                 "php": ">=5.3.2"
             },
@@ -252,27 +252,27 @@
                 "cms",
                 "wordpress"
             ],
-            "time": "2018-02-06T16:42:18+00:00"
+            "time": "2018-05-17T20:03:03+00:00"
         },
         {
             "name": "johnpbloch/wordpress-core",
-            "version": "4.9.4",
+            "version": "4.9.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/johnpbloch/wordpress-core.git",
-                "reference": "eef672cdb4ae9e846c464d4d03684b43d4108eda"
+                "reference": "6ff81eb3d93d326b78a8bc0f120e72c161ec58c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/johnpbloch/wordpress-core/zipball/eef672cdb4ae9e846c464d4d03684b43d4108eda",
-                "reference": "eef672cdb4ae9e846c464d4d03684b43d4108eda",
+                "url": "https://api.github.com/repos/johnpbloch/wordpress-core/zipball/6ff81eb3d93d326b78a8bc0f120e72c161ec58c8",
+                "reference": "6ff81eb3d93d326b78a8bc0f120e72c161ec58c8",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2"
             },
             "provide": {
-                "wordpress/core-implementation": "4.9.4"
+                "wordpress/core-implementation": "4.9.6"
             },
             "type": "wordpress-core",
             "notification-url": "https://packagist.org/downloads/",
@@ -292,7 +292,7 @@
                 "cms",
                 "wordpress"
             ],
-            "time": "2018-02-06T16:42:13+00:00"
+            "time": "2018-05-17T20:02:55+00:00"
         },
         {
             "name": "johnpbloch/wordpress-core-installer",
@@ -491,21 +491,77 @@
             "time": "2018-01-29T08:19:21+00:00"
         },
         {
-            "name": "symfony/yaml",
-            "version": "v3.4.4",
+            "name": "symfony/polyfill-ctype",
+            "version": "v1.8.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/yaml.git",
-                "reference": "eab73b6c21d27ae4cd037c417618dfd4befb0bfe"
+                "url": "https://github.com/symfony/polyfill-ctype.git",
+                "reference": "7cc359f1b7b80fc25ed7796be7d96adc9b354bae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/eab73b6c21d27ae4cd037c417618dfd4befb0bfe",
-                "reference": "eab73b6c21d27ae4cd037c417618dfd4befb0bfe",
+                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/7cc359f1b7b80fc25ed7796be7d96adc9b354bae",
+                "reference": "7cc359f1b7b80fc25ed7796be7d96adc9b354bae",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.5.9|>=7.0.8"
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.8-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Polyfill\\Ctype\\": ""
+                },
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                },
+                {
+                    "name": "Gert de Pagter",
+                    "email": "BackEndTea@gmail.com"
+                }
+            ],
+            "description": "Symfony polyfill for ctype functions",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "ctype",
+                "polyfill",
+                "portable"
+            ],
+            "time": "2018-04-30T19:57:29+00:00"
+        },
+        {
+            "name": "symfony/yaml",
+            "version": "v3.4.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/yaml.git",
+                "reference": "c5010cc1692ce1fa328b1fb666961eb3d4a85bb0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/c5010cc1692ce1fa328b1fb666961eb3d4a85bb0",
+                "reference": "c5010cc1692ce1fa328b1fb666961eb3d4a85bb0",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.5.9|>=7.0.8",
+                "symfony/polyfill-ctype": "~1.8"
             },
             "conflict": {
                 "symfony/console": "<3.4"
@@ -546,7 +602,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2018-01-21T19:05:02+00:00"
+            "time": "2018-05-03T23:18:14+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -600,7 +656,7 @@
         },
         {
             "name": "wpackagist-plugin/autodescription",
-            "version": "3.0.5",
+            "version": "3.0.6",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/autodescription/",
@@ -608,7 +664,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/autodescription.zip?timestamp=1519755105",
+                "url": "https://downloads.wordpress.org/plugin/autodescription.zip?timestamp=1525625897",
                 "reference": null,
                 "shasum": null
             },
@@ -620,15 +676,15 @@
         },
         {
             "name": "wpackagist-plugin/the-seo-framework-extension-manager",
-            "version": "1.4.0",
+            "version": "1.5.1",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/the-seo-framework-extension-manager/",
-                "reference": "tags/1.4.0"
+                "reference": "trunk"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/the-seo-framework-extension-manager.1.4.0.zip",
+                "url": "https://downloads.wordpress.org/plugin/the-seo-framework-extension-manager.zip?timestamp=1526660847",
                 "reference": null,
                 "shasum": null
             },
