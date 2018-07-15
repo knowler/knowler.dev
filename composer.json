@@ -42,7 +42,8 @@
     "aaemnnosttv/wp-cli-login-server": "^1.2",
     "soberwp/models": "1.0.6",
     "wpackagist-plugin/autodescription": "^3.0",
-    "wpackagist-plugin/the-seo-framework-extension-manager": "^1.4"
+    "wpackagist-plugin/the-seo-framework-extension-manager": "^1.4",
+    "roots/markdown-on-save": "^2.0"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0.2"

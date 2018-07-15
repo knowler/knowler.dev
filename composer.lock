@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6a90cbfc003f0fa0b9a82ef43a77bbf1",
+    "content-hash": "cefb3885281563f305bb6029b889ba2e",
     "packages": [
         {
             "name": "aaemnnosttv/wp-cli-login-server",
@@ -344,6 +344,75 @@
             "time": "2018-01-29T14:49:29+00:00"
         },
         {
+            "name": "league/commonmark",
+            "version": "0.13.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/commonmark.git",
+                "reference": "83f8210427fb01f671e272bb8d44b4ed3a94d459"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/83f8210427fb01f671e272bb8d44b4ed3a94d459",
+                "reference": "83f8210427fb01f671e272bb8d44b4ed3a94d459",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">=5.4.8"
+            },
+            "replace": {
+                "colinodell/commonmark-php": "*"
+            },
+            "require-dev": {
+                "cebe/markdown": "~1.0",
+                "erusev/parsedown": "~1.0",
+                "jgm/commonmark": "0.25",
+                "michelf/php-markdown": "~1.4",
+                "mikehaertl/php-shellcommand": "~1.2.0",
+                "phpunit/phpunit": "~4.3|~5.0",
+                "scrutinizer/ocular": "~1.1",
+                "symfony/finder": "~2.3|~3.0"
+            },
+            "suggest": {
+                "league/commonmark-extras": "Library of useful extensions including smart punctuation"
+            },
+            "bin": [
+                "bin/commonmark"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.14-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\CommonMark\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Colin O'Dell",
+                    "email": "colinodell@gmail.com",
+                    "homepage": "https://www.colinodell.com",
+                    "role": "Lead Developer"
+                }
+            ],
+            "description": "Markdown parser for PHP based on the CommonMark spec",
+            "homepage": "https://github.com/thephpleague/commonmark",
+            "keywords": [
+                "commonmark",
+                "markdown",
+                "parser"
+            ],
+            "time": "2016-06-14T14:49:29+00:00"
+        },
+        {
             "name": "oscarotero/env",
             "version": "v1.1.0",
             "source": {
@@ -384,6 +453,34 @@
                 "env"
             ],
             "time": "2017-07-17T20:41:59+00:00"
+        },
+        {
+            "name": "roots/markdown-on-save",
+            "version": "2.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/roots/markdown-on-save.git",
+                "reference": "33e5274bf0cfb3f5b1ab1f10967308a92e1054a6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/roots/markdown-on-save/zipball/33e5274bf0cfb3f5b1ab1f10967308a92e1054a6",
+                "reference": "33e5274bf0cfb3f5b1ab1f10967308a92e1054a6",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "^1.4",
+                "league/commonmark": "0.13.*",
+                "php": ">=5.4.0"
+            },
+            "type": "wordpress-plugin",
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "Allows you to compose content in Markdown on a per-item basis.",
+            "keywords": [
+                "markdown",
+                "wordpress"
+            ],
+            "time": "2017-09-30T23:33:12+00:00"
         },
         {
             "name": "roots/wp-password-bcrypt",
