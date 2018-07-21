@@ -17,7 +17,7 @@
 let colors = {
   'transparent': 'transparent',
 
-  'white': 'white',
+  'white': '#d2d4de',
 
   'green': '#00d8af',
   'teal': '#5baeaf',
