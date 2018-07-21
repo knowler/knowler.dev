@@ -43,7 +43,8 @@
     "soberwp/models": "1.0.6",
     "wpackagist-plugin/autodescription": "^3.0",
     "wpackagist-plugin/the-seo-framework-extension-manager": "^1.4",
-    "roots/markdown-on-save": "^2.0"
+    "roots/markdown-on-save": "^2.0",
+    "roots/soil": "^3.7"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0.2"

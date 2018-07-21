@@ -18,8 +18,6 @@ add_filter('body_class', function (array $classes) {
         $classes[] = 'sidebar-primary';
     }
 
-    $classes[] = 'bg-green tk-brother-1816 text-green-darkest';
-
     /** Clean up class names for custom templates */
     $classes = array_map(function ($class) {
         return preg_replace(['/-blade(-php)?$/', '/^page-template-views/'], '', $class);

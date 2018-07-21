@@ -173,7 +173,7 @@ let webpackConfig = {
     }),
     new StyleLintPlugin({
       failOnError: !config.enabled.watcher,
-      syntax: 'scss',
+      syntax: 'css',
     }),
     new FriendlyErrorsWebpackPlugin(),
   ],

@@ -138,3 +138,16 @@ function display_sidebar()
     isset($display) || $display = apply_filters('sage/display_sidebar', false);
     return $display;
 }
+
+/**
+ * @param array $parent
+ *
+ * Convert an array of arrays to an array of objects.
+ * @return array
+ */
+function cast_objects($parent)
+{
+    return array_map(function($child) {
+        return (object) $child;
+    }, $parent);
+}

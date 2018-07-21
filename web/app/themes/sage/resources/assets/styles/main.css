@@ -1,69 +1,95 @@
-/**
- * This injects Tailwind's base styles, which is a combination of
- * Normalize.css and some additional base styles.
- *
- * You can see the styles here:
- * https://github.com/tailwindcss/tailwindcss/blob/master/css/preflight.css
- */
+/* Preflight */
 @tailwind preflight;
 
-.heading:hover {
-  transform: scale(1.1);
-}
+/* Components */
+@tailwind components;
 
-.rich-text {
-  & > p {
-    @apply .leading-loose .my-3;
-  }
+p {
+  @apply leading-normal;
 
-  & > h2,
-  & > h3 {
-    @apply .leading-loose .mt-4 .mb-1;
-  }
-
-  & ul {
-    @apply .leading-normal .my-2 .pl-3;
-  }
-
-  & ul p {
-    @apply .leading-normal;
-  }
-
-  & li {
-    @apply .leading-normal .my-1;
-  }
-
-  & a {
-    @apply .text-green .font-semibold .quick .ease .props-all;
-
-    text-decoration: none;
-    border-bottom: 1px dashed;
-
-    &:hover {
-      @apply .text-green-dark;
-    }
+  &:not(:last-child) {
+    @apply mb-3;
   }
 }
 
-/**
- * This injects all of Tailwind's utility classes, generated based on your
- * config file.
- */
+a {
+  color: inherit;
+}
+
+.Terminal {
+  @apply bg-mirage m-3 p-3 border border-green font-mono shadow-md;
+  max-width: 732px;
+  letter-spacing: 0.05em;
+}
+
+.Terminal > p > a {
+  @apply border-b;
+  text-decoration: none;
+  padding: 0.1em 0.2em calc(0.1em - 1px) 0.25em;
+  margin: -0.1em -0.2em calc(-0.1em + 1px) -0.25em;
+
+  /* Hover */
+  transition: .1s ease;
+
+  &:hover {
+    @apply text-onyx bg-green border-green;
+  }
+}
+
+.Terminal--links {
+  @apply list-reset;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.Terminal--links li {
+  display: block;
+
+  &:not(:last-child) {
+    @apply mr-2;
+  }
+}
+
+.Terminal--links a {
+  /* Box */
+  @apply bg-onyx p-2;
+
+  display: block;
+
+  /* Type */
+  @apply text-sm text-green font-semibold;
+
+  text-decoration: none;
+
+  /* Hover  */
+  transition: .1s cubic-bezier(0.39, 0.58, 0.57, 1);
+
+  &:hover {
+    @apply bg-green text-mirage;
+  }
+}
+
+.blinky {
+  /* Box */
+  display: inline-block;
+  background-color: white;
+  margin-top: -0.125em;
+  padding-top: 0.125em;
+  margin-bottom: -1px;
+
+  /* Type */
+  @apply text-mirage;
+
+  /* Animation */
+  animation: blink 1s step-start infinite;
+}
+
+@keyframes blink {
+  50% {
+    background-color: transparent;
+    color: white;
+  }
+}
+
+/* Utilities */
 @tailwind utilities;
-
-.quicker { transition-duration: 0.1s; }
-.quick { transition-duration: 0.2s; }
-.slow { transition-duration: 0.5s; }
-
-.ease { transition-timing-function: ease; }
-.ease-in { transition-timing-function: ease-in; }
-.ease-out { transition-timing-function: ease-out; }
-
-.delay-short { transition-delay: 0.1s; }
-.delay-long { transition-delay: 0.2s; }
-
-.props-all { transition-property: all; }
-.props-transform { transition-property: transform; }
-.props-colors { transition-property: background-color, color; }
-.props-color { transition-property: color; }
-.props-bg { transition-property: background-color; }
