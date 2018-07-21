@@ -43,6 +43,7 @@ a {
 }
 
 .Terminal--links li {
+  @apply mt-2;
   display: block;
 
   &:not(:last-child) {

@@ -10,7 +10,6 @@ class FrontPage extends Controller
     {
         $jams = carbon_get_the_post_meta('jams');
 
-
         return (object) $jams[random_int(0, count($jams) - 1)];
     }
 
