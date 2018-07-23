@@ -16,7 +16,7 @@ add_action('wp_enqueue_scripts', function () {
 }, 100);
 
 add_action('wp_footer', function() {
-    if (env(WP_ENV) == 'PRODUCTION') { ?>
+    if (env('WP_ENV') == 'production') { ?>
 <!-- Fathom - simple website analytics - https://github.com/usefathom/fathom -->
 <script>
 (function(f, a, t, h, o, m){
