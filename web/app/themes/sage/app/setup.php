@@ -16,20 +16,23 @@ add_action('wp_enqueue_scripts', function () {
 }, 100);
 
 add_action('wp_footer', function() {
-    if (env('WP_ENV') == 'production') { ?>
-<script>
-(function(f, a, t, h, o, m){
-	a[h]=a[h]||function(){
-		(a[h].q=a[h].q||[]).push(arguments)
-	};
-	o=f.createElement('script'),
-	m=f.getElementsByTagName('script')[0];
-	o.async=1; o.src=t; o.id='fathom-script';
-	m.parentNode.insertBefore(o,m)
-})(document, window, '//fathom.knowlerkno.ws/tracker.js', 'fathom');
-fathom('trackPageview');
-</script>
-<?php }
+    $loadFathom = (!defined('WP_ENV') || \WP_ENV == 'production') && !current_user_can('manage_options');
+    ?>
+    <?php if ($loadFathom): ?>
+    <script>
+    (function(f, a, t, h, o, m){
+        a[h]=a[h]||function(){
+            (a[h].q=a[h].q||[]).push(arguments)
+        };
+        o=f.createElement('script'),
+        m=f.getElementsByTagName('script')[0];
+        o.async=1; o.src=t; o.id='fathom-script';
+        m.parentNode.insertBefore(o,m)
+    })(document, window, '//fathom.knowlerkno.ws/tracker.js', 'fathom');
+    fathom('trackPageview');
+    </script>
+    <?php endif; ?>
+<?php
 }, 100);
 
 /**
