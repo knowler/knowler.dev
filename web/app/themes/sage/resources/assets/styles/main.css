@@ -4,6 +4,10 @@
 /* Components */
 @tailwind components;
 
+h1 {
+  @apply leading-tight mb-3;
+}
+
 p {
   @apply leading-normal;
 

@@ -3,7 +3,6 @@
 @section('content')
 
   @while(have_posts()) @php(the_post())
-<div class="flex justify-center py-1 md:py-6">
   <div class="Terminal">
     @php the_content() @endphp
     <p>
@@ -19,7 +18,6 @@
     </p>
     @endif
   </div>
-</div>
-@endwhile
+  @endwhile
 
 @endsection
