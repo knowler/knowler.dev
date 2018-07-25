@@ -31,6 +31,7 @@ a {
   text-decoration: none;
   padding: 0.1em 0.2em calc(0.1em - 1px) 0.25em;
   margin: -0.1em -0.2em calc(-0.1em + 1px) -0.25em;
+  color: white;
 
   /* Hover */
   transition: .1s ease;
