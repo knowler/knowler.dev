@@ -44,7 +44,8 @@
     "sybrew/the-seo-framework": "^3.0",
     "sybrew/the-seo-framework-extension-manager": "^2.0",
     "roots/markdown-on-save": "^2.0",
-    "roots/soil": "^3.7"
+    "roots/soil": "^3.7",
+    "wpackagist-plugin/classic-editor": "^1.2"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0.2",
