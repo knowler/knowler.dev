@@ -40,7 +40,7 @@
     "roots/wordpress": "5.0.2",
     "roots/wp-password-bcrypt": "1.0.0",
     "aaemnnosttv/wp-cli-login-server": "^1.2",
-    "soberwp/models": "1.0.6",
+    "soberwp/models": "1.1.0",
     "sybrew/the-seo-framework": "^3.0",
     "sybrew/the-seo-framework-extension-manager": "^2.0",
     "roots/markdown-on-save": "^2.0",

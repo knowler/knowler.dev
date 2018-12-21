@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "50ddfc969fe9b1d080a8dd9bdf33f6c9",
+    "content-hash": "14ae29fa0c22887549dc61abd73f50fb",
     "packages": [
         {
             "name": "aaemnnosttv/wp-cli-login-server",
@@ -160,28 +160,29 @@
         },
         {
             "name": "hassankhan/config",
-            "version": "0.10.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hassankhan/config.git",
-                "reference": "06ac500348af033f1a2e44dc357ca86282626d4a"
+                "reference": "930556337783acfd95bde723354119178db01d10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hassankhan/config/zipball/06ac500348af033f1a2e44dc357ca86282626d4a",
-                "reference": "06ac500348af033f1a2e44dc357ca86282626d4a",
+                "url": "https://api.github.com/repos/hassankhan/config/zipball/930556337783acfd95bde723354119178db01d10",
+                "reference": "930556337783acfd95bde723354119178db01d10",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
+                "php": ">=5.5.9"
             },
             "require-dev": {
                 "phpunit/phpunit": "~4.0",
                 "scrutinizer/ocular": "~1.1",
-                "squizlabs/php_codesniffer": "~2.2"
+                "squizlabs/php_codesniffer": "~2.2",
+                "symfony/yaml": "~3.4"
             },
             "suggest": {
-                "symfony/yaml": "~2.5"
+                "symfony/yaml": "~3.4"
             },
             "type": "library",
             "autoload": {
@@ -213,7 +214,7 @@
                 "yaml",
                 "yml"
             ],
-            "time": "2016-02-11T16:21:17+00:00"
+            "time": "2018-08-22T14:18:52+00:00"
         },
         {
             "name": "league/commonmark",
@@ -552,23 +553,23 @@
         },
         {
             "name": "soberwp/models",
-            "version": "1.0.6",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/soberwp/models.git",
-                "reference": "707076c140a1ad9eec65d85ec2b945e35617c72c"
+                "reference": "dd17681ebf6d38f666b6c8161c4b33dc07797870"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/soberwp/models/zipball/707076c140a1ad9eec65d85ec2b945e35617c72c",
-                "reference": "707076c140a1ad9eec65d85ec2b945e35617c72c",
+                "url": "https://api.github.com/repos/soberwp/models/zipball/dd17681ebf6d38f666b6c8161c4b33dc07797870",
+                "reference": "dd17681ebf6d38f666b6c8161c4b33dc07797870",
                 "shasum": ""
             },
             "require": {
-                "composer/installers": "~1.0",
-                "hassankhan/config": "^0.10.0",
+                "composer/installers": "^1.5",
+                "hassankhan/config": "^1.0",
                 "php": ">=5.6",
-                "symfony/yaml": "^3.3"
+                "symfony/yaml": "^4.1"
             },
             "require-dev": {
                 "squizlabs/php_codesniffer": "2.*"
@@ -596,7 +597,7 @@
             "keywords": [
                 "wordpress"
             ],
-            "time": "2018-01-29T08:19:21+00:00"
+            "time": "2018-08-04T10:45:52+00:00"
         },
         {
             "name": "sybrew/the-seo-framework",
@@ -743,20 +744,20 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.4.20",
+            "version": "v4.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "291e13d808bec481eab83f301f7bff3e699ef603"
+                "reference": "c41175c801e3edfda90f32e292619d10c27103d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/291e13d808bec481eab83f301f7bff3e699ef603",
-                "reference": "291e13d808bec481eab83f301f7bff3e699ef603",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/c41175c801e3edfda90f32e292619d10c27103d7",
+                "reference": "c41175c801e3edfda90f32e292619d10c27103d7",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.5.9|>=7.0.8",
+                "php": "^7.1.3",
                 "symfony/polyfill-ctype": "~1.8"
             },
             "conflict": {
@@ -771,7 +772,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.4-dev"
+                    "dev-master": "4.2-dev"
                 }
             },
             "autoload": {
@@ -798,7 +799,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2018-11-11T19:48:54+00:00"
+            "time": "2018-11-11T19:52:12+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
