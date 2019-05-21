@@ -2128,10 +2128,10 @@ safe-regex@^1.1.0:
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
-sapper@^0.27.0:
-  version "0.27.0"
-  resolved "https://registry.yarnpkg.com/sapper/-/sapper-0.27.0.tgz#4cf4f0f85380ddb1f219c37c755bc0a400fe8f2e"
-  integrity sha512-4oNdbQzrmCyEA0agjEtZo06P6qNnVAXClNnUIUd4rvoJ/wm25DxSEty56SQrgfAx0dDJzrbs+9OYun1mCg4Gtg==
+sapper@^0.27.1:
+  version "0.27.1"
+  resolved "https://registry.yarnpkg.com/sapper/-/sapper-0.27.1.tgz#2d037cd7eed759eb5d7bbe2ff6f24c5819dded5c"
+  integrity sha512-RH0K1uQ3zJ1IXvowxr2SuboGXV69q22KaPMhhoM5VNDv9fsUlVHtluZE8WTcGxckiO2L1xFfgM7v/aINkSZpcw==
   dependencies:
     html-minifier "^4.0.0"
     http-link-header "^1.0.2"
