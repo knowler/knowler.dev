@@ -14,10 +14,15 @@
     "@emotion/styled": "^10.0.14",
     "@mdx-js/loader": "^1.0.21",
     "@next/mdx": "^9.0.0",
+    "module-alias": "^2.2.0",
     "next": "^9.0.0",
     "preact": "^10.0.0-beta.3",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "theme-ui": "^0.2.10"
+  },
+  "_moduleAliases": {
+    "react": "node_modules/preact/compat",
+    "react-dom": "node_modules/preact/compat"
   }
 }
