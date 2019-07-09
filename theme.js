@@ -1,7 +1,8 @@
 export const theme = {
   colors: {
-    text: '#fff',
+    text: '#d2d4de',
     background: '#161821',
+    primary: '#00d8af',
   },
   fonts: {
     sans: 'sans-serif',
@@ -13,6 +14,7 @@ export const theme = {
       fontFamily: 'sans',
       height: '100%',
       h1: {
+        fontWeight: 300,
         marginTop: 0,
         marginBottom: 0,
       },
@@ -29,5 +31,7 @@ export const globalStyles = {
   },
   body: {
     margin: 0,
+    backgroundColor: theme.colors.background,
+    color: theme.colors.text,
   },
 }
