@@ -1,2 +1,4 @@
 node_modules
-__sapper__
+/.netlify
+/.next
+/out

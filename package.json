@@ -1,24 +1,23 @@
 {
   "name": "@knowler/website",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "repository": "git@github.com:knowler/knowlerkno.ws.git",
   "author": "Nathan Knowler <nathan@knowler.me>",
-  "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "sapper dev",
-    "build": "sapper build",
-    "export": "sapper export"
-  },
-  "devDependencies": {
-    "sapper": "^0.27.0",
-    "svelte": "^3.4.1",
-    "svelte-loader": "^2.13.4",
-    "webpack": "^4.29.6"
+    "dev": "next dev",
+    "build": "next build",
+    "export": "next build && next export"
   },
   "dependencies": {
-    "compression": "^1.7.4",
-    "polka": "^0.5.2",
-    "sirv": "^0.4.2"
+    "@emotion/core": "^10.0.14",
+    "@emotion/styled": "^10.0.14",
+    "@mdx-js/loader": "^1.0.21",
+    "@next/mdx": "^9.0.0",
+    "next": "^9.0.0",
+    "preact": "^10.0.0-beta.3",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "theme-ui": "^0.2.10"
   }
 }
