@@ -2415,10 +2415,10 @@ svelte-loader@^2.13.4:
     loader-utils "^1.1.0"
     svelte-dev-helper "^1.1.9"
 
-svelte@^3.4.1:
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.4.1.tgz#871ca99d11fc91e5cc8bb45ab789839e5df97867"
-  integrity sha512-Ak8/k8fOhz6BBzGVgxfb4YHCWRDzOw7VYuWcDBtBpH7RaCodFXIEpdnRQXc4j9j5bHAlnRn4KXURXVvdZplkBg==
+svelte@^3.6.10:
+  version "3.6.10"
+  resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.6.10.tgz#054f944a8c161b16748d7f2e00a383252cd14725"
+  integrity sha512-2N9kIbDal5z/aZloaRCOQ9dlCtuCE08NZITDlSdG7fOl4kFrE2qnXCq+lSFtI15ABWCXPc17cX5vJvdOgUsKqw==
 
 tapable@^1.0.0, tapable@^1.1.0:
   version "1.1.1"
