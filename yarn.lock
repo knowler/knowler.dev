@@ -12,6 +12,11 @@
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-0.5.0.tgz#b21510597fd601e5d7c95008b76bf0d254ebfd31"
   integrity sha512-oZLYFEAzUKyi3SKnXvj32ZCEGH6RDnao7COuCVhDydMS9NrCSVXhM79VaKyP5+Zc33m0QXEd2DN3UkU7OsHcfw==
 
+"@polka/url@^1.0.0-next.9":
+  version "1.0.0-next.11"
+  resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.11.tgz#aeb16f50649a91af79dbe36574b66d0f9e4d9f71"
+  integrity sha512-3NsZsJIA/22P3QUyrEDNA2D133H4j224twJrdipXN38dpnIOzAbUDtOwkcJ5pXmn75w7LSQDjA4tO9dm1XlqlA==
+
 "@webassemblyjs/ast@1.8.5":
   version "1.8.5"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.8.5.tgz#51b1c5fe6576a34953bf4b253df9f0d490d9e359"
@@ -2211,13 +2216,14 @@ signal-exit@^3.0.0:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
   integrity sha1-tf3AjxKH6hF4Yo5BXiUTK3NkbG0=
 
-sirv@^0.4.2:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/sirv/-/sirv-0.4.2.tgz#842ed22f3aab58faee84eea66cf66066e123d6db"
-  integrity sha512-dQbZnsMaIiTQPZmbGmktz+c74zt/hyrJEB4tdp2Jj0RNv9J6B/OWR5RyrZEvIn9fyh9Zlg2OlE2XzKz6wMKGAw==
+sirv@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/sirv/-/sirv-1.0.0.tgz#c55fb4dd47760c95608f5fef10760ddbfc3fe209"
+  integrity sha512-NYxkb52SaeZWHH4cKwmY5N+Qv/oAVZHOUNuV+N7ohuJrlEYyQ0NdnR9s6+Ki2UFfYE4hjThzDCG9oU/qSNRdYA==
   dependencies:
-    "@polka/url" "^0.5.0"
+    "@polka/url" "^1.0.0-next.9"
     mime "^2.3.1"
+    totalist "^1.0.0"
 
 snapdragon-node@^2.0.1:
   version "2.1.1"
@@ -2505,6 +2511,11 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     extend-shallow "^3.0.2"
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
+
+totalist@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/totalist/-/totalist-1.0.1.tgz#c62ad01d773c1a0c721e18d385767c14712a82da"
+  integrity sha512-HuAt9bWDCdLkebrIQr+i63NgQSvjeD2VTNUIEBqof/4pG4Gb6omuBOMUX0vF371cbfImXQzmb4Ue/0c9MUWGew==
 
 trouter@^2.0.1:
   version "2.0.1"
