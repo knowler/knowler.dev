@@ -1,3 +1,9 @@
 [build]
   command = "yarn build"
   publish = "build"
+
+[[plugins]]
+package = "netlify-plugin-a11y"
+
+  [plugins.inputs]
+    checkPaths = ['/']
