@@ -1,24 +1,15 @@
 {
-  "name": "@knowler/website",
-  "version": "2.0.0",
+  "name": "knowlerkno.ws",
+  "version": "7.0.0",
+  "private": true,
   "repository": "git@github.com:knowler/knowlerkno.ws.git",
   "author": "Nathan Knowler <nathan@knowler.me>",
   "license": "MIT",
-  "private": true,
   "scripts": {
-    "dev": "sapper dev",
-    "build": "sapper build",
-    "export": "sapper export"
+    "build": "eleventy --config=eleventy.config.js",
+    "start": "eleventy --config=eleventy.config.js --serve"
   },
   "devDependencies": {
-    "sapper": "^0.27.0",
-    "svelte": "^3.4.1",
-    "svelte-loader": "^2.13.4",
-    "webpack": "^4.29.6"
-  },
-  "dependencies": {
-    "compression": "^1.7.4",
-    "polka": "^0.5.2",
-    "sirv": "^0.4.2"
+    "@11ty/eleventy": "^0.11.0"
   }
 }
