@@ -10,6 +10,7 @@
     "start": "eleventy --config=eleventy.config.js --serve"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^0.11.0"
+    "@11ty/eleventy": "^0.11.0",
+    "@changesets/cli": "^2.9.1"
   }
 }
