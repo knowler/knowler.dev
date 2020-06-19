@@ -6,11 +6,12 @@
   "author": "Nathan Knowler <nathan@knowler.me>",
   "license": "MIT",
   "scripts": {
-    "build": "eleventy --config=eleventy.config.js",
-    "start": "eleventy --config=eleventy.config.js --serve"
+    "build": "cross-env NODE_ENV=production eleventy --config=eleventy.config.js",
+    "start": "cross-env NODE_ENV=development eleventy --config=eleventy.config.js --serve"
   },
   "devDependencies": {
     "@11ty/eleventy": "^0.11.0",
-    "@changesets/cli": "^2.9.1"
+    "@changesets/cli": "^2.9.1",
+    "cross-env": "^7.0.2"
   }
 }
