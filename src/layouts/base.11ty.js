@@ -31,7 +31,7 @@ module.exports = ({
         <ul class="flex space-x-2 sm:space-x-4 pl-0 list-none">
           ${navPages.map(({title, url}) => `
               <li>
-                <a href="${url}"${setAriaCurrent(page, url)} class="px-2 py-1 border-2 border-green-2 rounded-full ${url === page.url ? 'bg-green-2 text-base' : 'text-green-2 hover:bg-green-3 hover:border-green-3 hover:text-base focus:border-green-0'} text-s-1 font-medium transition-colors duration-200 ease-in">${title}</a>
+                <a href="${url}"${setAriaCurrent(page, url)} class="px-2 py-1 border-2 border-green-2 rounded-full ${url === page.url ? 'bg-green-2 text-base' : 'text-green-2 hover:bg-green-3 hover:border-green-3 hover:text-base'} text-s-1 font-medium transition-colors duration-200 ease-in">${title}</a>
               </li>
             `).join('')}
         </ul>
