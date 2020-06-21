@@ -1,6 +1,10 @@
 ---
 layout: base
-title: Nathan Knowler’s Accessibility Statement
+title: Nathan Knowler – Accessibility Statement
+description: My commitment to make this website as transparently, accessible as possible.
+eleventyNavigation:
+  order: 2
+  title: Accessibility
 ---
 
 # Accessibility Statement
@@ -24,9 +28,13 @@ As a build step, I am using the Netlify <abbr title="accessibility">A11y</abbr> 
 
 ## Issues
 
-Currently, I haven’t implemented any custom colours, so the
-contrast is at its maximum. As I craft the colour palette for this
-site, I will do my best to fix this.
+I’ve done my best with ensuring sufficient WCAG 2.1 AA contrast
+so far. I’m worried that the content link contrast might not be
+enough. As well, I haven’t been able to give the focus styles as
+much attention as they deserve, so they are the browser defaults
+for now.
+
+## Feedback
 
 If you find any other issues that I haven’t accounted for,
 please help me address them by [submitting an issue on GitHub](https://github.com/knowler/knowlerkno.ws/issues/new).

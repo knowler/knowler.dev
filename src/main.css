@@ -1,10 +1,9 @@
-/** These styles are temporary and meant to be as minimal as possible */
+@tailwind base;
 
 body {
   font-family: system-ui, sans-serif;
 }
 
-/** Skip link */
 [href='#content']:focus {
   position: fixed;
   top: 0.5rem;
@@ -26,33 +25,4 @@ body {
   border-width: 0;
 }
 
-/** Content */
-#content {
-  max-width: 48ch;
-  line-height: 1.5;
-}
-
-/** Site nav */
-#site-nav > ul {
-  display: flex;
-  list-style: none;
-  padding-left: 0;
-}
-
-#site-nav > ul > li + li {
-  margin-left: 0.5rem;
-}
-
-#site-nav > ul > li > a {
-  padding: 0.25rem;
-  background-color: black;
-  color: white;
-}
-
-#site-nav > ul > li > a:hover {
-  opacity: 0.75;
-}
-
-#site-nav > ul > li > a:focus {
-  outline: 2px solid rgba(255, 0, 0, 0.5);
-}
+@tailwind utilities;

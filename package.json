@@ -6,12 +6,27 @@
   "author": "Nathan Knowler <nathan@knowler.me>",
   "license": "MIT",
   "scripts": {
-    "build": "cross-env NODE_ENV=production eleventy --config=eleventy.config.js",
-    "start": "cross-env NODE_ENV=development eleventy --config=eleventy.config.js --serve"
+    "build": "cross-env NODE_ENV=production run-s eleventy:build postcss:build",
+    "start": "cross-env NODE_ENV=development run-p eleventy:start postcss:start",
+    "eleventy:build": "eleventy --config=eleventy.config.js",
+    "eleventy:start": "eleventy --config=eleventy.config.js --serve",
+    "postcss:build": "postcss src/main.css --output build/main.css",
+    "postcss:start": "postcss src/main.css --output build/main.css --watch"
   },
   "devDependencies": {
     "@11ty/eleventy": "^0.11.0",
+    "@11ty/eleventy-navigation": "^0.1.5",
+    "@adobe/leonardo-contrast-colors": "^1.0.0-alpha.5",
     "@changesets/cli": "^2.9.1",
-    "cross-env": "^7.0.2"
+    "@knowler/typescale": "^1.0.0",
+    "@toycode/markdown-it-class": "^1.2.4",
+    "cross-env": "^7.0.2",
+    "cssnano": "^4.1.10",
+    "npm-run-all": "^4.1.5",
+    "postcss-cli": "^7.1.1",
+    "tailwindcss": "^1.4.6"
+  },
+  "volta": {
+    "node": "14.4.0"
   }
 }
