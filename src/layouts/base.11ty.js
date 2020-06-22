@@ -10,7 +10,17 @@ module.exports = ({
   page,
   collections,
 }) => {
-  const navPages = EleventyNavigation.findNavigationEntries(collections.all);
+  const navPages = [
+    ...EleventyNavigation.findNavigationEntries(collections.all),
+    {
+      title: 'GitHub',
+      url: 'https://github.com/knowler',
+    },
+    {
+      title: 'Twitter',
+      url: 'https://twitter.com/kn_wler',
+    },
+  ];
 
   return `
 <!doctype html>
