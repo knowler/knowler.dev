@@ -10,8 +10,9 @@ module.exports = ({
   page,
   collections,
 }) => {
-  const navPages = [
-    ...EleventyNavigation.findNavigationEntries(collections.all),
+  const navPages = EleventyNavigation.findNavigationEntries(collections.all);
+
+  const socialLinks = [
     {
       title: 'GitHub',
       url: 'https://github.com/knowler',
@@ -35,7 +36,7 @@ module.exports = ({
   </head>
   <body class="p-4 sm:p-8 bg-base text-green-2 font-body text-s0">
     <a href="#content">Skip to content</a>
-    <header role="banner" class="mb-4">
+    <header role="banner" class="mb-4 flex justify-between items-center">
       <nav id="site-nav" aria-labelledby="site-nav-label">
         <div id="site-nav-label" hidden>Site</div>
         <ul class="flex space-x-2 sm:space-x-4 pl-0 list-none">
@@ -46,8 +47,18 @@ module.exports = ({
             `).join('')}
         </ul>
       </nav>
+      <nav id="social-nav" aria-labelledby="social-nav-label">
+        <div id="social-nav-label" hidden>Social</div>
+        <ul class="flex space-x-2 sm:space-x-4 pl-0 list-none">
+          ${socialLinks.map(({title, url}) => `
+              <li>
+                <a href="${url}" class="px-2 py-1 border-2 border-green-2 rounded-full ${url === page.url ? 'bg-green-2 text-base' : 'text-green-2 hover:bg-green-3 hover:border-green-3 hover:text-base'} text-s-1 font-medium transition-colors duration-200 ease-in">${title}</a>
+              </li>
+            `).join('')}
+        </ul>
+      </nav>
     </header>
-    <main id="content" tabindex="-1" class="max-w-48ch space-y-4 focus:outline-none">
+    <main id="content" tabindex="-1" class="max-w-48ch mt-8 space-y-4 focus:outline-none">
       ${content}
     </main>
     <footer class="max-w-48ch mt-4">
