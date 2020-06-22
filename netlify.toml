@@ -9,10 +9,10 @@ package = "netlify-plugin-a11y"
     checkPaths = ['/']
 
 [[plugins]]
-package = "netlify-plugin-subfont"
+package = "netlify-plugin-hashfiles"
 
 [[plugins]]
-package = "netlify-plugin-hashfiles"
+package = "netlify-plugin-subfont"
 
 [[plugins]]
 package = "netlify-plugin-checklinks"
