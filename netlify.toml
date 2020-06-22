@@ -10,3 +10,6 @@ package = "netlify-plugin-a11y"
 
 [[plugins]]
 package = "netlify-plugin-subfont"
+
+  [plugins.inputs]
+    fallbacks = false
