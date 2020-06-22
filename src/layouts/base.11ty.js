@@ -37,7 +37,7 @@ module.exports = ({
         </ul>
       </nav>
     </header>
-    <main id="content" tabindex="-1" class="max-w-48ch space-y-4">
+    <main id="content" tabindex="-1" class="max-w-48ch space-y-4 focus:outline-none">
       ${content}
     </main>
     <footer class="max-w-48ch mt-4">
