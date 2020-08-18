@@ -52,10 +52,10 @@
     time-require "^0.1.2"
     valid-url "^1.0.9"
 
-"@adobe/leonardo-contrast-colors@^1.0.0-alpha.5":
-  version "1.0.0-alpha.5"
-  resolved "https://registry.yarnpkg.com/@adobe/leonardo-contrast-colors/-/leonardo-contrast-colors-1.0.0-alpha.5.tgz#b2a1233961ad2218716089503afd3de2e9544316"
-  integrity sha512-1X9F6ZdlwGHTGFM4FpRhzWI0J23rDvdySItdlZxYPoTWkuJ141j/0IUsw8Lx4156Xdk/sya0P5pNiVczQ/8W3A==
+"@adobe/leonardo-contrast-colors@^1.0.0-alpha.7":
+  version "1.0.0-alpha.7"
+  resolved "https://registry.yarnpkg.com/@adobe/leonardo-contrast-colors/-/leonardo-contrast-colors-1.0.0-alpha.7.tgz#e24e8c45e740b641c4dda31966a18f2198c1173f"
+  integrity sha512-S0u1fpE2RvP180I+r7YVaNMxibp54SR3wl9PGjb70sJJolOtMtCG6n8lA9ry4MDORtqOyfAMIGMuvD3Xuj2y+g==
   dependencies:
     d3 "^5.14.2"
     d3-3d "0.0.9"
