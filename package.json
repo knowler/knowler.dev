@@ -17,7 +17,7 @@
     "@11ty/eleventy": "^0.11.0",
     "@11ty/eleventy-navigation": "^0.1.6",
     "@adobe/leonardo-contrast-colors": "^1.0.0-alpha.7",
-    "@changesets/cli": "^2.10.0",
+    "@changesets/cli": "^2.10.1",
     "@knowler/typescale": "^1.0.0",
     "@toycode/markdown-it-class": "^1.2.4",
     "cross-env": "^7.0.2",
