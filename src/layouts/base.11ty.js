@@ -36,8 +36,8 @@ module.exports = ({
   </head>
   <body class="p-4 sm:p-8 bg-base text-green-2 font-body text-s0">
     <a href="#content">Skip to content</a>
-    <header role="banner" class="mb-4 flex justify-between items-center">
-      <nav id="site-nav" aria-labelledby="site-nav-label">
+    <header role="banner" class="-mt-2 mb-4 flex flex-wrap justify-between items-center">
+      <nav id="site-nav" aria-labelledby="site-nav-label" class="mt-2 mr-2">
         <div id="site-nav-label" hidden>Site</div>
         <ul class="flex space-x-2 sm:space-x-4 pl-0 list-none">
           ${navPages.map(({title, url}) => `
@@ -47,7 +47,7 @@ module.exports = ({
             `).join('')}
         </ul>
       </nav>
-      <nav id="social-nav" aria-labelledby="social-nav-label">
+      <nav id="social-nav" aria-labelledby="social-nav-label" class="mt-2">
         <div id="social-nav-label" hidden>Social</div>
         <ul class="flex space-x-2 sm:space-x-4 pl-0 list-none">
           ${socialLinks.map(({title, url}) => `
