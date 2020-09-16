@@ -25,7 +25,7 @@ module.exports = ({
 
   return `
 <!doctype html>
-<html lang="en-CA">
+<html lang="en-CA" class="h-full">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -34,7 +34,7 @@ module.exports = ({
      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Oswald&display=swap" rel="stylesheet">
     <link href="/main.css" rel="stylesheet">
   </head>
-  <body class="p-4 sm:p-8 bg-base text-green-2 font-body text-s0">
+  <body class="h-full p-4 sm:p-8 bg-base text-green-2 font-body text-s0">
     <a href="#content">Skip to content</a>
     <header role="banner" class="-mt-2 mb-4 flex flex-wrap justify-between items-center">
       <nav id="site-nav" aria-labelledby="site-nav-label" class="mt-2 mr-2">
