@@ -10,8 +10,8 @@
     "start": "cross-env NODE_ENV=development run-p eleventy:start postcss:start",
     "eleventy:build": "eleventy --config=eleventy.config.js",
     "eleventy:start": "eleventy --config=eleventy.config.js --serve",
-    "postcss:build": "postcss src/main.css --output build/main.css",
-    "postcss:start": "postcss src/main.css --output build/main.css --watch"
+    "postcss:build": "postcss assets/main.css --output build/main.css",
+    "postcss:start": "postcss assets/main.css --output build/main.css --watch"
   },
   "devDependencies": {
     "@11ty/eleventy": "^0.11.0",

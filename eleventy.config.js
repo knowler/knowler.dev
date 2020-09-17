@@ -20,9 +20,9 @@ module.exports = config => {
 
   return {
     dir: {
-      input: 'src',
-      layouts: 'layouts',
-      includes: 'partials',
+      input: 'content',
+      layouts: '_layouts',
+      includes: '_partials',
       output: 'build',
     },
   };
