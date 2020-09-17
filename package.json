@@ -19,12 +19,10 @@
     "@adobe/leonardo-contrast-colors": "^1.0.0-alpha.7",
     "@changesets/cli": "^2.10.2",
     "@knowler/typescale": "^1.0.0",
-    "@toycode/markdown-it-class": "^1.2.4",
     "cross-env": "^7.0.2",
     "cssnano": "^4.1.10",
     "npm-run-all": "^4.1.5",
-    "postcss-cli": "^7.1.1",
-    "tailwindcss": "^1.7.5"
+    "postcss-cli": "^7.1.1"
   },
   "volta": {
     "node": "14.4.0"
