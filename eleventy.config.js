@@ -3,7 +3,15 @@ const {createElement} = require('react');
 const eleventyNavigationPlugin = require('@11ty/eleventy-navigation');
 
 require('@babel/register')({
-  presets: ['@babel/env', '@babel/react'],
+  presets: [
+    '@babel/env',
+    [
+      '@babel/react',
+      {
+        runtime: 'automatic',
+      },
+    ],
+  ],
 });
 
 module.exports = config => {

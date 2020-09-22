@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const Footer = () => (
   <footer className="site-footer">
     <a

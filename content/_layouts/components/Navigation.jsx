@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const Navigation = ({children, label}) => {
   const navId = `${label.toLowerCase()}-nav`;
   const labelId = `${navId}-label`;

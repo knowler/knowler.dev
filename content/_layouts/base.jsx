@@ -1,4 +1,3 @@
-import React from 'react';
 import EleventyNavigation from '@11ty/eleventy-navigation/eleventy-navigation';
 
 import {Header, Footer, Main, Navigation, SkipLink} from './components';
