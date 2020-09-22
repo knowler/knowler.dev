@@ -1,6 +1,8 @@
 import React from 'react';
 import EleventyNavigation from '@11ty/eleventy-navigation/eleventy-navigation';
 
+import {Header, Footer, Main, Navigation, SkipLink} from './components';
+
 export default ({
   content,
   title = 'Nathan Knowler',
@@ -24,71 +26,29 @@ export default ({
         <link href="/main.css" rel="stylesheet" />
       </head>
       <body>
-        <a href="#content" className="skip-link">
-          Skip to content
-        </a>
-        <header role="banner" className="site-header">
-          <nav
-            id="site-nav"
-            className="site-nav"
-            aria-labelledby="site-nav-label"
-          >
-            <div id="site-nav-label" hidden>
-              Site
-            </div>
-            <ul className="site-nav--list">
-              {navPages.map(({title, url}) => (
-                <li key={url}>
-                  <a
-                    href={url}
-                    aria-current={url === page.url ? 'page' : null}
-                    className="site-nav--link"
-                  >
-                    {title}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-          <nav
-            id="social-nav"
-            className="site-nav"
-            aria-labelledby="social-nav-label"
-          >
-            <div id="social-nav-label" hidden>
-              Social
-            </div>
-            <ul className="site-nav--list">
-              <li>
-                <a href="https://github.com/knowler" className="site-nav--link">
-                  GitHub
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://twitter.com/kn_wler"
-                  className="site-nav--link"
-                >
-                  Twitter
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </header>
-        <main
-          id="content"
-          tabIndex="-1"
-          className="site-content"
-          dangerouslySetInnerHTML={{__html: content}}
-        />
-        <footer className="site-footer">
-          <a
-            href="https://github.com/knowler/knowlerkno.ws"
-            className="viewsource-link"
-          >
-            View source on GitHub
-          </a>
-        </footer>
+        <SkipLink />
+        <Header>
+          <Navigation label="Site">
+            {navPages.map(({title, url}) => (
+              <Navigation.Item
+                isCurrent={url === page.url ? 'page' : null}
+                href={url}
+              >
+                {title}
+              </Navigation.Item>
+            ))}
+          </Navigation>
+          <Navigation label="social">
+            <Navigation.Item href="https://github.com/knowler">
+              GitHub
+            </Navigation.Item>
+            <Navigation.Item href="https://twitter.com/kn_wler">
+              Twitter
+            </Navigation.Item>
+          </Navigation>
+        </Header>
+        <Main content={content} />
+        <Footer />
       </body>
     </html>
   );
