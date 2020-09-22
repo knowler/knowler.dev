@@ -1,5 +1,5 @@
 ---
-layout: base
+layout: base.jsx
 title: Nathan Knowler – Web Developer
 description: Nathan Knowler builds web-based solutions for people.
 eleventyNavigation:
