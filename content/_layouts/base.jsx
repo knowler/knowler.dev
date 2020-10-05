@@ -41,9 +41,6 @@ export default ({
             <Navigation.Item href="https://github.com/knowler">
               GitHub
             </Navigation.Item>
-            <Navigation.Item href="https://twitter.com/kn_wler">
-              Twitter
-            </Navigation.Item>
           </Navigation>
         </Header>
         <Main content={content} />
