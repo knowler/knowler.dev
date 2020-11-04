@@ -19,7 +19,7 @@
     "@adobe/leonardo-contrast-colors": "^1.0.0-alpha.8",
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.11.5",
-    "@babel/preset-react": "^7.10.4",
+    "@babel/preset-react": "^7.12.5",
     "@babel/register": "^7.11.5",
     "@changesets/cli": "^2.11.0",
     "@knowler/typescale": "^1.0.0",
