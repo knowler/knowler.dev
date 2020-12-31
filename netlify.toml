@@ -6,7 +6,7 @@
 package = "netlify-plugin-a11y"
 
   [plugins.inputs]
-    checkPaths = ['/']
+    checkPaths = ['/', '/garden/']
 
 [[plugins]]
 package = "netlify-plugin-checklinks"
