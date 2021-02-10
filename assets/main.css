@@ -33,7 +33,7 @@
   --s-4: calc(var(--s--increment) * -4);
 
   /** Typography */
-  --measure: 48ch;
+  --measure: 40rem;
   --leading-tight: 1.125;
   --leading-snug: 1.25;
   --leading-normal: 1.5;
