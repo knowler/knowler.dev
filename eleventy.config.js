@@ -1,6 +1,7 @@
 const {renderToStaticMarkup} = require('react-dom/server');
 const {createElement} = require('react');
 const eleventyNavigationPlugin = require('@11ty/eleventy-navigation');
+const markdownIt = require('markdown-it');
 
 require('@babel/register')({
   presets: [
@@ -16,6 +17,8 @@ require('@babel/register')({
 
 module.exports = config => {
   config.addPlugin(eleventyNavigationPlugin);
+
+  config.setLibrary('md', markdownIt().use(require('markdown-it-mark')));
 
   config.addTemplateFormats('jsx');
   config.addExtension('jsx', {

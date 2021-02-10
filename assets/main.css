@@ -70,6 +70,11 @@ body {
   }
 }
 
+mark {
+  background-color: var(--green3);
+  color: var(--green-base);
+}
+
 /**
  * Banner
  */
