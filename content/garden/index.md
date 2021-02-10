@@ -19,4 +19,5 @@ to speak, and there will certainly be some posts that I’ve neglected, and in
 some cases are beyond recovery. I may need some prompting to uproot some
 weeds.
 
+- [Notetaking](notetaking)
 - [Seed Bearing Fruit](seed-bearing-fruit)
