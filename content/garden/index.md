@@ -18,3 +18,5 @@ promise to keep in mind that the contents of these could need a little water, so
 to speak, and there will certainly be some posts that I’ve neglected, and in
 some cases are beyond recovery. I may need some prompting to uproot some
 weeds.
+
+- [Seed Bearing Fruit](seed-bearing-fruit)
