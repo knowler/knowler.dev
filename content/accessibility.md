@@ -24,8 +24,6 @@ This site uses <abbr title="Accessible Rich Internet Applications">ARIA</abbr> a
 Currently, I am testing with macOS’ VoiceOver screen reader. In
 the future I’d like to test on Windows as well.
 
-As a build step, I am using the Netlify <abbr title="accessibility">A11y</abbr> build plugin.
-
 ## Issues
 
 I’ve done my best with ensuring sufficient WCAG 2.1 AA contrast
