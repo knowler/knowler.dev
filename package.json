@@ -18,7 +18,7 @@
     "@11ty/eleventy-navigation": "^0.1.6",
     "@adobe/leonardo-contrast-colors": "^1.0.0-alpha.8",
     "@babel/core": "^7.12.13",
-    "@babel/preset-env": "^7.12.13",
+    "@babel/preset-env": "^7.12.17",
     "@babel/preset-react": "^7.12.13",
     "@babel/register": "^7.12.13",
     "@changesets/cli": "^2.14.1",
