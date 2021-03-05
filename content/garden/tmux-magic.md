@@ -27,7 +27,8 @@ a while. I used it for running quick commands in the background like
 `git pull` or `git commit -p` or install dependencies or running
 database migrations or opening the manual for a command. You can even
 add the `-d` flag to not focus the new window. Or the `-n` flag to name
-the window. This is helpful for windows that run a persistent command. 
+the window. This is helpful for windows that run a persistent command
+(e.g. `-dn watch yarn watch`). 
 
 There are two big benefits to a command first approach to tmux windows:
 
