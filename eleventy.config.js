@@ -18,7 +18,12 @@ require('@babel/register')({
 module.exports = config => {
   config.addPlugin(eleventyNavigationPlugin);
 
-  config.setLibrary('md', markdownIt().use(require('markdown-it-mark')));
+  config.setLibrary(
+    'md',
+    markdownIt({
+      html: true,
+    }).use(require('markdown-it-mark')),
+  );
 
   config.addTemplateFormats('jsx');
   config.addExtension('jsx', {
