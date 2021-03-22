@@ -14,7 +14,7 @@
     "postcss:start": "postcss assets/main.css --output build/main.css --watch"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^0.11.1",
+    "@11ty/eleventy": "^0.12.1",
     "@11ty/eleventy-navigation": "^0.1.6",
     "@adobe/leonardo-contrast-colors": "^1.0.0-alpha.8",
     "@babel/core": "^7.12.13",
