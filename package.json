@@ -20,7 +20,7 @@
     "@babel/core": "^7.12.13",
     "@babel/preset-env": "^7.12.13",
     "@babel/preset-react": "^7.12.13",
-    "@babel/register": "^7.12.13",
+    "@babel/register": "^7.13.14",
     "@changesets/cli": "^2.14.1",
     "@knowler/typescale": "^1.0.0",
     "cross-env": "^7.0.3",
