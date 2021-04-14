@@ -77,3 +77,7 @@ pre {
 pre > code {
   font-family: 'JetBrains Mono', monospace;
 }
+
+img {
+  max-width: 64ch;
+}

@@ -99,3 +99,7 @@ dots commit -m "Add Neovim config"
 
 dots push
 ```
+
+## The proof is in the pudding
+
+<img src="/images/dotfiles-repo-historical-commit-chart.png" alt="A chart from GitHub showing increased contribution activity for my dotfiles repository after switching to the barefile method.">
