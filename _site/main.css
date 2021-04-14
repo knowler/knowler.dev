@@ -67,3 +67,13 @@ a.site-title:hover {
   background-color: #eee;
   color: #000;
 }
+
+pre {
+  max-width: 64ch;
+  padding: 0.75rem 1rem;
+  background-color: #222;
+}
+
+pre > code {
+  font-family: 'JetBrains Mono', monospace;
+}
