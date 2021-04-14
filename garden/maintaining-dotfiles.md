@@ -1,5 +1,7 @@
 ---
 title: Maintaining dotfiles
+git-dir-path: "$HOME/.dotfiles"
+work-tree-path: "$HOME"
 ---
 
 # {{title}}
@@ -58,19 +60,19 @@ in your status config for the repository.
 ### Clone the repo
 
 ```shell
-git clone <repo> <git-dir-path> --bare
+git clone <repo> {{git-dir-path}} --bare
 ```
 
 ### Do not show untracked files in git status for the repo
 
 ```shell
-git --git-dir=<git-dir-path> config status.showUntrackedFiles no
+git --git-dir={{git-dir-path}} config status.showUntrackedFiles no
 ```
 
-### Checkout the worktree in your `$HOME`
+### Checkout the worktree in your `{{work-tree-path}}`
 
 ```shell
-git --git-dir=<git-dir-path> --work-tree=$HOME checkout
+git --git-dir={{git-dir-path}} --work-tree={{work-tree-path}} checkout
 ```
 
 ### Manage dotfiles using Git
@@ -79,13 +81,13 @@ You will need to prefix your Git commands with the path to the Git
 directory and the worktree path:
 
 ```shell
-git --git-dir=<git-dir-path> --work-tree=$HOME <command>
+git --git-dir={{git-dir-path}} --work-tree={{work-tree-path}} <command>
 ```
 
 It is best to create an alias for this.
 
 ```shell
-alias dots="git --git-dir=<git-dir-path> --work-tree=$HOME"
+alias dots="git --git-dir={{git-dir-path}} --work-tree={{work-tree-path}}"
 ```
 
 Now, you can use this alias however you would use Git.
