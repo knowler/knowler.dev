@@ -5,9 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ title }}</title>
     <meta name="description" content="{{ description }}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap">
     <link rel="stylesheet" href="/main.css">
   </head>
   <body>
-    {{ content | safe }}
+    <nav>
+      <a href="/" class="site-title">Nathan Knowler</a>
+    </nav>
+    <main>
+      {{ content | safe }}
+    </main>
   </body>
 </html>
