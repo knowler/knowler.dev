@@ -82,6 +82,7 @@ pre {
 
 pre > code {
   font-family: 'JetBrains Mono', monospace;
+  color: hsl(156, 100%, 70%);
 }
 
 img {
