@@ -1,5 +1,5 @@
 :root {
-  --accent: #0f9;
+  --accent: hsl(156, 100%, 50%);
 }
 
 *, ::before, ::after {
@@ -71,7 +71,12 @@ a.site-title:hover {
 pre {
   max-width: 64ch;
   padding: 0.75rem 1rem;
-  background-color: #222;
+  background-image: linear-gradient(
+    45deg, 
+    hsl(156, 100%, 3%),
+    hsl(156, 100%, 5%)
+  );
+  border: 0.1rem solid hsl(156, 100%, 12%);
   overflow-x: auto;
 }
 
