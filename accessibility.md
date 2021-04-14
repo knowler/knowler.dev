@@ -1,5 +1,4 @@
 ---
-layout: base.njk
 title: Accessibility Statement
 description: My commitment to make this website as transparently, accessible as possible.
 ---
