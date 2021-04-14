@@ -72,6 +72,7 @@ pre {
   max-width: 64ch;
   padding: 0.75rem 1rem;
   background-color: #222;
+  overflow-x: auto;
 }
 
 pre > code {
@@ -80,4 +81,5 @@ pre > code {
 
 img {
   max-width: 64ch;
+  width: 100%;
 }
