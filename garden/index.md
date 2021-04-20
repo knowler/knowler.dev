@@ -9,3 +9,4 @@ find older pieces in the [archive](archive/).
 
 - [Maintaining dotfiles](/garden/maintaining-dotfiles/)
 - [tmux magic](/garden/tmux-magic/)
+- [Social Media Exile](/garden/social-media-exile/)
