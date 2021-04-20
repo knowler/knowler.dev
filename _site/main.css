@@ -39,6 +39,7 @@ h1, h2, h3, h4 {
 
 main {
   margin-top: 2rem;
+  max-width: 64ch;
 }
 
 main > * {
@@ -48,10 +49,6 @@ main > * {
 
 main > * + * {
   margin-top: 1rem;
-}
-
-p {
-  max-width: 64ch;
 }
 
 a.site-title {
@@ -69,7 +66,6 @@ a.site-title:hover {
 }
 
 pre {
-  max-width: 64ch;
   padding: 0.75rem 1rem;
   background-image: linear-gradient(
     45deg, 
@@ -86,6 +82,5 @@ pre > code {
 }
 
 img {
-  max-width: 64ch;
   width: 100%;
 }
