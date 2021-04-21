@@ -1,4 +1,4 @@
 .netlify
 node_modules
 /_site/**/*.html
-!/_site/admin
+!/_site/admin/index.html
