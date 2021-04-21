@@ -1,6 +1,8 @@
 :root {
   --hs: 156, 100%;
   --accent: hsl(var(--hs), 50%);
+
+  --pad: clamp(1rem, 4vw, 2rem);
 }
 
 *, ::before, ::after {
@@ -47,9 +49,9 @@ header {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  padding-top: 2rem;
-  padding-left: 2rem;
-  paddding-right: 2rem;
+  padding-top: var(--pad);
+  padding-left: var(--pad);
+  paddding-right: var(--pad);
 }
 
 .site-title {
@@ -73,14 +75,14 @@ nav[aria-label=primary] li + li {
 }
 
 main {
-  padding: 2rem;
+  padding: var(--pad);
   max-width: 64ch;
   flex-grow: 1;
 }
 
 footer {
   background-color: hsl(var(--hs), 4%);
-  padding: 2rem;
+  padding: var(--pad);
   display: flex;
   justify-content: space-between;
   font-size: 0.9rem;
