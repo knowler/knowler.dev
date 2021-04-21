@@ -5,9 +5,8 @@ admin_path: _site/admin
 webhook_url: 
 sections:
 - type: document
-  path: _data/reading.yml
+  path: reading.njk
   label: Reading
-  match: "**/*"
 upload_dir: uploads
 public_path: "/uploads"
 front_matter_path: ''
