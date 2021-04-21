@@ -1,0 +1,16 @@
+---
+title: Currently Reading
+books:
+  - title: Till We Have Faces
+    author: C. S. Lewis
+  - title: Digital Minimalism
+    author: Cal Newport
+---
+
+<h1>{{title}}</h1>
+<p>I am currently reading the following books:</p>
+<ul>
+{% for book in books %}
+  <li><em>{{book.title}}</em> by {{book.author}}</li>
+{% endfor %}
+</ul>
