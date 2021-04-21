@@ -16,8 +16,7 @@ What motivated me to do all this? I decided that I cared more about being focuse
 
 ## Seven months later
 
-Seven months later, I figure it’s time to reflect. Some quick
-observations:
+Seven months later, I figure it’s time to reflect. Some quick observations:
 
 * I don’t miss my Facebook news feed.
 * I don’t miss my Twitter timeline.
