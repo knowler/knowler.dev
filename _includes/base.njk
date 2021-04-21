@@ -11,11 +11,45 @@
     <link rel="stylesheet" href="/main.css">
   </head>
   <body>
-    <nav>
+    <a href="#content">Skip to content</a>
+    <header>
+      {%- from 'maybe-current-link.njk' import maybeCurrentLink with context -%}
       <a href="/" class="site-title">Nathan Knowler</a>
-    </nav>
-    <main>
+      <nav aria-label="primary">
+        <ul>
+          <li>
+            {{ maybeCurrentLink('/garden/', 'Garden') }}
+          </li>
+          <li>
+            {{ maybeCurrentLink('/uses/', 'Uses') }}
+          </li>
+          <li>
+            {{ maybeCurrentLink('/reading/', 'Reading') }}
+          </li>
+          <li>
+            {{ maybeCurrentLink('/cv/', 'CV') }}
+          </li>
+          <li>
+            <a href="https://github.com/knowler" rel="external">GitHub</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main id="content" tabindex="-1">
       {{ content | safe }}
     </main>
+    <footer>
+      <p>&copy; 2015 to 2021 Nathan Knowler. All rights reserved.</p>
+      <nav aria-label="secondary">
+        <ul>
+          <li>
+            <a href="/accessibility/">Accessibility</a>
+          </li>
+          <li>
+            <a href="/privacy/">Privacy</a>
+          </li>
+        </ul>
+      </nav>
+    </footer>
   </body>
 </html>

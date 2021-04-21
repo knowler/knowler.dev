@@ -3,17 +3,23 @@
 }
 
 *, ::before, ::after {
-  box-sizing: inherit;
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
 }
 
 body {
   margin: 0;
-  padding: 2rem;
-  background-color: #000;
+  background-color: hsl(156, 100%, 3%);
   color: #eee;
   font-family: 'Poppins', sans-serif;
   font-size: 18px;
   font-weight: 300;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 a {
@@ -37,9 +43,66 @@ h1, h2, h3, h4 {
   font-weight: 500;
 }
 
+header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding-top: 2rem;
+  padding-left: 2rem;
+  paddding-right: 2rem;
+}
+
+.site-title {
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+}
+
+nav[aria-label=primary] {
+}
+
+nav[aria-label=primary] ul {
+  display: flex;
+  list-style: none;
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+nav[aria-label=primary] li + li {
+  margin-left: 1rem;
+}
+
 main {
-  margin-top: 2rem;
+  padding: 2rem;
   max-width: 64ch;
+  flex-grow: 1;
+}
+
+footer {
+  background-color: hsl(156, 100%, 4%);
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+}
+
+footer * {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+footer * + * {
+  margin-left: 1rem;
+}
+
+nav[aria-label=secondary] ul {
+  display: flex;
+  list-style: none;
+  padding-left: 0;
+}
+
+nav ul li {
+  margin-left: 0.5rem;
 }
 
 main > * {
@@ -83,4 +146,21 @@ pre > code {
 
 img {
   width: 100%;
+}
+
+a[href="#content"] {
+  align-self: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: hsl(156, 100%, 40%);
+  text-decoration-color: hsl(156, 100%, 20%);
+  transition-duration: 0.2s;
+  transition-properties: color, text-decoration-color;
+}
+
+a[href="#content"]:hover {
+  color: hsl(156, 100%, 50%);
+  background-color: transparent;
+  text-decoration-color: hsl(156, 100%, 40%);
+  text-decoration: underline;
 }
