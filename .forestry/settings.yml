@@ -8,8 +8,10 @@ sections:
   path: garden
   label: Garden
   create: all
-  match: "**/*.md"
-  new_doc_ext: md
+  match: "**/*"
+  new_doc_ext: ".md"
+  templates:
+  - base
 - type: document
   path: _data/reading.yml
   label: Reading
