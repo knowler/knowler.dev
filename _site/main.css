@@ -49,6 +49,7 @@ header {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  flex-shrink: 0;
   padding-top: var(--pad);
   padding-left: var(--pad);
   paddding-right: var(--pad);
@@ -78,11 +79,13 @@ main {
   padding: var(--pad);
   max-width: 64ch;
   flex-grow: 1;
+  flex-shrink: 0;
 }
 
 footer {
   background-color: hsl(var(--hs), 4%);
   padding: var(--pad);
+  flex-shrink: 0;
   display: flex;
   justify-content: space-between;
   font-size: 0.9rem;
@@ -151,6 +154,7 @@ img {
 }
 
 a[href="#content"] {
+  flex-shrink: 0;
   align-self: center;
   margin-top: 1rem;
   font-size: 0.9rem;
