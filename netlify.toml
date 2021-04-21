@@ -1,4 +1,4 @@
 [build]
 command = "eleventy"
 publish = "_site"
-ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF .forestry/"
+ignore = "git diff --quiet -1 --pretty=%B | grep 'Forestry configuration'"
