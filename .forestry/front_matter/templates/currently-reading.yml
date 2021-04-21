@@ -1,0 +1,14 @@
+---
+label: Currently Reading
+hide_body: true
+fields:
+- type: field_group_list
+  name: books
+  label: books
+  fields:
+  - type: text
+    name: title
+    label: title
+  - type: text
+    name: author
+    label: author
