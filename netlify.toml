@@ -1,4 +1,4 @@
 [build]
 command = "eleventy"
 publish = "_site"
-ignore = "git diff HEAD^ HEAD .forestry/"
+ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF .forestry/"
