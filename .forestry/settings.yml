@@ -9,7 +9,7 @@ sections:
   label: Pages
   create: all
   match: "*"
-  exclude: package.json,netlify.toml
+  exclude: "{package.json,netlify.toml}"
   templates:
   - base
 - type: directory
