@@ -5,7 +5,7 @@ admin_path: _site/admin
 webhook_url: 
 sections:
 - type: directory
-  path: garden
+  path: "./garden"
   label: Garden
   create: all
   match: "**/*"
