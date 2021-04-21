@@ -5,11 +5,18 @@ admin_path: _site/admin
 webhook_url: 
 sections:
 - type: directory
+  path: "."
+  label: Pages
+  create: all
+  match: "*"
+  templates:
+  - base
+- type: directory
   path: garden
   label: Garden
   create: all
   match: "**/*"
-  new_doc_ext: ".md"
+  new_doc_ext: md
   templates:
   - base
 - type: document
