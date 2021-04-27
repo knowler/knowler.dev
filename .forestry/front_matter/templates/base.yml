@@ -13,3 +13,5 @@ fields:
   config:
     required: false
   label: Description
+pages:
+- garden/the-solution-to-overthinking.md
