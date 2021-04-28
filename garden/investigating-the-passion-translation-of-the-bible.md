@@ -5,7 +5,7 @@ description: I’ve heard a lot of things and I’d like to investigate it mysel
 ---
 # {{title}}
 
-Over the last few years, I’ve heard a fair bit of buzz about _the Passion Translation_ of the Bible. There have been varying opinions about _TPT_. I have friends who love it and I have other friends who speak of it as if it should be burned. I figure I ought to investigate it myself. I’ll present my findings here. For now this is mostly point form and there are some questions I have throughout (some could seem obvious — I’m just being methodical).
+Over the last few years, I’ve heard a fair bit of buzz about _the Passion Translation_ of the Bible. There have been varying opinions about _TPT_. I have friends who love it and I have other friends who speak of it as if it should be burned. I figure I ought to investigate it myself. I’ll present my findings here. For now this is mostly point form and there are some questions I have throughout (some could seem obvious — I’m just being meticulous).
 
 * _The Passion Translation_ is a new English translation of the Bible.
   * Is it a translation or a paraphrase? The title seems to indicate the former.
