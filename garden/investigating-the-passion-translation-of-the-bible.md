@@ -3,7 +3,7 @@ title: Investigating The Passion Translation of the Bible
 description: I’ve heard a lot of things and I’d like to investigate it myself.
 
 ---
-# {{title}}
+# Investigating _the Passion Translation_ of the Bible
 
 Over the last few years, I’ve heard a fair bit of buzz about _the Passion Translation_ of the Bible. There have been varying opinions about _TPT_. I have friends who love it and I have other friends who speak of it as if it should be burned. I happen to own a copy of the New Testament (which includes the Psalms, Proverbs, and Song of Songs) and the Book of Isaiah. I figure I ought to investigate it myself. I’ll present my findings here. For now this is mostly point form and there are some questions I have throughout (some could seem obvious — I’m just being meticulous).
 
