@@ -11,3 +11,4 @@ find older pieces in the [archive](archive/).
 * [tmux magic](/garden/tmux-magic/)
 * [Social Media Exile](/garden/social-media-exile/)
 * [The solution to overthinking](/garden/the-solution-to-overthinking/)
+* [Maintaining a Brewfile in your dotfiles](/garden/maintaining-a-brewfile-in-your-dotfiles/)
