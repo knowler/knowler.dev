@@ -60,9 +60,6 @@ header {
   margin-bottom: 1rem;
 }
 
-nav[aria-label=primary] {
-}
-
 nav[aria-label=primary] ul {
   display: flex;
   list-style: none;
@@ -117,6 +114,14 @@ main > * {
 
 main > * + * {
   margin-top: 1rem;
+}
+
+main li {
+  margin-top: 0.75rem;
+}
+
+main p {
+  line-height: 1.7;
 }
 
 a.site-title {
