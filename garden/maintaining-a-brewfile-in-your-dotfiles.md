@@ -32,6 +32,6 @@ case "$1" in
 esac
 ```
 
-This is sort of a proxy on top of the `brew` command which just dumps the file after installing, uninstalling, or upgrading dependencies. I store this as `~/.local/bin/brew` which is a part of my `$PATH`.
+This is sort of a proxy on top of the `brew` command which just dumps the file after installing, uninstalling, or upgrading dependencies. I store this as [`~/.local/bin/brew`](https://github.com/knowler/dotfiles/blob/3888ed9950eb9d557b7a80b56ae680fa3b6123f9/.local/bin/brew) which is a part of my `$PATH`.
 
 On another note, I’d advise not spending any time worrying about the lock file that the bundle feature provides. It seems to set the installed version to `null` on subsequent dumps which doesn’t make sense. Maybe I’m not understanding it. I’ll have to check it out more in the future.
