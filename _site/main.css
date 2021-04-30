@@ -16,7 +16,7 @@ html, body {
 body {
   margin: 0;
   background-color: hsl(var(--hs), 3%);
-  color: #eee;
+  color: #ddd;
   font-family: 'Poppins', sans-serif;
   font-size: 18px;
   font-weight: 300;
