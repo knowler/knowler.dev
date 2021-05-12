@@ -1,7 +1,7 @@
 ---
 title: Nathan Knowler – Curriculum Vitae
----
 
+---
 # Curriculum Vitae
 
 This is a work in progress and should by no means seen as complete.
@@ -16,7 +16,7 @@ College.
 
 ## Work
 
-### Impress.org
+### Liquid Web (Impress.org before acquisition)
 
 I have worked as a web developer at Impress.org since October 2019.
 
@@ -30,9 +30,8 @@ From January to December 2018, I worked for True Market, a full-serve
 marketing agency in Calgary. I was a full stack developer and the
 primary developer on the team.
 
-
-- I was responsible for researching and implementing a new web stack.
-- As the development team grew, I created developer tools for
+* I was responsible for researching and implementing a new web stack.
+* As the development team grew, I created developer tools for
   scaffolding projects.
-- I developed WordPress plugins to address common needs across client
+* I developed WordPress plugins to address common needs across client
   sites.
