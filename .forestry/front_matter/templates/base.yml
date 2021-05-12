@@ -14,7 +14,6 @@ fields:
     required: false
   label: Description
 pages:
-- garden/humility-and-boldness.md
 - garden/investigating-the-passion-translation-of-the-bible.md
 - garden/maintaining-a-brewfile-in-your-dotfiles.md
 - garden/reflection-on-until-unity-by-francis-chan.md
