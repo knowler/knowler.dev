@@ -52,7 +52,7 @@ header {
   flex-shrink: 0;
   padding-top: var(--pad);
   padding-left: var(--pad);
-  paddding-right: var(--pad);
+  padding-right: var(--pad);
 }
 
 .site-title {
