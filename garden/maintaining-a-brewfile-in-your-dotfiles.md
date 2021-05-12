@@ -1,6 +1,6 @@
 ---
 title: Maintaining a Brewfile in your dotfiles
-description: ''
+description: How I record the apps and binaries I install on macOS synced in my dotfiles.
 
 ---
 # {{title}}
