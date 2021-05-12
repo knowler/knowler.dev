@@ -166,7 +166,7 @@ a[href="#content"] {
   color: hsl(var(--hs), 40%);
   text-decoration-color: hsl(var(--hs), 20%);
   transition-duration: 0.2s;
-  transition-properties: color, text-decoration-color;
+  transition-property: color, text-decoration-color;
 }
 
 a[href="#content"]:hover {
