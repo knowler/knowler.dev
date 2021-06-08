@@ -16,7 +16,7 @@ abandoned splits and windows called `zsh`.
 
 It began with this binding:
 
-```tmux 
+```
 bind -n C-Space command-prompt -p ":new-window" "new-window %%" 
 ```
 
@@ -41,7 +41,7 @@ There are two big benefits to a command first approach to tmux windows:
 I realized after some time that `split-window` is just as desirable to
 use. I bound these to alt + the arrow keys:
 
-```tmux 
+```
 bind -n M-Right command-prompt -p ":split-window -h" "split-window -h %%" 
 bind -n M-Left command-prompt -p ":split-window -bh" "split-window -bh %%" 
 bind -n M-Up command-prompt -p ":split-window -b" "split-window -b %%"
