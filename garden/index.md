@@ -11,5 +11,5 @@ This is my digital garden, you can find stuff I’m currently writing here or pi
 * [Social Media Exile](/garden/social-media-exile/)
 * [The solution to overthinking](/garden/the-solution-to-overthinking/)
 * [Maintaining a Brewfile in your dotfiles](/garden/maintaining-a-brewfile-in-your-dotfiles/)
-* [Investigating _the Passion Translation_ of the Bible](/garden/investigating-the-passion-translation-of-the-bible/)
 * [Humility, boldness, and teaching](/garden/humility-boldness-and-teaching)
+* [Research tools](/garden/research-tools/)
