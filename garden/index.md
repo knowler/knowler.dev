@@ -13,3 +13,4 @@ This is my digital garden, you can find stuff I’m currently writing here or pi
 * [Maintaining a Brewfile in your dotfiles](/garden/maintaining-a-brewfile-in-your-dotfiles/)
 * [Humility, boldness, and teaching](/garden/humility-boldness-and-teaching)
 * [Research tools](/garden/research-tools/)
+* [Discourse and tongues](/garden/discourse-and-tongues/)
