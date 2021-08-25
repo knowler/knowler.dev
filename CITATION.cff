@@ -1,0 +1,15 @@
+# vim: filetype=yaml
+cff_version: "1.1.0"
+authors:
+- family-names: Knowler
+  given-names: Nathan
+repository-code: "https://github.com/knowler/knowlerkno.ws"
+title: Knowler Knows
+preferred-citation:
+  type: website
+  year: 2021
+  title: Knowler Knows
+  authors:
+    - family-names: Knowler
+      give-names: Nathan
+
