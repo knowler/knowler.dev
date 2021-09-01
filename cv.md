@@ -50,6 +50,14 @@ primary developer on the team.
   scaffolding projects.
 * I developed WordPress plugins to address common needs across client
   sites.
+ 
+### Accent Guitar Studio
+
+I started this job in high school (maybe 2010). I was the webmaster of the
+website at the time and I also built websites for different bands the studio
+managed. Along with the web development work, I helped as a sound technician and
+as a music transcriptionist. I left this job in 2013 when I left to Saskatchewan
+for college.
 
 ## Education
 
