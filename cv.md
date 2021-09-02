@@ -4,12 +4,17 @@ title: Nathan Knowler – Curriculum Vitae
 ---
 # Curriculum Vitae
 
-This is a work in progress and should by no means seen as complete.
+_This is a work in progress and should by no means seen as complete._
 
-_I am a web developer focused creating beautiful, accessible user
-interfaces._
+- [About](#about)
+- [Work](#work)
+- [Education](#education)
 
-## Skills
+<h2 id="about">About</h2>
+
+I am a web developer focused creating beautiful, accessible user interfaces.
+
+### Skills
 
 _Computerz_. The web is the primary medium I work with, however, I also have a
 depth of knowledge working with computers in general.
@@ -22,7 +27,7 @@ depth of knowledge working with computers in general.
   - I’ve been called a “Git mystic.”
   - I’m usually the person called in to help clean up messes.
 
-## Work
+<h2 id="work">Work</h2>
 
 ### Liquid Web
 
@@ -37,19 +42,22 @@ was acquired by Liquid Web May 2021, I joined with the rest of the team.
 
 ### Freelance
 
-I freelanced largely from 2013 until my current position.
+I freelanced largely from 2013 until my current position. I handled a variety of
+projects: simple landing pages and marketing websites, product demos, MVPs, and
+full stack applications, consulting, and technical writing.
+
+_TODO: explain more._
 
 ### True Market
 
-From January to December 2018, I worked for True Market, a full-serve
-marketing agency in Calgary. I was a full stack developer and the
-primary developer on the team.
+From January to December 2018, I worked for True Market, a full-serve marketing
+agency in Calgary. I was a full stack developer and the primary developer on the
+team.
 
 * I was responsible for researching and implementing a new web stack.
-* As the development team grew, I created developer tools for
-  scaffolding projects.
-* I developed WordPress plugins to address common needs across client
-  sites.
+* As the development team grew, I created developer tools for scaffolding
+  projects.
+* I developed WordPress plugins to address common needs across client sites.
  
 ### Accent Guitar Studio
 
@@ -59,7 +67,6 @@ managed. Along with the web development work, I helped as a sound technician and
 as a music transcriptionist. I left this job in 2013 when I left to Saskatchewan
 for college.
 
-## Education
+<h2 id="education">Education</h2>
 
-In April 2021, I earned a Bachelor of Biblical Studies from Eston
-College.
+In April 2021, I earned a Bachelor of Biblical Studies from Eston College.
