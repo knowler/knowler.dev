@@ -86,12 +86,19 @@ header {
   margin-bottom: 1rem;
 }
 
+nav[aria-label=primary] {
+  overflow-x: hidden;
+}
+
 nav[aria-label=primary] ul {
   display: flex;
   list-style: none;
-  padding-left: 0;
+  padding: 0.5rem;
   margin-top: 0;
   margin-bottom: 1rem;
+  margin-left: -1rem;
+  margin-right: -1rem;
+  overflow-x: auto;
 }
 
 nav[aria-label=primary] li + li {
