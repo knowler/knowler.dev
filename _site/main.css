@@ -192,7 +192,7 @@ pre {
 
 pre:after {
   content: '';
-  flex-basis: 1rem;
+  flex-basis: var(--prism-block-padding-x);
   flex-grow: 0;
   flex-shrink: 0;
 }
