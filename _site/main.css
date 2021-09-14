@@ -96,8 +96,6 @@ nav[aria-label=primary] ul {
   padding: 0.5rem;
   margin-top: 0;
   margin-bottom: 1rem;
-  margin-left: -1rem;
-  margin-right: -1rem;
   overflow-x: auto;
 }
 
