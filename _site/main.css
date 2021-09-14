@@ -179,6 +179,7 @@ a.site-title:hover {
 }
 
 pre {
+  display: flex;
   padding: 0.75rem 1rem;
   background-image: linear-gradient(
     45deg, 
@@ -187,6 +188,13 @@ pre {
   ) !important;
   border: 0.1rem solid hsl(var(--hs), 12%);
   overflow-x: auto;
+}
+
+pre:after {
+  content: '';
+  flex-basis: 1rem;
+  flex-grow: 0;
+  flex-shrink: 0;
 }
 
 pre > code {
