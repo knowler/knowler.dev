@@ -101,6 +101,13 @@ nav[aria-label=primary] ul {
   overflow-x: auto;
 }
 
+nav[aria-label=primary] ul:after {
+  content: '';
+  flex-basis: 0.5rem;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
 nav[aria-label=primary] li + li {
   margin-left: 1rem;
 }
