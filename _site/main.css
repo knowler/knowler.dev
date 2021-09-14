@@ -192,6 +192,7 @@ pre {
 
 pre:after {
   content: '';
+  font-size: var(--prism-block-font-size); /* Since the flex-basis is an em value */
   flex-basis: var(--prism-block-padding-x);
   flex-grow: 0;
   flex-shrink: 0;
