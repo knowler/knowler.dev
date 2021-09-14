@@ -87,6 +87,7 @@ header {
 }
 
 nav[aria-label=primary] {
+  flex-grow: 1;
   overflow-x: hidden;
   margin-left: -1rem;
   margin-right: -1rem;
