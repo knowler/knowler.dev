@@ -14,4 +14,4 @@ This is my digital garden, you can find stuff I’m currently writing here or pi
 * [Humility, boldness, and teaching](/garden/humility-boldness-and-teaching)
 * [Research tools](/garden/research-tools/)
 * [Discourse and tongues](/garden/discourse-and-tongues/)
-* [VoiceOver ignores meter elements in Safari with -webkit-appearance: none](/garden/safari-meter-element-styling-and-accessibility/)
+* [`<meter>` and `<progress>` in Safari](/garden/meter-and-progress-in-safari/)
