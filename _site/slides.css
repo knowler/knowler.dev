@@ -1,5 +1,6 @@
 [data-slides] {
   display: grid;
+  counter-reset: slides;
 }
 
 [data-slides=""],
@@ -34,4 +35,5 @@
 
 [data-slides] > * {
   scroll-snap-align: start;
+  counter-increment: slides;
 }
