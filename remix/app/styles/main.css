@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  font-stretch: 125%;
+  font-weight: 550;
+}
+
+html, body, main {
+  block-size: 100%;
+}
+
+main {
+  display: grid;
+  place-items: center;
+}
