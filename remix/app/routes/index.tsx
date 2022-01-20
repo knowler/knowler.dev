@@ -1,18 +1,9 @@
-import styles from "~/styles/main.css";
+import { Link } from "remix";
 
 export default function Index() {
   return (
-    <main>
+    <article>
       <h1>Nathan Knowler</h1>
-    </main>
+    </article>
   );
-}
-
-export function links() {
-  return [
-    {
-      rel: "stylesheet",
-      href: styles,
-    },
-  ];
 }

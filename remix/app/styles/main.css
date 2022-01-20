@@ -1,15 +1,23 @@
+:root {
+  --font-fam: system-ui, sans-serif;
+}
+
+html {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: system-ui, sans-serif;
+  font-family: var(--font-fam);
+  font-stretch: 110%;
+  font-weight: 375;
+}
+
+*, ::before, ::after {
+  box-sizing: inherit;
+}
+
+h1, h2, h3, h4, h5, h6 {
   font-stretch: 125%;
   font-weight: 550;
-}
-
-html, body, main {
-  block-size: 100%;
-}
-
-main {
-  display: grid;
-  place-items: center;
 }
