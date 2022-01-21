@@ -30,16 +30,13 @@ export default function App() {
                 <NavLink to="/garden">Garden</NavLink>
               </li>
               <li>
-                <NavLink to="/patterns">Patterns</NavLink>
-              </li>
-              <li>
                 <NavLink to="/uses">Uses</NavLink>
               </li>
               <li>
-                <NavLink to="/reading">Reading</NavLink>
+                <NavLink to="/cv">CV</NavLink>
               </li>
               <li>
-                <NavLink to="/cv">CV</NavLink>
+                <a href="https://github.com/knowler">GitHub</a>
               </li>
             </ul>
           </nav>
