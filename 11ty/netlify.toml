@@ -1,4 +1,0 @@
-[build]
-command = "eleventy"
-publish = "_site"
-ignore = "git diff --quiet -1 --pretty=%B | grep 'Forestry configuration'"

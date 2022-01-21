@@ -1,4 +1,6 @@
-.netlify
 node_modules
-/_site/**/*.html
-!/_site/admin/index.html
+
+/.cache
+/build
+/public/build
+.env
