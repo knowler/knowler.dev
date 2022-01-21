@@ -1,9 +1,10 @@
 ---
-title: Maintaining a Brewfile in your dotfiles
-description: How I record the apps and binaries I install on macOS synced in my dotfiles.
-
+meta:
+  title: Maintaining a Brewfile in your dotfiles
+  description: How I record the apps and binaries I install on macOS synced in my dotfiles.
 ---
-# {{title}}
+
+# {attributes.meta.title}
 
 The `brew bundle` command lets you work with a `Brewfile`. Without any additional subcommands (`install` is the implicit subcommand) it will attempt to install formulae, casks, Mac App Store apps, and whalebrew dependencies from a `Brewfile` in the current directory. This is useful in itself, especially if you need to install a system from scratch, however, if we dig deeper we will find some tools to help us maintain a global `Brewfile` for our macOS system.
 

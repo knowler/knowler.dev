@@ -1,0 +1,234 @@
+:root {
+  --hs: 156, 100%;
+  --accent: hsl(var(--hs), 50%);
+
+  --pad: clamp(1rem, 4vw, 2rem);
+
+  --prism-scheme: dark;
+  --prism-foreground: hsl(156, 100%, 70%);
+  --prism-background: hsl(156, 100%, 3%);
+  --prism-comment: hsl(170, 100%, 30%);
+  --prism-string: #d48372;
+  --prism-literal: hsl(170, 100%, 70%);
+  --prism-keyword: hsl(170, 100%, 40%);
+  --prism-function: hsl(185, 100%, 70%);
+  --prism-deleted: #a14f55;
+  --prism-class: hsl(185, 100%, 70%);
+  --prism-builtin: hsl(185, 100%, 70%);
+  --prism-property: hsl(240, 100%, 80%);
+  --prism-namespace: #db889a;
+  --prism-punctuation: #858585;
+  --prism-decorator: #bd8f8f;
+  --prism-number: #6394bf;
+  --prism-boolean: hsl(170, 100%, 60%);
+  --prism-variable: hsl(20, 100%, 70%);
+  --prism-regex: #ab5e3f;
+  --prism-json-property: #6b8b9e;
+  --prism-line-number: #888888;
+  --prism-line-number-gutter: #eeeeee;
+  --prism-line-highlight-background: #444444;
+  --prism-selection-background: #444444;
+  --prism-font-family: JetBrains Mono, monospace;
+}
+
+*, ::before, ::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: hsl(var(--hs), 3%);
+  color: #ddd;
+  font-family: 'Atkinson Hyperlegible', sans-serif;
+  font-size: 18px;
+  font-weight: 300;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: var(--accent);
+  text-decoration-color: white;
+  text-underline-offset: 0.35ex;
+}
+
+a:focus {
+  outline: 0.1em dashed var(--accent);
+  outline-offset: 0.25em;
+}
+
+a:hover {
+  background-color: var(--accent);
+  color: #000;
+  text-decoration: none;
+}
+
+header, h1, h2, h3, h4 {
+  font-family: 'Poppins', sans-serif;
+}
+
+h1, h2, h3, h4 {
+  font-weight: 500;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  padding-top: var(--pad);
+  padding-left: var(--pad);
+  padding-right: var(--pad);
+}
+
+.site-title {
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+}
+
+nav[aria-label=primary] {
+  flex-grow: 1;
+  overflow-x: hidden;
+  margin-left: -1rem;
+  margin-right: -1rem;
+}
+
+nav[aria-label=primary] ul {
+  display: flex;
+  list-style: none;
+  padding: 0.5rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  overflow-x: auto;
+}
+
+nav[aria-label=primary] ul:after {
+  content: '';
+  flex-basis: 0.5rem;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+nav[aria-label=primary] li + li {
+  margin-left: 1rem;
+}
+
+main {
+  padding: var(--pad);
+  max-width: 64ch;
+  flex-grow: 1;
+  flex-shrink: 0;
+}
+
+footer {
+  background-color: hsl(var(--hs), 4%);
+  padding: var(--pad);
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+}
+
+footer * {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+footer * + * {
+  margin-left: 1rem;
+}
+
+nav[aria-label=secondary] ul {
+  display: flex;
+  list-style: none;
+  padding-left: 0;
+}
+
+nav ul li {
+  margin-left: 0.5rem;
+}
+
+main > * {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+main > * + * {
+  margin-top: 1rem;
+}
+
+main li {
+  margin-top: 0.75rem;
+}
+
+main p {
+  line-height: 1.7;
+}
+
+a.site-title {
+  padding: 0.25rem 0.5rem;
+  border: 0.1rem solid #eee;
+  color: inherit;
+  text-decoration: none;
+  font-size: 1.25rem;
+}
+
+a.site-title:focus,
+a.site-title:hover {
+  background-color: #eee;
+  color: #000;
+}
+
+pre {
+  display: flex;
+  padding-top: 0.75rem;
+  padding-left: 1rem;
+  padding-right: 0 !important; /* Override Prism */
+  padding-bottom: 0.75rem;
+  background-image: linear-gradient(
+    45deg, 
+    hsl(var(--hs), 3%),
+    hsl(var(--hs), 5%)
+  ) !important;
+  border: 0.1rem solid hsl(var(--hs), 12%);
+  overflow-x: auto;
+}
+
+pre:after {
+  content: '';
+  font-size: var(--prism-block-font-size); /* Since the flex-basis is an em value */
+  flex-basis: var(--prism-block-padding-x);
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+pre > code {
+  font-family: 'JetBrains Mono', monospace;
+  color: hsl(var(--hs), 70%);
+}
+
+img {
+  width: 100%;
+}
+
+a[href="#content"] {
+  flex-shrink: 0;
+  align-self: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: hsl(var(--hs), 40%);
+  text-decoration-color: hsl(var(--hs), 20%);
+  transition-duration: 0.2s;
+  transition-property: color, text-decoration-color;
+}
+
+a[href="#content"]:hover {
+  color: hsl(var(--hs), 50%);
+  background-color: transparent;
+  text-decoration-color: hsl(var(--hs), 40%);
+  text-decoration: underline;
+}

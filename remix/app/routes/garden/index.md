@@ -1,10 +1,14 @@
 ---
-title: Digital Garden
-
+meta:
+  title: Digital Garden
 ---
+
 # Digital Garden
 
-This is my digital garden, you can find stuff I’m currently writing here or pieces that I’ve finished or continue to maintain. It’s highly likely that there will be spelling mistakes and errors herein. You can find older pieces in the [archive](archive/).
+This is my digital garden, you can find stuff I’m currently writing here or
+pieces that I’ve finished or continue to maintain. It’s highly likely that there
+will be spelling mistakes and errors herein. You can find older pieces in the
+[archive](/garden/archive).
 
 * [Maintaining dotfiles](/garden/maintaining-dotfiles/)
 * [tmux magic](/garden/tmux-magic/)

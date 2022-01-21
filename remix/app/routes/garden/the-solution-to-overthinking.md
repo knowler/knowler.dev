@@ -1,8 +1,8 @@
 ---
-title: The solution to overthinking
-description: ''
-
+meta:
+  title: The solution to overthinking
 ---
-# {{title}}
+
+# {attributes.meta.title}
 
 The solution to overthinking isn’t thinking less. It’s thinking more. Thinking more broadly.

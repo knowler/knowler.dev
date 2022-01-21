@@ -1,5 +1,6 @@
 ---
-title: Digital garden archive
+meta:
+  title: Digital garden archive
 ---
 
 # Archive

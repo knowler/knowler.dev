@@ -7,17 +7,11 @@ import {
   Scripts,
   ScrollRestoration,
 } from "remix";
-import type { MetaFunction } from "remix";
-
-import styles from "~/styles/main.css";
-
-export const meta: MetaFunction = () => {
-  return { title: "Nathan Knowler" };
-};
+import type { MetaFunction, LinksFunction } from "remix";
 
 export default function App() {
   return (
-    <html lang="en-ca">
+    <html dir="ltr" lang="en-ca">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -27,10 +21,10 @@ export default function App() {
       <body>
         <a href="#content">Skip to content</a>
         <header>
+          <NavLink to="/" className="site-title">
+            Nathan Knowler
+          </NavLink>
           <nav aria-label="primary">
-            <NavLink to="/" className="site-title">
-              Nathan Knowler
-            </NavLink>
             <ul>
               <li>
                 <NavLink to="/garden">Garden</NavLink>
@@ -50,7 +44,8 @@ export default function App() {
             </ul>
           </nav>
         </header>
-        <main id="content">
+        <div id="content"></div>
+        <main>
           <Outlet />
         </main>
         <footer>
@@ -74,11 +69,28 @@ export default function App() {
   );
 }
 
-export function links() {
-  return [
-    {
-      rel: "stylesheet",
-      href: styles,
-    },
-  ];
-}
+export const meta: MetaFunction = () => ({ title: "Nathan Knowler" });
+
+export const links: LinksFunction = () => [
+  {
+    rel: "preconnect",
+    href: "https://fonts.googleapis.com",
+  },
+  {
+    rel: "preconnect",
+    href: "https://fonts.gstatic.com",
+    crossOrigin: "true",
+  },
+  {
+    rel: "stylesheet",
+    href: "https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Poppins:wght@300;500&family=JetBrains+Mono:wght@300&display=swap",
+  },
+  {
+    rel: "stylesheet",
+    href: "https://cdn.jsdelivr.net/npm/prism-theme-vars/base.css",
+  },
+  {
+    rel: "stylesheet",
+    href: "/main.css",
+  },
+];

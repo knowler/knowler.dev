@@ -1,10 +1,11 @@
 ---
-title: Web Patterns
+meta:
+  title: Web Patterns
 ---
 
-# {{title}}
+# {attributes.meta.title}
 
 These are some notes on markup patterns that are accessible. Work in progress.
 
-- [Breadcrumbs](breadcrumbs)
-- [Steps](steps)
+- [Breadcrumbs](/patterns/breadcrumbs)
+- [Steps](/patterns/steps)

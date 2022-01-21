@@ -1,9 +1,10 @@
 ---
-title: Social Media Exile
-description: Reflections on my ongoing self-imposed exile from social media.
-
+meta:
+  title: Social Media Exile
+  description: Reflections on my ongoing self-imposed exile from social media.
 ---
-# {{title}}
+
+# {attributes.meta.title}
 
 One day in September of 2020, I woke and thought, “today is the day.”
 I had contemplated deleting my social media accounts before, but that

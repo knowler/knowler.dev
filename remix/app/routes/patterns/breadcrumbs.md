@@ -1,8 +1,9 @@
 ---
-title: Breadcrumbs
+meta:
+  title: Breadcrumbs
 ---
 
-# {{title}}
+# {attributes.meta.title}
 
 Similar to the [steps](/patterns/steps) pattern.
 

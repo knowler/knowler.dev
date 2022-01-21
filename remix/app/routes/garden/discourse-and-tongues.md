@@ -1,5 +1,6 @@
 ---
-title: Discourse and tongues
+meta:
+  title: Discourse and tongues
 ---
 
 The interpretion and speaking of tongues in today’s world seems like it would

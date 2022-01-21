@@ -1,8 +1,9 @@
 ---
-title: Steps
+meta:
+  title: Steps
 ---
 
-# {{title}}
+# {attributes.meta.title}
 
 This is almost identical to the [breadcrumbs](/patterns/breadcrumbs) pattern,
 however, it indicates steps in some sort of process and can be static.

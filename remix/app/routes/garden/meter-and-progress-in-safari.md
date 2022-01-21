@@ -1,5 +1,6 @@
 ---
-title: "Meter and progress in Safari"
+meta:
+  title: "Meter and progress in Safari"
 ---
 
 # `<meter>` and `<progress>` in Safari

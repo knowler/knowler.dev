@@ -1,7 +1,6 @@
 ---
 meta:
   title: tmux magic
-layout: base
 ---
 
 # tmux magic

@@ -1,8 +1,9 @@
 ---
-title: Research tools
+meta:
+  title: Research tools
 ---
 
-# {{title}}
+# {attributes.meta.title}
 
 I’ve begun investing some time into a good researching workflow for myself. I’ll
 document some of my findings here.
