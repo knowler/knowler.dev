@@ -232,3 +232,8 @@ a[href="#content"]:hover {
   text-decoration-color: hsl(var(--hs), 40%);
   text-decoration: underline;
 }
+
+.github-link-icon {
+  font-family: system-ui, sans-serif;
+  font-weight: 200;
+}
