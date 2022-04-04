@@ -24,7 +24,7 @@ export default function App() {
             Nathan Knowler
           </NavLink>
           <nav aria-label="primary">
-            <ul>
+            <ul role="list">
               <li>
                 <NavLink to="/garden">Garden</NavLink>
               </li>
@@ -49,7 +49,7 @@ export default function App() {
         <footer>
           <p>&copy; 2015 to 2022 Nathan Knowler. All rights reserved.</p>
           <nav aria-label="secondary">
-            <ul>
+            <ul role="list">
               <li>
                 <NavLink to="/accessibility">Accessibility</NavLink>
               </li>
