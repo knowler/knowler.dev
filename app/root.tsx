@@ -14,7 +14,6 @@ export default function App() {
     <html dir="ltr" lang="en-ca">
       <head>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
         <Meta />
         <Links />
       </head>
@@ -68,7 +67,10 @@ export default function App() {
   );
 }
 
-export const meta: MetaFunction = () => ({ title: "Nathan Knowler" });
+export const meta: MetaFunction = () => ({
+  viewport: "width=device-width, initial-scale=1",
+  title: "Nathan Knowler",
+});
 
 export const links: LinksFunction = () => [
   {
