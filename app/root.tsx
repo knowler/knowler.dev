@@ -33,9 +33,6 @@ export default function App() {
                 <NavLink to="/uses">Uses</NavLink>
               </li>
               <li>
-                <NavLink to="/cv">CV</NavLink>
-              </li>
-              <li>
                 <a href="https://github.com/knowler">
                   GitHub{" "}
                   <span className="github-link-icon" aria-hidden="true">
