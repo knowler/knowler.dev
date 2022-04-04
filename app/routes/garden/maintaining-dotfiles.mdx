@@ -1,8 +1,6 @@
 ---
 meta:
   title: Maintaining dotfiles
-git-dir-path: "$HOME/.dotfiles"
-work-tree-path: "$HOME"
 ---
 
 # {attributes.meta.title}
@@ -61,19 +59,19 @@ in your status config for the repository.
 ### Clone the repo
 
 ```shell
-git clone <repo> {{git-dir-path}} --bare
+git clone <repo> "$HOME/.dotfiles" --bare
 ```
 
 ### Do not show untracked files in git status for the repo
 
 ```shell
-git --git-dir={{git-dir-path}} config status.showUntrackedFiles no
+git --git-dir="$HOME/.dotfiles" config status.showUntrackedFiles no
 ```
 
-### Checkout the worktree in your `{{work-tree-path}}`
+### Checkout the worktree in your `$HOME`
 
 ```shell
-git --git-dir={{git-dir-path}} --work-tree={{work-tree-path}} checkout
+git --git-dir="$HOME/.dotfiles" --work-tree="$HOME" checkout
 ```
 
 ### Manage dotfiles using Git
@@ -82,13 +80,13 @@ You will need to prefix your Git commands with the path to the Git
 directory and the worktree path:
 
 ```shell
-git --git-dir=${git-dir-path} --work-tree={work-tree-path} <command>
+git --git-dir="$HOME/.dotfiles" --work-tree="$HOME" <command>
 ```
 
 It is best to create an alias for this.
 
 ```shell
-alias dots="git --git-dir={git-dir-path} --work-tree={work-tree-path}"
+alias dots="git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
 ```
 
 Now, you can use this alias however you would use Git.
@@ -100,7 +98,3 @@ dots commit -m "Add Neovim config"
 
 dots push
 ```
-
-## The proof is in the pudding
-
-<img src="/images/dotfiles-repo-historical-commit-chart.png" alt="A chart from GitHub showing increased contribution activity for my dotfiles repository after switching to the barefile method." />
