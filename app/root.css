@@ -13,14 +13,18 @@ html, body {
 }
 
 body {
+  display: grid;
+  grid-template:
+    "skip" max-content
+    "banner" max-content
+    "content" auto
+    "colophon" max-content;
   margin: 0;
   background-color: hsl(var(--hs), 3%);
   color: #ddd;
   font-family: 'Atkinson Hyperlegible', sans-serif;
   font-size: 18px;
   font-weight: 300;
-  display: flex;
-  flex-direction: column;
 }
 
 a {
@@ -192,9 +196,9 @@ img {
   width: 100%;
 }
 
-a[href="#content"] {
+.skip-link {
   flex-shrink: 0;
-  align-self: center;
+  justify-self: center;
   margin-top: 1rem;
   font-size: 0.9rem;
   color: hsl(var(--hs), 40%);
@@ -203,7 +207,7 @@ a[href="#content"] {
   transition-property: color, text-decoration-color;
 }
 
-a[href="#content"]:hover {
+.skip-link:hover {
   color: hsl(var(--hs), 50%);
   background-color: transparent;
   text-decoration-color: hsl(var(--hs), 40%);

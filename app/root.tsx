@@ -18,7 +18,9 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <a href="#content">Skip to content</a>
+        <a href="#content" className="skip-link">
+          Skip to content
+        </a>
         <header>
           <NavLink to="/" className="site-title">
             Nathan Knowler
@@ -42,8 +44,7 @@ export default function App() {
             </ul>
           </nav>
         </header>
-        <div id="content"></div>
-        <main>
+        <main id="content">
           <Outlet />
         </main>
         <footer>
