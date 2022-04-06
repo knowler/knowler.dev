@@ -8,6 +8,7 @@ import {
   ScrollRestoration,
 } from "remix";
 import type { MetaFunction, LinksFunction } from "remix";
+import styles from "~/root.css";
 
 export default function App() {
   return (
@@ -88,10 +89,6 @@ export const links: LinksFunction = () => [
   },
   {
     rel: "stylesheet",
-    href: "https://cdn.jsdelivr.net/npm/prism-theme-vars/base.css",
-  },
-  {
-    rel: "stylesheet",
-    href: "/main.css",
+    href: styles,
   },
 ];
