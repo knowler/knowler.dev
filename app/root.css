@@ -9,7 +9,7 @@
 }
 
 html, body {
-  height: 100%;
+  block-size: 100%;
 }
 
 body {
@@ -57,30 +57,29 @@ header {
   align-items: center;
   flex-wrap: wrap;
   flex-shrink: 0;
-  padding-top: var(--pad);
-  padding-left: var(--pad);
-  padding-right: var(--pad);
+  padding-block-start: var(--pad);
+  padding-inline: var(--pad);
 }
 
 .site-title {
-  margin-right: 1rem;
-  margin-bottom: 1rem;
+  margin-inline-end: 1rem;
+  margin-block-end: 1rem;
 }
 
 nav[aria-label=primary] {
   flex-grow: 1;
   overflow-x: hidden;
-  margin-left: -1rem;
-  margin-right: -1rem;
+  overflow-inline: hidden;
+  margin-inline: -1rem;
 }
 
 nav[aria-label=primary] ul {
   display: flex;
   list-style: none;
   padding: 0.5rem;
-  margin-top: 0;
-  margin-bottom: 1rem;
+  margin-block: 0 1rem;
   overflow-x: auto;
+  overflow-inline: auto;
 }
 
 nav[aria-label=primary] ul:after {
@@ -91,7 +90,7 @@ nav[aria-label=primary] ul:after {
 }
 
 nav[aria-label=primary] li + li {
-  margin-left: 1rem;
+  margin-inline-start: 1rem;
 }
 
 main {
@@ -106,40 +105,37 @@ footer {
   padding: var(--pad);
   flex-shrink: 0;
   display: flex;
+  align-items: center;
+  gap: 1rem;
   justify-content: space-between;
   font-size: 0.9rem;
 }
 
-footer * {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-footer * + * {
-  margin-left: 1rem;
+footer > * {
+  margin-block: 0;
 }
 
 nav[aria-label=secondary] ul {
   display: flex;
   list-style: none;
-  padding-left: 0;
+  padding-inline-start: 0;
+  margin: 0;
 }
 
 nav ul li {
-  margin-left: 0.5rem;
+  margin-inline-start: 0.5rem;
 }
 
 main > * {
-  margin-top: 0;
-  margin-bottom: 0;
+  margin-block: 0;
 }
 
 main > * + * {
-  margin-top: 1rem;
+  margin-block-start: 1rem;
 }
 
 main li {
-  margin-top: 0.75rem;
+  margin-block-start: 0.75rem;
 }
 
 main p {
@@ -153,7 +149,8 @@ main blockquote {
 }
 
 a.site-title {
-  padding: 0.25rem 0.5rem;
+  padding-block: 0.25rem;
+  padding-inline: 0.5rem;
   border: 0.1rem solid #eee;
   color: inherit;
   text-decoration: none;
@@ -168,9 +165,8 @@ a.site-title:hover {
 
 pre {
   display: flex;
-  padding-top: 0.75rem;
-  padding-left: 1rem;
-  padding-bottom: 0.75rem;
+  padding-block: 0.75rem;
+  padding-inline: 1rem;
   background-image: linear-gradient(
     45deg, 
     hsl(var(--hs), 3%),
@@ -178,6 +174,7 @@ pre {
   );
   border: 0.1rem solid hsl(var(--hs), 12%);
   overflow-x: auto;
+  overflow-inline: auto;
 }
 
 pre:after {
@@ -199,7 +196,7 @@ img {
 .skip-link {
   flex-shrink: 0;
   justify-self: center;
-  margin-top: 1rem;
+  margin-block-start: 1rem;
   font-size: 0.9rem;
   color: hsl(var(--hs), 40%);
   text-decoration-color: hsl(var(--hs), 20%);
