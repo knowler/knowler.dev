@@ -1,5 +1,5 @@
-import { Outlet } from "remix";
-import type { LinksFunction } from "remix";
+import { Outlet } from "@remix-run/react";
+import type { LinksFunction } from "@remix-run/node";
 
 export default function GardenLayout() {
   return <Outlet />;

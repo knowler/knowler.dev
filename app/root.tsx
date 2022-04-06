@@ -6,15 +6,14 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-} from "remix";
-import type { MetaFunction, LinksFunction } from "remix";
+} from "@remix-run/react";
+import type { MetaFunction, LinksFunction } from "@remix-run/node";
 import styles from "~/root.css";
 
 export default function App() {
   return (
     <html dir="ltr" lang="en-ca">
       <head>
-        <meta charSet="utf-8" />
         <Meta />
         <Links />
       </head>
@@ -69,6 +68,7 @@ export default function App() {
 }
 
 export const meta: MetaFunction = () => ({
+  charset: "utf-8",
   viewport: "width=device-width, initial-scale=1",
   title: "Nathan Knowler",
 });
