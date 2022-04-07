@@ -61,7 +61,6 @@ export default function App() {
           </nav>
         </footer>
         <ScrollRestoration />
-        <Scripts />
         <LiveReload />
       </body>
     </html>
