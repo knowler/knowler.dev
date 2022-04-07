@@ -1,12 +1,4 @@
-import {
-  Links,
-  LiveReload,
-  Meta,
-  NavLink,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-} from "@remix-run/react";
+import { Links, LiveReload, Meta, NavLink, Outlet } from "@remix-run/react";
 import type { MetaFunction, LinksFunction } from "@remix-run/node";
 import styles from "~/root.css";
 
@@ -60,7 +52,6 @@ export default function App() {
             </ul>
           </nav>
         </footer>
-        <ScrollRestoration />
         <LiveReload />
       </body>
     </html>
