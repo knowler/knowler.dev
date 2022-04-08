@@ -12,7 +12,7 @@ export default function Index() {
       <p>
         Welcome to my website. I’m originally from Vancouver, however, I now
         live in Winnipeg and work remotely as a Senior Frontend Developer at
-        Kettle.
+        <a href="https://wearekettle.com">Kettle</a>.
       </p>
     </>
   );
