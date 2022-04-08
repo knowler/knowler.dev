@@ -52,6 +52,10 @@ h1, h2, h3, h4 {
   font-weight: 500;
 }
 
+:where(article) h1 {
+  font-size: 2rem;
+}
+
 header {
   display: flex;
   align-items: center;
@@ -126,23 +130,23 @@ nav ul li {
   margin-inline-start: 0.5rem;
 }
 
-main > * {
+:where(main, article) > * {
   margin-block: 0;
 }
 
-main > * + * {
+:where(main, article) > * + * {
   margin-block-start: 1rem;
 }
 
-main li {
+:where(main, article) li {
   margin-block-start: 0.75rem;
 }
 
-main p {
+:where(main, article) p {
   line-height: 1.7;
 }
 
-main blockquote {
+:where(main, article) blockquote {
   margin-inline-start: 0;
   padding-inline-start: 1em;
   border-inline-start: 0.25em solid #ddd;
