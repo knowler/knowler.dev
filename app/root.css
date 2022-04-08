@@ -99,7 +99,7 @@ nav[aria-label=primary] li + li {
 
 main {
   padding: var(--pad);
-  max-width: 64ch;
+  max-inline-size: min(64ch, 100vw);
   flex-grow: 1;
   flex-shrink: 0;
 }
