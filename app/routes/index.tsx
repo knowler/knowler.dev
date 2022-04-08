@@ -11,7 +11,7 @@ export default function Index() {
       <h1>I am Nathan Knowler</h1>
       <p>
         Welcome to my website. I’m originally from Vancouver, however, I now
-        live in Winnipeg and work remotely as a Senior Frontend Developer at
+        live in Winnipeg and work remotely as a Senior Frontend Developer at{" "}
         <a href="https://wearekettle.com">Kettle</a>.
       </p>
     </>
