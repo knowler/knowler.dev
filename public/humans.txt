@@ -1,0 +1,7 @@
+/* TEAM */
+Designer & Developer: Nathan Knowler
+Location: Winnipeg, Manitoba, Canada
+From: Cloverdale, British Columbia, Canada
+
+/* SITE */
+Language: English
