@@ -1,10 +1,9 @@
 import fs from "fs/promises";
 import path from "path";
-import matter from "gray-matter";
 import { json, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { useCatch, useLoaderData } from "@remix-run/react";
-import { marked } from "marked";
 import { z } from "zod";
+import { parseMarkdown } from "~/md.server";
 
 interface Post {
   title: string;
@@ -20,13 +19,17 @@ async function getPost(slug: string): Promise<Post> {
   const file = (
     await fs.readFile(path.join(__dirname, `../content/garden/${slug}.mdx`))
   ).toString();
-  const { content, data } = matter(file);
 
-  return {
-    title: data.title,
-    description: data?.description,
-    body: marked(content),
-  };
+  try {
+    const { attributes, html } = await parseMarkdown(file);
+    return {
+      title: attributes.title,
+      description: attributes?.description,
+      body: html,
+    };
+  } catch (error) {
+    throw new Error("Issue parsing the markdown content");
+  }
 }
 
 export const loader: LoaderFunction = async ({ params }) => {
