@@ -1,7 +1,7 @@
 import fs from "fs/promises";
 import path from "path";
 import matter from "gray-matter";
-import { json, LoaderFunction } from "@remix-run/node";
+import { json, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { useCatch, useLoaderData } from "@remix-run/react";
 import { marked } from "marked";
 import { z } from "zod";
@@ -42,6 +42,15 @@ export const loader: LoaderFunction = async ({ params }) => {
   } catch (error) {
     throw new Response("Not found", { status: 404 });
   }
+};
+
+export const meta: MetaFunction = ({ data }) => {
+  const { post } = data as LoaderData;
+
+  return {
+    title: `${post.title} – Nathan Knowler`,
+    description: post?.description,
+  };
 };
 
 export default function GardenPost() {
