@@ -1,6 +1,11 @@
 import fs from "fs/promises";
 import path from "path";
-import { json, LoaderFunction, MetaFunction } from "@remix-run/node";
+import {
+  json,
+  LinksFunction,
+  LoaderFunction,
+  MetaFunction,
+} from "@remix-run/node";
 import { useCatch, useLoaderData } from "@remix-run/react";
 import { z } from "zod";
 import { parseMarkdown } from "~/md.server";
@@ -55,6 +60,13 @@ export const meta: MetaFunction = ({ data }) => {
     description: post?.description,
   };
 };
+
+export const links: LinksFunction = () => [
+  {
+    rel: "stylesheet",
+    href: "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300&display=swap",
+  },
+];
 
 export default function GardenPost() {
   const { post } = useLoaderData<LoaderData>();
