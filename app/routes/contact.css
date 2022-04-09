@@ -35,6 +35,10 @@
   gap: 0.5rem;
 }
 
+.privacy-disclosure {
+  line-height: 1.2;
+}
+
 .send-message {
   --bg-l: 8%;
   padding: 1rem;

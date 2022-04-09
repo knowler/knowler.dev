@@ -107,7 +107,15 @@ export default function Contact() {
         </div>
         <textarea name="message" id="message" />
       </div>
-
+      <p className="privacy-disclosure">
+        Sending a message with this form will verify your email using{" "}
+        <a href="https://verifier.meetchopra.com/">a service</a> to help me
+        filter out potential spam. If you are not comfortable with that, you can
+        send an email to{" "}
+        <a href="mailto:contact@knowlerkno.ws">contact@knowlerkno.ws</a> (this
+        is not my actual email, so don’t go adding it to your address book or
+        anything).
+      </p>
       <div className="submission-controls">
         <button type="submit" className="send-message">
           Send message
