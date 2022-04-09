@@ -65,41 +65,21 @@ header {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  flex-shrink: 0;
+  gap: 1rem;
   padding-block-start: var(--pad);
   padding-inline: var(--pad);
 }
 
-.site-title {
-  margin-inline-end: 1rem;
-  margin-block-end: 1rem;
-}
-
 nav[aria-label=primary] {
   flex-grow: 1;
-  overflow-x: hidden;
-  overflow-inline: hidden;
-  margin-inline: -1rem;
 }
 
 nav[aria-label=primary] ul {
   display: flex;
+  gap: 1rem;
   list-style: none;
-  padding: 0.5rem;
-  margin-block: 0 1rem;
-  overflow-x: auto;
-  overflow-inline: auto;
-}
-
-nav[aria-label=primary] ul:after {
-  content: '';
-  flex-basis: 0.5rem;
-  flex-grow: 0;
-  flex-shrink: 0;
-}
-
-nav[aria-label=primary] li + li {
-  margin-inline-start: 1rem;
+  padding-inline-start: 0;
+  margin-block: 0;
 }
 
 main {
