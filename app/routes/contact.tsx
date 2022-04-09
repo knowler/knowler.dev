@@ -5,8 +5,10 @@ import {
   MetaFunction,
 } from "@remix-run/node";
 import { Form, Link, useActionData, useTransition } from "@remix-run/react";
+import { AuthenticityTokenInput, verifyAuthenticityToken } from "remix-utils";
 import { z } from "zod";
 import mail from "~/mail.server";
+import { getSession } from "~/session.server";
 import styles from "./contact.css";
 
 export const meta: MetaFunction = () => ({
@@ -16,6 +18,9 @@ export const meta: MetaFunction = () => ({
 export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }];
 
 export const action: ActionFunction = async ({ request }) => {
+  const session = await getSession(request.headers.get("Cookie"));
+  await verifyAuthenticityToken(request, session);
+
   const ContactFormSchema = z.object({
     name: z.string().optional(),
     email: z
@@ -33,7 +38,6 @@ export const action: ActionFunction = async ({ request }) => {
           );
           const response = await fetch(verifierEndpoint.toString());
           const verifierResult = await response.json();
-          console.log(verifierResult);
           return verifierResult.status;
         },
         {
@@ -78,6 +82,7 @@ export default function Contact() {
 
   return (
     <Form className="contact-form" method="post">
+      <AuthenticityTokenInput />
       <h1>Contact me</h1>
       <p>Feel free to use this form if you’d like to get in touch.</p>
       <div className="form-field">
