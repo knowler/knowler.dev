@@ -2,6 +2,11 @@
   --hs: 156, 100%;
   --accent: hsl(var(--hs), 50%);
   --pad: clamp(1rem, 4vw, 2rem);
+  --fancy-bg: linear-gradient(
+    45deg, 
+    hsl(var(--hs), 3%),
+    hsl(var(--hs), 5%)
+  );
 }
 
 *, ::before, ::after {
@@ -169,11 +174,7 @@ pre {
   display: flex;
   padding-block: 0.75rem;
   padding-inline: 1rem;
-  background-image: linear-gradient(
-    45deg, 
-    hsl(var(--hs), 3%),
-    hsl(var(--hs), 5%)
-  );
+  background-image: var(--fancy-bg);
   border: 0.1rem solid hsl(var(--hs), 12%);
   overflow-x: auto;
   overflow-inline: auto;

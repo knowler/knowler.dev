@@ -49,6 +49,9 @@ export default function App() {
               <li>
                 <NavLink to="/privacy">Privacy</NavLink>
               </li>
+              <li>
+                <NavLink to="/contact">Contact</NavLink>
+              </li>
             </ul>
           </nav>
         </footer>
