@@ -13,8 +13,10 @@
     "paths": {
       "~/*": ["./app/*"]
     },
-
-    // Remix takes care of building everything in `remix build`.
+    "types": [
+      "react/next",
+      "react-dom/next"
+    ],
     "noEmit": true
   }
 }
