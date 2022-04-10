@@ -64,7 +64,11 @@ export default function BlogPost() {
   const {post} = useLoaderData<LoaderData>();
 
   return (
-    <article dangerouslySetInnerHTML={{__html: post.body}} />
+    <article>
+      <h1>{post.title}</h1>
+      <p><time datetime={post.date}>{(new Date(post.date)).toDateString()}</time></p>
+      <div dangerouslySetInnerHTML={{__html: post.body}} />
+    </article>
   );
 }
 
