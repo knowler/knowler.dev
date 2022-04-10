@@ -1,7 +1,7 @@
 ---
-title = "Rust For A Rusty Game Developer — Part I"
-date = "2019-01-31T14:31:00-07:00"
-tags = ["rust", "coding"]
+title: "Rust For A Rusty Game Developer — Part I"
+date: "2019-01-31T14:31:00-07:00"
+tags: ["rust", "coding"]
 ---
 
 Rust is my first foray into a systems programming language since

@@ -1,6 +1,6 @@
 ---
-title = "Introduction To Clover"
-date = "2019-03-05T08:57:09-07:00"
+title: "Introduction To Clover"
+date: "2019-03-05T08:57:09-07:00"
 ---
 
 I wrote a post about Clover, a WordPress plugin boilerplate,

@@ -1,7 +1,7 @@
 ---
-title = "gg: a Git directory jumping helper"
-date = "2019-02-22T12:20:48-07:00"
-tags = [scripts, coding]
+title: "gg: a Git directory jumping helper"
+date: "2019-02-22T12:20:48-07:00"
+tags: [scripts, coding]
 ---
 
 Large projects and mono repos can be a pain to navigate. **gg**

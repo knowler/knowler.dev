@@ -1,6 +1,6 @@
 ---
-title = "Bookmarklet: Open GitHub Repo in CodeSandbox"
-date = "2020-01-14T23:37:30-07:00"
+title: "Bookmarklet: Open GitHub Repo in CodeSandbox"
+date: "2020-01-14T23:37:30-07:00"
 ---
 
 Just thought I’d share this helpful little bookmarklet I made

@@ -1,6 +1,8 @@
-title = "2020 in music"
-date = "2020-12-30T22:10:00-06:00"
-tags = [music, "year in review"]
+---
+title: "2020 in music"
+date: "2020-12-30T22:10:00-06:00"
+tags: [music, "year in review"]
+---
 
 I listened to a lot of music this year. I believe in someways this year music
 was a lot more meaningful to me this year and the albums I treasured the most

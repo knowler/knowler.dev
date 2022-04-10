@@ -1,7 +1,7 @@
 ---
-title = "Hello, World!"
-date = "2018-12-31T14:30:00-07:00"
-tags = [meta]
+title: "Hello, World!"
+date: "2018-12-31T14:30:00-07:00"
+tags: [meta]
 ---
 
 What is this? This is a place for me to turn my thoughts into
