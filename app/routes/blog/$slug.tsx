@@ -1,18 +1,14 @@
-import {
-  json,
-  LinksFunction,
-  LoaderFunction,
-  MetaFunction,
-} from "@remix-run/node";
-import { useCatch, useLoaderData } from "@remix-run/react";
-import { z } from "zod";
+import {json, LoaderFunction, MetaFunction} from '@remix-run/node';
+import { useCatch, useLoaderData } from '@remix-run/react';
+import { z } from 'zod';
 import { parseMarkdown } from "~/md.server";
-import { octokit } from "~/octokit.server";
+import {octokit} from '~/octokit.server';
 
 interface Post {
   title: string;
-  description?: string;
   body: string;
+  date: string;
+  tags: string[];
 }
 
 interface LoaderData {
@@ -32,7 +28,8 @@ async function getPost(slug: string): Promise<Post> {
     const { attributes, html } = await parseMarkdown(data);
     return {
       title: attributes.title,
-      description: attributes?.description,
+      date: attributes.date,
+      tags: attributes?.tags ?? [],
       body: html,
     };
   } catch (error) {
@@ -40,9 +37,9 @@ async function getPost(slug: string): Promise<Post> {
   }
 }
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader: LoaderFunction = async ({params}) => {
   try {
-    return json({
+    return json<LoaderData>({
       post: await getPost(
         z
           .string()
@@ -50,31 +47,25 @@ export const loader: LoaderFunction = async ({ params }) => {
           .parse(params.slug)
       ),
     });
-  } catch (error) {
-    throw new Response("Not found", { status: 404 });
+  } catch(error) {
+    throw new Response('Not found', { status: 404 });
   }
-};
+}
 
-export const meta: MetaFunction = ({ data }) => {
-  const { post } = data as LoaderData;
+export const Meta: MetaFunction = ({data}) => {
+  const {post} = data as LoaderData;
 
   return {
     title: `${post.title} – Nathan Knowler`,
-    description: post?.description,
   };
-};
+}
 
-export const links: LinksFunction = () => [
-  {
-    rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300&display=swap",
-  },
-];
+export default function BlogPost() {
+  const {post} = useLoaderData<LoaderData>();
 
-export default function GardenPost() {
-  const { post } = useLoaderData<LoaderData>();
-
-  return <article dangerouslySetInnerHTML={{ __html: post.body }} />;
+  return (
+    <article dangerouslySetInnerHTML={{__html: post.body}} />
+  );
 }
 
 export function CatchBoundary() {
