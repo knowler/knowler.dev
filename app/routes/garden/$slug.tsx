@@ -30,7 +30,7 @@ async function getPost(slug: string): Promise<Post> {
     },
     owner: "knowler",
     repo: "knowlerkno.ws",
-    path: `content/garden/${slug}.mdx`,
+    path: `content/garden/${slug}.md`,
   });
 
   try {
