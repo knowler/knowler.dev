@@ -39,6 +39,7 @@ export const loader: LoaderFunction = async () => {
         ...attributes,
       };
     }));
+    posts = posts.sort((a, b) => new Date(a.date) < new Date(b.date));
   }
 
   return json<LoaderData>({posts});
