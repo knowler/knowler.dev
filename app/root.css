@@ -111,6 +111,10 @@ nav[aria-label=secondary] ul {
   margin: 0;
 }
 
+strong {
+  font-weight: 600;
+}
+
 :where(main, article) > * {
   margin-block: 0;
 }
