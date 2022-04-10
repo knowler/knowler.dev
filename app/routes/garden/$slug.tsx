@@ -19,21 +19,20 @@ interface LoaderData {
   post: Post;
 }
 
+const octokit = new Octokit({
+  auth: process.env.GITHUB_TOKEN as string,
+});
+
 async function getPost(slug: string): Promise<Post> {
-  const octokit = new Octokit({
-    auth: process.env.GITHUB_TOKEN as string,
-  });
-
-  const {data} = await octokit.rest.repos.getContent({
-    mediaType: {
-      format: "raw",
-    },
-    owner: "knowler",
-    repo: "knowlerkno.ws",
-    path: `content/garden/${slug}.md`,
-  });
-
   try {
+    const {data} = await octokit.rest.repos.getContent({
+      mediaType: {
+        format: "raw",
+      },
+      owner: "knowler",
+      repo: "knowlerkno.ws",
+      path: `content/garden/${slug}.md`,
+    });
     const { attributes, html } = await parseMarkdown(data);
     return {
       title: attributes.title,
