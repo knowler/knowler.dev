@@ -23,7 +23,7 @@ async function getPost(slug: string): Promise<Post> {
       },
       owner: "knowler",
       repo: "knowlerkno.ws",
-      path: `content/garden/${slug}.md`,
+      path: `content/blog/${slug}.md`,
     });
     const { attributes, html } = await parseMarkdown(data);
     return {
