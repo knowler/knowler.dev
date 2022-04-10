@@ -59,6 +59,9 @@ export default function App() {
             <nav aria-label="primary">
               <ul role="list">
                 <li>
+                  <NavLink to="/about">About</NavLink>
+                </li>
+                <li>
                   <NavLink to="/garden">Garden</NavLink>
                 </li>
                 <li>

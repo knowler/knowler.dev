@@ -1,0 +1,63 @@
+article {
+  counter-reset: footnotes;
+}
+
+.wip {
+  padding: 1em 1.25em;
+  background: var(--fancy-bg);
+  border-radius: 0.75em;
+  border: 0.25em dashed hsl(var(--hs), 12%);
+}
+
+.wip > p {
+  margin: 0;
+}
+
+[data-a11y-footnotes-list-item]:target {
+  background-color: hsl(var(--hs), 12%);
+}
+
+[data-a11y-footnotes-back-link] {
+  font-size: 0.8em;
+}
+
+[data-a11y-footnotes-ref] {
+  counter-increment: footnotes;
+  text-decoration: none;
+  color: inherit;
+  cursor: default;
+  outline: none;
+}
+
+[data-a11y-footnotes-ref]:is(:focus, :hover) {
+  outline: none;
+  background-color: inherit;
+  color: inherit;
+}
+
+[data-a11y-footnotes-ref]::after {
+  content: counter(footnotes);
+  vertical-align: super;
+  margin-inline-start: 0.25em;
+  display: inline-grid;
+  place-content: center;
+  block-size: 1.3em;
+  inline-size: 1.3em;
+  aspect-ratio: 1;
+  border: 0.0625rem solid var(--accent);
+  border-radius: 9999px;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.6em;
+  font-weight: 600;
+  line-height: 1;
+  background-color: var(--accent);
+  color: #000;
+  cursor: pointer;
+  --t: 180ms ease;
+  transition: background var(--t), color var(--t);
+}
+
+[data-a11y-footnotes-ref]:is(:focus, :hover)::after {
+  background-color: transparent;
+  color: var(--accent);
+}
