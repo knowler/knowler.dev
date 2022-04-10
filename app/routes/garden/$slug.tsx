@@ -1,5 +1,3 @@
-import fs from "fs/promises";
-import path from "path";
 import {
   json,
   LinksFunction,
@@ -9,6 +7,7 @@ import {
 import { useCatch, useLoaderData } from "@remix-run/react";
 import { z } from "zod";
 import { parseMarkdown } from "~/md.server";
+import { Octokit } from "octokit";
 
 interface Post {
   title: string;
@@ -21,12 +20,21 @@ interface LoaderData {
 }
 
 async function getPost(slug: string): Promise<Post> {
-  const file = (
-    await fs.readFile(path.join(__dirname, `../content/garden/${slug}.mdx`))
-  ).toString();
+  const octokit = new Octokit({
+    auth: process.env.GITHUB_TOKEN as string,
+  });
+
+  const {data} = await octokit.rest.repos.getContent({
+    mediaType: {
+      format: "raw",
+    },
+    owner: "knowler",
+    repo: "knowlerkno.ws",
+    path: `content/garden/${slug}.mdx`,
+  });
 
   try {
-    const { attributes, html } = await parseMarkdown(file);
+    const { attributes, html } = await parseMarkdown(data);
     return {
       title: attributes.title,
       description: attributes?.description,
