@@ -16,7 +16,7 @@ interface LoaderData {
 let posts: Post[];
 
 export const loader: LoaderFunction = async () => {
-  const {data: files} = await octokit.rest.repos.getContent({
+  const {data: files, ...rest} = await octokit.rest.repos.getContent({
     owner: 'knowler',
     repo: 'knowlerkno.ws',
     path: 'content/blog'
@@ -39,7 +39,7 @@ export const loader: LoaderFunction = async () => {
         ...attributes,
       };
     }));
-    posts = posts.sort((a, b) => new Date(a.date) < new Date(b.date));
+    posts = posts.sort((a, b) => new Date(a.date) - new Date(b.date)).reverse();
   }
 
   return json<LoaderData>({posts});
