@@ -21,15 +21,26 @@ interface LoaderData {
 
 async function getPost(slug: string): Promise<Post> {
   try {
-    const {data} = await octokit.rest.repos.getContent({
-      mediaType: {
-        format: "raw",
-      },
-      owner: "knowler",
-      repo: "knowlerkno.ws",
-      path: `content/garden/${slug}.md`,
-    });
-    const { attributes, html } = await parseMarkdown(data);
+    const data: { repository: { object: { text: string } } } =
+      await octokit.graphql(
+        `
+      query gardenPost($expression: String!) {
+        repository(name: "knowlerkno.ws", owner: "knowler") {
+          object(expression: $expression) {
+            ... on Blob {
+              text
+            }
+          }
+        }
+      }
+    `,
+        {
+          expression: `HEAD:content/garden/${slug}.md`,
+        }
+      );
+    const { attributes, html } = await parseMarkdown(
+      data.repository.object.text
+    );
     return {
       title: attributes.title,
       description: attributes?.description,
