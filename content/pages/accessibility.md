@@ -29,4 +29,4 @@ are the browser defaults for now.
 ## Feedback
 
 If you find any other issues that I haven’t accounted for, please help me
-address them by [submitting an issue on GitHub](https://github.com/knowler/knowlerkno.ws/issues/new) .
+address them by [submitting an issue on GitHub](https://github.com/knowler/knowlerkno.ws/issues/new).
