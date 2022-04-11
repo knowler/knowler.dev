@@ -5,6 +5,16 @@ admin_path: content/admin
 webhook_url: 
 sections:
 - type: directory
+  path: content/blog
+  label: Blog
+  create: all
+  match: "**/*"
+- type: directory
+  path: content/garden
+  label: Garden
+  create: all
+  match: "**/*"
+- type: directory
   path: content/pages
   label: Pages
   create: all
