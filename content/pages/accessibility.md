@@ -1,6 +1,7 @@
 ---
 title: Accessibility Statement
 description: My commitment to make this website as transparently, accessible as possible.
+
 ---
 # Accessibility Statement
 
@@ -21,10 +22,8 @@ like to test on Windows as well.
 
 ## Issues
 
-I’ve done my best with ensuring sufficient WCAG 2.1 AA contrast so far. I’m
-worried that the content link contrast might not be enough. As well, I haven’t
-been able to give the focus styles as much attention as they deserve, so they
-are the browser defaults for now.
+I’ve done my best with ensuring sufficient WCAG 2.1 AA contrast so far. I’m 
+worried that the content link contrast might not be enough.
 
 ## Feedback
 
