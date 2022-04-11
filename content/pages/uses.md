@@ -20,3 +20,4 @@ Here’s a bunch of stuff I use regularly.
 * [Alfred](https://www.alfredapp.com/) as my application launcher on macOS.
 * [Firefox](https://www.mozilla.org/firefox/) as my primary web browser.
 * [Newsboat](https://newsboat.org) as my RSS reader.
+* [nb](https://github.com/xwmx/nb) for plain text notetaking.
