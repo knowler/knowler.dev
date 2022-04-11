@@ -1,6 +1,6 @@
 import { LoaderFunction, json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
-import parseFrontMatter from 'front-matter';
+import parseFrontMatter from "front-matter";
 import { octokit } from "~/octokit.server";
 
 interface Post {
@@ -13,44 +13,56 @@ interface LoaderData {
   posts: Post[];
 }
 
-let posts: Post[];
-
-export const loader: LoaderFunction = async () => {
-  const {data: files, ...rest} = await octokit.rest.repos.getContent({
-    owner: 'knowler',
-    repo: 'knowlerkno.ws',
-    path: 'content/blog'
-  });
-
-  if (!posts) {
-    posts = await Promise.all(files.map(async file => {
-      const {data: markdown} = await octokit.rest.repos.getContent({
-        mediaType: {
-          format: 'raw',
-        },
-        owner: 'knowler',
-        repo: 'knowlerkno.ws',
-        path: file.path,
-      });
-      const {attributes} = parseFrontMatter(markdown);
-
-      return {
-        slug: file.name.replace(/\.md$/, ''),
-        ...attributes,
-      };
-    }));
-    posts = posts.sort((a, b) => new Date(a.date) - new Date(b.date)).reverse();
-  }
-
-  return json<LoaderData>({posts});
+async function getPosts() {
+  return octokit
+    .graphql(
+      `
+    {
+      repository(owner: "knowler", name: "knowlerkno.ws") {
+        object(expression: "HEAD:content/blog") {
+          ... on Tree {
+            entries {
+              name
+              extension
+              object {
+                ... on Blob {
+                  text
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    `
+    )
+    .then((data) =>
+      data.repository.object.entries
+        .map((entry) => {
+          const { attributes } = parseFrontMatter(entry.object.text);
+          return {
+            slug: entry.name.replace(entry.extension, ""),
+            ...attributes,
+          };
+        })
+        .sort((a, b) => new Date(a.date) - new Date(b.date))
+    );
 }
 
+export const loader: LoaderFunction = async () => {
+  return json<LoaderData>({ posts: (await getPosts()).reverse() });
+};
+
 export default function BlogIndex() {
-  const {posts} = useLoaderData<LoaderData>();
+  const { posts } = useLoaderData<LoaderData>();
 
   return (
     <ol reversed>
-      {posts.map(post => <li key={post.slug}><Link to={post.slug}>{post.title}</Link></li>)}
+      {posts.map((post) => (
+        <li key={post.slug}>
+          <Link to={post.slug}>{post.title}</Link>
+        </li>
+      ))}
     </ol>
   );
 }

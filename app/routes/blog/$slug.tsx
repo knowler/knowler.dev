@@ -1,8 +1,8 @@
-import {json, LoaderFunction, MetaFunction} from '@remix-run/node';
-import { useCatch, useLoaderData } from '@remix-run/react';
-import { z } from 'zod';
+import { json, LoaderFunction, MetaFunction } from "@remix-run/node";
+import { useCatch, useLoaderData } from "@remix-run/react";
+import { z } from "zod";
 import { parseMarkdown } from "~/md.server";
-import {octokit} from '~/octokit.server';
+import { octokit } from "~/octokit.server";
 
 interface Post {
   title: string;
@@ -17,15 +17,27 @@ interface LoaderData {
 
 async function getPost(slug: string): Promise<Post> {
   try {
-    const {data} = await octokit.rest.repos.getContent({
-      mediaType: {
-        format: "raw",
-      },
-      owner: "knowler",
-      repo: "knowlerkno.ws",
-      path: `content/blog/${slug}.md`,
-    });
-    const { attributes, html } = await parseMarkdown(data);
+    const data: { repository: { object: { text: string } } } =
+      await octokit.graphql(
+        `
+      query blogPost($expression: String!) {
+        repository(name: "knowlerkno.ws", owner: "knowler") {
+          object(expression: $expression) {
+            ... on Blob {
+              text
+            }
+          }
+        }
+      }
+    `,
+        {
+          expression: `HEAD:content/blog/${slug}.md`,
+        }
+      );
+
+    const { attributes, html } = await parseMarkdown(
+      data.repository.object.text
+    );
     return {
       title: attributes.title,
       date: attributes.date,
@@ -37,7 +49,7 @@ async function getPost(slug: string): Promise<Post> {
   }
 }
 
-export const loader: LoaderFunction = async ({params}) => {
+export const loader: LoaderFunction = async ({ params }) => {
   try {
     return json<LoaderData>({
       post: await getPost(
@@ -47,27 +59,29 @@ export const loader: LoaderFunction = async ({params}) => {
           .parse(params.slug)
       ),
     });
-  } catch(error) {
-    throw new Response('Not found', { status: 404 });
+  } catch (error) {
+    throw new Response("Not found", { status: 404 });
   }
-}
+};
 
-export const Meta: MetaFunction = ({data}) => {
-  const {post} = data as LoaderData;
+export const Meta: MetaFunction = ({ data }) => {
+  const { post } = data as LoaderData;
 
   return {
     title: `${post.title} – Nathan Knowler`,
   };
-}
+};
 
 export default function BlogPost() {
-  const {post} = useLoaderData<LoaderData>();
+  const { post } = useLoaderData<LoaderData>();
 
   return (
     <article>
       <h1>{post.title}</h1>
-      <p><time datetime={post.date}>{(new Date(post.date)).toDateString()}</time></p>
-      <div dangerouslySetInnerHTML={{__html: post.body}} />
+      <p>
+        <time datetime={post.date}>{new Date(post.date).toDateString()}</time>
+      </p>
+      <div dangerouslySetInnerHTML={{ __html: post.body }} />
     </article>
   );
 }
