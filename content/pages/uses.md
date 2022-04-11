@@ -11,6 +11,7 @@ Here’s a bunch of stuff I use regularly.
 * [Neovim](https://neovim.io/) for editing any sort of text, but also as a merge tool.
 * [Iceberg](https://cocopon.github.io/iceberg.vim/) as my colour scheme for pretty much everything.
 * [Dank Mono](https://gumroad.com/l/dank-mono) is the font I use for code.
+* [“25th Hour”](https://github.com/dominiklohmann/25th-hour) as a dynamic wallpaper on macOS.
 * [Alacrity](https://github.com/alacritty/alacritty) as my terminal emulator.
 * [zsh](https://www.zsh.org/) as my shell.
 * [tmux](https://github.com/tmux/tmux) as my terminal multiplexer.
