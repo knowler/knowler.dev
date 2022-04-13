@@ -1,4 +1,4 @@
-import type { LoaderFunction} from "@remix-run/node";
+import type { HeadersFunction, LoaderFunction} from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import parseFrontMatter from "front-matter";
@@ -49,6 +49,8 @@ async function getPosts() {
         .sort((a, b) => new Date(a.date) - new Date(b.date))
     );
 }
+
+export const headers: HeadersFunction = ({loaderHeaders}) => loaderHeaders;
 
 export const loader: LoaderFunction = async () => {
   return json<LoaderData>(
