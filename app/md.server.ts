@@ -19,9 +19,9 @@ export async function parseMarkdown(contents): Promise<ParsedMarkdown> {
     const { default: rehypeStringify } = await import("rehype-stringify");
     processor = unified()
       .use(remarkParse)
-      .use(remarkRehype)
+      .use(remarkRehype, { allowDangerousHtml: true })
       .use(rehypeSlug)
-      .use(rehypeStringify);
+      .use(rehypeStringify, { allowDangerousHtml: true });
   }
   const { attributes, body } = parseFrontMatter(contents);
 
