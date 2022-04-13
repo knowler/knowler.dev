@@ -1,4 +1,5 @@
-import { LoaderFunction, json } from "@remix-run/node";
+import type { LoaderFunction} from "@remix-run/node";
+import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import parseFrontMatter from "front-matter";
 import { octokit } from "~/octokit.server";
@@ -50,7 +51,12 @@ async function getPosts() {
 }
 
 export const loader: LoaderFunction = async () => {
-  return json<LoaderData>({ posts: (await getPosts()).reverse() });
+  return json<LoaderData>(
+    { posts: (await getPosts()).reverse() },
+    {
+      headers: {'Cache-Control': 'public, s-maxage=60'},
+    }
+  );
 };
 
 export default function BlogIndex() {
