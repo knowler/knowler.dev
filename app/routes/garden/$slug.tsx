@@ -64,7 +64,7 @@ export const loader: LoaderFunction = async ({ params }) => {
             .parse(params.slug)
         ),
       }, {
-        headers: {'Cache-Control': 'public, s-maxage=60'}
+        headers: {'Cache-Control': 'public, max-age=60'}
       }
     );
   } catch (error) {
