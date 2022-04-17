@@ -41,13 +41,12 @@ Along with Alacritty, I use [tmux](https://github.com/tmux/tmux) as my terminal 
 
 For browsing, I use Firefox for personal and Brave for work.
 
-* [Firefox](https://www.mozilla.org/firefox/) as my primary web browser.
-
 ### Reading and Writing
 
 * Calibre for ebooks on the Desktop and ReadEra Premium on mobile.
 * [Newsboat](https://newsboat.org) as my RSS reader.
 * [nb](https://github.com/xwmx/nb) for plain text notetaking.
+* Markdown is my preferred text format, but for more formal work, I use LaTeX.
 
 ## Aesthetics
 
