@@ -49,7 +49,7 @@ I really like [Hypothesis](https://hypothes.is/) for annotating web pages.
 
 I use [Calibre](https://calibre-ebook.com/) for ebooks on the Desktop and [ReadEra Premium](https://play.google.com/store/apps/details?id=org.readera.premium) on mobile. For podcasts I use [Pocket Casts](https://www.pocketcasts.com/). I also use it for audiobooks when I have the actual files.
 
-[Newsboat](https://newsboat.org) is my RSS reader. I use it with [nb](https://github.com/xwmx/nb) for bookmarking. I use nb for notetaking as well. I really like it so far since it uses Git under the hood.
+[Newsboat](https://newsboat.org) is my RSS reader. I use it with [nb](https://github.com/xwmx/nb) for bookmarking. I use nb for notetaking as well. I really like it so far since it uses Git under the hood ad lets me use my editor for writing.
 
 Markdown is my preferred text format, but for more formal work, I use LaTeX.
 
