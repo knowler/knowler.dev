@@ -5,6 +5,8 @@ description: Technology that I use every day or most days.
 ---
 # Uses
 
+I am a workflow junkie, so I’m always refining what I use. This is a list of the hardware and software that I use on a daily basis which varying degrees of details about those choices.
+
 ## Devices and Operating Systems
 
 I’ve used MacBook Pros as my daily driver for the last decade. I like macOS. I can make it feel like Linux, but still benefit from the OS exclusive apps it has, which is especially important for my work as a web developer.
@@ -39,14 +41,17 @@ Along with Alacritty, I use [tmux](https://github.com/tmux/tmux) as my terminal 
 
 ### Surfin’ the Web
 
-For browsing, I use Firefox for personal and Brave for work.
+For browsing, I use Firefox for personal and Brave for work. I really wish that Firefox’s container tabs and Chromium’s group tabs could have a baby or something. And no — Chromium profiles are not the same as container tabs.
 
-### Reading and Writing
+I really like [Hypothesis](https://hypothes.is/) for annotating web pages.
 
-* Calibre for ebooks on the Desktop and ReadEra Premium on mobile.
-* [Newsboat](https://newsboat.org) as my RSS reader.
-* [nb](https://github.com/xwmx/nb) for plain text notetaking.
-* Markdown is my preferred text format, but for more formal work, I use LaTeX.
+### Reading, Writing, and Listening
+
+I use [Calibre](https://calibre-ebook.com/) for ebooks on the Desktop and [ReadEra Premium](https://play.google.com/store/apps/details?id=org.readera.premium) on mobile. For podcasts I use [Pocket Casts](https://www.pocketcasts.com/). I also use it for audiobooks when I have the actual files.
+
+[Newsboat](https://newsboat.org) is my RSS reader. I use it with [nb](https://github.com/xwmx/nb) for bookmarking. I use nb for notetaking as well. I really like it so far since it uses Git under the hood.
+
+Markdown is my preferred text format, but for more formal work, I use LaTeX.
 
 ## Aesthetics
 
