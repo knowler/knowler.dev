@@ -11,7 +11,7 @@
   "dependencies": {
     "@octokit/plugin-throttling": "^3.6.2",
     "@remix-run/node": "^1.4.0",
-    "@remix-run/react": "^1.4.0",
+    "@remix-run/react": "^1.4.1",
     "@remix-run/serve": "^1.4.0",
     "@sendgrid/helpers": "^7.6.2",
     "@sendgrid/mail": "^7.6.2",
