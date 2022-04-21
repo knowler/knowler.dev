@@ -1,16 +1,17 @@
 import parseFrontMatter from "front-matter";
+import type { Processor } from "unified";
 
 // Roughly based on Chance’s Markdown setup (except just the basics):
 // https://github.com/chaance/chance-dot-dev-netlify/blob/f4184c087de761aede8ceb8995154fdd872377fe/app/md.server.ts
 
-let processor;
+let processor: Processor;
 
 interface ParsedMarkdown {
   attributes: Record<string, any>;
   html: string;
 }
 
-export async function parseMarkdown(contents): Promise<ParsedMarkdown> {
+export async function parseMarkdown(contents: string): Promise<ParsedMarkdown> {
   if (!processor) {
     const { unified } = await import("unified");
     const { default: remarkParse } = await import("remark-parse");

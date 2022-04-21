@@ -1,9 +1,5 @@
-import {
-  ActionFunction,
-  json,
-  LinksFunction,
-  MetaFunction,
-} from "@remix-run/node";
+import type { ActionFunction, LinksFunction, MetaFunction} from "@remix-run/node";
+import { json } from "@remix-run/node";
 import { Form, Link, useActionData, useTransition } from "@remix-run/react";
 import { AuthenticityTokenInput, verifyAuthenticityToken } from "remix-utils";
 import { z } from "zod";

@@ -1,4 +1,8 @@
 import { createCookieSessionStorage } from "@remix-run/node";
+import invariant from "tiny-invariant";
+
+invariant(process.env.SESSION_DOMAIN, 'SESSION_DOMAIN must be set');
+invariant(process.env.SESSION_SECRET, 'SESSION_SECRET must be set');
 
 const { getSession, commitSession, destroySession } =
   createCookieSessionStorage({
