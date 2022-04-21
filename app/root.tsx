@@ -92,8 +92,6 @@ export default function App() {
               </ul>
             </nav>
           </footer>
-          <ScrollRestoration />
-          <Scripts />
           <LiveReload />
         </body>
       </html>
