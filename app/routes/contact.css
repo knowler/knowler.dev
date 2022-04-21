@@ -35,6 +35,11 @@
   gap: 0.5rem;
 }
 
+.field-error {
+  font-size: 0.9em;
+  color: hsl(335 100% 50%);
+}
+
 .privacy-disclosure {
   line-height: 1.2;
 }
