@@ -28,6 +28,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   // Validate
   const result = await getFormData(request, z.object({
+    robotName: z.string().max(0),
     name: z.string().optional(),
     email: z.string().email(),
     subject: z.string(),
@@ -133,6 +134,7 @@ export default function Contact() {
         />
         {actionData?.errors?.message ? <p id="message-error" className="field-error">{actionData.errors.message}</p> : null}
       </div>
+      <input type="text" name="robotName" hidden />
       <p className="privacy-disclosure">
         Sending a message with this form will verify your email using{" "}
         <a href="https://verifier.meetchopra.com/">a service</a> to help me
@@ -145,10 +147,15 @@ export default function Contact() {
           Send message
         </button>
       </div>
-      {actionData?.success === false ? 
-        <div role="alert" className="field-error">
-          The following fields are invalid: {lister.format(Object.keys(actionData.errors))}. Please fix the issues and try again.
-        </div> 
+      {actionData?.success === false
+        ? (
+          <div role="alert" className="field-error">
+            {actionData.errors?.robotName 
+              ? 'Your submission seemed like spam, so it wasn’t sent. Please contact me directly if this seems like a mistake.' 
+              : `The following fields are invalid: ${lister.format(Object.keys(actionData.errors))}. Please fix the issues and try again.`
+            }
+          </div> 
+        ) 
         : null
       }
       {actionData?.success ? <output className="formStatus">Message sent!</output> : null}
