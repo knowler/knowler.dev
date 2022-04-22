@@ -80,6 +80,7 @@ export default function Contact() {
   const formRef = useRef<HTMLFormElement>(null);
   const successful = actionData?.success === true;
   const invalid = actionData?.success === false;
+  const spam = invalid && actionData?.errors?.robotName;
 
   useEffect(() => {
     if (successful) formRef.current?.reset();
@@ -162,10 +163,10 @@ export default function Contact() {
           Send message
         </button>
       </div>
-      {actionData?.success === false
+      {invalid
         ? (
           <div role="alert" className="field-error">
-            {actionData.errors?.robotName 
+            {spam
               ? 'Your submission seemed like spam, so it wasn’t sent. Please contact me directly if this seems like a mistake.' 
               : `The following fields are invalid: ${lister.format(Object.keys(actionData.errors))}. Please fix the issues and try again.`
             }
