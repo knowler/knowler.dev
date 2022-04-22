@@ -51,7 +51,7 @@ export const action: ActionFunction = async ({ request }) => {
   const emailVerified = await verifyEmail(result.data.email);
 
   // Email verification failed
-  if (!emailVerified) return json(result, 400);
+  if (!emailVerified) return json({...result, success: false}, 400);
 
   // Send email (throws)
   await mail.send({
