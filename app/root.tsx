@@ -4,8 +4,6 @@ import {
   Meta,
   NavLink,
   Outlet,
-  Scripts,
-  ScrollRestoration,
   useLoaderData,
 } from "@remix-run/react";
 import { json } from "@remix-run/node";

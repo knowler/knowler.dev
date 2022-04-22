@@ -10,9 +10,6 @@ import mail, { verifyEmail } from "~/mail.server";
 import { getSession } from "~/session.server";
 import styles from "./contact.css";
 
-invariant(process.env.CONTACT_FORM_TO, 'CONTACT_FORM_TO must be set');
-invariant(process.env.CONTACT_FORM_FROM, 'CONTACT_FORM_FROM must be set');
-
 export const meta: MetaFunction = () => ({
   title: "Contact – Nathan Knowler",
 });
@@ -20,6 +17,11 @@ export const meta: MetaFunction = () => ({
 export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }];
 
 export const action: ActionFunction = async ({ request }) => {
+  invariant(process.env.CONTACT_FORM_TO, 'CONTACT_FORM_TO must be set');
+  invariant(process.env.CONTACT_FORM_FROM, 'CONTACT_FORM_FROM must be set');
+  // Take a copy of the request so we can re-populate the form if invalid.
+  const clonedRequest = request.clone();
+
   // Verify CSRF (throws)
   await verifyAuthenticityToken(
     request,
@@ -28,7 +30,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   // Validate
   const result = await getFormData(request, z.object({
-    robotName: z.string().max(0),
+    robotName: z.string().max(0).optional(),
     name: z.string().optional(),
     email: z.string().email(),
     subject: z.string(),
@@ -36,7 +38,14 @@ export const action: ActionFunction = async ({ request }) => {
   }));
 
   // Validation failed
-  if (!result.success) return json(result, 400);
+  if (!result.success) {
+    return json({
+      ...result,
+      // Send back the original data so it can be populated in the form.
+      // Empty the form if it was spam.
+      data: result?.errors?.robotName ? undefined : Object.fromEntries(await clonedRequest.formData())
+    }, 400);
+  }
 
   // Verify email
   const emailVerified = await verifyEmail(result.data.email);
@@ -69,10 +78,12 @@ export default function Contact() {
   const actionData = useActionData();
   const transition = useTransition();
   const formRef = useRef<HTMLFormElement>(null);
+  const successful = actionData?.success === true;
+  const invalid = actionData?.success === false;
 
   useEffect(() => {
-    if (actionData?.success) formRef.current?.reset();
-  }, [actionData]);
+    if (successful) formRef.current?.reset();
+  }, [successful]);
 
   return (
     <Form ref={formRef} className="contact-form" method="post">
@@ -87,7 +98,8 @@ export default function Contact() {
           type="text"
           name="name"
           id="name"
-          aria-invalid={Boolean(actionData?.errors?.name)}
+          defaultValue={invalid ? actionData?.data?.name : undefined}
+          aria-invalid={Boolean(actionData?.errors?.name) || undefined}
           aria-describedby={actionData?.errors?.name ? 'name-error' : undefined}
         />
         {actionData?.errors?.name ? <p id="name-error" className="field-error">{actionData.errors.name}</p> : null}
@@ -101,7 +113,8 @@ export default function Contact() {
           name="email"
           id="email"
           required
-          aria-invalid={Boolean(actionData?.errors?.email)}
+          defaultValue={invalid ? actionData?.data?.email : undefined}
+          aria-invalid={Boolean(actionData?.errors?.email) || undefined}
           aria-describedby={actionData?.errors?.email ? 'email-error' : undefined}
         />
         {actionData?.errors?.email ? <p id="email-error" className="field-error">{actionData.errors.email}</p> : null}
@@ -115,7 +128,8 @@ export default function Contact() {
           name="subject"
           id="subject"
           required
-          aria-invalid={Boolean(actionData?.errors?.subject)}
+          defaultValue={invalid ? actionData?.data?.subject : undefined}
+          aria-invalid={Boolean(actionData?.errors?.subject) || undefined}
           aria-describedby={actionData?.errors?.subject ? 'subject-error' : undefined}
         />
         {actionData?.errors?.subject ? <p id="subject-error" className="field-error">{actionData.errors.subject}</p> : null}
@@ -129,7 +143,8 @@ export default function Contact() {
           name="message"
           id="message"
           required
-          aria-invalid={Boolean(actionData?.errors?.message)}
+          defaultValue={invalid ? actionData?.data?.message : undefined}
+          aria-invalid={Boolean(actionData?.errors?.message) || undefined}
           aria-describedby={actionData?.errors?.message ? 'message-error' : undefined}
         />
         {actionData?.errors?.message ? <p id="message-error" className="field-error">{actionData.errors.message}</p> : null}
