@@ -1,6 +1,6 @@
-import type { ActionFunction, LinksFunction, MetaFunction} from "@remix-run/node";
+import type { ActionFunction, LinksFunction, LoaderFunction, MetaFunction} from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Form, useActionData, useTransition } from "@remix-run/react";
+import { Form, useActionData, useLoaderData, useTransition } from "@remix-run/react";
 import { useEffect, useRef } from "react";
 import { getFormData } from "remix-params-helper";
 import { AuthenticityTokenInput, verifyAuthenticityToken } from "remix-utils";
@@ -56,10 +56,15 @@ export const action: ActionFunction = async ({ request }) => {
   return json(result);
 };
 
+export const loader: LoaderFunction = async () => json({
+  fallbackEmail: process.env.CONTACT_FORM_FROM,
+});
+
 // @ts-ignore
 const lister = new Intl.ListFormat('en', {style: 'long', type: 'conjunction'});
 
 export default function Contact() {
+  const {fallbackEmail} = useLoaderData();
   const actionData = useActionData();
   const transition = useTransition();
   const formRef = useRef<HTMLFormElement>(null);
@@ -132,7 +137,7 @@ export default function Contact() {
         Sending a message with this form will verify your email using{" "}
         <a href="https://verifier.meetchopra.com/">a service</a> to help me
         filter out potential spam. If you are not comfortable with that, you can send an email to{" "}
-        <a href={`mailto:${process.env.CONTACT_FORM_FROM}`}>{process.env.CONTACT_FORM_FROM}</a>{" "}
+        <a href={`mailto:${fallbackEmail}`}>{fallbackEmail}</a>{" "}
         (this is not my actual email, so don’t go adding it to your address book or anything).
       </p>
       <div className="submission-controls">
