@@ -1,7 +1,6 @@
 ---
 title: Uses
 description: Technology that I use every day.
-
 ---
 # Uses
 
@@ -11,7 +10,7 @@ I am a workflow junkie, so I’m always refining what I use. This is a list of t
 
 I’ve used MacBook Pros as my daily driver for the last decade. I like macOS. I can make it feel like Linux, but still benefit from the OS exclusive apps it has, which is especially important for my work as a web developer.
 
-I do have a desktop PC that I built when I was a teenager. It serves as a backup work computer and a gaming rig. Currently, I have [Manjaro](https://manjaro.org) installed on it — and I think Windows too (I forget though).
+I do have a desktop PC that I built when I was a teenager. It serves as a backup work computer and a gaming rig. Currently, I have [Manjaro](https://manjaro.org) and Windows 10 installed on it.
 
 My current phone is a Xiaomi Mi A2 Lite. I’ve had it for about three and half years. I just keep stock Android on there. I used to muck around with custom ROMs and what not.
 
