@@ -6,6 +6,7 @@ import { getFormData } from "remix-params-helper";
 import { AuthenticityTokenInput, verifyAuthenticityToken } from "remix-utils";
 import invariant from "tiny-invariant";
 import { z } from "zod";
+import { prisma } from "~/db.server";
 import mail, { verifyEmail } from "~/mail.server";
 import { getSession } from "~/session.server";
 import styles from "./contact.css";
@@ -52,18 +53,27 @@ export const action: ActionFunction = async ({ request }) => {
 
   // Email verification failed
   if (!emailVerified) return json({...result, success: false}, 400);
+  
+  const submission = await prisma.contactFormSubmission.create({
+    data: {
+      name: result.data.name,
+      email: result.data.email,
+      subject: result.data.subject,
+      message: result.data.message,
+    },
+  });
 
   // Send email (throws)
   await mail.send({
     to: process.env.CONTACT_FORM_TO as string,
     from: process.env.CONTACT_FORM_FROM as string,
-    replyTo: result.data.email,
-    subject: result.data.subject,
-    text: `Message from ${result.data?.name ?? "Anonymous"}:\n\n${result.data.message}`,
+    replyTo: submission.email,
+    subject: submission.subject,
+    text: `Message from ${submission.name}:\n\n${submission.message}`,
   });
 
   // Success
-  return json(result);
+  return json({success: true});
 };
 
 export const loader: LoaderFunction = async () => json({

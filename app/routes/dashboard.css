@@ -1,0 +1,19 @@
+main {
+  max-inline-size: unset;
+}
+
+table {
+  table-layout: fixed;
+  inline-size: 100%;
+}
+
+th {
+  text-align: start;
+}
+
+td > div {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25em;
+}
