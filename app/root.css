@@ -93,7 +93,7 @@ nav[aria-label=primary] ul {
 
 nav[aria-label=admin] {
   display: flex;
-  justify-content: space-between;
+  gap: 1rem;
   background-color: var(--accent);
   color: hsl(var(--hs), 4%);
   padding: 0.5em;
@@ -111,6 +111,10 @@ nav[aria-label=admin] :is(a, button) {
 
 nav[aria-label=admin] a[aria-current=page] {
   font-weight: 700;
+}
+
+nav[aria-label=admin] form[action="/logout"] {
+  margin-inline-start: auto;
 }
 
 main {
