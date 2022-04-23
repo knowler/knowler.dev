@@ -1,6 +1,6 @@
 ---
 title: Uses
-description: Technology that I use every day or most days.
+description: Technology that I use every day.
 
 ---
 # Uses
