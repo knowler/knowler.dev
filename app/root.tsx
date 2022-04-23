@@ -11,17 +11,22 @@ import type { MetaFunction, LinksFunction, LoaderFunction } from "@remix-run/nod
 import styles from "~/root.css";
 import { commitSession, getSession } from "./session.server";
 import { AuthenticityTokenProvider, createAuthenticityToken } from "remix-utils";
+import { auth } from "./auth.server";
+import AdminBar from "./components/admin-bar";
 
 interface LoaderData {
   csrf: string;
+  isAuthenticated: boolean;
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get("Cookie"));
+  const isAuthenticated = Boolean(await auth.isAuthenticated(request));
 
   return json<LoaderData>(
     {
       csrf: createAuthenticityToken(session),
+      isAuthenticated,
     },
     {
       headers: {
@@ -32,16 +37,17 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 export default function App() {
-  const { csrf } = useLoaderData<LoaderData>();
+  const { csrf, isAuthenticated } = useLoaderData<LoaderData>();
 
   return (
     <AuthenticityTokenProvider token={csrf}>
-      <html dir="ltr" lang="en-ca">
+      <html dir="ltr" lang="en-ca" className={isAuthenticated ? 'logged-in' : undefined}>
         <head>
           <Meta />
           <Links />
         </head>
         <body>
+          {isAuthenticated ? <AdminBar /> : null}
           <a href="#content" className="skip-link">
             Skip to content
           </a>

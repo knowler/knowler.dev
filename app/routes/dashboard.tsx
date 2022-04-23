@@ -70,11 +70,6 @@ export default function Dashboard() {
   return (
     <main>
       <h1>Welcome to the dashboard, {name}!</h1>
-      <nav aria-label="dashboard">
-        <Form action="/logout" method="post">
-          <button>Logout</button>
-        </Form>
-      </nav>
       <table>
         <tr>
           <th>Subject</th>
