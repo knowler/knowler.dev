@@ -1,0 +1,7 @@
+.form-field {
+  display: flex;
+  column-gap: 0.5em;
+}
+
+textarea[name="body"] {
+}
