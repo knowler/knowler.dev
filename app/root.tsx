@@ -4,13 +4,22 @@ import {
   Meta,
   NavLink,
   Outlet,
+  Scripts,
+  ScrollRestoration,
   useLoaderData,
 } from "@remix-run/react";
 import { json } from "@remix-run/node";
-import type { MetaFunction, LinksFunction, LoaderFunction } from "@remix-run/node";
+import type {
+  MetaFunction,
+  LinksFunction,
+  LoaderFunction,
+} from "@remix-run/node";
 import styles from "~/root.css";
 import { commitSession, getSession } from "./session.server";
-import { AuthenticityTokenProvider, createAuthenticityToken } from "remix-utils";
+import {
+  AuthenticityTokenProvider,
+  createAuthenticityToken,
+} from "remix-utils";
 import { auth } from "./auth.server";
 import AdminBar from "./components/admin-bar";
 
@@ -41,7 +50,11 @@ export default function App() {
 
   return (
     <AuthenticityTokenProvider token={csrf}>
-      <html dir="ltr" lang="en-ca" className={isAuthenticated ? 'logged-in' : undefined}>
+      <html
+        dir="ltr"
+        lang="en-ca"
+        className={isAuthenticated ? "logged-in" : undefined}
+      >
         <head>
           <Meta />
           <Links />
@@ -96,6 +109,8 @@ export default function App() {
               </ul>
             </nav>
           </footer>
+          <ScrollRestoration />
+          <Scripts />
           <LiveReload />
         </body>
       </html>

@@ -1,6 +1,6 @@
-import type { LoaderFunction, MetaFunction} from "@remix-run/node";
+import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData, useMatches, useParams } from "@remix-run/react";
 import { parseMarkdown } from "~/md.server";
 import { octokit } from "~/octokit.server";
 
@@ -39,8 +39,30 @@ export const loader: LoaderFunction = async ({ params }) => {
   });
 };
 
-export default function Uses() {
-  const { content } = useLoaderData<LoaderData>();
+function useAuthenticated() {
+  return useMatches().find((match) => match.id === "root")?.data
+    ?.isAuthenticated;
+}
 
-  return <article dangerouslySetInnerHTML={{ __html: content }} />;
+export default function Page() {
+  const params = useParams();
+  const { content } = useLoaderData<LoaderData>();
+  const isAuthenticated = useAuthenticated();
+
+  return (
+    <>
+      <article dangerouslySetInnerHTML={{ __html: content }} />
+      <aside>
+        {isAuthenticated ? (
+          <Link to="edit">Edit this page</Link>
+        ) : (
+          <a
+            href={`https://github.com/knowler/knowlerkno.ws/blob/main/content/pages/${params.page}.md`}
+          >
+            Edit on GitHub
+          </a>
+        )}
+      </aside>
+    </>
+  );
 }
