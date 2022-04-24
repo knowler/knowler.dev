@@ -1,6 +1,7 @@
 ---
 title: Privacy Policy
+description: undefined
 ---
 # Privacy Policy
 
-I don’t track nothing.
+I don’t track nothing. My contact form does verify your email with a third party service. I do provide an alternative method of contact.
