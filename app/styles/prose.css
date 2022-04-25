@@ -11,6 +11,10 @@
   margin-block-start: 1rem;
 }
 
+.prose h1 {
+  font-size: 2rem;
+}
+
 .prose li {
   margin-block-start: 0.75rem;
 }
@@ -23,4 +27,30 @@
   margin-inline-start: 0;
   padding-inline-start: 1em;
   border-inline-start: 0.25em solid #ddd;
+}
+
+.prose img {
+  width: 100%;
+}
+
+.prose pre {
+  display: flex;
+  padding-block: 0.75rem;
+  padding-inline: 1rem;
+  background-image: var(--fancy-bg);
+  border: 0.1rem solid hsl(var(--hs), 12%);
+  overflow-x: auto;
+  overflow-inline: auto;
+}
+
+.prose pre::after {
+  content: '';
+  flex-basis: 1rem;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.prose pre > code {
+  font-family: 'JetBrains Mono', monospace;
+  color: hsl(var(--hs), 70%);
 }

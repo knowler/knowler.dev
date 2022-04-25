@@ -28,17 +28,8 @@ body {
   background-color: hsl(var(--hs), 3%);
   color: #ddd;
   font-family: 'Atkinson Hyperlegible', sans-serif;
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 300;
-}
-
-.logged-in body {
-  grid-template:
-    "admin-bar" max-content
-    "skip" max-content
-    "banner" max-content
-    "content" auto
-    "colophon" max-content;
 }
 
 a {
@@ -66,129 +57,29 @@ h1, h2, h3, h4 {
   font-weight: 500;
 }
 
-:where(article) h1 {
-  font-size: 2rem;
-}
-
-header {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-  padding-block-start: var(--pad);
-  padding-inline: var(--pad);
-}
-
-nav[aria-label=primary] {
-  flex-grow: 1;
-}
-
-nav[aria-label=primary] ul {
-  display: flex;
-  gap: 1rem;
-  list-style: none;
-  padding-inline-start: 0;
-  margin-block: 0;
-}
-
-nav[aria-label=admin] {
-  display: flex;
-  gap: 1rem;
-  background-color: var(--accent);
-  color: hsl(var(--hs), 4%);
-  padding: 0.5em;
-}
-
-nav[aria-label=admin] :is(a, button) {
-  color: inherit;
-  text-decoration: none;
-  background: none;
-  border: 0;
-  font-size: 1em;
-  font-family: inherit;
-  cursor: pointer;
-}
-
-nav[aria-label=admin] a[aria-current=page] {
-  font-weight: 700;
-}
-
-nav[aria-label=admin] form[action="/logout"] {
-  margin-inline-start: auto;
-}
-
 main {
   padding: var(--pad);
-}
-
-footer {
-  background-color: hsl(var(--hs), 4%);
-  padding: var(--pad);
-  flex-shrink: 0;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1rem;
-  justify-content: space-between;
-  font-size: 0.9rem;
-}
-
-footer > * {
-  margin-block: 0;
-}
-
-nav[aria-label=secondary] ul {
-  display: flex;
-  list-style: none;
-  padding-inline-start: 0;
-  gap: 0.5rem;
-  margin: 0;
 }
 
 strong {
   font-weight: 600;
 }
 
-a.site-title {
-  padding-block: 0.25rem;
-  padding-inline: 0.5rem;
-  border: 0.1rem solid #eee;
-  color: inherit;
-  text-decoration: none;
-  font-size: 1.25rem;
+/** Visually Hidden **/
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
-a.site-title:focus,
-a.site-title:hover {
-  background-color: #eee;
-  color: #000;
-}
-
-pre {
-  display: flex;
-  padding-block: 0.75rem;
-  padding-inline: 1rem;
-  background-image: var(--fancy-bg);
-  border: 0.1rem solid hsl(var(--hs), 12%);
-  overflow-x: auto;
-  overflow-inline: auto;
-}
-
-pre:after {
-  content: '';
-  flex-basis: 1rem;
-  flex-grow: 0;
-  flex-shrink: 0;
-}
-
-pre > code {
-  font-family: 'JetBrains Mono', monospace;
-  color: hsl(var(--hs), 70%);
-}
-
-img {
-  width: 100%;
-}
+/** Skip to Content **/
 
 .skip-link {
   flex-shrink: 0;
@@ -208,19 +99,69 @@ img {
   text-decoration: underline;
 }
 
-.github-link-icon {
+/** Banner **/
+
+.banner {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-block-start: var(--pad);
+  padding-inline: var(--pad);
+}
+
+.banner ._title {
+  padding-block: 0.25rem;
+  padding-inline: 0.5rem;
+  border: 0.1rem solid #eee;
+  color: inherit;
+  text-decoration: none;
+  font-size: 1.25rem;
+}
+
+.banner ._title:is(:focus, :hover) {
+  background-color: #eee;
+  color: #000;
+}
+
+.banner ._nav {
+  flex-grow: 1;
+}
+
+.banner ._nav-list {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+  padding-inline-start: 0;
+  margin-block: 0;
+}
+
+.banner ._external-link-icon {
   font-family: system-ui, sans-serif;
   font-weight: 200;
 }
 
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
+/** Content Info **/
+
+.content-info {
+  background-color: hsl(var(--hs), 4%);
+  padding: var(--pad);
+  flex-shrink: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  justify-content: space-between;
+  font-size: 0.9rem;
+}
+
+.content-info :is(p, ul) {
+  margin-block: 0;
+}
+
+.content-info ._nav-list {
+  display: flex;
+  list-style: none;
+  padding-inline-start: 0;
+  gap: 0.5rem;
 }

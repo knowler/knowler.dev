@@ -1,0 +1,36 @@
+.logged-in body {
+  grid-template:
+    "admin-bar" max-content
+    "skip" max-content
+    "banner" max-content
+    "content" auto
+    "colophon" max-content;
+}
+
+/** Admin Bar **/
+
+.admin-bar {
+  display: flex;
+  gap: 1rem;
+  background-color: var(--accent);
+  color: hsl(var(--hs), 4%);
+  padding: 0.5em;
+}
+
+.admin-bar :is(a, button) {
+  color: inherit;
+  text-decoration: none;
+  background: none;
+  border: 0;
+  font-size: 1em;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.admin-bar a[aria-current=page] {
+  font-weight: 700;
+}
+
+.admin-bar ._logout-form {
+  margin-inline-start: auto;
+}
