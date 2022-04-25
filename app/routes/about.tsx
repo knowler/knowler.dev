@@ -15,7 +15,7 @@ export const Meta: MetaFunction = () => ({
 export default function About() {
   return (
     <FootnotesProvider>
-      <article>
+      <article className="prose">
         <h1>About Nathan Knowler</h1>
         <aside aria-label="Work in progress" className="wip">
           <p>This article is a work in progress.</p>

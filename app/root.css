@@ -119,7 +119,6 @@ nav[aria-label=admin] form[action="/logout"] {
 
 main {
   padding: var(--pad);
-  max-inline-size: min(64ch, 100vw);
 }
 
 footer {
@@ -150,23 +149,27 @@ strong {
   font-weight: 600;
 }
 
-:where(main, article) > * {
+.prose {
+  max-inline-size: min(64ch, 100vw);
+}
+
+.prose > * {
   margin-block: 0;
 }
 
-:where(main, article) > * + * {
+.prose > * + * {
   margin-block-start: 1rem;
 }
 
-:where(main, article) li {
+.prose li {
   margin-block-start: 0.75rem;
 }
 
-:where(main, article) p {
+.prose p {
   line-height: 1.7;
 }
 
-:where(main, article) blockquote {
+.prose blockquote {
   margin-inline-start: 0;
   padding-inline-start: 1em;
   border-inline-start: 0.25em solid #ddd;

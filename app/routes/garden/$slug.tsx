@@ -93,7 +93,7 @@ export const links: LinksFunction = () => [
 export default function GardenPost() {
   const { post } = useLoaderData<LoaderData>();
 
-  return <article dangerouslySetInnerHTML={{ __html: post.body }} />;
+  return <article className="prose" dangerouslySetInnerHTML={{ __html: post.body }} />;
 }
 
 export function CatchBoundary() {

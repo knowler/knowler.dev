@@ -51,7 +51,7 @@ export default function Page() {
 
   return (
     <>
-      <article dangerouslySetInnerHTML={{ __html: content }} />
+      <article className="prose" dangerouslySetInnerHTML={{ __html: content }} />
       <aside>
         {isAuthenticated ? (
           <Link to="edit">Edit this page</Link>
