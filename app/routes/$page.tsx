@@ -1,8 +1,13 @@
-import type { LoaderFunction, MetaFunction } from "@remix-run/node";
+import type { LinksFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData, useMatches, useParams } from "@remix-run/react";
 import { parseMarkdown } from "~/md.server";
 import { octokit } from "~/octokit.server";
+import proseStyles from '~/styles/prose.css';
+
+export const links: LinksFunction = () => [
+  {rel: 'stylesheet', href: proseStyles},
+];
 
 export const meta: MetaFunction = ({ data }) => ({
   title: `${data.title} – Nathan Knowler`,

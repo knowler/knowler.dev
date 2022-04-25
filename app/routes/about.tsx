@@ -4,9 +4,13 @@ import {
   Footnotes,
   FootnotesProvider,
 } from "react-a11y-footnotes";
+import proseStyles from '~/styles/prose.css';
 import styles from "./about.css";
 
-export const links = () => [{ rel: "stylesheet", href: styles }];
+export const links = () => [
+  {rel: "stylesheet", href: proseStyles },
+  {rel: "stylesheet", href: styles },
+];
 
 export const Meta: MetaFunction = () => ({
   title: "About – Nathan Knowler",

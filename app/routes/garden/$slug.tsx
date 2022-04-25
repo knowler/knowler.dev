@@ -10,6 +10,7 @@ import { useCatch, useLoaderData } from "@remix-run/react";
 import { z } from "zod";
 import { parseMarkdown } from "~/md.server";
 import { octokit } from "~/octokit.server";
+import proseStyles from '~/styles/prose.css';
 
 interface Post {
   title: string;
@@ -84,6 +85,9 @@ export const meta: MetaFunction = ({ data }) => {
 };
 
 export const links: LinksFunction = () => [
+  {
+    rel: 'stylesheet', href: proseStyles,
+  },
   {
     rel: "stylesheet",
     href: "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300&display=swap",

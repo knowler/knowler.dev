@@ -1,8 +1,14 @@
-import { json, LoaderFunction, MetaFunction } from "@remix-run/node";
+import type { LinksFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import { useCatch, useLoaderData } from "@remix-run/react";
 import { z } from "zod";
 import { parseMarkdown } from "~/md.server";
 import { octokit } from "~/octokit.server";
+import proseStyles from '~/styles/prose.css';
+
+export const links: LinksFunction = () => [
+  {rel: 'stylesheet', href: proseStyles},
+];
 
 interface Post {
   title: string;
