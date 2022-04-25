@@ -1,5 +1,6 @@
 .prose {
   max-inline-size: min(64ch, 100vw);
+  margin-block-end: 2rem;
 }
 
 .prose > * {
