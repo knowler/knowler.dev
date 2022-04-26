@@ -7,8 +7,13 @@ import styles from "./edit.css";
 import { getFormData } from "remix-params-helper";
 import { z } from "zod";
 import { auth } from "~/auth.server";
+import Editor from "~/components/editor";
+import editorStyles from '~/components/editor.css';
 
-export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }];
+export const links: LinksFunction = () => [
+  { rel: "stylesheet", href: editorStyles},
+  { rel: "stylesheet", href: styles },
+];
 
 const updatePageMutation = `
   mutation updatePage(
@@ -111,12 +116,12 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 };
 
 export default function PageEdit() {
-  const { attributes, body, expectedHeadOid } = useLoaderData();
+  const { attributes, expectedHeadOid } = useLoaderData();
 
   return (
-    <main>
-      <Form method="patch">
-        <h1>Editing “{attributes.title}”</h1>
+    <Form method="patch" className="edit-form">
+      <h1>Editing “{attributes.title}”</h1>
+      <div className="_sidebar">
         <div className="form-field">
           <label htmlFor="title">Title</label>
           <input
@@ -129,24 +134,25 @@ export default function PageEdit() {
         </div>
         <div className="form-field">
           <label htmlFor="description">Description</label>
-          <input
-            type="text"
+          <textarea
             id="description"
             name="description"
             defaultValue={attributes.description}
           />
         </div>
-        <div>
-          <label htmlFor="body">Content</label>
-          <textarea id="body" name="body" required defaultValue={body} />
-        </div>
+        <button type="submit">
+          Save
+        </button>
         <input
           type="hidden"
           name="expectedHeadOid"
           defaultValue={expectedHeadOid}
         />
-        <button type="submit">Save</button>
-      </Form>
-    </main>
+      </div>
+      <div className="_editor">
+        <label>Content</label>
+        <Editor />
+      </div>
+    </Form>
   );
 }

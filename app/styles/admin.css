@@ -10,6 +10,9 @@
 /** Admin Bar **/
 
 .admin-bar {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 10;
   display: flex;
   gap: 1rem;
   background-color: var(--accent);
