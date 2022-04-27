@@ -17,7 +17,7 @@
     "@lexical/rich-text": "^0.2.4",
     "@lexical/utils": "^0.2.4",
     "@octokit/plugin-throttling": "^3.6.2",
-    "@prisma/client": "^3.12.0",
+    "@prisma/client": "^3.13.0",
     "@radix-ui/react-icons": "^1.1.0",
     "@radix-ui/react-toolbar": "^0.1.5",
     "@remix-run/node": "^1.4.2",
@@ -52,7 +52,7 @@
     "@types/react": "^18.0.5",
     "@types/react-dom": "^18.0.1",
     "eslint": "^8.13.0",
-    "prisma": "^3.12.0",
+    "prisma": "^3.13.0",
     "trim-newlines": "^4.0.2",
     "typescript": "^4.6.3"
   },
