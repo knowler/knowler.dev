@@ -81,7 +81,6 @@
 .editor ._input {
   position: relative;
   resize: none;
-  max-inline-size: min(64ch, 100vw);
   caret-color: var(--accent);
   outline: 0;
   padding: 1em;
@@ -148,7 +147,7 @@
   border: 0;
   border-radius: 0.25em;
   transition-timing-function: 180ms;
-  transition-property: background, border-color, color;
+  transition-property: background, color;
   display: grid;
   place-items: center;
   padding: 0.5em;

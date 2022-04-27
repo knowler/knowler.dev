@@ -13,10 +13,9 @@
     "paths": {
       "~/*": ["./app/*"]
     },
-    "types": [
-      "react/next",
-      "react-dom/next"
-    ],
-    "noEmit": true
+    "types": ["react/next", "react-dom/next"],
+    "noEmit": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowJs": true
   }
 }

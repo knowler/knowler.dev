@@ -1,47 +1,61 @@
 import { useCallback, useEffect, useState } from "react";
 import { useMatches } from "@remix-run/react";
-import cx from 'classnames';
+import cx from "classnames";
 import * as Toolbar from "@radix-ui/react-toolbar";
-import { ChevronLeftIcon, ChevronRightIcon, CodeIcon, FontBoldIcon, FontItalicIcon, StrikethroughIcon, UnderlineIcon } from "@radix-ui/react-icons";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  CodeIcon,
+  FontBoldIcon,
+  FontItalicIcon,
+  StrikethroughIcon,
+  UnderlineIcon,
+} from "@radix-ui/react-icons";
 
-import Composer from '@lexical/react/LexicalComposer';
+import Composer from "@lexical/react/LexicalComposer";
 import ContentEditable from "@lexical/react/LexicalContentEditable";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 
 // Lexical plugins
 import RichTextPlugin from "@lexical/react/LexicalRichTextPlugin";
-import {HistoryPlugin} from "@lexical/react/LexicalHistoryPlugin";
+import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import LinkPlugin from "@lexical/react/LexicalLinkPlugin";
 import ListPlugin from "@lexical/react/LexicalListPlugin";
 import MarkdownShortcutPlugin from "@lexical/react/LexicalMarkdownShortcutPlugin";
 
 // Lexical Utils
 import { $isHeadingNode, HeadingNode, QuoteNode } from "@lexical/rich-text";
-import { $getSelection, $isRangeSelection, CAN_REDO_COMMAND, CAN_UNDO_COMMAND, COMMAND_PRIORITY_LOW, FORMAT_TEXT_COMMAND, ParagraphNode, REDO_COMMAND, SELECTION_CHANGE_COMMAND, UNDO_COMMAND } from "lexical";
+import {
+  $getSelection,
+  $isRangeSelection,
+  CAN_REDO_COMMAND,
+  CAN_UNDO_COMMAND,
+  COMMAND_PRIORITY_LOW,
+  FORMAT_TEXT_COMMAND,
+  ParagraphNode,
+  REDO_COMMAND,
+  SELECTION_CHANGE_COMMAND,
+  UNDO_COMMAND,
+} from "lexical";
 import { LinkNode } from "@lexical/link";
 import { ListNode } from "@lexical/list";
 import { mergeRegister } from "@lexical/utils";
 import { $convertFromMarkdownString } from "@lexical/markdown";
 
-const useContent = () => useMatches().find(match => match.id === 'routes/$page.edit')?.data.body;
+const useContent = () =>
+  useMatches().find((match) => match.id === "routes/$page.edit")?.data.body;
 
 const initialConfig = {
   theme: {
     text: {
-      underline: 'underline',
-      strikethrough: 'strikethrough',
+      underline: "underline",
+      strikethrough: "strikethrough",
     },
   },
   onError(error: Error) {
-    throw error
+    throw error;
   },
-  nodes: [
-    HeadingNode,
-    ParagraphNode,
-    QuoteNode,
-    LinkNode,
-    ListNode,
-  ],
+  nodes: [HeadingNode, ParagraphNode, QuoteNode, LinkNode, ListNode],
 };
 
 export default function Editor() {
@@ -78,7 +92,12 @@ function LoadContentPlugin() {
   return null;
 }
 
-type TextFormatType = "bold" | "italic" | "underline" | "strikethrough" | "code";
+type TextFormatType =
+  | "bold"
+  | "italic"
+  | "underline"
+  | "strikethrough"
+  | "code";
 type TextAlignmentType = "left" | "center" | "right";
 
 function ToolbarPlugin() {
@@ -91,19 +110,19 @@ function ToolbarPlugin() {
   const [isStrikethrough, setIsStrikethrough] = useState(false);
   const [isCode, setIsCode] = useState(false);
   const [textFormatting, setTextFormatting] = useState<TextFormatType[]>([]);
-  const [selectedElementKey, setSelectedElementKey] = useState<string | null>(null);
+  const [selectedElementKey, setSelectedElementKey] = useState<string | null>(
+    null
+  );
   const [blockType, setBlockType] = useState("paragraph");
 
   useEffect(() => {
     setTextFormatting(
-      Object
-        .entries({
-          bold: isBold,
-          italic: isItalic,
-          underline: isUnderline,
-          strikethrough: isStrikethrough,
-        })
-        .flatMap(([key, value]) => value ? key as TextFormatType : [])
+      Object.entries({
+        bold: isBold,
+        italic: isItalic,
+        underline: isUnderline,
+        strikethrough: isStrikethrough,
+      }).flatMap(([key, value]) => (value ? (key as TextFormatType) : []))
     );
   }, [isBold, isItalic, isUnderline, isStrikethrough]);
 
@@ -111,9 +130,10 @@ function ToolbarPlugin() {
     const selection = $getSelection();
     if ($isRangeSelection(selection)) {
       const anchorNode = selection.anchor.getNode();
-      const element = anchorNode.getKey() === "root"
-        ? anchorNode
-        : anchorNode.getTopLevelElementOrThrow();
+      const element =
+        anchorNode.getKey() === "root"
+          ? anchorNode
+          : anchorNode.getTopLevelElementOrThrow();
       const elementKey = element.getKey();
       const elementDOM = editor.getElementByKey(elementKey);
       console.log(element.getFormat());
@@ -125,17 +145,17 @@ function ToolbarPlugin() {
         setBlockType(type);
       }
 
-      setIsBold(selection.hasFormat('bold'));
-      setIsItalic(selection.hasFormat('italic'));
-      setIsUnderline(selection.hasFormat('underline'));
-      setIsStrikethrough(selection.hasFormat('strikethrough'));
-      setIsCode(selection.hasFormat('code'));
+      setIsBold(selection.hasFormat("bold"));
+      setIsItalic(selection.hasFormat("italic"));
+      setIsUnderline(selection.hasFormat("underline"));
+      setIsStrikethrough(selection.hasFormat("strikethrough"));
+      setIsCode(selection.hasFormat("code"));
     }
   }, [editor]);
 
   useEffect(() => {
     return mergeRegister(
-      editor.registerUpdateListener(({editorState}) => {
+      editor.registerUpdateListener(({ editorState }) => {
         editorState.read(() => {
           updateToolbar();
         });
@@ -168,47 +188,54 @@ function ToolbarPlugin() {
   }, [editor, updateToolbar]);
 
   const handleTextFormattingChange = (values: TextFormatType[]) => {
-    const nowIsBold = values.includes('bold');
+    const nowIsBold = values.includes("bold");
     const shouldToggleBold = (!isBold && nowIsBold) || (isBold && !nowIsBold);
-    const nowIsItalic = values.includes('italic');
-    const shouldToggleItalic = (!isItalic && nowIsItalic) || (isItalic && !nowIsItalic);
-    const nowIsUnderline = values.includes('underline');
-    const shouldToggleUnderline = (!isUnderline && nowIsUnderline) || (isUnderline && !nowIsUnderline);
-    const nowIsStrikethrough = values.includes('strikethrough');
-    const shouldToggleStrikethrough = (!isStrikethrough && nowIsStrikethrough) || (isStrikethrough && !nowIsStrikethrough);
-    const nowIsCode = values.includes('code');
+    const nowIsItalic = values.includes("italic");
+    const shouldToggleItalic =
+      (!isItalic && nowIsItalic) || (isItalic && !nowIsItalic);
+    const nowIsUnderline = values.includes("underline");
+    const shouldToggleUnderline =
+      (!isUnderline && nowIsUnderline) || (isUnderline && !nowIsUnderline);
+    const nowIsStrikethrough = values.includes("strikethrough");
+    const shouldToggleStrikethrough =
+      (!isStrikethrough && nowIsStrikethrough) ||
+      (isStrikethrough && !nowIsStrikethrough);
+    const nowIsCode = values.includes("code");
     const shouldToggleCode = (!isCode && nowIsCode) || (isCode && !nowIsCode);
 
-    if (shouldToggleBold) editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold'); 
-    if (shouldToggleItalic) editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic');
-    if (shouldToggleUnderline) editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline');
-    if (shouldToggleStrikethrough) editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough');
-    if (shouldToggleCode) editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'code');
-  }
+    if (shouldToggleBold) editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
+    if (shouldToggleItalic)
+      editor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic");
+    if (shouldToggleUnderline)
+      editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
+    if (shouldToggleStrikethrough)
+      editor.dispatchCommand(FORMAT_TEXT_COMMAND, "strikethrough");
+    if (shouldToggleCode) editor.dispatchCommand(FORMAT_TEXT_COMMAND, "code");
+  };
 
   const textFormattingControls = [
     {
-      value: 'bold',
+      value: "bold",
       state: isBold,
       Icon: FontBoldIcon,
     },
     {
-      value: 'italic',
+      value: "italic",
       state: isItalic,
       Icon: FontItalicIcon,
     },
     {
-      value: 'underline',
+      value: "underline",
       state: isUnderline,
       Icon: UnderlineIcon,
     },
     {
-      value: 'strikethrough',
+      value: "strikethrough",
       state: isStrikethrough,
       Icon: StrikethroughIcon,
     },
     {
-      value: 'code',
+      value: "code",
       state: isCode,
       Icon: CodeIcon,
     },
@@ -217,10 +244,12 @@ function ToolbarPlugin() {
   return (
     <Toolbar.Root className="toolbar _toolabr">
       <div className="_group">
-        <Toolbar.Button 
+        <Toolbar.Button
           className="_button"
           disabled={!canUndo}
-          onClick={() => { editor.dispatchCommand(UNDO_COMMAND); }}
+          onClick={() => {
+            editor.dispatchCommand(UNDO_COMMAND);
+          }}
           aria-label="undo"
         >
           <ChevronLeftIcon />
@@ -228,16 +257,27 @@ function ToolbarPlugin() {
         <Toolbar.Button
           className="_button"
           disabled={!canRedo}
-          onClick={() => { editor.dispatchCommand(REDO_COMMAND); }}
+          onClick={() => {
+            editor.dispatchCommand(REDO_COMMAND);
+          }}
           aria-label="redo"
         >
           <ChevronRightIcon />
         </Toolbar.Button>
       </div>
-      <Toolbar.ToggleGroup className="_group" type="multiple" aria-label="Text formatting" value={textFormatting} onValueChange={handleTextFormattingChange}>
-        {textFormattingControls.map(control => (
+      <Toolbar.ToggleGroup
+        className="_group"
+        type="multiple"
+        aria-label="Text formatting"
+        value={textFormatting}
+        onValueChange={handleTextFormattingChange}
+      >
+        {textFormattingControls.map((control) => (
           <Toolbar.ToggleItem key={control.value} value={control.value} asChild>
-            <button className={cx('_button', control.state && 'is-active')} aria-label={control.value}>
+            <button
+              className={cx("_button", control.state && "is-active")}
+              aria-label={control.value}
+            >
               <control.Icon />
             </button>
           </Toolbar.ToggleItem>
