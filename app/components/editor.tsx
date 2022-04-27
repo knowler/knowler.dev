@@ -26,7 +26,12 @@ import { $convertFromMarkdownString } from "@lexical/markdown";
 const useContent = () => useMatches().find(match => match.id === 'routes/$page.edit')?.data.body;
 
 const initialConfig = {
-  theme: {},
+  theme: {
+    text: {
+      underline: 'underline',
+      strikethrough: 'strikethrough',
+    },
+  },
   onError(error: Error) {
     throw error
   },

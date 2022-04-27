@@ -2,6 +2,7 @@
   display: grid;
   grid-template-areas: "title title"
                        "meta content";
+  grid-template-columns: max-content auto;
   gap: 1rem;
 }
 
@@ -11,7 +12,8 @@
 
 .edit-form ._sidebar {
   grid-area: meta;
-  inline-size: 20rem;
+  max-inline-size: 24rem;
+  min-inline-size: 20rem;
   display: grid;
   gap: 0.5em;
   align-content: start;
@@ -26,6 +28,10 @@
 .edit-form .form-field {
   display: grid;
   gap: 0.25em;
+}
+
+.edit-form .form-field textarea {
+  resize: block;
 }
 
 .edit-form .form-field :is(input, textarea) {
@@ -56,8 +62,10 @@
 }
 
 .editor {
+  position: relative;
   block-size: calc(100vh - 8rem);
   overflow-y: auto;
+  overscroll-behavior: none;
   background: var(--fancy-bg);
   border: 0.125em solid hsl(var(--hs), 7%);
   border-radius: 0.375em;
@@ -73,6 +81,7 @@
 .editor ._input {
   position: relative;
   resize: none;
+  max-inline-size: min(64ch, 100vw);
   caret-color: var(--accent);
   outline: 0;
   padding: 1em;
@@ -104,7 +113,18 @@
   text-overflow: ellipsis;
 }
 
+.underline {
+  text-decoration: underline;
+}
+
+.strikethrough {
+  text-decoration: line-through;
+}
+
 .toolbar {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 5;
   display: flex;
   padding: 0.25em;
   gap: 0.5em;
@@ -128,7 +148,7 @@
   border: 0;
   border-radius: 0.25em;
   transition-timing-function: 180ms;
-  transition-property: background-color, border-color, color;
+  transition-property: background, border-color, color;
   display: grid;
   place-items: center;
   padding: 0.5em;

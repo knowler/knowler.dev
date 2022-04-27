@@ -130,15 +130,23 @@ strong {
 
 .banner ._nav-list {
   display: flex;
+  align-items: center;
   gap: 1rem;
   list-style: none;
   padding-inline-start: 0;
   margin-block: 0;
 }
 
-.banner ._external-link-icon {
-  font-family: system-ui, sans-serif;
-  font-weight: 200;
+.banner ._github-link {
+  display: grid;
+  place-items: center;
+  padding: 0.25em;
+  border-radius: 9999px;
+}
+
+.banner ._github-icon {
+  font-size: 1em;
+  height: 1.25em;
 }
 
 /** Content Info **/

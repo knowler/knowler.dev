@@ -23,6 +23,7 @@ import { auth } from "./auth.server";
 import AdminBar from "./components/admin-bar";
 import styles from "~/root.css";
 import adminStyles from '~/styles/admin.css'
+import { GitHubLogoIcon } from "@radix-ui/react-icons";
 
 interface LoaderData {
   csrf: string;
@@ -82,11 +83,9 @@ export default function App() {
                   <NavLink to="/uses">Uses</NavLink>
                 </li>
                 <li>
-                  <a href="https://github.com/knowler">
-                    GitHub{" "}
-                    <span className="_external-link-icon" aria-hidden="true">
-                      ↗
-                    </span>
+                  <a href="https://github.com/knowler" className="_github-link" title="@knowler on GitHub">
+                    <span className="visually-hidden">@knowler on GitHub</span>
+                    <GitHubLogoIcon aria-hidden className="_github-icon" width={undefined} height={undefined} />
                   </a>
                 </li>
               </ul>
