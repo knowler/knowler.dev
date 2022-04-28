@@ -18,6 +18,7 @@ import { commitSession, getSession } from "./session.server";
 import {
   AuthenticityTokenProvider,
   createAuthenticityToken,
+  useShouldHydrate,
 } from "remix-utils";
 import { auth } from "./auth.server";
 import AdminBar from "./components/admin-bar";
@@ -48,6 +49,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 export default function App() {
+  const shouldHydrate = useShouldHydrate();
   const { csrf, isAuthenticated } = useLoaderData<LoaderData>();
 
   return (
@@ -110,8 +112,12 @@ export default function App() {
               </ul>
             </nav>
           </footer>
-          <ScrollRestoration />
-          <Scripts />
+          {shouldHydrate && (
+            <>
+              <ScrollRestoration />
+              <Scripts />
+            </>
+          )}
           <LiveReload />
         </body>
       </html>

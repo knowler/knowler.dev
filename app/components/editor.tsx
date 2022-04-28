@@ -136,7 +136,6 @@ function ToolbarPlugin() {
           : anchorNode.getTopLevelElementOrThrow();
       const elementKey = element.getKey();
       const elementDOM = editor.getElementByKey(elementKey);
-      console.log(element.getFormat());
       if (elementDOM !== null) {
         setSelectedElementKey(elementKey);
         const type = $isHeadingNode(element)

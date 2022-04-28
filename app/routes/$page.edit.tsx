@@ -10,6 +10,8 @@ import { auth } from "~/auth.server";
 import Editor from "~/components/editor";
 import editorStyles from '~/components/editor.css';
 
+export const handle = { hydrate: true };
+
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: editorStyles},
   { rel: "stylesheet", href: styles },
