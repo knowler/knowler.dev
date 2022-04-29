@@ -9,7 +9,7 @@
     "start": "remix-serve build"
   },
   "dependencies": {
-    "@lexical/code": "^0.2.4",
+    "@lexical/code": "^0.2.5",
     "@lexical/link": "^0.2.4",
     "@lexical/list": "^0.2.4",
     "@lexical/markdown": "^0.2.4",
