@@ -42,7 +42,7 @@
     "remix-auth": "^3.2.1",
     "remix-auth-github": "^1.1.0",
     "remix-params-helper": "^0.4.9",
-    "remix-utils": "^3.0.0",
+    "remix-utils": "^3.1.0",
     "tiny-invariant": "^1.2.0",
     "unified": "^10.1.2",
     "zod": "^3.14.4"
