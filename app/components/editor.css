@@ -1,9 +1,14 @@
 .edit-form {
   display: grid;
-  grid-template-areas: "title title"
-                       "meta content";
-  grid-template-columns: max-content auto;
   gap: 1rem;
+}
+
+@media screen and (min-width: 32rem) {
+  .edit-form {
+    grid-template-areas: "title title"
+                         "meta content";
+    grid-template-columns: max-content auto;
+  }
 }
 
 .edit-form h1 {
