@@ -4,7 +4,7 @@ description: Technology that I use every day.
 ---
 # Uses
 
-I am a workflow junkie, so I’m always refining what I use. This is a list of the hardware and software that I use on a daily basis with varying degrees of details about those choices.
+I am a workflow *junkie*, so I’m always refining what I use. This is a list of the hardware and software that I use on a daily basis with varying degrees of details about those choices.
 
 ## Devices and Operating Systems
 
@@ -16,7 +16,7 @@ My current phone is a Xiaomi Mi A2 Lite. I’ve had it for about three and half 
 
 ## Peripherals
 
-Generally, I just use my MacBook’s keyboard and trackpad. I do have an [ErgoDox EZ](https://ergodox-ez.com/) that I use when I use a second monitor or if I am using my desktop computer. It’s tough to get used to since often I just need to get work done. I know I just need to take a few weeks of dedicated use to force myself to get better at it. I suspect it will be like learning anything with a steep learning curve (e.g. `vim`, `tmux`, etc.).
+Generally, I just use my MacBook’s keyboard and trackpad. I do have an [ErgoDox EZ](https://ergodox-ez.com/) that I use when I use a second monitor or if I am using my desktop computer. It’s tough to get used to since often I just need to get work done. I know I just need to take a few weeks of dedicated use to force myself to get better at it. I suspect it will be like learning anything with a steep learning curve (e.g. vim, tmux, etc.).
 
 I have an old 24-inch BenQ monitor that I use. It’s not a high DPI screen which both isn’t great for regular use, but also is good for testing some designs. One day I’ll upgrade it.
 
