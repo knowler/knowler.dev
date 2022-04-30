@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useMatches } from "@remix-run/react";
 import cx from "classnames";
 import * as Toolbar from "@radix-ui/react-toolbar";
@@ -26,6 +26,7 @@ import MarkdownShortcutPlugin from "@lexical/react/LexicalMarkdownShortcutPlugin
 // Lexical Utils
 import { $isHeadingNode, HeadingNode, QuoteNode } from "@lexical/rich-text";
 import {
+  $getRoot,
   $getSelection,
   $isRangeSelection,
   CAN_REDO_COMMAND,
@@ -40,7 +41,8 @@ import {
 import { LinkNode } from "@lexical/link";
 import { ListNode } from "@lexical/list";
 import { mergeRegister } from "@lexical/utils";
-import { $convertFromMarkdownString } from "@lexical/markdown";
+
+import { lexicalToMarkdown, mdastNodeToLexical } from "~/utils/lexical-mdast";
 
 const useContent = () =>
   useMatches().find((match) => match.id === "routes/$page.edit")?.data.body;
@@ -65,7 +67,7 @@ export default function Editor() {
         <ToolbarPlugin />
         <div className="_input-wrap">
           <RichTextPlugin
-            contentEditable={<ContentEditable className="_input" />}
+            contentEditable={<ContentEditable className="_input prose" />}
             placeholder={<div className="_placeholder">Write something...</div>}
           />
         </div>
@@ -74,8 +76,29 @@ export default function Editor() {
         <ListPlugin />
         <MarkdownShortcutPlugin />
         <LoadContentPlugin />
+        <PersistenceInput />
       </div>
     </Composer>
+  );
+}
+
+function PersistenceInput() {
+  const inputRef = useRef();
+  const [editor] = useLexicalComposerContext();
+
+  useEffect(() => {
+    editor.registerUpdateListener(({editorState}) => {
+      import('mdast-util-to-markdown').then(({toMarkdown}) => {
+        editorState.read(() => {
+          const markdown = toMarkdown(lexicalToMarkdown());
+          inputRef.current.value = markdown;
+        });
+      });
+    });
+  }, [editor]);
+
+  return (
+    <input ref={inputRef} type="hidden" name="content" />
   );
 }
 
@@ -84,8 +107,13 @@ function LoadContentPlugin() {
   const content = useContent();
 
   useEffect(() => {
-    editor.update(() => {
-      $convertFromMarkdownString(content, editor);
+    import('mdast-util-from-markdown').then(({fromMarkdown}) => {
+      editor.update(() => {
+        const mdast = fromMarkdown(content);
+        $getRoot().append(
+          ...mdastNodeToLexical(mdast)
+        );
+      });
     });
   }, [content, editor]);
 

@@ -1,6 +1,6 @@
 import type { ActionFunction, LinksFunction, LoaderFunction} from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Form, useLoaderData } from "@remix-run/react";
+import { Form, useActionData, useLoaderData } from "@remix-run/react";
 import { octokit } from "~/octokit.server";
 import parseFrontMatter from "front-matter";
 import styles from "./edit.css";
@@ -9,11 +9,13 @@ import { z } from "zod";
 import { auth } from "~/auth.server";
 import Editor from "~/components/editor";
 import editorStyles from '~/components/editor.css';
+import proseStyles from '~/styles/prose.css';
 
 export const handle = { hydrate: true };
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: editorStyles},
+  { rel: "stylesheet", href: proseStyles },
   { rel: "stylesheet", href: styles },
 ];
 
@@ -26,7 +28,7 @@ const updatePageMutation = `
   ) {
     createCommitOnBranch(input: {
       branch: {
-        repositoryNameWithOwner: "knowler/knowlerkno.ws",
+        repositoryNameWithOwner: "knowler/knowler.dev",
         branchName: "main"
       },
       expectedHeadOid: $expectedHeadOid,
@@ -59,7 +61,7 @@ export const action: ActionFunction = async ({ params, request }) => {
     z.object({
       title: z.string(),
       description: z.string().optional(),
-      body: z.string(),
+      content: z.string(),
       expectedHeadOid: z.string(),
     })
   );
@@ -68,7 +70,7 @@ export const action: ActionFunction = async ({ params, request }) => {
 
   await octokit.graphql(updatePageMutation, {
     contents: Buffer.from(
-      `---\ntitle: ${result.data.title}\ndescription: ${result.data?.description}\n---\n${result.data.body}`,
+      `---\ntitle: ${result.data.title}\ndescription: ${result.data?.description}\n---\n${result.data.content}`,
       "utf-8"
     ).toString("base64"),
     expectedHeadOid: result.data.expectedHeadOid,
@@ -81,7 +83,7 @@ export const action: ActionFunction = async ({ params, request }) => {
 
 const pageWithHeadOidQuery = `
   query page($expression: String!) {
-    repository(name: "knowlerkno.ws", owner: "knowler") {
+    repository(name: "knowler.dev", owner: "knowler") {
       object(expression: $expression) {
         ... on Blob {
           text
@@ -118,6 +120,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 };
 
 export default function PageEdit() {
+  const actionData = useActionData();
   const { attributes, expectedHeadOid } = useLoaderData();
 
   return (
@@ -143,7 +146,7 @@ export default function PageEdit() {
           />
         </div>
         <button type="submit">
-          Save
+          {actionData?.success ? "Success!" : "Save"}
         </button>
         <input
           type="hidden"
