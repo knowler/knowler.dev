@@ -6,10 +6,6 @@ description: Technology that I use every day.
 
 I am a workflow *junkie*, so I’m always refining what I use. This is a list of the hardware and software that I use on a daily basis with varying degrees of details about those choices.
 
-## Hello, World!
-
-Once I save this change it will **commit** to GitHub and be viewable on my site *instantly.*
-
 ## Devices and Operating Systems
 
 I’ve used MacBook Pros as my daily driver for the last decade. I like macOS. I can make it feel like Linux, but still benefit from the OS exclusive apps it has, which is especially important for my work as a web developer.
