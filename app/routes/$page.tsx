@@ -1,7 +1,8 @@
 import type { LinksFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Link, useLoaderData, useMatches, useParams } from "@remix-run/react";
+import { Link, useLoaderData, useParams } from "@remix-run/react";
 import { parseMarkdown } from "~/md.server";
+import { useAuthenticated } from '~/hooks';
 import { octokit } from "~/octokit.server";
 import proseStyles from '~/styles/prose.css';
 
@@ -14,28 +15,25 @@ export const meta: MetaFunction = ({ data }) => ({
   description: data?.description,
 });
 
-interface LoaderData {
-  content: string;
-}
 
-export const loader: LoaderFunction = async ({ params }) => {
-  const data: { repository: { object: { text: string } } } =
-    await octokit.graphql(
-      `
-    query page($expression: String!) {
-      repository(name: "knowlerkno.ws", owner: "knowler") {
-        object(expression: $expression) {
-          ... on Blob {
-            text
-          }
+interface PageContentQueryResponseData { repository: { object: { text: string; } } }
+const pageContentQuery = `
+  query page($expression: String!) {
+    repository(name: "knowler.dev", owner: "knowler") {
+      object(expression: $expression) {
+        ... on Blob {
+          text
         }
       }
     }
-  `,
-      {
-        expression: `HEAD:content/pages/${params.page}.md`,
-      }
-    );
+  }
+`;
+interface LoaderData { content: string; }
+export const loader: LoaderFunction = async ({ params }) => {
+  const data = await octokit.graphql<PageContentQueryResponseData>(
+    pageContentQuery,
+    { expression: `HEAD:content/pages/${params.page}.md` },
+  );
   const { attributes, html } = await parseMarkdown(data.repository.object.text);
 
   return json<LoaderData>({
@@ -43,11 +41,6 @@ export const loader: LoaderFunction = async ({ params }) => {
     ...attributes,
   });
 };
-
-function useAuthenticated() {
-  return useMatches().find((match) => match.id === "root")?.data
-    ?.isAuthenticated;
-}
 
 export default function Page() {
   const params = useParams();
@@ -62,7 +55,7 @@ export default function Page() {
           <Link to="edit">Edit this page</Link>
         ) : (
           <a
-            href={`https://github.com/knowler/knowlerkno.ws/blob/main/content/pages/${params.page}.md`}
+            href={`https://github.com/knowler/knowler.dev/blob/main/content/pages/${params.page}.md`}
           >
             Edit on GitHub
           </a>
