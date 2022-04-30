@@ -2,9 +2,11 @@
 title: Uses
 description: Technology that I use every day.
 ---
+
+
 # Uses
 
-I am a workflow junkie, so I’m always refining what I use. This is a list of the hardware and software that I use on a daily basis with varying degrees of details about those choices.
+I am a workflow junkie, so I’m always refining what I use. This is page is an outline of the hardware and software that I use on a daily basis with varying degrees of details about those choices.
 
 ## Devices and Operating Systems
 
