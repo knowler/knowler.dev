@@ -1,4 +1,8 @@
-import type { ActionFunction, LinksFunction, LoaderFunction} from "@remix-run/node";
+import type {
+  ActionFunction,
+  LinksFunction,
+  LoaderFunction,
+} from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
 import { octokit } from "~/octokit.server";
@@ -8,13 +12,13 @@ import { getFormData } from "remix-params-helper";
 import { z } from "zod";
 import { auth } from "~/auth.server";
 import Editor from "~/components/editor";
-import editorStyles from '~/components/editor.css';
-import proseStyles from '~/styles/prose.css';
+import editorStyles from "~/components/editor.css";
+import proseStyles from "~/styles/prose.css";
 
 export const handle = { hydrate: true };
 
 export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: editorStyles},
+  { rel: "stylesheet", href: editorStyles },
   { rel: "stylesheet", href: proseStyles },
   { rel: "stylesheet", href: styles },
 ];

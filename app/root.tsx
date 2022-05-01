@@ -2,7 +2,6 @@ import {
   Links,
   LiveReload,
   Meta,
-  NavLink,
   Outlet,
   Scripts,
   ScrollRestoration,
@@ -23,8 +22,7 @@ import {
 import { auth } from "./auth.server";
 import AdminBar from "./components/admin-bar";
 import styles from "~/root.css";
-import adminStyles from '~/styles/admin.css'
-import { GitHubLogoIcon } from "@radix-ui/react-icons";
+import adminStyles from "~/styles/admin.css";
 
 interface LoaderData {
   csrf: string;
@@ -62,56 +60,13 @@ export default function App() {
         <head>
           <Meta />
           <Links />
-          {isAuthenticated ? <link rel="stylesheet" href={adminStyles} /> : null}
+          {isAuthenticated ? (
+            <link rel="stylesheet" href={adminStyles} />
+          ) : null}
         </head>
         <body>
           {isAuthenticated ? <AdminBar /> : null}
-          <a href="#content" className="skip-link">
-            Skip to content
-          </a>
-          <header className="banner">
-            <NavLink to="/" className="_title">
-              Nathan Knowler
-            </NavLink>
-            <nav aria-label="primary" className="_nav">
-              <ul role="list" className="_nav-list">
-                <li>
-                  <NavLink to="/about">About</NavLink>
-                </li>
-                <li>
-                  <NavLink to="/garden">Garden</NavLink>
-                </li>
-                <li>
-                  <NavLink to="/uses">Uses</NavLink>
-                </li>
-                <li>
-                  <a href="https://github.com/knowler" className="_github-link" title="@knowler on GitHub">
-                    <span className="visually-hidden">@knowler on GitHub</span>
-                    <GitHubLogoIcon aria-hidden className="_github-icon" width={undefined} height={undefined} />
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </header>
-          <main id="content">
-            <Outlet />
-          </main>
-          <footer className="content-info">
-            <p>&copy; 2015 to 2022 Nathan Knowler. All rights reserved.</p>
-            <nav aria-label="secondary">
-              <ul role="list" className="_nav-list">
-                <li>
-                  <NavLink to="/accessibility">Accessibility</NavLink>
-                </li>
-                <li>
-                  <NavLink to="/privacy">Privacy</NavLink>
-                </li>
-                <li>
-                  <NavLink to="/contact">Contact</NavLink>
-                </li>
-              </ul>
-            </nav>
-          </footer>
+          <Outlet />
           {shouldHydrate && (
             <>
               <ScrollRestoration />
