@@ -87,8 +87,8 @@ function PersistenceInput() {
   const [editor] = useLexicalComposerContext();
 
   useEffect(() => {
-    editor.registerUpdateListener(({editorState}) => {
-      import('mdast-util-to-markdown').then(({toMarkdown}) => {
+    editor.registerUpdateListener(({ editorState }) => {
+      import("mdast-util-to-markdown").then(({ toMarkdown }) => {
         editorState.read(() => {
           const markdown = toMarkdown(lexicalToMarkdown());
           inputRef.current.value = markdown;
@@ -97,9 +97,7 @@ function PersistenceInput() {
     });
   }, [editor]);
 
-  return (
-    <input ref={inputRef} type="hidden" name="content" />
-  );
+  return <input ref={inputRef} type="hidden" name="content" />;
 }
 
 function LoadContentPlugin() {
@@ -107,12 +105,11 @@ function LoadContentPlugin() {
   const content = useContent();
 
   useEffect(() => {
-    import('mdast-util-from-markdown').then(({fromMarkdown}) => {
+    import("mdast-util-from-markdown").then(({ fromMarkdown }) => {
       editor.update(() => {
         const mdast = fromMarkdown(content);
-        $getRoot().append(
-          ...mdastNodeToLexical(mdast)
-        );
+        $getRoot().clear();
+        $getRoot().append(...mdastNodeToLexical(mdast));
       });
     });
   }, [content, editor]);
