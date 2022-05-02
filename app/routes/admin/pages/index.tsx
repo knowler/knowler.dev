@@ -1,63 +1,20 @@
+import { CachedPage } from "@prisma/client";
 import { json, LoaderFunction } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
-import parseFrontMatter from "front-matter";
-import { octokit } from "~/octokit.server";
-
-interface PagesQueryResponseData {
-  repository: {
-    object: {
-      entries: {
-        name: string;
-        extension: string;
-        object: {
-          text: string;
-        };
-      }[];
-    };
-  };
-}
-const pagesQuery = `
-  query pages {
-    repository(name: "knowler.dev", owner: "knowler") {
-      object(expression: "HEAD:content/pages") {
-        ... on Tree {
-          entries {
-            name
-            extension
-            object {
-              ... on Blob {
-                text
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-interface Page {
-  slug: string;
-  title: string;
-  description?: string;
-}
-async function getPages(): Promise<Page[]> {
-  const data = await octokit.graphql<PagesQueryResponseData>(pagesQuery);
-  return data.repository.object.entries?.map((entry) => {
-    const { attributes } = parseFrontMatter<Omit<Page, "slug">>(
-      entry.object.text
-    );
-    return {
-      slug: entry.name.replace(entry.extension, ""),
-      ...attributes,
-    };
-  });
-}
+import { prisma } from "~/db.server";
 
 interface LoaderData {
-  pages: Page[];
+  pages: Pick<CachedPage, "slug" | "title">[];
 }
 export const loader: LoaderFunction = async () => {
-  return json<LoaderData>({ pages: await getPages() });
+  return json<LoaderData>({
+    pages: await prisma.cachedPage.findMany({
+      select: {
+        slug: true,
+        title: true,
+      },
+    }),
+  });
 };
 
 export default function PageList() {
