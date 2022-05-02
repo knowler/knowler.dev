@@ -56,6 +56,14 @@ const updatePageMutation = `
   }
 `;
 
+// prettier-ignore
+const markdownTemplate = ({ title, description, content }: {title: string; description?: string; content: string;}) => 
+`---
+title: ${title}
+description: ${description ?? ""}
+---
+${content}`;
+
 export const action: ActionFunction = async ({ params, request }) => {
   await auth.isAuthenticated(request, {
     failureRedirect: `/login?returnTo=/admin/pages/edit/${params.page}`,
@@ -75,7 +83,11 @@ export const action: ActionFunction = async ({ params, request }) => {
 
   await octokit.graphql(updatePageMutation, {
     contents: Buffer.from(
-      `---\ntitle: ${result.data.title}\ndescription: ${result.data?.description}\n---\n${result.data.content}`,
+      markdownTemplate({
+        title: result.data.title,
+        description: result.data?.description,
+        content: result?.data.content,
+      }),
       "utf-8"
     ).toString("base64"),
     expectedHeadOid: result.data.expectedHeadOid,
@@ -104,7 +116,7 @@ const pageWithHeadOidQuery = `
   }
 `;
 
-export const loader: LoaderFunction = async ({ params, request }) => {
+export const loader: LoaderFunction = async ({ params }) => {
   const { repository } = await octokit.graphql(pageWithHeadOidQuery, {
     expression: `HEAD:content/pages/${params.page}.md`,
   });
@@ -144,7 +156,7 @@ export default function PageEdit() {
           <textarea
             id="description"
             name="description"
-            defaultValue={attributes.description}
+            defaultValue={attributes?.description}
           />
         </div>
         <button type="submit">
