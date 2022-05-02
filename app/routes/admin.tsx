@@ -6,7 +6,8 @@ import {
   ExitIcon,
   ReaderIcon,
 } from "@radix-ui/react-icons";
-import { LoaderFunction, json, LinksFunction } from "@remix-run/node";
+import type { LoaderFunction, LinksFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import { NavLink, Outlet, Scripts, ScrollRestoration } from "@remix-run/react";
 import { auth } from "~/auth.server";
 import adminStyles from "./admin.css";
@@ -69,9 +70,7 @@ export default function Auth() {
           </button>
         </form>
       </header>
-      <main>
-        <Outlet />
-      </main>
+      <Outlet />
       <ScrollRestoration />
       <Scripts />
     </>

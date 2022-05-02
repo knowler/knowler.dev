@@ -5,8 +5,6 @@ body {
 }
 
 main {
-  padding-block: 0.5rem;
-  padding-inline: 1rem;
   grid-area: main;
 }
 

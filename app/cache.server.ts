@@ -1,4 +1,4 @@
-import { CachedPage } from "@prisma/client";
+import type { CachedPage } from "@prisma/client";
 import { prisma } from "~/db.server";
 import { parseMarkdown } from "~/md.server";
 import { octokit } from "~/octokit.server";
