@@ -1,6 +1,6 @@
 ---
 title: Privacy Policy
-description: undefined
+description: 
 ---
 # Privacy Policy
 
