@@ -3,8 +3,6 @@ import {
   LiveReload,
   Meta,
   Outlet,
-  Scripts,
-  ScrollRestoration,
   useLoaderData,
 } from "@remix-run/react";
 import { json } from "@remix-run/node";
@@ -17,12 +15,9 @@ import { commitSession, getSession } from "./session.server";
 import {
   AuthenticityTokenProvider,
   createAuthenticityToken,
-  useShouldHydrate,
 } from "remix-utils";
 import { auth } from "./auth.server";
-import AdminBar from "./components/admin-bar";
 import styles from "~/root.css";
-import adminStyles from "~/styles/admin.css";
 
 interface LoaderData {
   csrf: string;
@@ -47,9 +42,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 export default function App() {
-  const shouldHydrate = useShouldHydrate();
   const { csrf, isAuthenticated } = useLoaderData<LoaderData>();
-
   return (
     <AuthenticityTokenProvider token={csrf}>
       <html
@@ -60,19 +53,9 @@ export default function App() {
         <head>
           <Meta />
           <Links />
-          {isAuthenticated ? (
-            <link rel="stylesheet" href={adminStyles} />
-          ) : null}
         </head>
         <body>
-          {isAuthenticated ? <AdminBar /> : null}
           <Outlet />
-          {shouldHydrate && (
-            <>
-              <ScrollRestoration />
-              <Scripts />
-            </>
-          )}
           <LiveReload />
         </body>
       </html>

@@ -31,6 +31,7 @@ import {
   $isRangeSelection,
   CAN_REDO_COMMAND,
   CAN_UNDO_COMMAND,
+  CLEAR_HISTORY_COMMAND,
   COMMAND_PRIORITY_LOW,
   FORMAT_TEXT_COMMAND,
   ParagraphNode,
@@ -45,7 +46,8 @@ import { mergeRegister } from "@lexical/utils";
 import { lexicalToMarkdown, mdastNodeToLexical } from "~/utils/lexical-mdast";
 
 const useContent = () =>
-  useMatches().find((match) => match.id === "routes/$page.edit")?.data.body;
+  useMatches().find((match) => match.id === "routes/admin/pages/edit.$page")
+    ?.data.body;
 
 const initialConfig = {
   theme: {

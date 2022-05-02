@@ -57,7 +57,7 @@ const updatePageMutation = `
 
 export const action: ActionFunction = async ({ params, request }) => {
   await auth.isAuthenticated(request, {
-    failureRedirect: `/login?returnTo=/${params.page}/edit`,
+    failureRedirect: `/login?returnTo=/admin/pages/edit/${params.page}`,
   });
 
   const result = await getFormData(
@@ -103,10 +103,6 @@ const pageWithHeadOidQuery = `
 `;
 
 export const loader: LoaderFunction = async ({ params, request }) => {
-  await auth.isAuthenticated(request, {
-    failureRedirect: `/login?returnTo=/${params.page}/edit`,
-  });
-
   const { repository } = await octokit.graphql(pageWithHeadOidQuery, {
     expression: `HEAD:content/pages/${params.page}.md`,
   });

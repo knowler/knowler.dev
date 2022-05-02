@@ -71,7 +71,7 @@ export default function Dashboard() {
   const { name, contactFormSubmissions } = useLoaderData<LoaderData>();
 
   return (
-    <main>
+    <>
       <h1>Welcome to the dashboard, {name}!</h1>
       <table>
         <thead>
@@ -129,6 +129,6 @@ export default function Dashboard() {
           ))}
         </tbody>
       </table>
-    </main>
+    </>
   );
 }

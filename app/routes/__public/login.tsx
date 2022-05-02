@@ -11,7 +11,7 @@ async function login(request: Request) {
 
   try {
     return await auth.authenticate("github", request, {
-      successRedirect: returnTo ?? "/dashboard",
+      successRedirect: returnTo ?? "/admin/dashboard",
       failureRedirect: "/",
     });
   } catch (error) {
