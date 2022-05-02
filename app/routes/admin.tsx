@@ -1,3 +1,10 @@
+import {
+  CardStackIcon,
+  DashboardIcon,
+  DrawingPinIcon,
+  EnvelopeClosedIcon,
+  ReaderIcon,
+} from "@radix-ui/react-icons";
 import { LoaderFunction, json, LinksFunction } from "@remix-run/node";
 import { NavLink, Outlet, Scripts, ScrollRestoration } from "@remix-run/react";
 import { auth } from "~/auth.server";
@@ -19,24 +26,42 @@ export const loader: LoaderFunction = async ({ request }) => {
 export default function Auth() {
   return (
     <>
-      <aside>
+      <header className="admin-sidebar">
         <nav aria-label="admin">
-          <ul>
+          <ul role="list" className="_nav-list">
             <li>
-              <NavLink to="dashboard">Dashboard</NavLink>
+              <NavLink to="dashboard">
+                <DashboardIcon aria-hidden />
+                <span className="visually-hidden">Dashboard</span>
+              </NavLink>
             </li>
             <li>
-              <NavLink to="pages">Pages</NavLink>
+              <NavLink to="pages">
+                <ReaderIcon aria-hidden />
+                <span className="visually-hidden">Pages</span>
+              </NavLink>
             </li>
             <li>
-              <NavLink to="posts">Posts</NavLink>
+              <NavLink to="posts">
+                <DrawingPinIcon />
+                <span className="visually-hidden">Posts</span>
+              </NavLink>
             </li>
             <li>
-              <NavLink to="garden">Garden</NavLink>
+              <NavLink to="garden">
+                <CardStackIcon />
+                <span className="visually-hidden">Garden</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="messages">
+                <EnvelopeClosedIcon />
+                <span className="visually-hidden">Messages</span>
+              </NavLink>
             </li>
           </ul>
         </nav>
-      </aside>
+      </header>
       <main>
         <Outlet />
       </main>
