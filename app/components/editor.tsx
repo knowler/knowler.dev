@@ -69,7 +69,9 @@ export default function Editor() {
         <ToolbarPlugin />
         <div className="_input-wrap">
           <RichTextPlugin
-            contentEditable={<ContentEditable className="_input prose" />}
+            contentEditable={
+              <ContentEditable className="_input prose has-links" />
+            }
             placeholder={<div className="_placeholder">Write something...</div>}
           />
         </div>
