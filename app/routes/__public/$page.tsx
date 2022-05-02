@@ -1,61 +1,54 @@
-import type { LinksFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
+import type {
+  LinksFunction,
+  LoaderFunction,
+  MetaFunction,
+} from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData, useParams } from "@remix-run/react";
-import { parseMarkdown } from "~/md.server";
-import { useAuthenticated } from '~/hooks';
-import { octokit } from "~/octokit.server";
-import proseStyles from '~/styles/prose.css';
+import { useAuthenticated } from "~/hooks";
+import proseStyles from "~/styles/prose.css";
+import { prisma } from "~/db.server";
+import { CachedPage } from "@prisma/client";
+import { notFound } from "remix-utils";
 
 export const links: LinksFunction = () => [
-  {rel: 'stylesheet', href: proseStyles},
+  { rel: "stylesheet", href: proseStyles },
 ];
 
 export const meta: MetaFunction = ({ data }) => ({
-  title: `${data.title} – Nathan Knowler`,
-  description: data?.description,
+  title: `${data.page.title} – Nathan Knowler`,
+  description: data.page?.description,
 });
 
-
-interface PageContentQueryResponseData { repository: { object: { text: string; } } }
-const pageContentQuery = `
-  query page($expression: String!) {
-    repository(name: "knowler.dev", owner: "knowler") {
-      object(expression: $expression) {
-        ... on Blob {
-          text
-        }
-      }
-    }
-  }
-`;
-interface LoaderData { content: string; }
+interface LoaderData {
+  page: CachedPage;
+}
 export const loader: LoaderFunction = async ({ params }) => {
-  const data = await octokit.graphql<PageContentQueryResponseData>(
-    pageContentQuery,
-    { expression: `HEAD:content/pages/${params.page}.md` },
-  );
-  const { attributes, html } = await parseMarkdown(data.repository.object.text);
-
-  return json<LoaderData>({
-    content: html,
-    ...attributes,
+  let page = await prisma.cachedPage.findUnique({
+    where: { slug: params.page },
   });
+
+  if (!page) throw notFound("Page not found");
+
+  return json<LoaderData>({ page });
 };
 
 export default function Page() {
-  const params = useParams();
-  const { content } = useLoaderData<LoaderData>();
+  const { page } = useLoaderData<LoaderData>();
   const isAuthenticated = useAuthenticated();
 
   return (
     <>
-      <article className="prose" dangerouslySetInnerHTML={{ __html: content }} />
+      <article
+        className="prose"
+        dangerouslySetInnerHTML={{ __html: page.html }}
+      />
       <aside>
         {isAuthenticated ? (
-          <Link to="edit">Edit this page</Link>
+          <Link to={`/admin/pages/edit/${page.slug}`}>Edit this page</Link>
         ) : (
           <a
-            href={`https://github.com/knowler/knowler.dev/blob/main/content/pages/${params.page}.md`}
+            href={`https://github.com/knowler/knowler.dev/blob/main/content/pages/${page.slug}.md`}
           >
             Edit on GitHub
           </a>

@@ -14,6 +14,7 @@ import { auth } from "~/auth.server";
 import Editor from "~/components/editor";
 import editorStyles from "~/components/editor.css";
 import proseStyles from "~/styles/prose.css";
+import { cachePages } from "~/cache.server";
 
 export const handle = { hydrate: true };
 
@@ -81,6 +82,7 @@ export const action: ActionFunction = async ({ params, request }) => {
     pagePath: `content/pages/${params.page}.md`,
     commitSubject: `Update ${result.data.title} page`,
   });
+  await cachePages();
 
   return json({ success: true });
 };

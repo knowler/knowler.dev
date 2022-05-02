@@ -17,3 +17,12 @@ model ContactFormSubmission {
   updatedAt DateTime @updatedAt
   isSpam    Boolean @default(false)
 }
+
+model CachedPage {
+  slug        String @id @unique
+  title       String
+  description String?
+  markdown    String
+  html        String
+  cachedAt    DateTime @updatedAt
+}
