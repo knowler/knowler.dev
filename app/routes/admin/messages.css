@@ -1,7 +1,3 @@
-main {
-  max-inline-size: unset;
-}
-
 table {
   table-layout: fixed;
   inline-size: 100%;

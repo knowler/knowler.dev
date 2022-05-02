@@ -23,7 +23,7 @@ export default function PageList() {
   return (
     <>
       <h1>Pages</h1>
-      <ul>
+      <ul className="has-links">
         {pages.map((page) => (
           <li key={page.slug}>
             <Link to={`edit/${page.slug}`}>{page.title}</Link>

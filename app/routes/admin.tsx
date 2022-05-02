@@ -3,6 +3,7 @@ import {
   DashboardIcon,
   DrawingPinIcon,
   EnvelopeClosedIcon,
+  ExitIcon,
   ReaderIcon,
 } from "@radix-ui/react-icons";
 import { LoaderFunction, json, LinksFunction } from "@remix-run/node";
@@ -27,7 +28,7 @@ export default function Auth() {
   return (
     <>
       <header className="admin-sidebar">
-        <nav aria-label="admin">
+        <nav aria-label="admin" className="_nav">
           <ul role="list" className="_nav-list">
             <li>
               <NavLink to="dashboard">
@@ -61,6 +62,12 @@ export default function Auth() {
             </li>
           </ul>
         </nav>
+        <form action="/logout" method="post" className="_logout">
+          <button>
+            <span className="visually-hidden">Logout</span>
+            <ExitIcon />
+          </button>
+        </form>
       </header>
       <main>
         <Outlet />
