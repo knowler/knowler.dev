@@ -1,0 +1,111 @@
+:root {
+  --pad: clamp(1rem, 4vw, 2rem);
+}
+
+body {
+  display: grid;
+  grid-template:
+    "skip" max-content
+    "banner" max-content
+    "content" auto
+    "colophon" max-content;
+}
+
+main {
+  padding: var(--pad);
+}
+
+/** Skip to Content **/
+
+.skip-link {
+  flex-shrink: 0;
+  justify-self: center;
+  margin-block-start: 1rem;
+  font-size: 0.9rem;
+  color: hsl(var(--hs), 40%);
+  text-decoration-color: hsl(var(--hs), 20%);
+  transition-duration: 0.2s;
+  transition-property: color, text-decoration-color;
+}
+
+.skip-link:hover {
+  color: hsl(var(--hs), 50%);
+  background-color: transparent;
+  text-decoration-color: hsl(var(--hs), 40%);
+  text-decoration: underline;
+}
+
+/** Banner **/
+
+.banner {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-block-start: var(--pad);
+  padding-inline: var(--pad);
+}
+
+.banner ._title {
+  padding-block: 0.25rem;
+  padding-inline: 0.5rem;
+  border: 0.1rem solid #eee;
+  color: inherit;
+  text-decoration: none;
+  font-size: 1.25rem;
+}
+
+.banner ._title:is(:focus, :hover) {
+  background-color: #eee;
+  color: #000;
+}
+
+.banner ._nav {
+  flex-grow: 1;
+}
+
+.banner ._nav-list {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  list-style: none;
+  padding-inline-start: 0;
+  margin-block: 0;
+}
+
+.banner ._github-link {
+  display: grid;
+  place-items: center;
+  padding: 0.25em;
+  border-radius: 9999px;
+}
+
+.banner ._github-icon {
+  font-size: 1em;
+  height: 1.25em;
+}
+
+/** Content Info **/
+
+.content-info {
+  background-color: hsl(var(--hs), 4%);
+  padding: var(--pad);
+  flex-shrink: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  justify-content: space-between;
+  font-size: 0.9rem;
+}
+
+.content-info :is(p, ul) {
+  margin-block: 0;
+}
+
+.content-info ._nav-list {
+  display: flex;
+  list-style: none;
+  padding-inline-start: 0;
+  gap: 0.5rem;
+}

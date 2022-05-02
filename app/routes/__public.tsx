@@ -1,5 +1,11 @@
 import { NavLink, Outlet } from "@remix-run/react";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
+import { LinksFunction } from "@remix-run/node";
+import publicStyles from "./public.css";
+
+export const links: LinksFunction = () => [
+  { rel: "stylesheet", href: publicStyles },
+];
 
 export default function Public() {
   return (
@@ -11,7 +17,7 @@ export default function Public() {
         <NavLink to="/" className="_title">
           Nathan Knowler
         </NavLink>
-        <nav aria-label="primary" className="_nav">
+        <nav aria-label="primary" className="_nav has-links">
           <ul role="list" className="_nav-list">
             <li>
               <NavLink to="/about">About</NavLink>
@@ -40,10 +46,10 @@ export default function Public() {
           </ul>
         </nav>
       </header>
-      <main id="content">
+      <main id="content" className="has-links">
         <Outlet />
       </main>
-      <footer className="content-info">
+      <footer className="content-info has-links">
         <p>&copy; 2015 to 2022 Nathan Knowler. All rights reserved.</p>
         <nav aria-label="secondary">
           <ul role="list" className="_nav-list">

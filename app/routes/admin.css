@@ -1,13 +1,48 @@
 body {
   display: grid;
   grid-template-areas: "sidebar main";
-  grid-template-columns: min(20vw, 20rem) auto;
-}
-
-body > aside {
-  grid-area: sidebar;
+  grid-template-columns: max-content auto;
 }
 
 main {
   grid-area: main;
+}
+
+.admin-sidebar {
+  position: sticky;
+  inset-block-start: 0;
+  min-block-size: 100vh;
+  grid-area: sidebar;
+  background-image: var(--fancy-bg);
+}
+
+.admin-sidebar ._nav-list {
+  display: grid;
+  list-style: none;
+  row-gap: 0.75rem;
+  padding: 1rem;
+  margin: 0;
+}
+
+.admin-sidebar a {
+  display: grid;
+  place-content: center;
+  padding: 0.5rem;
+  background-image: linear-gradient(
+    45deg,
+    hsl(var(--hs), 6%),
+    hsl(var(--hs), 12%)
+  );
+  border-radius: 0.25em;
+  color: var(--accent);
+  transition: filter 240ms ease-in;
+}
+
+.admin-sidebar a:is(:hover, :focus) {
+  filter: brightness(1.2);
+}
+
+.admin-sidebar a:focus {
+  outline: 0.125em dashed var(--accent);
+  outline-offset: 0.25em;
 }

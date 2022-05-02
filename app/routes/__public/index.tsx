@@ -1,8 +1,8 @@
 import type { LinksFunction, MetaFunction } from "@remix-run/node";
-import proseStyles from '~/styles/prose.css';
+import proseStyles from "~/styles/prose.css";
 
 export const links: LinksFunction = () => [
-  {rel: 'stylesheet', href: proseStyles},
+  { rel: "stylesheet", href: proseStyles },
 ];
 
 export const meta: MetaFunction = () => ({
@@ -12,7 +12,7 @@ export const meta: MetaFunction = () => ({
 
 export default function Index() {
   return (
-    <article className="prose">
+    <article className="prose has-links">
       <h1>I am Nathan Knowler</h1>
       <p>
         Welcome to my website. I’m originally from Vancouver, however, I now
