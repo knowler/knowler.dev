@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useMatches } from "@remix-run/react";
 import cx from "classnames";
 import * as Toolbar from "@radix-ui/react-toolbar";
@@ -26,12 +26,10 @@ import MarkdownShortcutPlugin from "@lexical/react/LexicalMarkdownShortcutPlugin
 // Lexical Utils
 import { $isHeadingNode, HeadingNode, QuoteNode } from "@lexical/rich-text";
 import {
-  $getRoot,
   $getSelection,
   $isRangeSelection,
   CAN_REDO_COMMAND,
   CAN_UNDO_COMMAND,
-  CLEAR_HISTORY_COMMAND,
   COMMAND_PRIORITY_LOW,
   FORMAT_TEXT_COMMAND,
   ParagraphNode,
@@ -43,7 +41,8 @@ import { LinkNode } from "@lexical/link";
 import { ListNode } from "@lexical/list";
 import { mergeRegister } from "@lexical/utils";
 
-import { lexicalToMarkdown, mdastNodeToLexical } from "~/utils/lexical-mdast";
+import { ClientOnly } from "remix-utils";
+import { PersistenceInput, createInitialContentSetter } from "~/utils/lexical.client";
 
 const useContent = () =>
   useMatches().find((match) => match.id === "routes/admin/pages/edit.$page")
@@ -63,12 +62,15 @@ const initialConfig = {
 };
 
 export default function Editor() {
+  const content = useContent();
+
   return (
     <Composer initialConfig={initialConfig}>
       <div className="editor">
         <ToolbarPlugin />
         <div className="_input-wrap">
           <RichTextPlugin
+            initialEditorState={typeof document === 'undefined' ? () => null : createInitialContentSetter(content)}
             contentEditable={
               <ContentEditable className="_input prose has-links" />
             }
@@ -79,46 +81,12 @@ export default function Editor() {
         <LinkPlugin />
         <ListPlugin />
         <MarkdownShortcutPlugin />
-        <LoadContentPlugin />
-        <PersistenceInput />
+        <ClientOnly>
+          {() => <PersistenceInput />}
+        </ClientOnly>
       </div>
     </Composer>
   );
-}
-
-function PersistenceInput() {
-  const inputRef = useRef();
-  const [editor] = useLexicalComposerContext();
-
-  useEffect(() => {
-    editor.registerUpdateListener(({ editorState }) => {
-      import("mdast-util-to-markdown").then(({ toMarkdown }) => {
-        editorState.read(() => {
-          const markdown = toMarkdown(lexicalToMarkdown());
-          inputRef.current.value = markdown;
-        });
-      });
-    });
-  }, [editor]);
-
-  return <input ref={inputRef} type="hidden" name="content" />;
-}
-
-function LoadContentPlugin() {
-  const [editor] = useLexicalComposerContext();
-  const content = useContent();
-
-  useEffect(() => {
-    import("mdast-util-from-markdown").then(({ fromMarkdown }) => {
-      editor.update(() => {
-        const mdast = fromMarkdown(content);
-        $getRoot().clear();
-        $getRoot().append(...mdastNodeToLexical(mdast));
-      });
-    });
-  }, [content, editor]);
-
-  return null;
 }
 
 type TextFormatType =
@@ -127,7 +95,6 @@ type TextFormatType =
   | "underline"
   | "strikethrough"
   | "code";
-type TextAlignmentType = "left" | "center" | "right";
 
 function ToolbarPlugin() {
   const [editor] = useLexicalComposerContext();
