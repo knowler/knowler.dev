@@ -11,7 +11,6 @@ import type {
   LinksFunction,
   LoaderFunction,
 } from "@remix-run/node";
-import { commitSession, getSession } from "./session.server";
 import { auth } from "./auth.server";
 import styles from "~/root.css";
 
@@ -20,12 +19,10 @@ interface LoaderData {
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const session = await getSession(request.headers.get("Cookie"));
   const isAuthenticated = Boolean(await auth.isAuthenticated(request));
 
   return json<LoaderData>(
     {isAuthenticated},
-    {headers: {"Set-Cookie": await commitSession(session)}},
   );
 };
 
