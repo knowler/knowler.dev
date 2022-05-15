@@ -21,7 +21,7 @@ export default function PageList() {
   const { pages } = useLoaderData<LoaderData>();
 
   return (
-    <>
+    <main>
       <h1>Pages</h1>
       <ul className="has-links">
         {pages.map((page) => (
@@ -30,6 +30,6 @@ export default function PageList() {
           </li>
         ))}
       </ul>
-    </>
+    </main>
   );
 }
