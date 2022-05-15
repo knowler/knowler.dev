@@ -9,7 +9,7 @@ export const sessionStorage = createCookieSessionStorage({
     name: "__session",
     domain: process.env.SESSION_DOMAIN as string,
     httpOnly: true,
-    maxAge: 1000 * 60 * 60 * 24 * 7,
+    maxAge: 60 * 60 * 24 * 7,
     path: "/",
     sameSite: "lax",
     secrets: [process.env.SESSION_SECRET as string],
