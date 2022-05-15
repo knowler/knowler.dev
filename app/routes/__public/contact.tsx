@@ -13,12 +13,10 @@ import {
 } from "@remix-run/react";
 import { useEffect, useRef } from "react";
 import { getFormData } from "remix-params-helper";
-import { AuthenticityTokenInput, verifyAuthenticityToken } from "remix-utils";
 import invariant from "tiny-invariant";
 import { z } from "zod";
 import { prisma } from "~/db.server";
 import mail, { verifyEmail } from "~/mail.server";
-import { getSession } from "~/session.server";
 import styles from "./contact.css";
 
 export const meta: MetaFunction = () => ({
@@ -32,12 +30,6 @@ export const action: ActionFunction = async ({ request }) => {
   invariant(process.env.CONTACT_FORM_FROM, "CONTACT_FORM_FROM must be set");
   // Take a copy of the request so we can re-populate the form if invalid.
   const clonedRequest = request.clone();
-
-  // Verify CSRF (throws)
-  await verifyAuthenticityToken(
-    request,
-    await getSession(request.headers.get("Cookie"))
-  );
 
   // Validate
   const result = await getFormData(
@@ -120,7 +112,6 @@ export default function Contact() {
 
   return (
     <Form ref={formRef} className="contact-form" method="post">
-      <AuthenticityTokenInput />
       <h1>Contact me</h1>
       <p>Feel free to use this form if you’d like to get in touch.</p>
       <div className="form-field">
