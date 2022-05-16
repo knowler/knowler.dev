@@ -4,6 +4,19 @@ import { LinksFunction } from "@remix-run/node";
 import publicStyles from "./public.css";
 
 export const links: LinksFunction = () => [
+  {
+    rel: "preconnect",
+    href: "https://fonts.googleapis.com",
+  },
+  {
+    rel: "preconnect",
+    href: "https://fonts.gstatic.com",
+    crossOrigin: "anonymous",
+  },
+  {
+    rel: "stylesheet",
+    href: "https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Poppins:wght@300;500&display=swap",
+  },
   { rel: "stylesheet", href: publicStyles },
 ];
 

@@ -1,14 +1,88 @@
 :root {
   --pad: clamp(1rem, 4vw, 2rem);
+  --hs: 156, 100%;
+  --accent: hsl(var(--hs), 50%);
+  --accent-2: white;
+  --fancy-bg: linear-gradient(
+    45deg, 
+    hsl(var(--hs), 3%),
+    hsl(var(--hs), 5%)
+  );
+  --bg: hsl(var(--hs), 3%);
+  --fg: #ddd;
+}
+
+*, ::before, ::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  block-size: 100%;
 }
 
 body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: 'Atkinson Hyperlegible', sans-serif;
+  font-size: 1.125rem;
+  font-weight: 300;
   display: grid;
   grid-template:
     "skip" max-content
     "banner" max-content
     "content" auto
     "colophon" max-content;
+}
+
+.has-links a,
+.link {
+  color: var(--accent);
+  text-decoration-color: var(--accent-2);
+  text-underline-offset: 0.35ex;
+}
+
+.has-links a:focus,
+.link:focus {
+  outline: 0.1em dashed var(--accent);
+  outline-offset: 0.25em;
+}
+
+.has-links a:hover,
+.link:hover {
+  background-color: var(--accent);
+  color: #000;
+  text-decoration: none;
+}
+
+header, h1, h2, h3, h4 {
+  font-family: 'Poppins', sans-serif;
+}
+
+h1, h2, h3, h4 {
+  font-weight: 500;
+}
+
+main {
+  padding: var(--pad);
+}
+
+strong {
+  font-weight: 600;
+}
+
+/** Visually Hidden **/
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
 main {

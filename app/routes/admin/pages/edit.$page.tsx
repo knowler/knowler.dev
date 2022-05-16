@@ -7,7 +7,6 @@ import { json } from "@remix-run/node";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
 import { octokit } from "~/octokit.server";
 import parseFrontMatter from "front-matter";
-import styles from "./edit.css";
 import { getFormData } from "remix-params-helper";
 import { z } from "zod";
 import { auth } from "~/auth.server";
@@ -21,7 +20,6 @@ export const handle = { hydrate: true };
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: editorStyles },
   { rel: "stylesheet", href: proseStyles },
-  { rel: "stylesheet", href: styles },
 ];
 
 const updatePageMutation = `

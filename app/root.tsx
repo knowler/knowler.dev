@@ -6,13 +6,8 @@ import {
   useLoaderData,
 } from "@remix-run/react";
 import { json } from "@remix-run/node";
-import type {
-  MetaFunction,
-  LinksFunction,
-  LoaderFunction,
-} from "@remix-run/node";
+import type { MetaFunction, LoaderFunction } from "@remix-run/node";
 import { auth } from "./auth.server";
-import styles from "~/root.css";
 
 interface LoaderData {
   isAuthenticated: boolean;
@@ -51,23 +46,3 @@ export const meta: MetaFunction = () => ({
   viewport: "width=device-width, initial-scale=1",
   title: "Nathan Knowler",
 });
-
-export const links: LinksFunction = () => [
-  {
-    rel: "preconnect",
-    href: "https://fonts.googleapis.com",
-  },
-  {
-    rel: "preconnect",
-    href: "https://fonts.gstatic.com",
-    crossOrigin: "anonymous",
-  },
-  {
-    rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Poppins:wght@300;500&display=swap",
-  },
-  {
-    rel: "stylesheet",
-    href: styles,
-  },
-];
