@@ -63,8 +63,9 @@ description: ${description ?? ""}
 ${content}`;
 
 export const action: ActionFunction = async ({ params, request }) => {
+  const { pathname } = new URL(request.url);
   await auth.isAuthenticated(request, {
-    failureRedirect: `/login?returnTo=/admin/pages/edit/${params.page}`,
+    failureRedirect: `/login?returnTo=${pathname}`,
   });
 
   const result = await getFormData(
@@ -114,7 +115,12 @@ const pageWithHeadOidQuery = `
   }
 `;
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader: LoaderFunction = async ({ params, request }) => {
+  const { pathname } = new URL(request.url);
+  await auth.isAuthenticated(request, {
+    failureRedirect: `/login?returnTo=${pathname}`,
+  });
+
   const { repository } = await octokit.graphql(pageWithHeadOidQuery, {
     expression: `HEAD:content/pages/${params.page}.md`,
   });
