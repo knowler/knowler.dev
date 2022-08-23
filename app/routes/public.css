@@ -1,17 +1,41 @@
 :root {
-	--dark-color-bg: hsl(156 100% 3%);
-	--dark-color-fg: #ddd; /* 14.41 on fg */
-	--dark-color-accent: hsl(156 100% 50%); /* 14.7 on bg */
-	--dark-color-accent-2: #fff;
-	--dark-color-input-bg: hsl(156 100% 5%);
-	--dark-color-surface: hsl(156 100% 4%);
-
-	--light-color-bg: hsl(200 100% 96%);
-	--light-color-fg: hsl(156 100% 5%);
-	--light-color-accent: hsl(156 100% 17%);
-	--light-color-accent-2: hsl(156 100% 40%);
-	--light-color-input-bg: hsl(200 100% 98%);
-	--light-color-surface: hsl(200 100% 98%);
+	--dark: 1;
+	--light: calc(1 - var(--dark));
+	--dark-n: calc(var(--dark) * 1000); /* 1000 when dark */
+	--dark-p: calc(var(--dark) * 1000%); /* 1000% when dark */
+	--light-n: calc(var(--light) * 1000); /* -1000 when dark */
+	--light-p: calc(var(--light) * 1000%); /* -1000% when dark */
+	--hue: clamp(156, var(--light-n), 200);
+	--color-bg: hsl(
+		var(--hue)
+		100%
+		clamp(3%, var(--light-p), 96%)
+	);
+	--color-fg: hsl(
+		clamp(0, var(--light-n), 156)
+		clamp(0%, var(--light-p), 100%)
+		clamp(5%, var(--dark-p), 87%)
+	);
+	--color-accent: hsl(
+		156
+		100%
+		clamp(17%, var(--dark-p), 50%)
+	);
+	--color-accent-2: hsl(
+		clamp(0, var(--light-n), 156)
+		clamp(0%, var(--light-p), 100%)
+		clamp(17%, var(--dark-p), 100%)
+	);
+	--color-input-bg: hsl(
+		var(--hue)
+		100%
+		clamp(5%, var(--light-p), 98%)
+	);
+	--color-surface: hsl(
+		var(--hue)
+		100%
+		clamp(4%, var(--light-p), 98%)
+	);
 
 	--font-title: Poppins, system-ui, sans-serif;
 	--font-copy: Atkinson Hyperlegible, system-ui, sans-serif;
@@ -21,36 +45,16 @@
 	block-size: 100%;
 }
 
-/* Default styles are dark */
-:root:not([data-color-scheme="light"]) {
-	--color-bg: var(--dark-color-bg);
-	--color-fg: var(--dark-color-fg);
-	--color-accent: var(--dark-color-accent);
-	--color-accent-2: var(--dark-color-accent-2);
-	--color-input-bg: var(--dark-color-input-bg);
-	--color-surface: var(--dark-color-surface);
-}
-
 /* Visitor media prefers light */
 @media (prefers-color-scheme: light) {
 	:root:not([data-color-scheme="dark"]) {
-		--color-bg: var(--light-color-bg);
-		--color-fg: var(--light-color-fg);
-		--color-accent: var(--light-color-accent);
-		--color-accent-2: var(--light-color-accent-2);
-		--color-input-bg: var(--light-color-input-bg);
-		--color-surface: var(--light-color-surface);
+		--dark: 0;
 	}
 }
 
 /* Visitor wants light (when media wants dark) */
 :root[data-color-scheme="light"] {
-	--color-bg: var(--light-color-bg);
-	--color-fg: var(--light-color-fg);
-	--color-accent: var(--light-color-accent);
-	--color-accent-2: var(--light-color-accent-2);
-	--color-input-bg: var(--light-color-input-bg);
-	--color-surface: var(--light-color-surface);
+	--dark: 0;
 }
 
 *, ::before, ::after {
