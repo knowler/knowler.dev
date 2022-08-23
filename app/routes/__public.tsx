@@ -154,26 +154,6 @@ export default function Public() {
 							</button>
 						))}
 					</fieldset>
-					<script dangerouslySetInnerHTML={{__html: `
-document.forms.namedItem('user-preferences').addEventListener('submit', async (event) => {
-	event.preventDefault();
-	const formData = new FormData(event.target);
-	try {
-		document.documentElement.dataset.colorScheme = formData.get('theme');
-		event.target.querySelector('button[name="theme"][aria-pressed="true"]').removeAttribute('aria-pressed');
-		event.submitter.setAttribute('aria-pressed', true);
-		await fetch(new URL('/theme', location.origin), {
-			method: 'POST',
-			mode: 'same-origin',
-			redirect: 'manual',
-			body: formData,
-		});
-	} catch (error) {
-		if ('requestSubmit' on event.target) event.target.requestSubmit(event.submitter);
-		else event.target.click();
-	}
-});
-					`}}/>
 				</form>
 			</body>
     </html>
