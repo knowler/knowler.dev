@@ -171,7 +171,7 @@ button:not([aria-pressed="true"]):hover {
 }
 
 .prose pre {
-	background-color: ;
+	background-color: var(--color-surface);
 }
 
 /* Global elements */
