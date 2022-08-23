@@ -4,12 +4,14 @@
 	--dark-color-accent: hsl(156 100% 50%); /* 14.7 on bg */
 	--dark-color-accent-2: #fff;
 	--dark-color-input-bg: hsl(156 100% 5%);
+	--dark-color-surface: hsl(156 100% 4%);
 
 	--light-color-bg: hsl(200 100% 96%);
 	--light-color-fg: hsl(156 100% 5%);
 	--light-color-accent: hsl(156 100% 17%);
 	--light-color-accent-2: hsl(156 100% 40%);
 	--light-color-input-bg: hsl(200 100% 98%);
+	--light-color-surface: hsl(200 100% 98%);
 
 	--font-title: Poppins, system-ui, sans-serif;
 	--font-copy: Atkinson Hyperlegible, system-ui, sans-serif;
@@ -26,6 +28,7 @@
 	--color-accent: var(--dark-color-accent);
 	--color-accent-2: var(--dark-color-accent-2);
 	--color-input-bg: var(--dark-color-input-bg);
+	--color-surface: var(--dark-color-surface);
 }
 
 /* Visitor media prefers light */
@@ -36,6 +39,7 @@
 		--color-accent: var(--light-color-accent);
 		--color-accent-2: var(--light-color-accent-2);
 		--color-input-bg: var(--light-color-input-bg);
+		--color-surface: var(--light-color-surface);
 	}
 }
 
@@ -46,6 +50,7 @@
 	--color-accent: var(--light-color-accent);
 	--color-accent-2: var(--light-color-accent-2);
 	--color-input-bg: var(--light-color-input-bg);
+	--color-surface: var(--light-color-surface);
 }
 
 *, ::before, ::after {
@@ -163,6 +168,10 @@ button:not([aria-pressed="true"]):hover {
 
 .prose li:not(:first-of-type) {
 	margin-block-start: 0.75rem;
+}
+
+.prose pre {
+	background-color: ;
 }
 
 /* Global elements */
