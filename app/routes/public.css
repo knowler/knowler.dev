@@ -1,185 +1,258 @@
 :root {
-  --pad: clamp(1rem, 4vw, 2rem);
-  --hs: 156, 100%;
-  --accent: hsl(var(--hs), 50%);
-  --accent-2: white;
-  --fancy-bg: linear-gradient(
-    45deg, 
-    hsl(var(--hs), 3%),
-    hsl(var(--hs), 5%)
-  );
-  --bg: hsl(var(--hs), 3%);
-  --fg: #ddd;
+	--dark-color-bg: hsl(156 100% 3%);
+	--dark-color-fg: #ddd; /* 14.41 on fg */
+	--dark-color-accent: hsl(156 100% 50%); /* 14.7 on bg */
+	--dark-color-accent-2: #fff;
+	--dark-color-input-bg: hsl(156 100% 5%);
+
+	--light-color-bg: hsl(200 100% 96%);
+	--light-color-fg: hsl(156 100% 5%);
+	--light-color-accent: hsl(156 100% 17%);
+	--light-color-accent-2: hsl(156 100% 40%);
+	--light-color-input-bg: hsl(200 100% 98%);
+
+	--font-title: Poppins, system-ui, sans-serif;
+	--font-copy: Atkinson Hyperlegible, system-ui, sans-serif;
+
+	color-scheme: dark light;
+	box-sizing: border-box;
+	block-size: 100%;
+}
+
+/* Default styles are dark */
+:root:not([data-color-scheme="light"]) {
+	--color-bg: var(--dark-color-bg);
+	--color-fg: var(--dark-color-fg);
+	--color-accent: var(--dark-color-accent);
+	--color-accent-2: var(--dark-color-accent-2);
+	--color-input-bg: var(--dark-color-input-bg);
+}
+
+/* Visitor media prefers light */
+@media (prefers-color-scheme: light) {
+	:root:not([data-color-scheme="dark"]) {
+		--color-bg: var(--light-color-bg);
+		--color-fg: var(--light-color-fg);
+		--color-accent: var(--light-color-accent);
+		--color-accent-2: var(--light-color-accent-2);
+		--color-input-bg: var(--light-color-input-bg);
+	}
+}
+
+/* Visitor wants light (when media wants dark) */
+:root[data-color-scheme="light"] {
+	--color-bg: var(--light-color-bg);
+	--color-fg: var(--light-color-fg);
+	--color-accent: var(--light-color-accent);
+	--color-accent-2: var(--light-color-accent-2);
+	--color-input-bg: var(--light-color-input-bg);
 }
 
 *, ::before, ::after {
-  box-sizing: border-box;
-}
-
-html, body {
-  block-size: 100%;
+	box-sizing: inherit;
 }
 
 body {
-  margin: 0;
-  background-color: var(--bg);
-  color: var(--fg);
-  font-family: 'Atkinson Hyperlegible', sans-serif;
-  font-size: 1.125rem;
-  font-weight: 300;
-  display: grid;
-  grid-template:
-    "skip" max-content
-    "banner" max-content
-    "content" auto
-    "colophon" max-content;
+	block-size: inherit;
+	margin: 0;
+	padding: clamp(1rem, 4vw, 2rem);
+	background-color: var(--color-bg);
+	color: var(--color-fg);
+	font-family: var(--font-copy);
+	font-weight: 300;
+	font-size: 1.2rem;
+	display: grid;
+	grid-template:
+		"skip" max-content
+		"banner" max-content
+		"content" auto
+		"colophon" max-content
+		"user-preferences" max-content;
 }
 
-.has-links a,
-.link {
-  color: var(--accent);
-  text-decoration-color: var(--accent-2);
-  text-underline-offset: 0.35ex;
+a {
+	color: var(--color-accent);
+	text-decoration-color: var(--color-accent-2);
+	text-underline-offset: 0.2em;
+	text-decoration-thickness: 0.05em;
+	transition-timing-function: ease-in-out;
+	transition-duration: 0.2s;
+	transition-property: color, background-color, text-decoration-color;
 }
 
-.has-links a:focus,
-.link:focus {
-  outline: 0.1em dashed var(--accent);
-  outline-offset: 0.25em;
+a:hover {
+	color: var(--color-bg);
+	background-color: var(--color-accent);
+	text-decoration-color: var(--color-accent);
 }
 
-.has-links a:hover,
-.link:hover {
-  background-color: var(--accent);
-  color: #000;
-  text-decoration: none;
+button {
+	transition:
+		filter 0.2s ease-in-out,
+		color 0.2s ease-in-out;
 }
 
-header, h1, h2, h3, h4 {
-  font-family: 'Poppins', sans-serif;
+button:not([aria-pressed="true"]):hover {
+	color: var(--color-bg);
+	filter: brightness(0.8);
 }
 
-h1, h2, h3, h4 {
-  font-weight: 500;
+:focus-visible {
+	outline-offset: 0.2em;
+	outline: 0.125em dashed var(--color-accent);
 }
 
-main {
-  padding: var(--pad);
-}
+/* Helpers */
 
-strong {
-  font-weight: 600;
+.h-pad {
+	padding-inline: var(--pad-h);
 }
-
-/** Visually Hidden **/
 
 .visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border-width: 0;
+}
+
+.icon-link {
+	display: inline-grid;
+	place-content: center;
+	border-radius: 9999px;
+	padding: 0.25em;
+	line-height: 1;
+}
+
+.icon-link svg {
+	height: 1.25em;
+}
+
+.inline-list {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	flex-wrap: wrap;
+	list-style: none;
+	padding-inline-start: 0;
+	margin-block: 0;
+}
+
+/* Prose */
+.prose {
+	display: grid;
+	row-gap: 1em;
+	max-inline-size: min(64ch, 100vw);
+}
+
+.prose p {
+	line-height: 1.7;
+}
+
+.prose :is(h1, h2, h3, p, ul) {
+	margin: 0;
+}
+
+.prose :is(h1, h2, h3) {
+	font-family: var(--font-title);
+}
+
+.prose li:not(:first-of-type) {
+	margin-block-start: 0.75rem;
+}
+
+/* Global elements */
+
+.skip-link {
+	align-self: center;
+	justify-self: center;
+	margin: 1rem;
+}
+
+header {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 1rem;
+	padding-block: 2rem;
+	font-size: 1.2rem;
+	font-family: var(--font-title);
+}
+
+header > a:first-of-type {
+	text-decoration: none;
+	color: var(--color-fg);
+	border: 0.125em solid var(--color-fg);
+	padding-inline: 0.375em;
+	padding-block: 0.25em;
+}
+
+header > a:first-of-type:hover {
+	color: var(--color-bg);
+	background-color: var(--color-fg);
+}
+
+footer {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	padding-block: 2rem;
+	margin-block-start: 2rem;
+}
+
+.colophon {
+	margin: 0;
+}
+
+form[name="user-preferences"] {
+	display: flex;
+	justify-content: center;
+	line-height: 1;
+	padding-block-end: 1rem;
+}
+
+form[name="user-preferences"] fieldset {
+	display: flex;
+	align-items: center;
+	column-gap: 0.5rem;
+	padding: 0.5em;
+	border: none;
+	font-size: 0.9em;
+}
+
+form[name="user-preferences"] span:first-of-type {
+	font-weight: 600;
+	margin-right: 1rem;
+}
+
+form[name="user-preferences"] button {
+	background-color: var(--color-fg);
+	border: none;
+	color: var(--color-bg);
+	padding-inline: 0.5em;
+	padding-block: 0.25em;
+	font-family: inherit;
+	font-weight: 400;
+	font-size: 1em;
+	border-radius: 0.125em;
+}
+
+form[name="user-preferences"] button[aria-pressed="true"] {
+	background-color: var(--color-accent);
 }
 
 main {
-  padding: var(--pad);
+	display: grid;
+	align-content: start;
+	row-gap: 2rem;
 }
 
-/** Skip to Content **/
-
-.skip-link {
-  flex-shrink: 0;
-  justify-self: center;
-  margin-block-start: 1rem;
-  font-size: 0.9rem;
-  color: hsl(var(--hs), 40%);
-  text-decoration-color: hsl(var(--hs), 20%);
-  transition-duration: 0.2s;
-  transition-property: color, text-decoration-color;
-}
-
-.skip-link:hover {
-  color: hsl(var(--hs), 50%);
-  background-color: transparent;
-  text-decoration-color: hsl(var(--hs), 40%);
-  text-decoration: underline;
-}
-
-/** Banner **/
-
-.banner {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-  padding-block-start: var(--pad);
-  padding-inline: var(--pad);
-}
-
-.banner ._title {
-  padding-block: 0.25rem;
-  padding-inline: 0.5rem;
-  border: 0.1rem solid #eee;
-  color: inherit;
-  text-decoration: none;
-  font-size: 1.25rem;
-}
-
-.banner ._title:is(:focus, :hover) {
-  background-color: #eee;
-  color: #000;
-}
-
-.banner ._nav {
-  flex-grow: 1;
-}
-
-.banner ._nav-list {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  list-style: none;
-  padding-inline-start: 0;
-  margin-block: 0;
-}
-
-.banner ._github-link {
-  display: grid;
-  place-items: center;
-  padding: 0.25em;
-  border-radius: 9999px;
-}
-
-.banner ._github-icon {
-  font-size: 1em;
-  height: 1.25em;
-}
-
-/** Content Info **/
-
-.content-info {
-  background-color: hsl(var(--hs), 4%);
-  padding: var(--pad);
-  flex-shrink: 0;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1rem;
-  justify-content: space-between;
-  font-size: 0.9rem;
-}
-
-.content-info :is(p, ul) {
-  margin-block: 0;
-}
-
-.content-info ._nav-list {
-  display: flex;
-  list-style: none;
-  padding-inline-start: 0;
-  gap: 0.5rem;
+input[type="text"] {
+	color: var(--color-bg);
 }

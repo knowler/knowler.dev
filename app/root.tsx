@@ -1,10 +1,4 @@
-import {
-  Links,
-  LiveReload,
-  Meta,
-  Outlet,
-  useLoaderData,
-} from "@remix-run/react";
+import { LiveReload, Outlet } from "@remix-run/react";
 import { json } from "@remix-run/node";
 import type { MetaFunction, LoaderFunction } from "@remix-run/node";
 import { auth } from "./auth.server";
@@ -22,22 +16,11 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 export default function App() {
-  const { isAuthenticated } = useLoaderData<LoaderData>();
   return (
-    <html
-      dir="ltr"
-      lang="en-ca"
-      className={isAuthenticated ? "logged-in" : undefined}
-    >
-      <head>
-        <Meta />
-        <Links />
-      </head>
-      <body>
-        <Outlet />
-        <LiveReload />
-      </body>
-    </html>
+		<>
+			<Outlet />
+			<LiveReload />
+    </>
   );
 }
 

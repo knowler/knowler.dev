@@ -1,9 +1,4 @@
-import type { LinksFunction, MetaFunction } from "@remix-run/node";
-import proseStyles from "~/styles/prose.css";
-
-export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: proseStyles },
-];
+import type { MetaFunction } from "@remix-run/node";
 
 export const meta: MetaFunction = () => ({
   title: "Nathan Knowler",

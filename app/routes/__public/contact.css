@@ -17,9 +17,9 @@
   border: 0;
   border-radius: 0.5em;
   padding: 1rem;
-  background-image: var(--fancy-bg);
-  border: 0.125em solid hsl(var(--hs), 6%);
-  color: hsl(var(--hs), 80%);
+  background: var(--color-input-bg);
+  border: 0.125em solid var(--color-accent);
+  color: var(--color-fg);
   transition: border 240ms ease;
 }
 .form-field :is(
@@ -27,7 +27,7 @@
   input:where([type="text"], [type="email"])
 ):focus {
   outline: 0;
-  border-color: hsl(var(--hs), 80%);
+  border-color: var(--color-accent-2);
 }
 
 .form-field {
@@ -49,8 +49,8 @@
   padding: 1rem;
   border: 0;
   border-radius: 0.25em;
-  background-color: hsl(var(--hs), var(--bg-l));
-  color: hsl(var(--hs), 80%);
+  background-color: var(--color-accent);
+  color: var(--color-bg);
   transition: background-color 180ms ease;
   font-size: 1em;
   font-weight: 500;
