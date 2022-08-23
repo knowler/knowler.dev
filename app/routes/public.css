@@ -1,40 +1,69 @@
 :root {
 	--dark: 1;
-	--light: calc(1 - var(--dark));
-	--dark-n: calc(var(--dark) * 1000); /* 1000 when dark */
-	--dark-p: calc(var(--dark) * 1000%); /* 1000% when dark */
-	--light-n: calc(var(--light) * 1000); /* -1000 when dark */
-	--light-p: calc(var(--light) * 1000%); /* -1000% when dark */
-	--hue: clamp(156, var(--light-n), 200);
+	--light: calc(var(--dark) * -1);
+	--hue: max(
+			var(--dark) * 156,
+			var(--light) * 200
+	);
 	--color-bg: hsl(
 		var(--hue)
 		100%
-		clamp(3%, var(--light-p), 96%)
+		max(
+			var(--dark) * 3%,
+			var(--light) * 96%
+		)
 	);
 	--color-fg: hsl(
-		clamp(0, var(--light-n), 156)
-		clamp(0%, var(--light-p), 100%)
-		clamp(5%, var(--dark-p), 87%)
+		max(
+			var(--dark) * 0,
+			var(--light) * 156
+		)
+		max(
+			var(--light) * 100%,
+			var(--dark) * 0%
+		)
+		max(
+			var(--light) * 5%,
+			var(--dark) * 87%
+		)
 	);
 	--color-accent: hsl(
 		156
 		100%
-		clamp(17%, var(--dark-p), 50%)
+		max(
+			var(--light) * 17%,
+			var(--dark) * 50%
+		)
 	);
 	--color-accent-2: hsl(
-		clamp(0, var(--light-n), 156)
-		clamp(0%, var(--light-p), 100%)
-		clamp(17%, var(--dark-p), 100%)
+		max(
+			var(--light) * 156,
+			var(--dark) * 0
+		)
+		max(
+			var(--light) * 100%,
+			var(--dark) * 0%
+		)
+		max(
+			var(--light) * 17%,
+			var(--dark) * 100%
+		)
 	);
 	--color-input-bg: hsl(
 		var(--hue)
 		100%
-		clamp(5%, var(--light-p), 98%)
+		max(
+			var(--light) * 98%,
+			var(--dark) * 5%
+		)
 	);
 	--color-surface: hsl(
 		var(--hue)
 		100%
-		clamp(4%, var(--light-p), 98%)
+		max(
+			var(--light) * 98%,
+			var(--dark) * 4%
+		)
 	);
 
 	--font-title: Poppins, system-ui, sans-serif;
@@ -48,13 +77,13 @@
 /* Visitor media prefers light */
 @media (prefers-color-scheme: light) {
 	:root:not([data-color-scheme="dark"]) {
-		--dark: 0;
+		--dark: -1;
 	}
 }
 
 /* Visitor wants light (when media wants dark) */
 :root[data-color-scheme="light"] {
-	--dark: 0;
+	--dark: -1;
 }
 
 *, ::before, ::after {
