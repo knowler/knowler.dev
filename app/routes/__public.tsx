@@ -137,24 +137,27 @@ export default function Public() {
 						</ul>
 					</nav>
 				</footer>
-				<form name="user-preferences" method="post" action="/theme">
-					<fieldset aria-labelledby="theme-label">
-						<span aria-hidden id="theme-label">Theme</span>
-						{themes.map(theme => (
-							<button
-								key={theme.value}
-								name="theme"
-								value={theme.value}
-								id={`${theme.value}-theme`}
-								aria-labelledby={`${theme.value}-theme theme-label`}
-								aria-pressed={theme.isActive}
-								autoFocus={loaderData?.themeUpdated && theme.isActive}
-							>
-								{theme.label}
-							</button>
-						))}
-					</fieldset>
-				</form>
+				<details open={loaderData?.themeUpdated} className="site-preferences">
+					<summary>Site Preferences</summary>
+					<form name="user-preferences" method="post" action="/theme">
+						<fieldset aria-labelledby="theme-label">
+							<span aria-hidden id="theme-label">Theme</span>
+							{themes.map(theme => (
+								<button
+									key={theme.value}
+									name="theme"
+									value={theme.value}
+									id={`${theme.value}-theme`}
+									aria-labelledby={`${theme.value}-theme theme-label`}
+									aria-pressed={theme.isActive}
+									autoFocus={loaderData?.themeUpdated && theme.isActive}
+								>
+									{theme.label}
+								</button>
+							))}
+						</fieldset>
+					</form>
+				</details>
 			</body>
     </html>
   );
