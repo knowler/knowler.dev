@@ -1,7 +1,7 @@
-import { Links, Meta, NavLink, Outlet, useLoaderData } from "@remix-run/react";
+import { Links, LiveReload, Meta, NavLink, Outlet, useLoaderData } from "@remix-run/react";
 import { GitHubLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
 import { json, LinksFunction, LoaderFunction } from "@remix-run/node";
-import publicStyles from "./public.css";
+import publicStyles from "~/styles/public.css";
 import { commitSession, getSession } from "~/session.server";
 
 export const links: LinksFunction = () => [
@@ -158,6 +158,7 @@ export default function Public() {
 						</fieldset>
 					</form>
 				</details>
+				<LiveReload />
 			</body>
     </html>
   );

@@ -44,15 +44,13 @@
 }
 
 .prose pre::after {
-  content: "";
+  content: '';
   flex-basis: 1rem;
   flex-grow: 0;
   flex-shrink: 0;
 }
 
 .prose pre > code {
-  font-family: "JetBrains Mono", monospace;
+  font-family: 'JetBrains Mono', monospace;
   color: hsl(var(--hs), 70%);
 }
-
-/*# sourceMappingURL=prose.css.map */

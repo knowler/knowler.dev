@@ -1,4 +1,4 @@
-import { LiveReload, Outlet } from "@remix-run/react";
+import { Outlet } from "@remix-run/react";
 import { json } from "@remix-run/node";
 import type { MetaFunction, LoaderFunction } from "@remix-run/node";
 import { auth } from "./auth.server";
@@ -16,12 +16,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 export default function App() {
-  return (
-		<>
-			<Outlet />
-			<LiveReload />
-    </>
-  );
+  return <Outlet />;
 }
 
 export const meta: MetaFunction = () => ({
