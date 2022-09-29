@@ -3,6 +3,7 @@ import { renderToPipeableStream } from "react-dom/server";
 import isbot from 'isbot';
 import { RemixServer } from "@remix-run/react";
 import type { EntryContext } from "@remix-run/node";
+import { etag } from "remix-etag";
 
 const ABORT_DELAY = 5000;
 
@@ -26,10 +27,13 @@ export default function handleRequest(
           responseHeaders.set('Content-Type', 'text/html');
 
           resolve(
-            new Response(body, {
-              status: didError ? 500 : responseStatusCode,
-              headers: responseHeaders,
-            }),
+						etag({
+							request,
+							response: new Response(body, {
+								status: didError ? 500 : responseStatusCode,
+								headers: responseHeaders,
+							}),
+						}),
           );
           pipe(body);
         },

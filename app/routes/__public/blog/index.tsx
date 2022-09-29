@@ -1,60 +1,30 @@
-import type { HeadersFunction, LoaderFunction} from "@remix-run/node";
+import { CachedBlogPost } from "@prisma/client";
+import type { HeadersFunction, LinksFunction, LoaderFunction} from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
-import parseFrontMatter from "front-matter";
-import { octokit } from "~/octokit.server";
-
-interface Post {
-  slug: string;
-  title: string;
-  date: string;
-}
+import { prisma } from "~/db.server";
+import blogStyles from "~/styles/blog.css";
 
 interface LoaderData {
-  posts: Post[];
+  posts: CachedBlogPost[];
 }
 
-async function getPosts() {
-  return octokit
-    .graphql(
-      `
-    {
-      repository(owner: "knowler", name: "knowlerkno.ws") {
-        object(expression: "HEAD:content/blog") {
-          ... on Tree {
-            entries {
-              name
-              extension
-              object {
-                ... on Blob {
-                  text
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-    `
-    )
-    .then((data) =>
-      data.repository.object.entries
-        .map((entry) => {
-          const { attributes } = parseFrontMatter(entry.object.text);
-          return {
-            slug: entry.name.replace(entry.extension, ""),
-            ...attributes,
-          };
-        })
-        .sort((a, b) => new Date(a.date) - new Date(b.date))
-    );
-}
+export const links: LinksFunction = () => [
+	{rel: 'stylesheet', href: blogStyles},
+]
 
 export const headers: HeadersFunction = ({loaderHeaders}) => loaderHeaders;
 
 export const loader: LoaderFunction = async () => {
+	const posts = await prisma.cachedBlogPost.findMany({
+		take: 10,
+		orderBy: {
+			publishedAt: "desc",
+		},
+	});
+
   return json<LoaderData>(
-    { posts: (await getPosts()).reverse() },
+    { posts },
     {
       headers: {'Cache-Control': 'public, s-maxage=60'},
     }
@@ -65,10 +35,16 @@ export default function BlogIndex() {
   const { posts } = useLoaderData<LoaderData>();
 
   return (
-    <ol reversed>
+    <ol role="list" reversed>
       {posts.map((post) => (
         <li key={post.slug}>
-          <Link to={post.slug}>{post.title}</Link>
+					<article>
+						<hgroup>
+							<h2><Link to={post.slug}>{post.title}</Link></h2>
+							<time dateTime={post.publishedAt}>{new Date(post.publishedAt).toDateString()}</time>
+							{post.description ? <p>{post.description}</p> : undefined}
+						</hgroup>
+					</article>
         </li>
       ))}
     </ol>

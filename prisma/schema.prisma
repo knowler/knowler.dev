@@ -26,3 +26,14 @@ model CachedPage {
   html        String
   cachedAt    DateTime @updatedAt
 }
+
+model CachedBlogPost {
+	slug				String @id @unique
+	title				String
+	description String?
+	markdown		String
+	html				String
+	publishedAt DateTime
+	updatedAt		DateTime?
+	cachedAt		DateTime @updatedAt
+}

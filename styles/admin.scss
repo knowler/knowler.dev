@@ -1,0 +1,118 @@
+@use 'color-schemes';
+
+:root {
+	@include color-schemes.root;
+
+	--color-bg: black;
+	--color-fg: white;
+	--color-accent: #0f9;
+
+	font-family: system-ui, sans-serif;
+	background-color: var(--color-bg);
+	color: var(--color-fg);
+	block-size: 100%;
+	box-sizing: border-box;
+}
+
+*, ::before, ::after {
+	box-sizing: inherit;
+}
+
+body {
+	display: flex;
+	gap: 1rem;
+	margin: 0;
+	block-size: 100%;
+
+	> * {
+		transition: flex-basis 0.2s ease-in-out;
+		flex: 1 1 max-content;
+	}
+}
+
+header {
+	display: grid;
+	align-content: space-between;
+	background-color: rgb(255 255 255 / 0.1);
+	padding: 1rem;
+	font-size: 1.5rem;
+	transition: inline-size 0.2s ease-in-out;
+
+	ul {
+		display: grid;
+		gap: 1em;
+		list-style: none;
+		padding-inline-start: 0;
+		margin-block: 0;
+		line-height: 1;
+		transition: inherit;
+	}
+
+	svg {
+		block-size: 1em;
+		inline-size: 1em;
+	}
+
+	a {
+		text-decoration: none;
+	}
+
+	:is(a, button) .label {
+		display: block;
+		overflow: clip;
+		transition: inline-size 0.2s ease-in-out;
+	}
+
+	&:has(button[aria-pressed="true"]) :is(a, button) .label {
+		animation:
+			expand 0.2s ease-in-out both,
+			slide-in-inline-start 0.3s 0.2s ease-in-out both;
+
+		@keyframes expand {
+			from { inline-size: 0px; }
+			to { inline-size: auto; }
+		}
+
+		@keyframes slide-in-inline-start {
+			from { transform: translateX(-100%); }
+			to { transform: none; }
+		}
+	}
+
+	button {
+		font-size: 1em;
+		background: none;
+
+		border: none;
+		color: var(--color-fg);
+	}
+
+	:is(a, button) {
+		display: flex;
+		gap: 0.5em;
+		padding: 0.5em;
+		color: var(--color-fg);
+		transition: all 0.3s ease-in-out;
+
+		&:hover {
+			color: var(--color-accent);
+			cursor: pointer;
+		}
+
+		&:focus {
+			outline: none;
+		}
+
+		&:focus-visible {
+			color: var(--color-accent);
+			outline: 0.0625em dashed var(--color-accent);
+		}
+	}
+
+}
+
+h1 {
+	font-variation-settings: "wdth" 125, "wght" 750;
+}
+
+@import 'visually-hidden';

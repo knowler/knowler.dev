@@ -17,7 +17,7 @@ import invariant from "tiny-invariant";
 import { z } from "zod";
 import { prisma } from "~/db.server";
 import mail, { verifyEmail } from "~/mail.server";
-import styles from "./contact.css";
+import styles from "~/styles/contact.css";
 
 export const meta: MetaFunction = () => ({
   title: "Contact – Nathan Knowler",

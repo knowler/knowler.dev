@@ -12,14 +12,14 @@ import { z } from "zod";
 import { auth } from "~/auth.server";
 import Editor from "~/components/editor";
 import editorStyles from "~/components/editor.css";
-import proseStyles from "~/styles/prose.css";
+//import proseStyles from "~/styles/prose.css";
 import { cachePages } from "~/cache.server";
 
 export const handle = { hydrate: true };
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: editorStyles },
-  { rel: "stylesheet", href: proseStyles },
+	//{ rel: "stylesheet", href: proseStyles },
 ];
 
 const updatePageMutation = `

@@ -1,6 +1,8 @@
+@use 'color-schemes';
+
 :root {
-	--dark: 1;
-	--light: calc(var(--dark) * -1);
+	@include color-schemes.root;
+
 	--hue: max(var(--dark) * 156, var(--light) * 200);
 	--color-bg: hsl(var(--hue) 100% max(var(--dark) * 3%, var(--light) * 96%));
 	--color-fg: hsl(
@@ -23,18 +25,6 @@
 	color-scheme: dark light;
 	box-sizing: border-box;
 	block-size: 100%;
-}
-
-/* Visitor media prefers light */
-@media (prefers-color-scheme: light) {
-	:root:not([data-color-scheme="dark"]) {
-		--dark: -1;
-	}
-}
-
-/* Visitor wants light (when media wants dark) */
-:root[data-color-scheme="light"] {
-	--dark: -1;
 }
 
 *, ::before, ::after {
@@ -64,26 +54,28 @@ a {
 	text-decoration-color: var(--color-accent-2);
 	text-underline-offset: 0.2em;
 	text-decoration-thickness: 0.05em;
-	transition-timing-function: ease-in-out;
-	transition-duration: 0.2s;
-	transition-property: color, background-color, text-decoration-color;
-}
+	--transition-settings: 0.2s ease-in-out;
+	transition:
+		color var(--transition-settings),
+		background-color var(--transition-settings),
+		text-decoration-color var(--transition-settings);
 
-a:hover {
-	color: var(--color-bg);
-	background-color: var(--color-accent);
-	text-decoration-color: var(--color-accent);
+	&:hover {
+		color: var(--color-bg);
+		background-color: var(--color-accent);
+		text-decoration-color: var(--color-accent);
+	}
 }
 
 button {
 	transition:
 		filter 0.2s ease-in-out,
 		color 0.2s ease-in-out;
-}
 
-button:not([aria-pressed="true"]):hover {
-	color: var(--color-bg);
-	filter: brightness(0.8);
+	&:not([aria-pressed="true"]):hover {
+		color: var(--color-bg);
+		filter: brightness(0.8);
+	}
 }
 
 :focus-visible {
@@ -97,17 +89,7 @@ button:not([aria-pressed="true"]):hover {
 	padding-inline: var(--pad-h);
 }
 
-.visually-hidden {
-	position: absolute;
-	width: 1px;
-	height: 1px;
-	padding: 0;
-	margin: -1px;
-	overflow: hidden;
-	clip: rect(0, 0, 0, 0);
-	white-space: nowrap;
-	border-width: 0;
-}
+@import 'visually-hidden';
 
 .icon-link {
 	display: inline-grid;
@@ -115,10 +97,10 @@ button:not([aria-pressed="true"]):hover {
 	border-radius: 9999px;
 	padding: 0.25em;
 	line-height: 1;
-}
 
-.icon-link svg {
-	height: 1.25em;
+	svg {
+		height: 1.25em;
+	}
 }
 
 .inline-list {
@@ -136,26 +118,26 @@ button:not([aria-pressed="true"]):hover {
 	display: grid;
 	row-gap: 1em;
 	max-inline-size: min(64ch, 100vw);
-}
 
-.prose p {
-	line-height: 1.7;
-}
+	p {
+		line-height: 1.7;
+	}
 
-.prose :is(h1, h2, h3, p, ul) {
-	margin: 0;
-}
+	:is(h1, h2, h3, p, ul) {
+		margin: 0;
+	}
 
-.prose :is(h1, h2, h3) {
-	font-family: var(--font-title);
-}
+	:is(h1, h2, h3) {
+		font-family: var(--font-title);
+	}
 
-.prose li:not(:first-of-type) {
-	margin-block-start: 0.75rem;
-}
+	li:not(:first-of-type) {
+		margin-block-start: 0.75rem;
+	}
 
-.prose pre {
-	background-color: var(--color-surface);
+	pre {
+		background-color: var(--color-surface);
+	}
 }
 
 /* Global elements */
@@ -174,19 +156,19 @@ header {
 	padding-block: 2rem;
 	font-size: 1.2rem;
 	font-family: var(--font-title);
-}
 
-header > a:first-of-type {
-	text-decoration: none;
-	color: var(--color-fg);
-	border: 0.125em solid var(--color-fg);
-	padding-inline: 0.375em;
-	padding-block: 0.25em;
-}
+	> a:first-of-type {
+		text-decoration: none;
+		color: var(--color-fg);
+		border: 0.125em solid var(--color-fg);
+		padding-inline: 0.375em;
+		padding-block: 0.25em;
 
-header > a:first-of-type:hover {
-	color: var(--color-bg);
-	background-color: var(--color-fg);
+		&:hover {
+			color: var(--color-bg);
+			background-color: var(--color-fg);
+		}
+	}
 }
 
 footer {
@@ -209,36 +191,37 @@ footer {
 
 form[name="user-preferences"] {
 	line-height: 1;
-}
 
-form[name="user-preferences"] fieldset {
-	display: flex;
-	align-items: center;
-	column-gap: 0.5rem;
-	padding: 0.5em;
-	border: none;
-	font-size: 0.9em;
-}
+	fieldset {
+		display: flex;
+		align-items: center;
+		column-gap: 0.5rem;
+		padding: 0.5em;
+		border: none;
+		font-size: 0.9em;
+	}
 
-form[name="user-preferences"] span:first-of-type {
-	font-weight: 600;
-	margin-right: 1rem;
-}
+	span:first-of-type {
+		font-weight: 600;
+		margin-right: 1rem;
+	}
 
-form[name="user-preferences"] button {
-	background-color: var(--color-fg);
-	border: none;
-	color: var(--color-bg);
-	padding-inline: 0.5em;
-	padding-block: 0.25em;
-	font-family: inherit;
-	font-weight: 400;
-	font-size: 1em;
-	border-radius: 0.125em;
-}
+	button {
+		background-color: var(--color-fg);
+		border: none;
+		color: var(--color-bg);
+		padding-inline: 0.5em;
+		padding-block: 0.25em;
+		font-family: inherit;
+		font-weight: 400;
+		font-size: 1em;
+		border-radius: 0.125em;
 
-form[name="user-preferences"] button[aria-pressed="true"] {
-	background-color: var(--color-accent);
+		&[aria-pressed="true"] {
+			background-color: var(--color-accent);
+		}
+	}
+
 }
 
 main {

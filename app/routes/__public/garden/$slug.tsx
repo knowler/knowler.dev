@@ -3,7 +3,6 @@ import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { parseMarkdown } from "~/md.server";
 import { octokit } from "~/octokit.server";
-import proseStyles from '~/styles/prose.css';
 
 export const meta: MetaFunction = ({ data }) => {
   const { description, title } = data as LoaderData;
@@ -11,7 +10,6 @@ export const meta: MetaFunction = ({ data }) => {
 };
 
 export const links: LinksFunction = () => [
-  { rel: 'stylesheet', href: proseStyles },
   {
     rel: "stylesheet",
     href: "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300&display=swap",

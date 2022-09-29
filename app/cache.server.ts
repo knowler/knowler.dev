@@ -1,9 +1,9 @@
-import type { CachedPage } from "@prisma/client";
+import type { CachedBlogPost, CachedPage } from "@prisma/client";
 import { prisma } from "~/db.server";
 import { parseMarkdown } from "~/md.server";
 import { octokit } from "~/octokit.server";
 
-interface PagesQueryResponseData {
+interface ContentQueryResponseData {
   repository: {
     object: {
       entries: {
@@ -16,6 +16,7 @@ interface PagesQueryResponseData {
     };
   };
 }
+
 const pagesQuery = `
   query pages {
     repository(name: "knowler.dev", owner: "knowler") {
@@ -37,7 +38,7 @@ const pagesQuery = `
 `;
 
 export async function cachePages(): Promise<CachedPage[]> {
-  const data = await octokit.graphql<PagesQueryResponseData>(pagesQuery);
+  const data = await octokit.graphql<ContentQueryResponseData>(pagesQuery);
   const cachedPages = await Promise.all(
     data.repository.object.entries?.map(async (entries) => {
       const markdown = entries.object.text;
@@ -65,4 +66,57 @@ export async function cachePages(): Promise<CachedPage[]> {
   );
 
   return cachedPages;
+}
+
+const blogPostsQuery = `{
+	repository(owner: "knowler", name: "knowler.dev") {
+		object(expression: "HEAD:content/blog") {
+			... on Tree {
+				entries {
+					name
+					extension
+					object {
+						... on Blob {
+							text
+						}
+					}
+				}
+			}
+		}
+	}
+}`;
+
+
+export async function cacheBlogPosts(): Promise<CachedBlogPost[]> {
+	const data = await octokit.graphql<ContentQueryResponseData>(blogPostsQuery);
+	const cachedBlogPosts = await Promise.all(
+		data.repository.object.entries?.map(async (entry) => {
+			const markdown = entry.object.text;
+			const slug = entry.name.replace(entry.extension, "");
+			const { attributes, html } = await parseMarkdown(markdown);
+			const { title, date: publishedAt, updated: updatedAt, description } = attributes;
+
+			return await prisma.cachedBlogPost.upsert({
+				where: { slug },
+				create: {
+					slug,
+					title,
+					publishedAt,
+					updatedAt,
+					description,
+					markdown,
+					html,
+				},
+				update: {
+					title,
+					description,
+					markdown,
+					html,
+					publishedAt,
+					updatedAt
+				}
+			});
+		})
+	);
+	return cachedBlogPosts;
 }

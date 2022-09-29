@@ -1,7 +1,7 @@
-import { Links, Meta, NavLink, Outlet, useLoaderData } from "@remix-run/react";
+import { Form, Links, LiveReload, Meta, NavLink, Outlet, useLoaderData } from "@remix-run/react";
 import { GitHubLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
 import { json, LinksFunction, LoaderFunction } from "@remix-run/node";
-import publicStyles from "./public.css";
+import publicStyles from "~/styles/public.css";
 import { commitSession, getSession } from "~/session.server";
 
 export const links: LinksFunction = () => [
@@ -21,7 +21,13 @@ export const links: LinksFunction = () => [
 	{
 		rel: "stylesheet",
 		href: publicStyles,
-	}
+	},
+	{
+		rel: "alternate",
+		type: "application/rss+xml",
+		title: "RSS",
+		href: "/feed.xml"
+	},
 ];
 
 export const loader: LoaderFunction = async ({request}) => {
@@ -36,6 +42,13 @@ export const loader: LoaderFunction = async ({request}) => {
 		},
 	});
 }
+
+const featureDetection = `
+with (document.documentElement.classList) {
+	toggle("no-js", false);
+	toggle("no-cookies", !navigator.cookieEnabled);
+}
+`;
 
 export default function Public() {
 	const loaderData = useLoaderData();
@@ -63,23 +76,28 @@ export default function Public() {
       dir="ltr"
       lang="en-ca"
 			data-color-scheme={loaderData?.theme}
+			className="no-js"
     >
       <head>
         <Meta />
+				<script dangerouslySetInnerHTML={{__html: featureDetection}} />
         <Links />
       </head>
       <body>
 				<a href="#content" className="skip-link">
 					Skip to content
 				</a>
-				<header>
+				<header className="site-head">
 					<NavLink to="/">
 						Nathan Knowler
 					</NavLink>
-					<nav aria-label="primary" className="_nav has-links">
-						<ul role="list" className="inline-list">
+					<nav aria-label="primary" className="nav">
+						<ul role="list" className="nav__list inline-list">
 							<li>
 								<NavLink to="/about">About</NavLink>
+							</li>
+							<li>
+								<NavLink to="/blog">Blog</NavLink>
 							</li>
 							<li>
 								<NavLink to="/garden">Garden</NavLink>
@@ -123,8 +141,8 @@ export default function Public() {
 				</main>
 				<footer>
 					<p className="colophon">&copy; 2015 to 2022 Nathan Knowler. All rights reserved.</p>
-					<nav aria-label="secondary">
-						<ul role="list" className="inline-list">
+					<nav aria-label="secondary" className="nav">
+						<ul role="list" className="nav__list inline-list">
 							<li>
 								<NavLink to="/accessibility">Accessibility</NavLink>
 							</li>
@@ -137,27 +155,30 @@ export default function Public() {
 						</ul>
 					</nav>
 				</footer>
-				<details open={loaderData?.themeUpdated} className="site-preferences">
-					<summary>Site Preferences</summary>
-					<form name="user-preferences" method="post" action="/theme">
-						<fieldset aria-labelledby="theme-label">
-							<span aria-hidden id="theme-label">Theme</span>
-							{themes.map(theme => (
-								<button
-									key={theme.value}
-									name="theme"
-									value={theme.value}
-									id={`${theme.value}-theme`}
-									aria-labelledby={`${theme.value}-theme theme-label`}
-									aria-pressed={theme.isActive}
-									autoFocus={loaderData?.themeUpdated && theme.isActive}
-								>
-									{theme.label}
-								</button>
-							))}
-						</fieldset>
-					</form>
-				</details>
+				<site-preferences>
+					<details open={loaderData?.themeUpdated} className="site-preferences">
+						<summary>Site Preferences</summary>
+						<Form name="user-preferences" method="post" action="/theme">
+							<fieldset aria-labelledby="theme-label">
+								<span aria-hidden id="theme-label">Theme</span>
+								{themes.map(theme => (
+									<button
+										key={theme.value}
+										name="theme"
+										value={theme.value}
+										id={`${theme.value}-theme`}
+										aria-labelledby={`${theme.value}-theme theme-label`}
+										aria-pressed={theme.isActive}
+										autoFocus={loaderData?.themeUpdated && theme.isActive}
+									>
+										{theme.label}
+									</button>
+								))}
+							</fieldset>
+						</Form>
+					</details>
+				</site-preferences>
+				<LiveReload />
 			</body>
     </html>
   );

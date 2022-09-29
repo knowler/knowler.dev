@@ -10,7 +10,7 @@ import type { LoaderFunction, LinksFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { NavLink, Outlet, Scripts, ScrollRestoration } from "@remix-run/react";
 import { auth } from "~/auth.server";
-import adminStyles from "./admin.css";
+import adminStyles from "~/styles/admin.css";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: adminStyles },
