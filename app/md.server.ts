@@ -16,11 +16,13 @@ export async function parseMarkdown(contents: string): Promise<ParsedMarkdown> {
     const { unified } = await import("unified");
     const { default: remarkParse } = await import("remark-parse");
     const { default: remarkRehype } = await import("remark-rehype");
+    const { default: rehypeHighlight } = await import("rehype-highlight");
     const { default: rehypeSlug } = await import("rehype-slug");
     const { default: rehypeStringify } = await import("rehype-stringify");
     processor = unified()
       .use(remarkParse)
       .use(remarkRehype, { allowDangerousHtml: true })
+			.use(rehypeHighlight)
       .use(rehypeSlug)
       .use(rehypeStringify, { allowDangerousHtml: true });
   }
