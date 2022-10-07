@@ -50,7 +50,7 @@ export default function BlogPost() {
       <p>
         <time dateTime={post.publishedAt}>{new Date(post.publishedAt).toDateString()}</time>
       </p>
-      <div dangerouslySetInnerHTML={{ __html: post.html }} />
+      <div className="prose" dangerouslySetInnerHTML={{ __html: post.html }} />
     </article>
   );
 }
