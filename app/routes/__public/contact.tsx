@@ -17,13 +17,14 @@ import invariant from "tiny-invariant";
 import { z } from "zod";
 import { prisma } from "~/db.server";
 import mail, { verifyEmail } from "~/mail.server";
+import { getSeo } from "~/seo";
 import styles from "~/styles/contact.css";
 
-export const meta: MetaFunction = () => ({
-  title: "Contact – Nathan Knowler",
-});
+const [seoMeta, seoLinks] = getSeo({title: 'Contact'});
 
-export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }];
+export const meta: MetaFunction = () => seoMeta;
+
+export const links: LinksFunction = () => [...seoLinks, { rel: "stylesheet", href: styles }];
 
 export const action: ActionFunction = async ({ request }) => {
   invariant(process.env.CONTACT_FORM_TO, "CONTACT_FORM_TO must be set");

@@ -1,15 +1,21 @@
 import { CachedBlogPost } from "@prisma/client";
-import type { HeadersFunction, LinksFunction, LoaderFunction} from "@remix-run/node";
+import type { HeadersFunction, LinksFunction, LoaderFunction, MetaFunction} from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { prisma } from "~/db.server";
+import { getSeo } from "~/seo";
 import blogStyles from "~/styles/blog.css";
+
+const [seoMeta, seoLinks] = getSeo({title: 'Blog'});
+
+export const meta: MetaFunction = () => seoMeta;
 
 interface LoaderData {
   posts: CachedBlogPost[];
 }
 
 export const links: LinksFunction = () => [
+	...seoLinks,
 	{rel: 'stylesheet', href: blogStyles},
 ]
 

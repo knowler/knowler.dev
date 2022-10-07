@@ -1,8 +1,8 @@
 import type { MetaFunction } from "@remix-run/node";
+import { getSeoMeta } from "~/seo";
 
-export const meta: MetaFunction = () => ({
-  title: "Nathan Knowler",
-  description: "Nathan Knowler builds for the web.",
+export const meta: MetaFunction = () => getSeoMeta({
+  title: "Home",
 });
 
 export default function Index() {

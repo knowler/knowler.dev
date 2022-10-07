@@ -5,10 +5,11 @@ import { useAuthenticated } from "~/hooks";
 import { prisma } from "~/db.server";
 import { CachedPage } from "@prisma/client";
 import { notFound } from "remix-utils";
+import { getSeoMeta } from "~/seo";
 
-export const meta: MetaFunction = ({ data }) => ({
-  title: `${data.page.title} – Nathan Knowler`,
-  description: data.page?.description,
+export const meta: MetaFunction = ({ data }) => getSeoMeta({
+	title: data.page.title,
+	description: data.page?.description,
 });
 
 interface LoaderData {
