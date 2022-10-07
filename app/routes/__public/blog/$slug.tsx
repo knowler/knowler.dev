@@ -1,9 +1,14 @@
 import { CachedBlogPost } from "@prisma/client";
-import type { LoaderFunction, MetaFunction } from "@remix-run/node";
+import type { LinksFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useCatch, useLoaderData } from "@remix-run/react";
 import { z } from "zod";
 import { prisma } from "~/db.server";
+import proseStyles from "~/styles/prose.css";
+
+export const links: LinksFunction = () => [
+	{rel: 'stylesheet', href: proseStyles},
+]
 
 interface LoaderData {
   post: CachedBlogPost;
@@ -40,7 +45,7 @@ export default function BlogPost() {
   const { post } = useLoaderData<LoaderData>();
 
   return (
-    <article>
+    <article className="prose">
       <h1>{post.title}</h1>
       <p>
         <time dateTime={post.publishedAt}>{new Date(post.publishedAt).toDateString()}</time>
