@@ -31,9 +31,13 @@ call [`AbortController.abort()`][] in `disconnectedCallback()`:
 class BaseElement extends HTMLElement {
 	#disconnectionController = new AbortController();
 
-	get disconnectSignal() { return this.#disconnectionController.signal; }
+	get disconnectSignal() {
+		return this.#disconnectionController.signal;
+	}
 
-	disconnectedCallback() { this.#disconnectionController.abort(); }
+	disconnectedCallback() {
+		this.#disconnectionController.abort();
+	}
 }
 ```
 
@@ -42,12 +46,16 @@ My custom elements can just extend the base element class and use the
 
 ```javascript
 class MyButton extends BaseElement {
-	get button() { return this.querySelector(':scope > button'); }
+	get button() {
+		return this.querySelector(':scope > button');
+	}
 
 	connectedCallback() {
-		this.button.addEventListener('click', this.#onClick.bind(this), {
-			signal: this.disconnectSignal,
-		});
+		this.button.addEventListener(
+			'click',
+			this.#onClick.bind(this),
+			{ signal: this.disconnectSignal },
+		);
 	}
 
 	#onClick(event) { /* Handle event */ }
