@@ -3,6 +3,8 @@ import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { parseMarkdown } from "~/md.server";
 import { octokit } from "~/octokit.server";
+import githubDarkStyles from 'highlight.js/styles/github-dark.css'
+import githubStyles from 'highlight.js/styles/github.css'
 
 export const meta: MetaFunction = ({ data }) => {
   const { description, title } = data as LoaderData;
@@ -14,6 +16,8 @@ export const links: LinksFunction = () => [
     rel: "stylesheet",
     href: "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300&display=swap",
   },
+	{rel: 'stylesheet', href: githubDarkStyles, media: '(prefers-color-scheme: dark)'},
+	{rel: 'stylesheet', href: githubStyles, media: '(prefers-color-scheme: light)'},
 ];
 
 interface GardenPostQueryResponseData {repository: {object: {text: string}}};
