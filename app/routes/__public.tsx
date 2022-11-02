@@ -152,6 +152,9 @@ export default function Public() {
 							<li>
 								<NavLink to="/contact">Contact</NavLink>
 							</li>
+							<li>
+								<NavLink to="/webmention" rel="webmention">Webmention</NavLink>
+							</li>
 						</ul>
 					</nav>
 				</footer>

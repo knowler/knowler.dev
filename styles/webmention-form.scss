@@ -1,0 +1,21 @@
+form[name="webmention"] {
+	display: grid;
+	justify-content: start;
+	row-gap: 1rem;
+
+	form-field {
+		display: grid;
+		justify-content: start;
+		row-gap: 0.5rem;
+
+		label {
+			font-weight: 500;
+		}
+
+		input {
+			font-size: inherit;
+			padding-block: 0.25em;
+			padding-inline: 0.375em;
+		}
+	}
+}

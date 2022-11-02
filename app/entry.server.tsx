@@ -25,6 +25,7 @@ export default function handleRequest(
           const body = new PassThrough();
 
           responseHeaders.set('Content-Type', 'text/html');
+					responseHeaders.set('Link', `${new URL('webmention', process.env.BASE_URL as string)}; rel="webmention"`);
 
           resolve(
 						etag({
