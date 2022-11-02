@@ -41,6 +41,7 @@ body {
 	font-weight: 300;
 	font-size: 1.2rem;
 	display: grid;
+	justify-items: start;
 	grid-template:
 		"skip" max-content
 		"banner" max-content
@@ -176,6 +177,7 @@ footer {
 	flex-wrap: wrap;
 	align-items: center;
 	justify-content: space-between;
+	justify-self: stretch;
 	gap: 1rem;
 	padding-block: 2rem;
 	margin-block-start: 2rem;
