@@ -1,6 +1,18 @@
+import { registerPlainText } from "@lexical/plain-text";
+import { createEditor } from "lexical";
+
 class MicroblogEditor extends HTMLElement {
+	editor = createEditor();
+
 	connectedCallback() {
-		console.log('Hello, World!');
+		this.contentEditable = true;
+		this.editor.setRootElement(this);
+
+		this.removePlainTextListener = registerPlainText(this.editor);
+	}
+
+	disconnectedCallback() {
+		this.removePlainTextListener();
 	}
 }
 

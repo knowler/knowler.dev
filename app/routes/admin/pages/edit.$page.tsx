@@ -1,6 +1,5 @@
 import type {
   ActionFunction,
-  LinksFunction,
   LoaderFunction,
 } from "@remix-run/node";
 import { json } from "@remix-run/node";
@@ -10,17 +9,9 @@ import parseFrontMatter from "front-matter";
 import { getFormData } from "remix-params-helper";
 import { z } from "zod";
 import { auth } from "~/auth.server";
-import Editor from "~/components/editor";
-import editorStyles from "~/components/editor.css";
-//import proseStyles from "~/styles/prose.css";
 import { cachePages } from "~/cache.server";
 
 export const handle = { hydrate: true };
-
-export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: editorStyles },
-	//{ rel: "stylesheet", href: proseStyles },
-];
 
 const updatePageMutation = `
   mutation updatePage(
@@ -139,30 +130,29 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 
 export default function PageEdit() {
   const actionData = useActionData();
-  const { attributes, expectedHeadOid } = useLoaderData();
+  const { attributes, body, expectedHeadOid } = useLoaderData();
 
   return (
     <Form method="patch" className="edit-form">
       <h1>Editing “{attributes.title}”</h1>
       <div className="_sidebar">
-        <div className="form-field">
-          <label htmlFor="title">Title</label>
+        <form-field>
+          <label htmlFor="post-title">Title</label>
           <input
-            type="text"
-            id="title"
+            id="post-title"
             name="title"
             required
             defaultValue={attributes.title}
           />
-        </div>
-        <div className="form-field">
-          <label htmlFor="description">Description</label>
+        </form-field>
+        <form-field>
+          <label htmlFor="post-description">Description</label>
           <textarea
-            id="description"
+            id="post-description"
             name="description"
             defaultValue={attributes?.description}
           />
-        </div>
+        </form-field>
         <button type="submit">
           {actionData?.success ? "Success!" : "Save"}
         </button>
@@ -172,10 +162,10 @@ export default function PageEdit() {
           defaultValue={expectedHeadOid}
         />
       </div>
-      <div className="_editor">
-        <label>Content</label>
-        <Editor />
-      </div>
+      <form-field>
+        <label htmlFor="post-content">Content</label>
+				<textarea id="#post-content" name="content" defaultValue={body} />
+      </form-field>
     </Form>
   );
 }
