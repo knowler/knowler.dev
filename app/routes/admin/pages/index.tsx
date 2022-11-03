@@ -1,41 +1,50 @@
-import { CachedPage } from "@prisma/client";
 import { json, LoaderFunction } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { auth } from "~/auth.server";
 import { prisma } from "~/db.server";
 
-interface LoaderData {
-  pages: Pick<CachedPage, "slug" | "title">[];
-}
 export const loader: LoaderFunction = async ({request}) => {
   const { pathname } = new URL(request.url);
   await auth.isAuthenticated(request, {
     failureRedirect: `/login?returnTo=${pathname}`,
   });
 
-  return json<LoaderData>({
-    pages: await prisma.cachedPage.findMany({
-      select: {
-        slug: true,
-        title: true,
-      },
-    }),
+  return json({
+		pages: await prisma.page.findMany({ take: 10 }),
   });
 };
 
 export default function PageList() {
-  const { pages } = useLoaderData<LoaderData>();
+  const { pages } = useLoaderData<typeof loader>();
 
   return (
-    <main>
-      <h1>Pages</h1>
-      <ul className="has-links">
-        {pages.map((page) => (
-          <li key={page.slug}>
-            <Link to={`edit/${page.slug}`}>{page.title}</Link>
-          </li>
-        ))}
-      </ul>
-    </main>
+    <article>
+			<article-header>
+				<h1>Pages</h1>
+				<Link to="new">New Page</Link>
+			</article-header>
+			<table>
+				<thead>
+					<tr>
+						<th>Title</th>
+						<th>State</th>
+						<th>Created At</th>
+					</tr>
+				</thead>
+				<tbody>
+					{pages.map(page => (
+						<tr key={page.slug}>
+							<td>
+								<Link to={`edit/${page.slug}`}>{page.title}</Link>
+							</td>
+							<td>{page.published ? "Published" : "Draft"}</td>
+							<td>{new Date(page.createdAt).toString()}</td>
+						</tr>
+					))}
+					<tr>
+					</tr>
+				</tbody>
+			</table>
+    </article>
   );
 }

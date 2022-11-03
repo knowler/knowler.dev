@@ -1,118 +1,116 @@
-@use 'color-schemes';
+@layer reset, base;
 
-:root {
-	@include color-schemes.root;
+@layer reset {
+	*, ::before, ::after {
+		box-sizing: border-box;
+	}
 
-	--color-bg: black;
-	--color-fg: white;
-	--color-accent: #0f9;
-
-	font-family: system-ui, sans-serif;
-	background-color: var(--color-bg);
-	color: var(--color-fg);
-	block-size: 100%;
-	box-sizing: border-box;
-}
-
-*, ::before, ::after {
-	box-sizing: inherit;
-}
-
-body {
-	display: flex;
-	gap: 1rem;
-	margin: 0;
-	block-size: 100%;
-
-	> * {
-		transition: flex-basis 0.2s ease-in-out;
-		flex: 1 1 max-content;
+	body, h1, h2, h3, h4, h5, h6, p, ul, ol {
+		margin: 0;
 	}
 }
 
-header {
-	display: grid;
-	align-content: space-between;
-	background-color: rgb(255 255 255 / 0.1);
-	padding: 1rem;
-	font-size: 1.5rem;
-	transition: inline-size 0.2s ease-in-out;
+@layer base {
+	html {
+		color-scheme: dark light;
+		font-family: system-ui;
+		block-size: 100%;
+	}
 
-	ul {
+	body {
+		min-block-size: 100%;
 		display: grid;
-		gap: 1em;
-		list-style: none;
-		padding-inline-start: 0;
-		margin-block: 0;
-		line-height: 1;
-		transition: inherit;
+		grid-auto-flow: column;
+		grid-template-columns: max-content auto;
 	}
 
-	svg {
-		block-size: 1em;
-		inline-size: 1em;
-	}
+	header {
+		padding-block: 1rem;
+		padding-inline: 1rem 4rem;
+		background-color: rgb(0 0 0 / 0.2);
 
-	a {
-		text-decoration: none;
-	}
+		nav {
+			display: grid;
+			gap: 1em;
 
-	:is(a, button) .label {
-		display: block;
-		overflow: clip;
-		transition: inline-size 0.2s ease-in-out;
-	}
-
-	&:has(button[aria-pressed="true"]) :is(a, button) .label {
-		animation:
-			expand 0.2s ease-in-out both,
-			slide-in-inline-start 0.3s 0.2s ease-in-out both;
-
-		@keyframes expand {
-			from { inline-size: 0px; }
-			to { inline-size: auto; }
+			ul {
+				list-style: none;
+				padding-inline-start: 0;
+				margin-block: 0;
+				display: grid;
+				gap: inherit;
+			}
 		}
 
-		@keyframes slide-in-inline-start {
-			from { transform: translateX(-100%); }
-			to { transform: none; }
+	}
+
+	main {
+		padding: 1rem;
+
+		& > article {
+			display: grid;
+			row-gap: 2rem;
+
+			> article-header {
+				display: flex;
+				align-items: baseline;
+				gap: 1rem;
+			}
 		}
 	}
 
-	button {
-		font-size: 1em;
-		background: none;
+	table {
+		inline-size: 100%;
 
-		border: none;
-		color: var(--color-fg);
+		thead {
+			border-radius: 0.5em;
+		}
+
+		td, th {
+			text-align: start;
+			padding: 0.5em;
+		}
 	}
 
-	:is(a, button) {
-		display: flex;
-		gap: 0.5em;
-		padding: 0.5em;
-		color: var(--color-fg);
-		transition: all 0.3s ease-in-out;
+	@import 'visually-hidden';
 
-		&:hover {
-			color: var(--color-accent);
-			cursor: pointer;
+	.skip-link {
+		&:not(:focus) {
+			@extend .visually-hidden;
 		}
 
 		&:focus {
-			outline: none;
-		}
-
-		&:focus-visible {
-			color: var(--color-accent);
-			outline: 0.0625em dashed var(--color-accent);
+			position: fixed;
+			inset-block-start: 0;
+			inset-inline-start: 0;
+			background-color: Canvas;
+			padding: 0.5em;
 		}
 	}
 
-}
+	form {
+		display: grid;
+		justify-items: start;
+		row-gap: 1rem;
 
-h1 {
-	font-variation-settings: "wdth" 125, "wght" 750;
-}
+		label {
+			font-weight: 500;
+		}
 
-@import 'visually-hidden';
+		form-field {
+			display: grid;
+			justify-items: start;
+			row-gap: 0.5rem;
+		}
+
+		input:where(:not([type])) {
+			font-size: inherit;
+			padding: 0.5em;
+		}
+
+		textarea {
+			padding: 0.5em;
+			font: inherit;
+		}
+	}
+}
