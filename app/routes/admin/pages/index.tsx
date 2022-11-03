@@ -37,7 +37,7 @@ export default function PageList() {
 							<td>
 								<Link to={`edit/${page.id}`}>{page.title}</Link>
 							</td>
-							<td>{page.published ? "Published" : "Draft"}</td>
+							<td>{page.published ? <Link to={`/${page.slug}`}>Published</Link> : "Draft"}</td>
 							<td>{new Date(page.createdAt).toString()}</td>
 						</tr>
 					))}
