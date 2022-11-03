@@ -6,7 +6,8 @@ import { auth } from "~/auth.server";
 import { prisma } from "~/db.server";
 import { parseMarkdown } from "~/md.server";
 
-export const action: ActionFunction = async ({request, params}) => {
+export const action: ActionFunction = async ({request, params, ...rest}) => {
+	console.log(rest);
   const { pathname } = new URL(request.url);
   await auth.isAuthenticated(request, {
     failureRedirect: `/login?returnTo=${pathname}`,
@@ -27,6 +28,8 @@ export const action: ActionFunction = async ({request, params}) => {
 	const {title, slug, description, content: markdown, published} = result.data;
 	const {html} = await parseMarkdown(markdown);
 
+	const oldPage = await prisma.page.findUnique({where: {id: params.id}, select: {published: true, publishedAt: true}});
+
 	await prisma.page.update({
 		where: { id: params.id },
 		data: {
@@ -36,6 +39,7 @@ export const action: ActionFunction = async ({request, params}) => {
 			markdown,
 			html,
 			published: published === "on",
+			publishedAt: published === "on" ? !oldPage?.published ? new Date().toISOString() : oldPage?.publishedAt : null,
 		},
 	});
 
@@ -82,7 +86,7 @@ export default function EditPage() {
 				<textarea id="page-content" name="content" required defaultValue={page.markdown} />
 			</form-field>
 			<label>
-				<input type="checkbox" name="published" defaultChecked={page.published} />
+				Publish <input type="checkbox" name="published" defaultChecked={page.published} />
 			</label>
 			<button>Update</button>
 		</Form>
