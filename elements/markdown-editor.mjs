@@ -5,7 +5,7 @@ import {LinkNode} from "@lexical/link";
 import {ListItemNode, ListNode} from "@lexical/list";
 import {$convertFromMarkdownString, $convertToMarkdownString, registerMarkdownShortcuts} from "@lexical/markdown";
 import {mergeRegister} from "@lexical/utils";
-import { registerHistory } from "@lexical/history";
+import { createEmptyHistoryState, registerHistory } from "@lexical/history";
 
 class MarkdownEditor extends HTMLElement {
 	editor = createEditor({
@@ -18,6 +18,7 @@ class MarkdownEditor extends HTMLElement {
 			ListItemNode,
 		],
 	});
+	history = createEmptyHistoryState();
 
 	get form() { return this.closest('form'); }
 	get textarea() { return this.querySelector(':scope > textarea'); }
@@ -37,7 +38,7 @@ class MarkdownEditor extends HTMLElement {
 		this.editor.update(() => $convertFromMarkdownString(this.markdown));
 
 		mergeRegister(
-			registerHistory(this.editor),
+			registerHistory(this.editor, this.history),
 			registerRichText(this.editor),
 			registerMarkdownShortcuts(this.editor),
 		);
