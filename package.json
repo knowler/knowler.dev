@@ -3,7 +3,7 @@
   "name": "@knowler/www",
   "sideEffects": false,
   "scripts": {
-    "build": "run-s build:sass build:remix",
+    "build": "run-s build:sass build:elements build:remix",
     "build:remix": "remix build",
     "build:sass": "sass styles/:app/styles --style=compressed",
     "build:elements": "NODE_ENV=production node ./scripts/build-elements.mjs",
