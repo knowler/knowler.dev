@@ -20,7 +20,7 @@
     "@octokit/plugin-throttling": "^3.6.2",
     "@prisma/client": "^3.13.0",
     "@radix-ui/react-icons": "^1.1.1",
-    "@radix-ui/react-toolbar": "^1.0.1-rc.3",
+    "@radix-ui/react-toolbar": "^1.0.1",
     "@remix-run/node": "^1.7.4",
     "@remix-run/react": "^1.7.4",
     "@remix-run/serve": "^1.7.4",
