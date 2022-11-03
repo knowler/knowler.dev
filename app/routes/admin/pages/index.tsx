@@ -35,7 +35,7 @@ export default function PageList() {
 					{pages.map(page => (
 						<tr key={page.slug}>
 							<td>
-								<Link to={`edit/${page.slug}`}>{page.title}</Link>
+								<Link to={`edit/${page.id}`}>{page.title}</Link>
 							</td>
 							<td>{page.published ? "Published" : "Draft"}</td>
 							<td>{new Date(page.createdAt).toString()}</td>

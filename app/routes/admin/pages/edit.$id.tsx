@@ -28,7 +28,7 @@ export const action: ActionFunction = async ({request, params}) => {
 	const {html} = await parseMarkdown(markdown);
 
 	await prisma.page.update({
-		where: { slug: params.slug },
+		where: { id: params.id },
 		data: {
 			slug,
 			title,
@@ -50,7 +50,7 @@ export const loader: LoaderFunction = async ({request, params}) => {
 
 	const page = await prisma.page.findUnique({
 		where: {
-			slug: params.slug,
+			id: params.id,
 		},
 	});
 
