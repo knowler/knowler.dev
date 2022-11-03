@@ -101,6 +101,7 @@
 			display: grid;
 			justify-items: start;
 			row-gap: 0.5rem;
+			inline-size: 100%;
 		}
 
 		input:where(:not([type])) {
@@ -111,6 +112,16 @@
 		textarea {
 			padding: 0.5em;
 			font: inherit;
+		}
+	}
+
+	markdown-editor:defined {
+		padding: 1rem;
+		display: block;
+		inline-size: min(100%, 40rem);
+
+		> * + * {
+			margin-block-start: 1rem;
 		}
 	}
 }

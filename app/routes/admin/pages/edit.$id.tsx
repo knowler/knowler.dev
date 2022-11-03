@@ -83,7 +83,10 @@ export default function EditPage() {
 			</form-field>
 			<form-field>
 				<label htmlFor="page-content">Content</label>
-				<textarea id="page-content" name="content" required defaultValue={page.markdown} />
+				<markdown-editor>
+					<textarea id="page-content" name="content" required defaultValue={page.markdown} />
+				</markdown-editor>
+				<script type="module" src="/elements/markdown-editor.js"></script>
 			</form-field>
 			<label>
 				Publish <input type="checkbox" name="published" defaultChecked={page.published} />
