@@ -7,18 +7,6 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Page {
-	slug					String @id @unique
-	title					String
-	description		String?
-	html					String
-	markdown			String
-	published			Boolean @default(false)
-	createdAt			DateTime @default(now())
-	updatedAt			DateTime @updatedAt
-	publishedAt		DateTime?
-}
-
 model ContactFormSubmission {
   id        String @id @default(cuid())
   name      String @default("Anonymous")
