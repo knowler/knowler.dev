@@ -133,6 +133,7 @@
 		resize: vertical;
 		overflow-y: scroll;
 		min-block-size: 10rem;
+		block-size: 20rem;
 		inline-size: min(100%, 40rem);
 
 		> * + * {
