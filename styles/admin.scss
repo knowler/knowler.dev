@@ -20,8 +20,13 @@
 	body {
 		min-block-size: 100%;
 		display: grid;
-		grid-auto-flow: column;
-		grid-template-columns: max-content auto;
+		align-content: start;
+
+		@media screen and (min-width: 36rem) {
+			align-content: unset;
+			grid-auto-flow: column;
+			grid-template-columns: max-content auto;
+		}
 	}
 
 	header {
@@ -39,12 +44,18 @@
 				margin-block: 0;
 				display: grid;
 				gap: inherit;
+				grid-auto-flow: column;
+
+				@media screen and (min-width: 36rem) {
+					grid-auto-flow: row;
+				}
 			}
 		}
 
 	}
 
 	main {
+		block-size: 100%;
 		padding: 1rem;
 
 		& > article {
@@ -116,8 +127,12 @@
 	}
 
 	markdown-editor:defined {
+		border: 1px solid CanvasText;
 		padding: 1rem;
 		display: block;
+		resize: vertical;
+		overflow-y: scroll;
+		min-block-size: 10rem;
 		inline-size: min(100%, 40rem);
 
 		> * + * {
