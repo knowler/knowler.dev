@@ -11,8 +11,6 @@ await build({
 		'elements/markdown-editor.mjs',
 	],
 	outdir: 'public/elements',
-	chunkNames: 'chunks/[name]-[hash]',
-	splitting: true,
 	minify: !__DEV__,
 	watch: __DEV__,
 });
