@@ -7,7 +7,6 @@ import { prisma } from "~/db.server";
 import { parseMarkdown } from "~/md.server";
 
 export const action: ActionFunction = async ({request, params, ...rest}) => {
-	console.log(rest);
   const { pathname } = new URL(request.url);
   await auth.isAuthenticated(request, {
     failureRedirect: `/login?returnTo=${pathname}`,
@@ -67,31 +66,46 @@ export default function EditPage() {
 	const {page} = useLoaderData<typeof loader>();
 
 	return (
-		<Form method="post">
-			<h1>Edit "{page.title}"</h1>
-			<form-field>
-				<label htmlFor="page-title">Title</label>
-				<input id="page-title" name="title" required defaultValue={page.title} />
-			</form-field>
-			<form-field>
-				<label htmlFor="page-slug">Slug</label>
-				<input id="page-slug" name="slug" required defaultValue={page.slug} />
-			</form-field>
-			<form-field>
-				<label htmlFor="page-description">Description</label>
-				<textarea id="page-description" name="description" defaultValue={page.description} />
-			</form-field>
-			<form-field>
-				<label htmlFor="page-content">Content</label>
-				<markdown-editor>
-					<textarea id="page-content" name="content" required defaultValue={page.markdown} />
-				</markdown-editor>
-				<script type="module" src="/elements/markdown-editor.js"></script>
-			</form-field>
-			<label>
-				Publish <input type="checkbox" name="published" defaultChecked={page.published} />
-			</label>
-			<button>Update</button>
-		</Form>
+		<>
+			<Form method="post">
+				<h1>Edit "{page.title}"</h1>
+				<form-field>
+					<label htmlFor="page-title">Title</label>
+					<input id="page-title" name="title" required defaultValue={page.title} />
+				</form-field>
+				<form-field>
+					<label htmlFor="page-slug">Slug</label>
+					<input id="page-slug" name="slug" required defaultValue={page.slug} />
+				</form-field>
+				<form-field>
+					<label htmlFor="page-description">Description</label>
+					<textarea id="page-description" name="description" defaultValue={page.description} />
+				</form-field>
+				<form-field>
+					<label htmlFor="page-content">Content</label>
+					<markdown-editor>
+						<textarea id="page-content" name="content" required defaultValue={page.markdown} />
+					</markdown-editor>
+					<script type="module" src="/elements/markdown-editor.js"></script>
+				</form-field>
+				<label>
+					Publish <input type="checkbox" name="published" defaultChecked={page.published} />
+				</label>
+				<button>Update</button>
+			</Form>
+			<Form method="post" action="delete" name="deletePage">
+				<button type="button" name="deleteButton">Delete</button>
+				<dialog name="confirmDeleteModal">
+					<p>Are you sure?</p>
+					<button>Delete</button>
+				</dialog>
+				<script dangerouslySetInnerHTML={{
+					__html: `
+const {deleteButton, confirmDeleteModal} = document.forms.deletePage.children;
+deleteButton.addEventListener('click', () => confirmDeleteModal.showModal());
+					`}} 
+				/>
+			</Form>
+		</>
 	);
 }
