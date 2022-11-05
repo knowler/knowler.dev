@@ -25,8 +25,9 @@ export const meta: MetaFunction = ({ data }) => {
 
 export const loader: LoaderFunction = async ({ params }) => {
   try {
-		const post = await prisma.post.findUnique({
+		const post = await prisma.post.findFirst({
 			where: {
+				published: true,
 				slug: z
           .string()
           .regex(/^[a-z0-9\-]*$/) // idk — security
