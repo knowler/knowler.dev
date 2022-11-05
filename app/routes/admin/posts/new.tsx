@@ -42,7 +42,7 @@ export const action: ActionFunction = async ({request}) => {
 		},
 	});
 
-	return redirect(`/admin/post/edit/${post.id}`);
+	return redirect(`/admin/posts/edit/${post.id}`);
 }
 
 export default function NewPost() {
