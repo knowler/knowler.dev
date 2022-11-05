@@ -3,7 +3,7 @@ import { Form, useActionData } from "@remix-run/react";
 import { getFormData } from "remix-params-helper";
 import { z } from "zod";
 import { authOrLogin } from "~/auth.server";
-import { Editor } from "~/components/Editor";
+import { Editor } from "~/components/editor";
 import { prisma } from "~/db.server";
 import { parseMarkdown } from "~/md.server";
 
