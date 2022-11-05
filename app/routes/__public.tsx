@@ -3,21 +3,22 @@ import { GitHubLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
 import { json, LinksFunction, LoaderFunction } from "@remix-run/node";
 import publicStyles from "~/styles/public.css";
 import { commitSession, getSession } from "~/session.server";
+import { MastodonIcon } from "~/components/mastodon-icon";
 
 export const links: LinksFunction = () => [
-  {
-    rel: "preconnect",
-    href: "https://fonts.googleapis.com",
-  },
-  {
-    rel: "preconnect",
-    href: "https://fonts.gstatic.com",
-    crossOrigin: "anonymous",
-  },
-  {
-    rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Poppins:wght@300;500&display=swap",
-  },
+	{
+		rel: "preconnect",
+		href: "https://fonts.googleapis.com",
+	},
+	{
+		rel: "preconnect",
+		href: "https://fonts.gstatic.com",
+		crossOrigin: "anonymous",
+	},
+	{
+		rel: "stylesheet",
+		href: "https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Poppins:wght@300;500&display=swap",
+	},
 	{
 		rel: "stylesheet",
 		href: publicStyles,
@@ -30,7 +31,7 @@ export const links: LinksFunction = () => [
 	},
 ];
 
-export const loader: LoaderFunction = async ({request}) => {
+export const loader: LoaderFunction = async ({ request }) => {
 	const session = await getSession(request.headers.get("Cookie"));
 
 	return json({
@@ -71,19 +72,19 @@ export default function Public() {
 		},
 	];
 
-  return (
-    <html
-      dir="ltr"
-      lang="en-ca"
+	return (
+		<html
+			dir="ltr"
+			lang="en-ca"
 			data-color-scheme={loaderData?.theme}
 			className="no-js"
-    >
-      <head>
-        <Meta />
-				<script dangerouslySetInnerHTML={{__html: featureDetection}} />
-        <Links />
-      </head>
-      <body>
+		>
+			<head>
+				<Meta />
+				<script dangerouslySetInnerHTML={{ __html: featureDetection }} />
+				<Links />
+			</head>
+			<body>
 				<a href="#content" className="skip-link">
 					Skip to content
 				</a>
@@ -107,6 +108,7 @@ export default function Public() {
 							</li>
 							<li>
 								<a
+									rel="me"
 									href="https://github.com/knowler"
 									className="icon-link"
 									title="@knowler on GitHub"
@@ -121,16 +123,13 @@ export default function Public() {
 							</li>
 							<li>
 								<a
-									href="https://twitter.com/kn_wler"
+									rel="me"
+									href="https://sunny.garden/@knowler"
 									className="icon-link"
-									title="@kn_wler on Twitter"
+									title="@knowler@sunny.garden on Mastodon"
 								>
-									<span className="visually-hidden">@kn_wler on Twitter</span>
-									<TwitterLogoIcon
-										aria-hidden
-										width={undefined}
-										height={undefined}
-									/>
+									<span className="visually-hidden">@knowler@sunny.garden on Mastodon</span>
+									<MastodonIcon aria-hidden />
 								</a>
 							</li>
 						</ul>
@@ -183,6 +182,6 @@ export default function Public() {
 				</site-preferences>
 				<LiveReload />
 			</body>
-    </html>
-  );
+		</html>
+	);
 }
