@@ -7,6 +7,5 @@ node_modules
 /prisma/data.db
 /prisma/data.db-journal
 .env
-/app/styles
-/app/routes/**/*.css
-/app/routes/**/*.css.map
+/app/**/*.css
+/app/**/*.css.map
