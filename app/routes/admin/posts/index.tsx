@@ -28,6 +28,7 @@ export default function PostsIndex() {
 						<li key={post.id} className="card">
 							<article className="flow">
 								<h3>{post.title}</h3>
+								<p><time dateTime={post.createdAt}>{new Date(post.createdAt).toString()}</time></p>
 								{post.description ? <p>{post.description}</p> : null}
 								<p>
 									<Link to={`edit/${post.id}`}>Edit</Link> <Link to={`/blog/${post.slug}`}>View</Link>

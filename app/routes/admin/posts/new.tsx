@@ -20,12 +20,13 @@ export const action: ActionFunction = async ({request}) => {
 		slug: z.string(),
 		description: z.string().optional(),
 		content: z.string(),
+		publishedAt: z.date().optional(),
 		_action: z.nativeEnum(FormAction),
 	}));
 
 	if (!result.success) return json(result, 400);
 
-	const {slug, title, description, content: markdown} = result.data;
+	const {slug, title, description, content: markdown, publishedAt} = result.data;
 	const published = result.data._action === "publish";
 	const {html} = await parseMarkdown(markdown);
 
@@ -37,6 +38,7 @@ export const action: ActionFunction = async ({request}) => {
 			published,
 			html,
 			markdown,
+			publishedAt,
 		},
 	});
 
@@ -63,6 +65,10 @@ export default function NewPost() {
 			<form-field>
 				<label htmlFor="post-content">Content</label>
 				<Editor id="post-content" name="content" required />
+			</form-field>
+			<form-field>
+				<label htmlFor="post-published-at">Published At</label>
+				<input type="datetime-local" id ="post-published-at" name="publishedAt" />
 			</form-field>
 			<button name="_action" value="draft">Draft</button>
 			<button name="_action" value="publish">Publish</button>
