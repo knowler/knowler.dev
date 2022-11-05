@@ -82,7 +82,7 @@ export default function PostEditor() {
 				</label>
 				<form-field>
 					<label htmlFor="post-published-at">Published At</label>
-					<input type="datetime-local" id ="post-published-at" name="publishedAt" />
+					<input type="datetime-local" id ="post-published-at" name="publishedAt" defaultValue={post.publishedAt} />
 				</form-field>
 				<button>Update</button>
 			</Form>
