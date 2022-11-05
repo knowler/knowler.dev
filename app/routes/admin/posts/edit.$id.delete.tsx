@@ -5,7 +5,7 @@ import { prisma } from "~/db.server";
 export const action: ActionFunction = async ({request, params}) => {
 	await authOrLogin(request);
 
-	await prisma.post.delete({where: {id: params.id}});
+	await prisma.page.delete({where: {id: params.id}});
 
-	return redirect('/admin/posts');
+	return redirect('/admin/pages');
 }
