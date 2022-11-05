@@ -8,10 +8,8 @@
   margin: 0;
 }
 
-.form-field :is(
-  textarea,
-  input:where([type="text"], [type="email"])
-) {
+.form-field :is(textarea,
+input:where([type=text], [type=email])) {
   font-size: 1em;
   font-family: inherit;
   border: 0;
@@ -22,10 +20,9 @@
   color: var(--color-fg);
   transition: border 240ms ease;
 }
-.form-field :is(
-  textarea,
-  input:where([type="text"], [type="email"])
-):focus {
+
+.form-field :is(textarea,
+input:where([type=text], [type=email])):focus {
   outline: 0;
   border-color: var(--color-accent-2);
 }
@@ -37,7 +34,7 @@
 
 .field-error {
   font-size: 0.9em;
-  color: hsl(335 100% 50%);
+  color: hsl(335deg, 100%, 50%);
 }
 
 .privacy-disclosure {
@@ -60,3 +57,5 @@
 .send-message:is(:hover, :focus) {
   --bg-l: 12%;
 }
+
+/*# sourceMappingURL=contact.css.map */

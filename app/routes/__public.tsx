@@ -1,9 +1,9 @@
 import { Form, Links, LiveReload, Meta, NavLink, Outlet, useLoaderData } from "@remix-run/react";
-import { GitHubLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
+import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { json, LinksFunction, LoaderFunction } from "@remix-run/node";
-import publicStyles from "~/styles/public.css";
 import { commitSession, getSession } from "~/session.server";
 import { MastodonIcon } from "~/components/mastodon-icon";
+import publicStyles from "./public.css";
 
 export const links: LinksFunction = () => [
 	{

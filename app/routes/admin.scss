@@ -1,19 +1,29 @@
-@layer reset, base;
+@use 'visually-hidden';
+
+@layer reset, base, blocks, utilities;
 
 @layer reset {
 	*, ::before, ::after {
 		box-sizing: border-box;
 	}
 
+	html {
+		font-family: system-ui;
+		color-scheme: dark light;
+	}
+
 	body, h1, h2, h3, h4, h5, h6, p, ul, ol {
 		margin: 0;
+	}
+
+	:is(ul, ol):where([role="list"]) {
+		list-style: none;
+		padding-inline-start: 0;
 	}
 }
 
 @layer base {
 	html {
-		color-scheme: dark light;
-		font-family: system-ui;
 		block-size: 100%;
 	}
 
@@ -57,33 +67,17 @@
 	main {
 		block-size: 100%;
 		padding: 1rem;
-
-		& > article {
-			display: grid;
-			row-gap: 2rem;
-
-			> article-header {
-				display: flex;
-				align-items: baseline;
-				gap: 1rem;
-			}
-		}
 	}
 
-	table {
-		inline-size: 100%;
-
-		thead {
-			border-radius: 0.5em;
-		}
-
-		td, th {
-			text-align: start;
-			padding: 0.5em;
-		}
+	article-header {
+		display: flex;
+		align-items: baseline;
+		gap: 1rem;
 	}
 
-	@import 'visually-hidden';
+	h1 {
+		font-size: 2rem;
+	}
 
 	.skip-link {
 		&:not(:focus) {
@@ -139,5 +133,27 @@
 		> * + * {
 			margin-block-start: 1rem;
 		}
+	}
+}
+
+@layer blocks {
+	.card {
+		border-radius: 0.5em;
+		padding: var(--size-3);
+		border: 0.125em solid rgb(0 0 0 / 0.5);
+		background-color: rgb(0 0 0 / 0.3);
+	}
+
+	.card-grid {
+		display: grid;
+		justify-content: start;
+		grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+		gap: 1rem;
+		inline-size: min(100%, 64rem);
+	}
+
+	.flow > * + * {
+		--_space: var(--space, var(--size-2));
+		margin-block-start: var(--_space);
 	}
 }

@@ -3,7 +3,7 @@ import { Form, useActionData } from "@remix-run/react";
 import mail from "@sendgrid/mail";
 import { getFormData } from "remix-params-helper";
 import { z } from "zod";
-import webmentionFormStyles from '~/styles/webmention-form.css';
+import webmentionFormStyles from './webmention.css';
 
 export const links: LinksFunction = () => [
 	{rel: "stylesheet", href: webmentionFormStyles},

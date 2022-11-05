@@ -4,7 +4,7 @@ import type { ActionFunction , LinksFunction, LoaderFunction } from "@remix-run/
 import { prisma } from "~/db.server";
 import { auth } from "~/auth.server";
 import type { ContactFormSubmission } from "@prisma/client";
-import styles from "~/styles/messages.css";
+import styles from "./messages.css";
 
 export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }];
 

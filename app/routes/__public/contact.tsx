@@ -18,7 +18,7 @@ import { z } from "zod";
 import { prisma } from "~/db.server";
 import mail, { verifyEmail } from "~/mail.server";
 import { getSeo } from "~/seo";
-import styles from "~/styles/contact.css";
+import styles from "./contact.css";
 
 const [seoMeta, seoLinks] = getSeo({title: 'Contact'});
 

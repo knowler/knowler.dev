@@ -2,10 +2,11 @@ import type { LinksFunction, LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, Links, Meta, NavLink, Outlet } from "@remix-run/react";
 import { auth } from "~/auth.server";
-import adminStyles from "~/styles/admin.css";
+import adminStyles from "./admin.css";
 
 export const links: LinksFunction = () => [
-	{rel: "stylesheet", href: adminStyles},
+	{ rel: "stylesheet", href: "https://unpkg.com/open-props@1.4.21/sizes.min.css" },
+	{ rel: "stylesheet", href: adminStyles },
 ];
 
 export const loader: LoaderFunction = async ({ request }) => {

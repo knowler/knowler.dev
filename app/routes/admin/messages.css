@@ -1,8 +1,6 @@
 .messages {
   display: grid;
-  grid-template-areas: 
-    "title title"
-    "list message";
+  grid-template-areas: "title title" "list message";
   grid-template-rows: max-content auto;
   grid-template-columns: minmax(20rem, max-content) auto;
 }
@@ -29,10 +27,7 @@
 
 .message-list-item a {
   display: grid;
-  grid-template: 
-    "sender sent-at"
-    "subject subject"
-    "preview preview";
+  grid-template: "sender sent-at" "subject subject" "preview preview";
   justify-content: space-between;
   column-gap: 1rem;
   row-gap: 0.25rem;
@@ -47,7 +42,7 @@
   filter: brightness(1.5);
 }
 
-.message-list-item a[aria-current="page"] {
+.message-list-item a[aria-current=page] {
   filter: brightness(2);
 }
 
@@ -70,14 +65,14 @@
   grid-area: preview;
 }
 
-.messages-list-item :is(
-  ._sender,
-  ._subject,
-  ._preview
-) {
+.messages-list-item :is(._sender,
+._subject,
+._preview) {
   display: block;
 }
 
 .message {
   padding: 1rem;
 }
+
+/*# sourceMappingURL=messages.css.map */

@@ -4,7 +4,7 @@ import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { prisma } from "~/db.server";
 import { getSeo } from "~/seo";
-import blogStyles from "~/styles/blog.css";
+import blogStyles from "./index.css";
 
 const [seoMeta, seoLinks] = getSeo({title: 'Blog'});
 

@@ -36,3 +36,10 @@ auth.use(
     },
   )
 );
+
+export async function authOrLogin(request: Request) {
+  const { pathname } = new URL(request.url);
+  await auth.isAuthenticated(request, {
+    failureRedirect: `/login?returnTo=${pathname}`,
+  });
+}

@@ -2,7 +2,7 @@ import { ActionFunction, json, LoaderFunction, redirect } from "@remix-run/node"
 import { Form } from "@remix-run/react";
 import { getFormData } from "remix-params-helper";
 import { z } from "zod";
-import { auth } from "~/auth.server";
+import { authOrLogin } from "~/auth.server";
 import { prisma } from "~/db.server";
 import { parseMarkdown } from "~/md.server";
 
@@ -12,10 +12,7 @@ enum FormAction {
 }
 
 export const action: ActionFunction = async ({request}) => {
-  const { pathname } = new URL(request.url);
-  await auth.isAuthenticated(request, {
-    failureRedirect: `/login?returnTo=${pathname}`,
-  });
+	await authOrLogin(request);
 
 	const result = await getFormData(request, z.object({
 		slug: z.string(),
@@ -46,10 +43,7 @@ export const action: ActionFunction = async ({request}) => {
 }
 
 export const loader: LoaderFunction = async ({request}) => {
-  const { pathname } = new URL(request.url);
-  await auth.isAuthenticated(request, {
-    failureRedirect: `/login?returnTo=${pathname}`,
-  });
+	await authOrLogin(request);
 
 	return json({});
 }

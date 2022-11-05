@@ -7,30 +7,30 @@ export const loader: LoaderFunction = async ({ request }) => {
 	await authOrLogin(request);
 
 	return json({
-		published: await prisma.page.findMany({ take: 10, where: { published: true } }),
-		drafted: await prisma.page.findMany({ take: 10, where: { published: false } }),
+		published: await prisma.post.findMany({ take: 10, where: { published: true } }),
+		drafted: await prisma.post.findMany({ take: 10, where: { published: false } }),
 	});
 };
 
-export default function PageList() {
+export default function PostsIndex() {
 	const { published, drafted } = useLoaderData<typeof loader>();
 
 	return (
 		<article className="flow" style={{"--space": "var(--size-4)"}}>
 			<article-header>
-				<h1>Pages</h1>
-				<Link to="new">New Page</Link>
+				<h1>Posts</h1>
+				<Link to="new">New Post</Link>
 			</article-header>
 			<section className="flow" style={{ "--space": "var(--size-4)" }}>
 				<h2>Published</h2>
 				<ul role="list" className="card-grid">
-					{published.map(page => (
-						<li key={page.id} className="card">
+					{published.map(post => (
+						<li key={post.id} className="card">
 							<article className="flow">
-								<h3>{page.title}</h3>
-								<p>{page.description ?? "(No page description)"}</p>
+								<h3>{post.title}</h3>
+								{post.description ? <p>{post.description}</p> : null}
 								<p>
-									<Link to={`edit/${page.id}`}>Edit</Link> <Link to={`/${page.slug}`}>View</Link>
+									<Link to={`edit/${post.id}`}>Edit</Link> <Link to={`/blog/${post.slug}`}>View</Link>
 								</p>
 							</article>
 						</li>
@@ -40,11 +40,14 @@ export default function PageList() {
 			<section className="flow" style={{ "--space": "var(--size-4)" }}>
 				<h2>Drafts</h2>
 				<ul role="list" className="card-grid">
-					{drafted.map(page => (
-						<li key={page.id} className="card">
+					{drafted.map(post => (
+						<li key={post.id} className="card">
 							<article className="flow">
-								<h3>{page.title}</h3>
-								<p><Link to={`edit/${page.id}`}>Edit</Link></p>
+								<h3>{post.title}</h3>
+								<p>{post.description ?? "(No post description)"}</p>
+								<p>
+									<Link to={`edit/${post.id}`}>Edit</Link>
+								</p>
 							</article>
 						</li>
 					))}

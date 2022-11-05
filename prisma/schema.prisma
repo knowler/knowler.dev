@@ -20,6 +20,19 @@ model Page {
 	publishedAt		DateTime?
 }
 
+model Post {
+	id						String @id @default(cuid())
+	slug					String
+	title					String
+	description		String?
+	markdown			String
+	html					String
+	published			Boolean @default(false)
+	createdAt			DateTime @default(now())
+	updatedAt			DateTime @updatedAt
+	publishedAt		DateTime?
+}
+
 model ContactFormSubmission {
   id        String @id @default(cuid())
   name      String @default("Anonymous")
