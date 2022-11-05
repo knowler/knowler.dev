@@ -38,7 +38,7 @@ export const action: ActionFunction = async ({request}) => {
 			published,
 			html,
 			markdown,
-			publishedAt,
+			publishedAt: published && !publishedAt ? new Date().toUTCString() : publishedAt,
 		},
 	});
 
