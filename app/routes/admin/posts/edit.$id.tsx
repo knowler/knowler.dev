@@ -16,13 +16,18 @@ export const action: ActionFunction = async ({request, params}) => {
 		description: z.string().optional(),
 		content: z.string(),
 		published: z.string().optional(),
+		publishedAt: z.date().optional(),
 	}));
 
 	if (!result.success) return json(result, 400);
 
-	const {slug, title, description, content: markdown, published} = result.data;
+	const {slug, title, description, content: markdown, published, publishedAt} = result.data;
 	const {html} = await parseMarkdown(markdown);
-	const oldPage = await prisma.page.findUnique({where: {id: params.id}, select: {published: true, publishedAt: true}});
+
+	const oldPage = await prisma.post.findUnique({
+		where: {id: params.id},
+		select: {published: true},
+	});
 
 	await prisma.post.update({
 		where: { id: params.id },
@@ -33,7 +38,7 @@ export const action: ActionFunction = async ({request, params}) => {
 			markdown,
 			html,
 			published: published === "on",
-			publishedAt: published === "on" ? !oldPage?.published ? new Date().toISOString() : oldPage?.publishedAt : null,
+			publishedAt: !oldPage?.published && !publishedAt ? new Date().toUTCString() : publishedAt,
 		}
 	})
 
@@ -75,6 +80,10 @@ export default function PostEditor() {
 				<label>
 					Publish <input type="checkbox" name="published" defaultChecked={post.published} />
 				</label>
+				<form-field>
+					<label htmlFor="post-published-at">Published At</label>
+					<input type="datetime-local" id ="post-published-at" name="publishedAt" />
+				</form-field>
 				<button>Update</button>
 			</Form>
 			<Form method="post" action="delete" name="deletePage">
