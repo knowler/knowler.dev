@@ -2,17 +2,14 @@ import { NavLink, Outlet, useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
 import type { ActionFunction , LinksFunction, LoaderFunction } from "@remix-run/node";
 import { prisma } from "~/db.server";
-import { auth } from "~/auth.server";
+import { authOrLogin } from "~/auth.server";
 import type { ContactFormSubmission } from "@prisma/client";
 import styles from "./messages.css";
 
 export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }];
 
 export const action: ActionFunction = async ({ request }) => {
-  const { pathname } = new URL(request.url);
-  await auth.isAuthenticated(request, {
-    failureRedirect: `/login?returnTo=${pathname}`,
-  });
+	await authOrLogin(request);
 
   const form = await request.formData();
 
@@ -47,10 +44,7 @@ export interface LoaderData {
 }
 
 export const loader: LoaderFunction = async ({request}) => {
-  const { pathname } = new URL(request.url);
-  await auth.isAuthenticated(request, {
-    failureRedirect: `/login?returnTo=${pathname}`,
-  });
+	await authOrLogin(request);
 
   json<LoaderData>({
     contactFormSubmissions: await prisma.contactFormSubmission.findMany({

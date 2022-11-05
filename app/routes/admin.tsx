@@ -1,7 +1,7 @@
 import type { LinksFunction, LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, Links, Meta, NavLink, Outlet } from "@remix-run/react";
-import { auth } from "~/auth.server";
+import { authOrLogin } from "~/auth.server";
 import adminStyles from "./admin.css";
 
 export const links: LinksFunction = () => [
@@ -10,10 +10,7 @@ export const links: LinksFunction = () => [
 ];
 
 export const loader: LoaderFunction = async ({ request }) => {
-	const { pathname } = new URL(request.url);
-	await auth.isAuthenticated(request, {
-		failureRedirect: `/login?returnTo=${pathname}`,
-	});
+	await authOrLogin(request);
 
 	return json({});
 };

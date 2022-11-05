@@ -8,7 +8,7 @@ import { octokit } from "~/octokit.server";
 import parseFrontMatter from "front-matter";
 import { getFormData } from "remix-params-helper";
 import { z } from "zod";
-import { auth } from "~/auth.server";
+import { authOrLogin } from "~/auth.server";
 import { cachePages } from "~/cache.server";
 
 export const handle = { hydrate: true };
@@ -54,10 +54,7 @@ description: ${description ?? ""}
 ${content}`;
 
 export const action: ActionFunction = async ({ params, request }) => {
-  const { pathname } = new URL(request.url);
-  await auth.isAuthenticated(request, {
-    failureRedirect: `/login?returnTo=${pathname}`,
-  });
+	await authOrLogin(request);
 
   const result = await getFormData(
     request,
@@ -107,10 +104,7 @@ const pageWithHeadOidQuery = `
 `;
 
 export const loader: LoaderFunction = async ({ params, request }) => {
-  const { pathname } = new URL(request.url);
-  await auth.isAuthenticated(request, {
-    failureRedirect: `/login?returnTo=${pathname}`,
-  });
+	await authOrLogin(request);
 
   const { repository } = await octokit.graphql(pageWithHeadOidQuery, {
     expression: `HEAD:content/pages/${params.page}.md`,
