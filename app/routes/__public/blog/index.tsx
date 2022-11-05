@@ -1,4 +1,3 @@
-import { CachedBlogPost } from "@prisma/client";
 import type { HeadersFunction, LinksFunction, LoaderFunction, MetaFunction} from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
@@ -10,10 +9,6 @@ const [seoMeta, seoLinks] = getSeo({title: 'Blog'});
 
 export const meta: MetaFunction = () => seoMeta;
 
-interface LoaderData {
-  posts: CachedBlogPost[];
-}
-
 export const links: LinksFunction = () => [
 	...seoLinks,
 	{rel: 'stylesheet', href: blogStyles},
@@ -22,14 +17,13 @@ export const links: LinksFunction = () => [
 export const headers: HeadersFunction = ({loaderHeaders}) => loaderHeaders;
 
 export const loader: LoaderFunction = async () => {
-	const posts = await prisma.cachedBlogPost.findMany({
+	const posts = await prisma.post.findMany({
 		take: 10,
-		orderBy: {
-			publishedAt: "desc",
-		},
+		orderBy: { publishedAt: "desc" },
+		where: { published: true },
 	});
 
-  return json<LoaderData>(
+  return json(
     { posts },
     {
       headers: {'Cache-Control': 'public, s-maxage=60'},
@@ -38,7 +32,7 @@ export const loader: LoaderFunction = async () => {
 };
 
 export default function BlogIndex() {
-  const { posts } = useLoaderData<LoaderData>();
+  const { posts } = useLoaderData<typeof loader>();
 
   return (
     <ol role="list" reversed>

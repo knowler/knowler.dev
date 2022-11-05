@@ -19,11 +19,10 @@ export const loader: LoaderFunction = async () => {
 		author: me,
 	});
 
-	const latestPosts = await prisma.cachedBlogPost.findMany({
+	const latestPosts = await prisma.post.findMany({
 		take: 10,
-		orderBy: {
-			publishedAt: 'desc',
-		},
+		where: { published: true },
+		orderBy: { publishedAt: 'desc' },
 	});
 
 

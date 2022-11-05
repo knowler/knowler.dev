@@ -1,4 +1,3 @@
-import { CachedBlogPost } from "@prisma/client";
 import type { LinksFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useCatch, useLoaderData } from "@remix-run/react";
@@ -16,7 +15,7 @@ export const links: LinksFunction = () => [
 ];
 
 export const meta: MetaFunction = ({ data }) => {
-  const { post } = data as LoaderData;
+  const { post } = data;
 
 	return getSeoMeta({
 		title: post.title,
@@ -24,14 +23,10 @@ export const meta: MetaFunction = ({ data }) => {
 	});
 };
 
-interface LoaderData {
-  post: CachedBlogPost;
-}
-
 export const loader: LoaderFunction = async ({ params }) => {
   try {
-		const post = await prisma.cachedBlogPost.findUnique({
-				where: {
+		const post = await prisma.post.findUnique({
+			where: {
 				slug: z
           .string()
           .regex(/^[a-z0-9\-]*$/) // idk — security
@@ -41,14 +36,14 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 		if (post === null) throw "Post not found";
 
-    return json<LoaderData>({ post });
+    return json({ post });
   } catch (error) {
     throw new Response("Not found", { status: 404 });
   }
 };
 
 export default function BlogPost() {
-  const { post } = useLoaderData<LoaderData>();
+  const { post } = useLoaderData<typeof loader>();
 
   return (
     <article className="prose">
