@@ -46,7 +46,7 @@ export interface LoaderData {
 export const loader: LoaderFunction = async ({request}) => {
 	await authOrLogin(request);
 
-  json<LoaderData>({
+  return json<LoaderData>({
     contactFormSubmissions: await prisma.contactFormSubmission.findMany({
       take: 10,
     }),
