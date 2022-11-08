@@ -134,6 +134,27 @@
 			margin-block-start: 1rem;
 		}
 	}
+
+	button {
+		background-color: Canvas;
+		border: 0.0625em solid CanvasText;
+		border-radius: 0.375em;
+		padding-block: 0.25em;
+		padding-inline: 0.375em;
+		font: inherit;
+		transition-timing-function: ease;
+		transition-duration: 0.3s;
+		transition-property: color, background-color;
+
+		&:hover {
+			filter: brightness(0.7);
+		}
+
+		&[data-variant="primary"] {
+			color: Canvas;
+			background-color: CanvasText;
+		}
+	}
 }
 
 @layer blocks {

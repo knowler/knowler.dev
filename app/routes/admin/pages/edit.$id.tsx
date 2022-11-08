@@ -6,6 +6,7 @@ import { authOrLogin } from "~/auth.server";
 import { Editor } from "~/components/editor";
 import { prisma } from "~/db.server";
 import { parseMarkdown } from "~/md.server";
+import { invariant } from "~/utils";
 
 export const action: ActionFunction = async ({request, params}) => {
 	await authOrLogin(request);
@@ -25,6 +26,10 @@ export const action: ActionFunction = async ({request, params}) => {
 
 	const oldPage = await prisma.page.findUnique({where: {id: params.id}, select: {published: true, publishedAt: true}});
 
+	invariant(oldPage, "the page should have existed so idk how you got here.");
+
+	const wasDraft = !oldPage.published;
+
 	await prisma.page.update({
 		where: { id: params.id },
 		data: {
@@ -34,7 +39,11 @@ export const action: ActionFunction = async ({request, params}) => {
 			markdown,
 			html,
 			published: published === "on",
-			publishedAt: published === "on" ? !oldPage?.published ? new Date().toISOString() : oldPage?.publishedAt : null,
+			publishedAt: published === "on"
+				? wasDraft // if published is on, check if it was draft
+					? new Date() // If it was a draft, then we need a new published date.
+					: oldPage.publishedAt // Otherwise, we can just use the old one
+				: null, // When published is off, then null out the value.
 		},
 	});
 

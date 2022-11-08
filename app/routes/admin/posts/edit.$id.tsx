@@ -4,8 +4,10 @@ import { getFormData } from "remix-params-helper";
 import { z } from "zod";
 import { authOrLogin } from "~/auth.server";
 import { Editor } from "~/components/editor";
+import { VisualDebugger } from "~/components/visual-debugger";
 import { prisma } from "~/db.server";
 import { parseMarkdown } from "~/md.server";
+import { invariant, omit } from "~/utils";
 
 export const action: ActionFunction = async ({request, params}) => {
 	await authOrLogin(request);
@@ -16,18 +18,21 @@ export const action: ActionFunction = async ({request, params}) => {
 		description: z.string().optional(),
 		content: z.string(),
 		published: z.string().optional(),
-		publishedAt: z.date().optional(),
 	}));
 
 	if (!result.success) return json(result, 400);
 
-	const {slug, title, description, content: markdown, published, publishedAt} = result.data;
+	const {slug, title, description, content: markdown, published} = result.data;
 	const {html} = await parseMarkdown(markdown);
 
-	const oldPage = await prisma.post.findUnique({
+	const oldPost = await prisma.post.findUnique({
 		where: {id: params.id},
-		select: {published: true},
+		select: {published: true, publishedAt: true},
 	});
+
+	invariant(oldPost, "the post should have existed so idk how you got here");
+
+	const wasDraft = !oldPost.published;
 
 	await prisma.post.update({
 		where: { id: params.id },
@@ -38,7 +43,11 @@ export const action: ActionFunction = async ({request, params}) => {
 			markdown,
 			html,
 			published: published === "on",
-			publishedAt: !oldPage?.published && !publishedAt ? new Date().toUTCString() : publishedAt,
+			publishedAt: published === "on"
+				? wasDraft // if published is on, check if it was draft
+					? new Date() // If it was a draft, then we need a new published date.
+					: oldPost.publishedAt // Otherwise, we can just use the old one
+				: null, // When published is off, then null out the value.
 		}
 	})
 
@@ -51,7 +60,7 @@ export const loader: LoaderFunction = async ({request, params}) => {
 
 	if (!post) return json({}, 404);
 
-	return json({ post });
+	return json({ post: omit(post, 'html') });
 }
 
 export default function PostEditor() {
@@ -80,11 +89,8 @@ export default function PostEditor() {
 				<label>
 					Publish <input type="checkbox" name="published" defaultChecked={post.published} />
 				</label>
-				<form-field>
-					<label htmlFor="post-published-at">Published At</label>
-					<input type="datetime-local" id ="post-published-at" name="publishedAt" defaultValue={post.publishedAt} />
-				</form-field>
 				<button>Update</button>
+				<VisualDebugger code={post} />
 			</Form>
 			<Form method="post" action="delete" name="deletePage">
 				<button type="button" name="deleteButton">Delete</button>
