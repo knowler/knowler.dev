@@ -44,35 +44,9 @@ model ContactFormSubmission {
   isSpam    Boolean @default(false)
 }
 
-model CachedPage {
-  slug        String @id @unique
-  title       String
-  description String?
-  markdown    String
-  html        String
-  cachedAt    DateTime @updatedAt
-}
-
-model CachedBlogPost {
-	slug				String @id @unique
-	title				String
-	description String?
-	markdown		String
-	html				String
-	publishedAt DateTime
-	updatedAt		DateTime?
-	cachedAt		DateTime @updatedAt
-}
-
 model Webmention {
 	target			String @id @unique
 	source			String @unique
 	createdAt		DateTime @default(now())
 	updatedAt   DateTime @updatedAt
-}
-
-model MicroBlogPost {
-	id				  String @id @default(cuid())
-	content			String
-	publishedAt DateTime @default(now())
 }
