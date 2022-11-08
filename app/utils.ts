@@ -14,3 +14,10 @@ export function invariant(condition: any, message?: string | (() => string)): as
 	const value: string = provided ? `${prefix}: ${provided}` : prefix;
 	throw new Error(value);
 }
+
+/** Format it for Winterpeg, eh? */
+export function winterpegDateTime(date: string): string {
+	return new Date(date).toLocaleString('en-ca', {
+		timeZone: 'America/Winnipeg',
+	});
+}

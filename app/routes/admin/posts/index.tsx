@@ -2,6 +2,7 @@ import { json, LoaderFunction } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { authOrLogin } from "~/auth.server";
 import { prisma } from "~/db.server";
+import { winterpegDateTime } from "~/utils";
 
 export const loader: LoaderFunction = async ({ request }) => {
 	await authOrLogin(request);
@@ -36,7 +37,7 @@ export default function PostsIndex() {
 						<li key={post.id} className="card">
 							<article className="flow">
 								<h3>{post.title}</h3>
-								<p><time dateTime={post.publishedAt}>{new Date(post.publishedAt).toString()}</time></p>
+								<p><time dateTime={post.publishedAt}>{new Date(post.publishedAt).toLocaleString('en-ca', {timeZone: 'America/Winnipeg'})}</time></p>
 								{post.description ? <p>{post.description}</p> : null}
 								<p>
 									<Link to={`edit/${post.id}`}>Edit</Link> <Link to={`/blog/${post.slug}`}>View</Link>
@@ -53,7 +54,7 @@ export default function PostsIndex() {
 						<li key={post.id} className="card">
 							<article className="flow">
 								<h3>{post.title}</h3>
-								<p><time dateTime={post.createdAt}>{new Date(post.createdAt).toString()}</time></p>
+								<p><time dateTime={post.createdAt}>{winterpegDateTime(post.createdAt)}</time></p>
 								<p>{post.description ?? "(No post description)"}</p>
 								<p>
 									<Link to={`edit/${post.id}`}>Edit</Link>
