@@ -33,6 +33,17 @@ model Post {
 	publishedAt		DateTime?
 }
 
+model GardenPost {
+	id						String @id @default(cuid())
+	slug					String
+	title					String
+	description		String?
+	markdown			String
+	html					String
+	createdAt			DateTime @default(now())
+	updatedAt			DateTime @updatedAt
+}
+
 model ContactFormSubmission {
   id        String @id @default(cuid())
   name      String @default("Anonymous")
