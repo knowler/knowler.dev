@@ -3,6 +3,7 @@ import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import githubDarkStyles from 'highlight.js/styles/github-dark.css'
 import githubStyles from 'highlight.js/styles/github.css'
+import proseStyles from '~/styles/prose.css';
 import { z } from "zod";
 import { prisma } from "~/db.server";
 import { omit } from "~/utils";
@@ -17,6 +18,7 @@ export const links: LinksFunction = () => [
     rel: "stylesheet",
     href: "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300&display=swap",
   },
+	{rel: 'stylesheet', href: proseStyles},
 	{rel: 'stylesheet', href: githubDarkStyles, media: '(prefers-color-scheme: dark)'},
 	{rel: 'stylesheet', href: githubStyles, media: '(prefers-color-scheme: light)'},
 ];

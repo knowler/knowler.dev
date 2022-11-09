@@ -35,6 +35,7 @@
 
 .prose pre {
   display: flex;
+	inline-size: 100%;
   overflow-x: auto;
   overflow-inline: auto;
 	tab-size: 2ch;
