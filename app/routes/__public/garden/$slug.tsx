@@ -8,7 +8,7 @@ import { prisma } from "~/db.server";
 import { omit } from "~/utils";
 
 export const meta: MetaFunction = ({ data }) => {
-  const { description, title } = data;
+  const { description, title } = data.post;
   return { title: `${title} – Nathan Knowler`, description };
 };
 
