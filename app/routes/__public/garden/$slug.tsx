@@ -1,13 +1,14 @@
 import type { LinksFunction, LoaderFunction, MetaFunction} from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { parseMarkdown } from "~/md.server";
-import { octokit } from "~/octokit.server";
 import githubDarkStyles from 'highlight.js/styles/github-dark.css'
 import githubStyles from 'highlight.js/styles/github.css'
+import { z } from "zod";
+import { prisma } from "~/db.server";
+import { omit } from "~/utils";
 
 export const meta: MetaFunction = ({ data }) => {
-  const { description, title } = data as LoaderData;
+  const { description, title } = data;
   return { title: `${title} – Nathan Knowler`, description };
 };
 
@@ -20,35 +21,21 @@ export const links: LinksFunction = () => [
 	{rel: 'stylesheet', href: githubStyles, media: '(prefers-color-scheme: light)'},
 ];
 
-interface GardenPostQueryResponseData {repository: {object: {text: string}}};
-const gardenPostQuery = `
-  query gardenPost($expression: String!) {
-    repository(name: "knowler.dev", owner: "knowler") {
-      object(expression: $expression) {
-        ... on Blob {
-          text
-        }
-      }
-    }
-  }
-`;
-interface LoaderData { title: string; description?: string; body: string; }
 export const loader: LoaderFunction = async ({ params }) => {
-  const data = await octokit.graphql<GardenPostQueryResponseData>(
-    gardenPostQuery,
-    { expression: `HEAD:content/garden/${params.slug}.md` },
-  );
-  const { attributes, html } = await parseMarkdown(data.repository.object.text);
+	const post = await prisma.gardenPost.findFirst({where: {slug: z.string().regex(/^[a-z0-9\-]*$/).parse(params.slug)}});
 
-  return json({
-    title: attributes.title,
-    description: attributes?.description,
-    body: html,
-  });
+	if (!post) return json({}, 404);
+
+  return json({ post: omit(post, 'markdown') });
 };
 
 export default function GardenPost() {
-  const { body } = useLoaderData<LoaderData>();
+  const { post } = useLoaderData<typeof loader>();
 
-  return <article className="prose" dangerouslySetInnerHTML={{ __html: body }} />;
+	return (
+		<article>
+			<h1>{post.title}</h1>
+			<div className="prose" dangerouslySetInnerHTML={{__html: post.html}} />
+		</article>
+	);
 }
