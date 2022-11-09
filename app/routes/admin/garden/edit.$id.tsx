@@ -24,7 +24,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 	const { slug, title, description, content: markdown } = result.data;
 	const { html } = await parseMarkdown(markdown);
 
-	await prisma.post.update({
+	await prisma.gardenPost.update({
 		where: { id: params.id },
 		data: {
 			slug,
