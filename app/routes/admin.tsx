@@ -32,6 +32,7 @@ export default function Auth() {
 							<li><NavLink to="posts">Posts</NavLink></li>
 							<li><NavLink to="garden">Garden</NavLink></li>
 							<li><NavLink to="messages">Messages</NavLink></li>
+							<li><NavLink to="webmentions">Webmentions</NavLink></li>
 						</ul>
 						<Form action="/logout" method="post">
 							<button>Logout</button>

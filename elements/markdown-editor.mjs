@@ -1,6 +1,6 @@
 import {createEditor} from "lexical";
 import {registerRichText, HeadingNode, QuoteNode} from "@lexical/rich-text";
-import {CodeNode} from "@lexical/code";
+import {CodeHighlightNode, CodeNode, registerCodeHighlighting} from "@lexical/code";
 import {LinkNode} from "@lexical/link";
 import {ListItemNode, ListNode} from "@lexical/list";
 import {$convertFromMarkdownString, $convertToMarkdownString, registerMarkdownShortcuts} from "@lexical/markdown";
@@ -13,6 +13,7 @@ class MarkdownEditor extends HTMLElement {
 			HeadingNode,
 			QuoteNode,
 			CodeNode,
+			CodeHighlightNode,
 			LinkNode,
 			ListNode,
 			ListItemNode,
@@ -40,6 +41,7 @@ class MarkdownEditor extends HTMLElement {
 		mergeRegister(
 			registerHistory(this.editor, this.history),
 			registerRichText(this.editor),
+			registerCodeHighlighting(this.editor),
 			registerMarkdownShortcuts(this.editor),
 		);
 

@@ -56,8 +56,11 @@ model ContactFormSubmission {
 }
 
 model Webmention {
-	target			String @id @unique
-	source			String @unique
-	createdAt		DateTime @default(now())
-	updatedAt   DateTime @updatedAt
+	id				String @id @default(cuid())
+	source		String @unique
+	target		String
+	content		String?
+	approved	Boolean @default(false)
+	createdAt DateTime @default(now())
+	updatedAt DateTime @updatedAt
 }

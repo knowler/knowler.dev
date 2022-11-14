@@ -3,6 +3,7 @@ import { Form, useActionData } from "@remix-run/react";
 import mail from "@sendgrid/mail";
 import { getFormData } from "remix-params-helper";
 import { z } from "zod";
+import { prisma } from "~/db.server";
 import webmentionFormStyles from './webmention.css';
 
 export const links: LinksFunction = () => [
@@ -26,14 +27,8 @@ export const action: ActionFunction = async ({ request }) => {
 
 	if (!result.success) return json({ result }, 400);
 
-	const targetUrl = new URL(result.data.target);
-
-	await mail.send({
-		to: process.env.CONTACT_FORM_TO as string,
-		from: process.env.CONTACT_FORM_FROM as string,
-		subject: `New Webmention ${targetUrl.pathname}`,
-		html: `<p>Source: ${result.data.source}</p><p>Target: ${result.data.target}</p>`,
-	});
+	const {source, target} = result.data;
+	await prisma.webmention.create({ data: { source, target } })
 
 	return json({ success: true }, 202);
 }
