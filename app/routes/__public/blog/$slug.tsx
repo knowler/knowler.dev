@@ -47,12 +47,12 @@ export default function BlogPost() {
   const { post } = useLoaderData<typeof loader>();
 
   return (
-    <article className="prose">
-      <h1>{post.title}</h1>
+    <article className="h-entry prose">
+      <h1 className="p-name">{post.title}</h1>
       <p>
-        <time dateTime={post.publishedAt}>{new Date(post.publishedAt).toDateString()}</time>
+        <time className="dt-published" dateTime={post.publishedAt}>{new Date(post.publishedAt).toDateString()}</time>
       </p>
-      <div className="prose" dangerouslySetInnerHTML={{ __html: post.html }} />
+      <div className="e-content prose" dangerouslySetInnerHTML={{ __html: post.html }} />
     </article>
   );
 }
