@@ -35,4 +35,7 @@ export const meta: MetaFunction = () => ({
 	...seoMeta,
 });
 
-export const links: LinksFunction = () => seoLinks;
+export const links: LinksFunction = () => [
+	{rel: 'author', href: '/', title: 'About the author'},
+	...seoLinks,
+];
