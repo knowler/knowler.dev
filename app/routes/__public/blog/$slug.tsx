@@ -50,7 +50,7 @@ export default function BlogPost() {
     <article className="h-entry prose">
       <h1 className="p-name">{post.title}</h1>
       <p>
-        <time className="dt-published" dateTime={post.publishedAt}>{new Date(post.publishedAt).toDateString()}</time>
+				<time className="dt-published" dateTime={post.publishedAt}>{new Date(post.publishedAt).toDateString()}</time> – <a className="u-url" rel="bookmark" href={new URL(`blog/${post.slug}`, process.env.BASE_URL).toString()}>Permalink</a>
       </p>
       <div className="e-content prose" dangerouslySetInnerHTML={{ __html: post.html }} />
     </article>
