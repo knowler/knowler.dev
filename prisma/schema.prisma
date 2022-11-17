@@ -57,7 +57,7 @@ model ContactFormSubmission {
 
 model Webmention {
 	id				String @id @default(cuid())
-	source		String @unique
+	source		String
 	target		String
 	content		String?
 	approved	Boolean @default(false)
