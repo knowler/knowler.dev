@@ -4,6 +4,7 @@ import { getFormData } from "remix-params-helper";
 import { z } from "zod";
 import { authOrLogin } from "~/auth.server";
 import { Editor } from "~/components/editor";
+import { SlugField, TextareaField, TextField } from "~/components/forms";
 import { VisualDebugger } from "~/components/visual-debugger";
 import { prisma } from "~/db.server";
 import { parseMarkdown } from "~/md.server";
@@ -56,19 +57,10 @@ export default function EditGardenPost() {
 	return (
 		<>
 			<Form method="post">
+				<TextField label="Title" name="title" id="post-title" required defaultValue={post.title} />
+				<SlugField label="Slug" name="slug" id="post-slug" required defaultValue={post.slug} />
+				<TextareaField label="Description" name="description" id="post-description" defaultValue={post.description} />
 				<h1>Edit "{post.title}"</h1>
-				<form-field>
-					<label htmlFor="post-title">Title</label>
-					<input id="post-title" name="title" required defaultValue={post.title} />
-				</form-field>
-				<form-field>
-					<label htmlFor="post-slug">Slug</label>
-					<input id="post-slug" name="slug" required defaultValue={post.slug} />
-				</form-field>
-				<form-field>
-					<label htmlFor="post-description">Description</label>
-					<textarea id="post-description" name="description" defaultValue={post.description} />
-				</form-field>
 				<form-field>
 					<label htmlFor="post-content">Content</label>
 					<Editor id="post-content" name="content" required defaultValue={post.markdown} />

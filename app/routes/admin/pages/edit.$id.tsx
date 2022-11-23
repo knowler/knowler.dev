@@ -4,6 +4,7 @@ import { getFormData } from "remix-params-helper";
 import { z } from "zod";
 import { authOrLogin } from "~/auth.server";
 import { Editor } from "~/components/editor";
+import { SlugField, TextareaField, TextField } from "~/components/forms";
 import { prisma } from "~/db.server";
 import { parseMarkdown } from "~/md.server";
 import { invariant } from "~/utils";
@@ -71,18 +72,9 @@ export default function EditPage() {
 		<>
 			<Form method="post">
 				<h1>Edit "{page.title}"</h1>
-				<form-field>
-					<label htmlFor="page-title">Title</label>
-					<input id="page-title" name="title" required defaultValue={page.title} />
-				</form-field>
-				<form-field>
-					<label htmlFor="page-slug">Slug</label>
-					<input id="page-slug" name="slug" required defaultValue={page.slug} />
-				</form-field>
-				<form-field>
-					<label htmlFor="page-description">Description</label>
-					<textarea id="page-description" name="description" defaultValue={page.description} />
-				</form-field>
+				<TextField label="Title" name="title" id="page-title" required defaultValue={page.title} />
+				<SlugField label="Slug" name="slug" id="page-slug" required defaultValue={page.slug} />
+				<TextareaField label="Description" name="description" id="page-description" defaultValue={page.description} />
 				<form-field>
 					<label htmlFor="page-content">Content</label>
 					<Editor id="page-content" name="content" required defaultValue={page.markdown} />
