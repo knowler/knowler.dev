@@ -61,6 +61,8 @@ model Webmention {
   id        String   @id @default(cuid())
   source    String
   target    String
+	title			String?
+	author		String?
   content   String?
   approved  Boolean  @default(false)
   createdAt DateTime @default(now())
