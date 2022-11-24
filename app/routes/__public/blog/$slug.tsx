@@ -1,6 +1,6 @@
 import type { LinksFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { useCatch, useLoaderData } from "@remix-run/react";
+import { Form, Link, useCatch, useLoaderData, useLocation } from "@remix-run/react";
 import { z } from "zod";
 import { prisma } from "~/db.server";
 import proseStyles from "~/styles/prose.css";
@@ -45,15 +45,30 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 export default function BlogPost() {
   const { post } = useLoaderData<typeof loader>();
+	const location = useLocation();
 
   return (
-    <article className="h-entry prose">
-      <h1 className="p-name">{post.title}</h1>
-      <p>
-				<time className="dt-published" dateTime={post.publishedAt}>{new Date(post.publishedAt).toDateString()}</time> – <a className="u-url" rel="bookmark" href={new URL(`blog/${post.slug}`, process.env.BASE_URL).toString()}>Permalink</a>
-      </p>
-      <div className="e-content prose" dangerouslySetInnerHTML={{ __html: post.html }} />
-    </article>
+		<>
+			<article className="h-entry prose">
+				<h1 className="p-name">{post.title}</h1>
+				<p>
+					<time className="dt-published" dateTime={post.publishedAt}>{new Date(post.publishedAt).toDateString()}</time> – <Link className="u-url" aria-current="page" rel="bookmark" to="">Permalink</Link>
+				</p>
+				<div className="e-content prose" dangerouslySetInnerHTML={{ __html: post.html }} />
+			</article>
+			<aside className="flow">
+				<h2>Webmentions</h2>
+				<p>This post has no webmentions. Use the form below to send one.</p>
+				<Form method="post" action="/webmention" className="flow">
+					<input type="hidden" name="target" value={new URL(location.pathname, process.env.BASE_URL).toString()} />
+					<form-field>
+						<label htmlFor="webmention-source">Source</label>
+						<input type="url" id="webmention-source" name="source" required placeholder="https://blog.example/awesome-reblog" style={{inlineSize: '32ch'}} />
+					</form-field>
+					<button className="button">Send Webmention</button>
+				</Form>
+			</aside>
+		</>
   );
 }
 
