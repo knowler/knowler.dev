@@ -60,6 +60,7 @@ export default function BlogPost() {
 				<h2>Webmentions</h2>
 				<p>This post has no webmentions. Use the form below to send one.</p>
 				<Form method="post" action="/webmention" className="flow">
+					<input hidden name="robotName" />
 					<input type="hidden" name="target" value={new URL(location.pathname, process.env.BASE_URL).toString()} />
 					<form-field>
 						<label htmlFor="webmention-source">Source</label>
