@@ -36,7 +36,7 @@
     "@sendgrid/mail": "^7.6.2",
     "class-variance-authority": "^0.2.1",
     "classnames": "^2.3.1",
-    "esbuild": "^0.15.12",
+    "esbuild": "^0.15.15",
     "feed": "^4.2.2",
     "front-matter": "^4.0.2",
     "happy-dom": "^7.7.0",
