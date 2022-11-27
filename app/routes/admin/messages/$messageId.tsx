@@ -1,11 +1,22 @@
-import { useParams } from "@remix-run/react";
-import { useMemo } from "react";
-import { useRouteData } from "remix-utils";
-import type {LoaderData as MessageRouteData} from '../messages';
+import { json, LoaderArgs } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
+import { authOrLogin } from "~/auth.server";
+import { prisma } from "~/db.server";
 
-export default function Message() { const {messageId} = useParams();
-  const {contactFormSubmissions} = useRouteData<MessageRouteData>('routes/admin/messages') as MessageRouteData;
-  const message = useMemo(() => contactFormSubmissions.find(message => message.id === messageId), [messageId, contactFormSubmissions]);
+export async function loader({request, params}: LoaderArgs) {
+	await authOrLogin(request);
+
+	const message = await prisma.contactFormSubmission.findUnique({
+		where: { id: params.messageId },
+	});
+
+	if (!message) throw "Not found";
+
+	return json({ message });
+}
+
+export default function Message() {
+	const {message} = useLoaderData<typeof loader>();
 
   return (
     <article className="message">
