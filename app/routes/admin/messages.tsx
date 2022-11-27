@@ -1,9 +1,8 @@
 import { NavLink, Outlet, useLoaderData } from "@remix-run/react";
-import { json } from "@remix-run/node";
-import type { ActionFunction , LinksFunction, LoaderFunction } from "@remix-run/node";
+import { json, LoaderArgs } from "@remix-run/node";
+import type { ActionFunction , LinksFunction } from "@remix-run/node";
 import { prisma } from "~/db.server";
 import { authOrLogin } from "~/auth.server";
-import type { ContactFormSubmission } from "@prisma/client";
 import styles from "./messages.css";
 
 export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }];
@@ -39,14 +38,10 @@ export const action: ActionFunction = async ({ request }) => {
   }
 };
 
-export interface LoaderData {
-  contactFormSubmissions: ContactFormSubmission[];
-}
-
-export const loader: LoaderFunction = async ({request}) => {
+export async function loader({request}: LoaderArgs) {
 	await authOrLogin(request);
 
-  return json<LoaderData>({
+  return json({
     contactFormSubmissions: await prisma.contactFormSubmission.findMany({
       take: 10,
     }),
@@ -54,7 +49,7 @@ export const loader: LoaderFunction = async ({request}) => {
 }
 
 export default function Messages() {
-  const { contactFormSubmissions } = useLoaderData<LoaderData>();
+  const { contactFormSubmissions } = useLoaderData<typeof loader>();
 
   return (
     <main className="messages">

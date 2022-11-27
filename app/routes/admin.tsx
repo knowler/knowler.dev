@@ -1,4 +1,4 @@
-import type { LinksFunction, LoaderFunction } from "@remix-run/node";
+import type { LinksFunction, LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, Links, Meta, NavLink, Outlet } from "@remix-run/react";
 import { authOrLogin } from "~/auth.server";
@@ -9,7 +9,7 @@ export const links: LinksFunction = () => [
 	{ rel: "stylesheet", href: adminStyles },
 ];
 
-export const loader: LoaderFunction = async ({ request }) => {
+export async function loader({ request }: LoaderArgs) {
 	await authOrLogin(request);
 
 	return json({});

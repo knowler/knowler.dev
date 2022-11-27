@@ -1,9 +1,9 @@
-import type { ActionFunction, LoaderFunction } from "@remix-run/node";
+import type { ActionArgs, LoaderArgs } from "@remix-run/node";
 import { auth } from "~/auth.server";
 import { returnToCookie } from "~/cookies.server";
 
-export const action: ActionFunction = ({ request }) => login(request);
-export const loader: LoaderFunction = ({ request }) => login(request);
+export const action = ({ request }: ActionArgs) => login(request);
+export const loader = ({ request }: LoaderArgs) => login(request);
 
 async function login(request: Request) {
   const { searchParams } = new URL(request.url);

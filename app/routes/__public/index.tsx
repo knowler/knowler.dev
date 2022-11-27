@@ -1,4 +1,4 @@
-import { json, LoaderFunction, MetaFunction } from "@remix-run/node";
+import { json, LoaderArgs, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { prisma } from "~/db.server";
 import { getSeoMeta } from "~/seo";
@@ -7,7 +7,7 @@ export const meta: MetaFunction = () => getSeoMeta({
   title: "Home",
 });
 
-export const loader: LoaderFunction = async () => {
+export async function loader({}: LoaderArgs) {
 	const webmentions = await prisma.webmention.findMany({
 		where: {
 			target: 'https://knowler.dev',

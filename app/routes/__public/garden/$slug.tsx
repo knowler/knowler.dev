@@ -1,4 +1,4 @@
-import type { LinksFunction, LoaderFunction, MetaFunction} from "@remix-run/node";
+import type { LinksFunction, LoaderArgs, MetaFunction} from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import githubDarkStyles from 'highlight.js/styles/github-dark.css'
@@ -23,7 +23,7 @@ export const links: LinksFunction = () => [
 	{rel: 'stylesheet', href: githubStyles, media: '(prefers-color-scheme: light)'},
 ];
 
-export const loader: LoaderFunction = async ({ params }) => {
+export async function loader({ params }: LoaderArgs) {
 	const post = await prisma.gardenPost.findFirst({where: {slug: z.string().regex(/^[a-z0-9\-]*$/).parse(params.slug)}});
 
 	if (!post) return json({}, 404);

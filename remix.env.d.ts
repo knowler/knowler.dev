@@ -12,6 +12,8 @@ declare global {
 	namespace JSX {
 		interface IntrinsicElements {
 			["form-field"]: CustomElement<FormField>
+			["article-header"]: CustomElement<Element>
+			["site-preferences"]: CustomElement<Element>
 		}
 	}
 }

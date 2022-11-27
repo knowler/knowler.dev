@@ -1,3 +1,5 @@
+import { json } from "@remix-run/node";
+
 export function omit<T extends object, Key extends keyof T>(model: T, ...keys: Key[]): Omit<T, Key> {
 	for (const key of keys) {
 		delete model[key];
@@ -20,4 +22,8 @@ export function winterpegDateTime(date: string): string {
 	return new Date(date).toLocaleString('en-ca', {
 		timeZone: 'America/Winnipeg',
 	});
+}
+
+export function notFound(data = {}) {
+	return json(data, 404);
 }

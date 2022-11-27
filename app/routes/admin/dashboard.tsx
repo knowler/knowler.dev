@@ -1,4 +1,4 @@
-import type { LoaderFunction, MetaFunction } from "@remix-run/node";
+import type { LoaderArgs, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { auth } from "~/auth.server";
@@ -8,7 +8,7 @@ export const meta: MetaFunction = () => ({
   title: "Dashboard – Nathan Knowler",
 });
 
-export const loader: LoaderFunction = async ({ request }) => {
+export async function loader({ request }: LoaderArgs) {
   const { profile } = await auth.isAuthenticated(request, {
     failureRedirect: "/",
   });

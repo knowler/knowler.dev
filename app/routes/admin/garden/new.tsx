@@ -1,4 +1,4 @@
-import { ActionFunction, json, LoaderFunction, redirect } from "@remix-run/node";
+import { ActionFunction, json, LoaderArgs, redirect } from "@remix-run/node";
 import { Form } from "@remix-run/react";
 import { getFormData } from "remix-params-helper";
 import { z } from "zod";
@@ -35,7 +35,7 @@ export const action: ActionFunction = async ({request}) => {
 	return redirect(`/admin/garden/edit/${post.id}`);
 }
 
-export const loader: LoaderFunction = async ({request}) => {
+export const loader = async ({request}: LoaderArgs) => {
 	await authOrLogin(request);
 
 	return json({});

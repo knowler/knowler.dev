@@ -1,4 +1,4 @@
-import { ActionFunction, json, LoaderFunction } from "@remix-run/node";
+import { ActionFunction, json, LoaderArgs, LoaderFunction } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
 import { getFormData } from "remix-params-helper";
 import { z } from "zod";
@@ -51,7 +51,7 @@ export const action: ActionFunction = async ({request, params}) => {
 	return json({success: true});
 }
 
-export const loader: LoaderFunction = async ({request, params}) => {
+export async function loader({request, params}: LoaderArgs) {
 	await authOrLogin(request);
 
 	const page = await prisma.page.findUnique({

@@ -1,4 +1,4 @@
-import type { LinksFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
+import type { LinksFunction, LoaderArgs, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, Link, useCatch, useLoaderData, useLocation } from "@remix-run/react";
 import { z } from "zod";
@@ -23,7 +23,7 @@ export const meta: MetaFunction = ({ data }) => {
 	});
 };
 
-export const loader: LoaderFunction = async ({ params }) => {
+export async function loader({ params }: LoaderArgs) {
   try {
 		const post = await prisma.post.findFirst({
 			where: {

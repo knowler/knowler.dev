@@ -1,6 +1,6 @@
 import { Form, Links, LiveReload, Meta, NavLink, Outlet, useLoaderData } from "@remix-run/react";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
-import { json, LinksFunction, LoaderFunction } from "@remix-run/node";
+import { json, LinksFunction, LoaderArgs } from "@remix-run/node";
 import { commitSession, getSession } from "~/session.server";
 import { MastodonIcon } from "~/components/mastodon-icon";
 import publicStyles from "./public.css";
@@ -31,7 +31,7 @@ export const links: LinksFunction = () => [
 	},
 ];
 
-export const loader: LoaderFunction = async ({ request }) => {
+export async function loader({ request }: LoaderArgs) {
 	const session = await getSession(request.headers.get("Cookie"));
 
 	return json({

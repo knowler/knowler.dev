@@ -1,4 +1,4 @@
-import type { HeadersFunction, LinksFunction, LoaderFunction, MetaFunction} from "@remix-run/node";
+import type { HeadersFunction, LinksFunction, LoaderArgs, MetaFunction} from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { prisma } from "~/db.server";
@@ -16,7 +16,7 @@ export const links: LinksFunction = () => [
 
 export const headers: HeadersFunction = ({loaderHeaders}) => loaderHeaders;
 
-export const loader: LoaderFunction = async () => {
+export async function loader({}: LoaderArgs) {
 	const posts = await prisma.post.findMany({
 		take: 10,
 		orderBy: { publishedAt: "desc" },

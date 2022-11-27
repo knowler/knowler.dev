@@ -1,16 +1,16 @@
-import type { LoaderFunction, MetaFunction } from "@remix-run/node";
+import type { LoaderArgs, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { prisma } from "~/db.server";
-import { notFound } from "remix-utils";
 import { getSeoMeta } from "~/seo";
+import { notFound } from "~/utils";
 
 export const meta: MetaFunction = ({ data }) => getSeoMeta({
 	title: data.page.title,
 	description: data.page?.description,
 });
 
-export const loader: LoaderFunction = async ({ params }) => {
+export async function loader({ params }: LoaderArgs) {
   let page = await prisma.page.findFirst({
 		where: {
 			slug: params.page,
@@ -18,7 +18,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 		},
   });
 
-  if (!page) throw notFound("Page not found");
+	if (!page) return notFound();
 
   return json({ page });
 };

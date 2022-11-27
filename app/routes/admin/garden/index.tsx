@@ -1,9 +1,9 @@
-import { json, LoaderFunction } from "@remix-run/node";
+import { json, LoaderArgs } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { authOrLogin } from "~/auth.server";
 import { prisma } from "~/db.server";
 
-export const loader: LoaderFunction = async ({request}) => {
+export async function loader({request}: LoaderArgs) {
 	await authOrLogin(request);
 
 	return json({
