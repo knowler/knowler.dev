@@ -9,7 +9,11 @@
   grid-auto-columns: 100%;
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
-  @supports (overflow-inline: scroll) {
+}
+
+@supports (overflow-inline: scroll) {
+  [data-slides=""],
+  [data-slides="inline"] {
     overflow-inline: scroll;
     scroll-snap-type: inline mandatory;
   }
@@ -20,7 +24,10 @@
   grid-auto-rows: 100%;
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
-  @supports (overflow-block: scroll) {
+}
+
+@supports (overflow-block: scroll) {
+  [data-slides="block"] {
     overflow-block: scroll;
     scroll-snap-type: block mandatory;
   }
