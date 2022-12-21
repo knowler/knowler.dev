@@ -40,18 +40,21 @@ export function TextareaField({label, name, id, required, minLength, maxLength, 
 	);
 }
 
-export function SlugField({label, defaultValue, name, id, required}: {
+export function SlugField({label, defaultValue, name, id, required, from}: {
 	defaultValue?: string;
 	label: string;
 	name: string;
 	id?: string;
 	required?: boolean;
+	from: string;
 }) {
 
 	return (
 		<form-field>
 			<label htmlFor={id ?? name}>{label}</label>
-			<input id={id ?? name} name={name} pattern="^[a-z0-9]+(?:-[a-z0-9]+)*$" defaultValue={defaultValue} required={required} />
+			<slug-input id={id ?? name} name={name} defaultValue={defaultValue} required={required} from={from}>
+				<input id={id ?? name} name={name} pattern="^[a-z0-9]+(?:-[a-z0-9]+)*$" defaultValue={defaultValue} required={required} />
+			</slug-input>
 		</form-field>
 	);
 }

@@ -58,7 +58,7 @@ export default function EditGardenPost() {
 		<>
 			<Form method="post">
 				<TextField label="Title" name="title" id="post-title" required defaultValue={post.title} />
-				<SlugField label="Slug" name="slug" id="post-slug" required defaultValue={post.slug} />
+				<SlugField label="Slug" name="slug" id="post-slug" from="post-title" required defaultValue={post.slug} />
 				<TextareaField label="Description" name="description" id="post-description" defaultValue={post.description} />
 				<h1>Edit "{post.title}"</h1>
 				<form-field>

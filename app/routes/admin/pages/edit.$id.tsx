@@ -73,7 +73,7 @@ export default function EditPage() {
 			<Form method="post">
 				<h1>Edit "{page.title}"</h1>
 				<TextField label="Title" name="title" id="page-title" required defaultValue={page.title} />
-				<SlugField label="Slug" name="slug" id="page-slug" required defaultValue={page.slug} />
+				<SlugField label="Slug" name="slug" id="page-slug" from="page-title" required defaultValue={page.slug} />
 				<TextareaField label="Description" name="description" id="page-description" defaultValue={page.description} />
 				<form-field>
 					<label htmlFor="page-content">Content</label>

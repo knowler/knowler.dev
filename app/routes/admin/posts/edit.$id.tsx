@@ -72,7 +72,7 @@ export default function PostEditor() {
 			<Form method="post">
 				<h1>Edit "{post.title}"</h1>
 				<TextField label="Title" name="title" id="post-title" required defaultValue={post.title} />
-				<SlugField label="Slug" name="slug" id="post-slug" required defaultValue={post.slug} />
+				<SlugField label="Slug" name="slug" id="post-slug" from="post-title" required defaultValue={post.slug} />
 				<TextareaField label="Description" name="description" id="post-description" defaultValue={post.description} />
 				<form-field>
 					<label htmlFor="post-content">Content</label>

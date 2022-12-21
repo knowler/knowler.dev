@@ -10,6 +10,7 @@ await build({
 		'elements/microblog-editor.mjs',
 		'elements/markdown-editor.mjs',
 		'elements/form-field.mjs',
+		'elements/slug-input.mjs',
 	],
 	outdir: 'public/elements',
 	minify: !__DEV__,

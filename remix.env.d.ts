@@ -3,6 +3,7 @@
 
 import type { DOMAttributes } from "react";
 import type {FormField} from "./elements/form-field.mjs";
+import type {SlugInputElement} from "./elements/slug-input.mjs";
 
 type CustomElement<T> = Partial<
   T & DOMAttributes<T> & { children: any; class: string; ref?: any }
@@ -14,6 +15,7 @@ declare global {
 			["form-field"]: CustomElement<FormField>
 			["article-header"]: CustomElement<Element>
 			["site-preferences"]: CustomElement<Element>
+			["slug-input"]: CustomElement<SlugInputElement>
 		}
 	}
 }
