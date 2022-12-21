@@ -22,6 +22,7 @@ export default function Auth() {
 				<Meta />
 				<Links />
 				<script type="module" src="/elements/form-field.js" />
+				<script type="module" src="/elements/slug-input.js" />
 			</head>
 			<body>
 				<a href="#content" className="skip-link">Skip to content</a>
