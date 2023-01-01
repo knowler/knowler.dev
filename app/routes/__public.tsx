@@ -139,7 +139,7 @@ export default function Public() {
 					<Outlet />
 				</main>
 				<footer>
-					<p className="colophon">&copy; 2015 to {new Intl.DateTimeFormat("en-ca", {timeZone: "America/Winnipeg", year: "numeric"}).format(new Date())} Nathan Knowler. All rights reserved.</p>
+					<p className="colophon">&copy; {new Intl.DateTimeFormat("en-ca", {timeZone: "America/Winnipeg", year: "numeric"}).format(new Date())} Nathan Knowler. All rights reserved.</p>
 					<nav aria-label="secondary" className="nav">
 						<ul role="list" className="nav__list inline-list">
 							<li>
