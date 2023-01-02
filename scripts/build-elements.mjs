@@ -13,6 +13,6 @@ await build({
 		'elements/slug-input.mjs',
 	],
 	outdir: 'public/elements',
-	minify: !__DEV__,
+	minify: false, //!__DEV__,
 	watch: __DEV__,
 });
