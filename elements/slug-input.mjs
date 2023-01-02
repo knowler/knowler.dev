@@ -7,7 +7,7 @@ export class SlugInputElement extends HTMLElement {
 	#internals;
 	#overridden = false;
 
-	get #inputElement() { return this.shadowRoot.querySelector(':scope > input'); }
+	get #inputElement() { return this.shadowRoot.querySelector(':host > input'); }
 	#template = html`
 		<input pattern="^[a-z0-9]+(?:-[a-z0-9]+)*$">
 	`;
