@@ -1,5 +1,3 @@
-import kebabCase from 'just-kebab-case';
-
 const html = String.raw;
 
 export class SlugInputElement extends HTMLElement {
@@ -49,4 +47,25 @@ export class SlugInputElement extends HTMLElement {
 if (!window.customElements.get('slug-input')) {
 	window.SlugInputElement = SlugInputElement;
 	window.customElements.define('slug-input', SlugInputElement);
+}
+
+// node_modules/just-kebab-case
+
+var wordSeparators = /[\s\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]+/;
+var capital_plus_lower = /[A-ZÀ-Ý\u00C0-\u00D6\u00D9-\u00DD][a-zà-ÿ]/g;
+var capitals = /[A-ZÀ-Ý\u00C0-\u00D6\u00D9-\u00DD]+/g;
+
+function kebabCase(str) {
+  str = str.replace(capital_plus_lower, function(match) {
+    return ' ' + (match[0].toLowerCase() || match[0]) + match[1];
+  });
+  str = str.replace(capitals, function(match) {
+    return ' ' + match.toLowerCase();
+  });
+  return str
+    .trim()
+    .split(wordSeparators)
+    .join('-')
+    .replace(/^-/, '')
+    .replace(/-\s*$/, '');
 }

@@ -3,7 +3,8 @@ node_modules
 /.cache
 /build
 /public/build
-/public/elements
+/public/elements/*.js
+!/public/elements/slug-input.js
 /prisma/data.db
 /prisma/data.db-journal
 .env
