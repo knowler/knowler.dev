@@ -52,7 +52,7 @@ export function SlugField({label, defaultValue, name, id, required, from}: {
 	return (
 		<form-field>
 			<label htmlFor={id ?? name}>{label}</label>
-			<slug-input id={id ?? name} name={name} defaultValue={defaultValue} required={required} from={from}>
+			<slug-input id={id ?? name} name={name} value={defaultValue} required={required} from={from}>
 				<input id={id ?? name} name={name} pattern="^[a-z0-9]+(?:-[a-z0-9]+)*$" defaultValue={defaultValue} required={required} />
 			</slug-input>
 		</form-field>
