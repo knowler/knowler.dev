@@ -15,6 +15,7 @@ export class SlugInputElement extends HTMLElement {
 			this.#internals = this.attachInternals();
 			this.attachShadow({mode: 'open'});
 			this.shadowRoot.innerHTML = this.#template;
+			this.#inputElement.value = this.querySelector(':scope > input').value;
 			this.innerHTML = '';
 		}
 
