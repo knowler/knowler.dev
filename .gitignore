@@ -4,6 +4,7 @@ node_modules
 /build
 /public/build
 /public/elements/*.js
+/public/elements/*.js.map
 !/public/elements/slug-input.js
 /prisma/data.db
 /prisma/data.db-journal
