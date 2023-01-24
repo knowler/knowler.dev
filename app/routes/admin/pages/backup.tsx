@@ -7,7 +7,7 @@ export async function loader({ request }: LoaderArgs) {
 
 	return json(
 		{
-			pages: await prisma.post.findMany(),
+			pages: await prisma.page.findMany(),
 		},
 		{
 			headers: {
