@@ -11,7 +11,7 @@ export async function loader({ request }: LoaderArgs) {
 		},
 		{
 			headers: {
-				'content-disposition': `attachment; filename="knowler.dev-posts-export-${(new Date()).toISOString().replaceAll(/[TZ:.-]/g, '')}.json"`,
+				'content-disposition': `attachment; filename="knowler.dev-garden-export-${(new Date()).toISOString().replaceAll(/[TZ:.-]/g, '')}.json"`,
 			}
 		}
 	);
