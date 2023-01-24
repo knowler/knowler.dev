@@ -16,10 +16,11 @@ export default function PageList() {
 	const { published, drafted } = useLoaderData<typeof loader>();
 
 	return (
-		<article className="flow" style={{"--space": "var(--size-4)"}}>
+		<article className="flow" style={{ "--space": "var(--size-4)" }}>
 			<article-header>
 				<h1>Pages</h1>
 				<Link to="new">New Page</Link>
+				<Link to="backup" download>Backup</Link>
 			</article-header>
 			<section className="flow" style={{ "--space": "var(--size-4)" }}>
 				<h2>Published</h2>

@@ -3,7 +3,7 @@ import { Link, useLoaderData } from "@remix-run/react";
 import { authOrLogin } from "~/auth.server";
 import { prisma } from "~/db.server";
 
-export async function loader({request}: LoaderArgs) {
+export async function loader({ request }: LoaderArgs) {
 	await authOrLogin(request);
 
 	return json({
@@ -12,13 +12,14 @@ export async function loader({request}: LoaderArgs) {
 }
 
 export default function GardenList() {
-	const {posts} = useLoaderData<typeof loader>();
+	const { posts } = useLoaderData<typeof loader>();
 
 	return (
-		<article className="flow" style={{'--space': 'var(--size-4)'}}>
+		<article className="flow" style={{ '--space': 'var(--size-4)' }}>
 			<article-header>
 				<h1>Garden</h1>
 				<Link to="new">New Garden Post</Link>
+				<Link to="backup" download>Backup</Link>
 			</article-header>
 			<ul role="list" className="card-grid">
 				{posts.map(post => (
