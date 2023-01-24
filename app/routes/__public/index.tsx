@@ -8,6 +8,12 @@ export const meta: MetaFunction = () => getSeoMeta({
 });
 
 export async function loader({}: LoaderArgs) {
+	const latestPosts = await prisma.post.findMany({
+		where: { published: true },
+		orderBy: { publishedAt: "desc" },
+		take: 3,
+	});
+
 	const webmentions = await prisma.webmention.findMany({
 		where: {
 			target: 'https://knowler.dev',
@@ -15,11 +21,14 @@ export async function loader({}: LoaderArgs) {
 		},
 	});
 
-	return json({ webmentions });
+	return json({
+		webmentions,
+		latestPosts,
+	});
 }
 
 export default function Index() {
-	const {webmentions} = useLoaderData<typeof loader>();
+	const {webmentions, latestPosts} = useLoaderData<typeof loader>();
 
   return (
 		<article className="h-entry prose has-links">
@@ -29,6 +38,22 @@ export default function Index() {
 				live in Winnipeg and work remotely as a Senior Frontend Developer at{" "}
 				<a href="https://wearekettle.com">Kettle</a>.
 			</p>
+			{latestPosts ? (
+				<section>
+					<h2>Latest blog posts</h2>
+					<ol reversed>
+						{latestPosts.map(post => (
+							<li>
+								<article>
+									<h3><a href={`/blog/${post.slug}`} rel="bookmark">{post.title}</a></h3>
+									<p>{post.description}</p>
+								</article>
+							</li>
+						))}
+					</ol>
+					<p><a href="/blog">See more blog posts</a></p>
+				</section>
+			) : null}
 			{webmentions?.length > 0 ? (
 				<aside aria-labelledby="webmentionsLabel">
 					<details>
