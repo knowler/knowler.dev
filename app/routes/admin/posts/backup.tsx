@@ -1,7 +1,11 @@
 import { json, LoaderArgs } from "@remix-run/node";
+import { authOrLogin } from "~/auth.server";
+import { prisma } from "~/db.server";
 
-export function loader({}: LoaderArgs) {
-	return json({
-		testing: "hello, world!",
-	});
+export async function loader({request}: LoaderArgs) {
+	await authOrLogin(request);
+
+	const posts = await prisma.post.findMany();
+
+	return json({ posts });
 }
