@@ -29,6 +29,7 @@ export default function PostsIndex() {
 			<article-header>
 				<h1>Posts</h1>
 				<Link to="new">New Post</Link>
+				<Link download to="backup">Backup</Link>
 			</article-header>
 			<section className="flow" style={{ "--space": "var(--size-4)" }}>
 				<h2>Published</h2>

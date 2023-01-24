@@ -43,7 +43,7 @@ export default function Index() {
 					<h2>Latest blog posts</h2>
 					<ol reversed>
 						{latestPosts.map(post => (
-							<li>
+							<li key={post.id}>
 								<article>
 									<h3><a href={`/blog/${post.slug}`} rel="bookmark">{post.title}</a></h3>
 									<p>{post.description}</p>
