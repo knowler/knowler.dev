@@ -6,7 +6,7 @@ export class RestartAnimationsElement extends HTMLElement {
 	connectedCallback() {
 		if (!this.shadowRoot) {
 			this.attachShadow({mode: 'open'});
-			this.shadowRoot.innerHTML = `<button type="button">Restart Animations</button>`;
+			this.shadowRoot.innerHTML = '<button type="button"><slot>Restart Animations</slot></button>';
 			this.#controller = new AbortController();
 		}
 
