@@ -1,4 +1,4 @@
-import { Form, Links, LiveReload, Meta, NavLink, Outlet, useLoaderData } from "@remix-run/react";
+import { Links, LiveReload, Meta, NavLink, Outlet } from "@remix-run/react";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { json, LinksFunction, LoaderArgs } from "@remix-run/node";
 import { commitSession, getSession } from "~/session.server";
@@ -44,44 +44,11 @@ export async function loader({ request }: LoaderArgs) {
 	});
 }
 
-const featureDetection = `
-with (document.documentElement.classList) {
-	toggle("no-js", false);
-	toggle("no-cookies", !navigator.cookieEnabled);
-}
-`;
-
 export default function Public() {
-	const loaderData = useLoaderData();
-
-	const themes = [
-		{
-			value: "system",
-			label: "System",
-			isActive: loaderData?.theme === "system" || loaderData.theme === undefined,
-		},
-		{
-			value: "dark",
-			label: "Dark",
-			isActive: loaderData?.theme === "dark",
-		},
-		{
-			value: "light",
-			label: "Light",
-			isActive: loaderData?.theme === "light",
-		},
-	];
-
 	return (
-		<html
-			dir="ltr"
-			lang="en-ca"
-			data-color-scheme={loaderData?.theme}
-			className="no-js"
-		>
+		<html lang="en-ca">
 			<head>
 				<Meta />
-				<script dangerouslySetInnerHTML={{ __html: featureDetection }} />
 				<Links />
 			</head>
 			<body>
@@ -148,35 +115,9 @@ export default function Public() {
 							<li>
 								<NavLink to="/privacy">Privacy</NavLink>
 							</li>
-							<li>
-								<NavLink to="/webmention" rel="webmention">Webmention</NavLink>
-							</li>
 						</ul>
 					</nav>
 				</footer>
-				<site-preferences>
-					<details open={loaderData?.themeUpdated} className="site-preferences">
-						<summary>Site Preferences</summary>
-						<Form name="user-preferences" method="post" action="/theme">
-							<fieldset aria-labelledby="theme-label">
-								<span aria-hidden id="theme-label">Theme</span>
-								{themes.map(theme => (
-									<button
-										key={theme.value}
-										name="theme"
-										value={theme.value}
-										id={`${theme.value}-theme`}
-										aria-labelledby={`${theme.value}-theme theme-label`}
-										aria-pressed={theme.isActive}
-										autoFocus={loaderData?.themeUpdated && theme.isActive}
-									>
-										{theme.label}
-									</button>
-								))}
-							</fieldset>
-						</Form>
-					</details>
-				</site-preferences>
 				<LiveReload />
 			</body>
 		</html>
