@@ -1,6 +1,6 @@
 import type { LinksFunction, LoaderArgs, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Form, Link, useCatch, useLoaderData, useLocation } from "@remix-run/react";
+import { Link, useCatch, useLoaderData } from "@remix-run/react";
 import { z } from "zod";
 import { prisma } from "~/db.server";
 import proseStyles from "~/styles/prose.css";
@@ -45,7 +45,6 @@ export async function loader({ params }: LoaderArgs) {
 
 export default function BlogPost() {
   const { post } = useLoaderData<typeof loader>();
-	const location = useLocation();
 
   return (
 		<>
@@ -59,15 +58,6 @@ export default function BlogPost() {
 			<aside className="flow">
 				<h2>Webmentions</h2>
 				<p>This post has no webmentions. Use the form below to send one.</p>
-				<Form method="post" action="/webmention" className="flow">
-					<input hidden name="robotName" />
-					<input type="hidden" name="target" value={new URL(location.pathname, process.env.BASE_URL).toString()} />
-					<form-field>
-						<label htmlFor="webmention-source">Source</label>
-						<input type="url" id="webmention-source" name="source" required placeholder="https://blog.example/awesome-reblog" style={{inlineSize: '32ch'}} />
-					</form-field>
-					<button className="button">Send Webmention</button>
-				</Form>
 			</aside>
 		</>
   );
