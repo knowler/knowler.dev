@@ -47,19 +47,13 @@ export default function BlogPost() {
   const { post } = useLoaderData<typeof loader>();
 
   return (
-		<>
-			<article className="h-entry prose">
-				<h1 className="p-name">{post.title}</h1>
-				<p>
-					<time className="dt-published" dateTime={post.publishedAt}>{new Date(post.publishedAt).toDateString()}</time> – <Link className="u-url" aria-current="page" rel="bookmark" to="">Permalink</Link>
-				</p>
-				<div className="e-content prose" dangerouslySetInnerHTML={{ __html: post.html }} />
-			</article>
-			<aside className="flow">
-				<h2>Webmentions</h2>
-				<p>This post has no webmentions. Use the form below to send one.</p>
-			</aside>
-		</>
+		<article className="h-entry prose">
+			<h1 className="p-name">{post.title}</h1>
+			<p>
+				<time className="dt-published" dateTime={post.publishedAt}>{new Date(post.publishedAt).toDateString()}</time> – <Link className="u-url" aria-current="page" rel="bookmark" to="">Permalink</Link>
+			</p>
+			<div className="e-content prose" dangerouslySetInnerHTML={{ __html: post.html }} />
+		</article>
   );
 }
 

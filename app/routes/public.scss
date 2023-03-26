@@ -1,30 +1,16 @@
-@use 'color-schemes';
-
 :root {
-	@include color-schemes.root;
-
-	--hue: max(var(--dark) * 156, var(--light) * 200);
-	--color-bg: hsl(var(--hue) 100% max(var(--dark) * 3%, var(--light) * 96%));
-	--color-fg: hsl(
-		max(var(--dark) * 0, var(--light) * 156)
-		max(var(--light) * 100%, var(--dark) * 0%)
-		max(var(--light) * 5%, var(--dark) * 87%)
-	);
-	--color-accent: hsl(156 100% max(var(--light) * 17%, var(--dark) * 50%));
-	--color-accent-2: hsl(
-		max(var(--light) * 156, var(--dark) * 0)
-		max(var(--light) * 100%, var(--dark) * 0%)
-		max(var(--light) * 17%, var(--dark) * 100%)
-	);
-	--color-input-bg: hsl(var(--hue) 100% max(var(--light) * 98%, var(--dark) * 5%));
-	--color-surface: hsl(var(--hue) 100% max(var(--light) * 98%, var(--dark) * 4%));
-
 	--font-title: Poppins, system-ui, sans-serif;
 	--font-copy: Atkinson Hyperlegible, system-ui, sans-serif;
 
 	color-scheme: dark light;
 	box-sizing: border-box;
 	block-size: 100%;
+
+	--color-accent-default: hsl(156 50% 50%);
+
+	@media (prefers-color-scheme: light) {
+		--color-accent-default: hsl(156 40% 30%);
+	}
 }
 
 *, ::before, ::after {
@@ -35,8 +21,6 @@ body {
 	block-size: inherit;
 	margin: 0;
 	padding: clamp(1rem, 4vw, 2rem);
-	background-color: var(--color-bg);
-	color: var(--color-fg);
 	font-family: var(--font-copy);
 	font-weight: 300;
 	font-size: 1.2rem;
@@ -46,42 +30,27 @@ body {
 		"skip" max-content
 		"banner" max-content
 		"content" auto
-		"colophon" max-content
-		"user-preferences" max-content;
+		"colophon" max-content;
 }
 
 a {
-	color: var(--color-accent);
-	text-decoration-color: var(--color-accent-2);
+	color: var(--color-accent-default);
 	text-underline-offset: 0.2em;
 	text-decoration-thickness: 0.05em;
-	--transition-settings: 0.2s ease-in-out;
-	transition:
-		color var(--transition-settings),
-		background-color var(--transition-settings),
-		text-decoration-color var(--transition-settings);
+	transition-property: color, background-color, text-decoration-color;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in-out;
 
 	&:hover {
-		color: var(--color-bg);
-		background-color: var(--color-accent);
-		text-decoration-color: var(--color-accent);
-	}
-}
-
-button {
-	transition:
-		filter 0.2s ease-in-out,
-		color 0.2s ease-in-out;
-
-	&:not([aria-pressed="true"]):hover {
-		color: var(--color-bg);
-		filter: brightness(0.8);
+		color: Canvas;
+		background-color: var(--color-accent-default);
+		text-decoration-color: var(--color-accent-default);
 	}
 }
 
 :focus-visible {
 	outline-offset: 0.2em;
-	outline: 0.125em dashed var(--color-accent);
+	outline: 0.125em dashed var(--color-accent-default);
 }
 
 /* Helpers */
@@ -160,14 +129,14 @@ header {
 
 	> a:first-of-type {
 		text-decoration: none;
-		color: var(--color-fg);
-		border: 0.125em solid var(--color-fg);
+		color: CanvasText;
+		border: 0.125em solid CanvasText;
 		padding-inline: 0.375em;
 		padding-block: 0.25em;
 
 		&:hover {
-			color: var(--color-bg);
-			background-color: var(--color-fg);
+			color: Canvas;
+			background-color: CanvasText;
 		}
 	}
 }
@@ -187,82 +156,10 @@ footer {
 	margin: 0;
 }
 
-.site-preferences {
-	padding-block-end: 1rem;
-}
-
-form[name="user-preferences"] {
-	line-height: 1;
-
-	fieldset {
-		display: flex;
-		align-items: center;
-		column-gap: 0.5rem;
-		padding: 0.5em;
-		border: none;
-		font-size: 0.9em;
-	}
-
-	span:first-of-type {
-		font-weight: 600;
-		margin-right: 1rem;
-	}
-
-	button {
-		background-color: var(--color-fg);
-		border: none;
-		color: var(--color-bg);
-		padding-inline: 0.5em;
-		padding-block: 0.25em;
-		font-family: inherit;
-		font-weight: 400;
-		font-size: 1em;
-		border-radius: 0.125em;
-
-		&[aria-pressed="true"] {
-			background-color: var(--color-accent);
-		}
-	}
-
-}
-
 main {
 	display: grid;
 	align-content: start;
 	row-gap: 2rem;
-}
-
-input[type="text"] {
-	color: var(--color-bg);
-}
-
-form-field {
-	display: grid;
-	justify-content: start;
-	gap: 0.25em;
-
-	label {
-		font-weight: 600;
-	}
-
-	input:is([type="text"], [type="url"], [type="email"]) {
-		font: inherit;
-		line-height: 1.8;
-		padding-inline: 0.375em;
-		border: 0.125em solid var(--color-accent-2);
-		border-radius: 0.375em;
-		background-color: var(--color-input-bg);
-		transition: border-color 0.3s ease-in-out;
-
-		&:focus {
-			border-color: var(--color-accent);
-		}
-
-		&::placeholder {
-			color: var(--color-accent);
-			opacity: 0.3;
-		}
-	}
 }
 
 .flow {
@@ -275,15 +172,4 @@ form-field {
 	& > * + * {
 		margin-block-start: var(--_space);
 	}
-}
-
-.button {
-	padding-block: 0.375em;
-	padding-inline: 0.5em;
-	font: inherit;
-	font-weight: 600;
-	color: var(--color-bg);
-	background-color: var(--color-accent);
-	border: 0.125em solid var(--color-accent);
-	border-radius: 0.25em;
 }
