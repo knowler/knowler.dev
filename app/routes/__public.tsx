@@ -68,12 +68,6 @@ export default function Public() {
 								<NavLink to="/blog">Blog</NavLink>
 							</li>
 							<li>
-								<NavLink to="/garden">Garden</NavLink>
-							</li>
-							<li>
-								<NavLink to="/uses">Uses</NavLink>
-							</li>
-							<li>
 								<a
 									rel="me"
 									href="https://github.com/knowler"
