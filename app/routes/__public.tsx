@@ -39,15 +39,18 @@ export default function Public() {
 				<Links />
 			</head>
 			<body>
-				<a href="#content" className="skip-link">
+				<a href="#content" className="skip-link visually-hidden">
 					Skip to content
 				</a>
 				<header>
-					<NavLink to="/">
+					<NavLink to="/" className="site-title">
 						Nathan Knowler
 					</NavLink>
 					<nav aria-label="primary">
 						<ul role="list">
+							<li>
+								<NavLink to="/">Home</NavLink>
+							</li>
 							<li>
 								<NavLink to="/about">About</NavLink>
 							</li>
