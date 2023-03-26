@@ -7,19 +7,6 @@ import publicStyles from "./public.css";
 
 export const links: LinksFunction = () => [
 	{
-		rel: "preconnect",
-		href: "https://fonts.googleapis.com",
-	},
-	{
-		rel: "preconnect",
-		href: "https://fonts.gstatic.com",
-		crossOrigin: "anonymous",
-	},
-	{
-		rel: "stylesheet",
-		href: "https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Poppins:wght@300;500&display=swap",
-	},
-	{
 		rel: "stylesheet",
 		href: publicStyles,
 	},
@@ -55,12 +42,12 @@ export default function Public() {
 				<a href="#content" className="skip-link">
 					Skip to content
 				</a>
-				<header className="site-head">
+				<header>
 					<NavLink to="/">
 						Nathan Knowler
 					</NavLink>
-					<nav aria-label="primary" className="nav">
-						<ul role="list" className="nav__list inline-list">
+					<nav aria-label="primary">
+						<ul role="list">
 							<li>
 								<NavLink to="/about">About</NavLink>
 							</li>
@@ -100,9 +87,9 @@ export default function Public() {
 					<Outlet />
 				</main>
 				<footer>
-					<p className="colophon">&copy; {new Intl.DateTimeFormat("en-ca", {timeZone: "America/Winnipeg", year: "numeric"}).format(new Date())} Nathan Knowler. All rights reserved.</p>
-					<nav aria-label="secondary" className="nav">
-						<ul role="list" className="nav__list inline-list">
+					<p>&copy; 2023 Nathan Knowler. All rights reserved.</p>
+					<nav aria-label="secondary">
+						<ul role="list">
 							<li>
 								<NavLink to="/accessibility">Accessibility</NavLink>
 							</li>

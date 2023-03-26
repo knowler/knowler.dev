@@ -1,10 +1,8 @@
 :root {
-	--font-title: Poppins, system-ui, sans-serif;
-	--font-copy: Atkinson Hyperlegible, system-ui, sans-serif;
-
 	color-scheme: dark light;
-	box-sizing: border-box;
 	block-size: 100%;
+	font-family: system-ui, sans-serif;
+	font-size: 1.2rem;
 
 	--color-accent-default: hsl(156 50% 50%);
 
@@ -14,16 +12,13 @@
 }
 
 *, ::before, ::after {
-	box-sizing: inherit;
+	box-sizing: border-box;
 }
 
 body {
 	block-size: inherit;
 	margin: 0;
 	padding: clamp(1rem, 4vw, 2rem);
-	font-family: var(--font-copy);
-	font-weight: 300;
-	font-size: 1.2rem;
 	display: grid;
 	justify-items: start;
 	grid-template:
@@ -31,6 +26,10 @@ body {
 		"banner" max-content
 		"content" auto
 		"colophon" max-content;
+}
+
+:is(h1, h2, h3, p, ul) {
+	margin: 0;
 }
 
 a {
@@ -55,10 +54,6 @@ a {
 
 /* Helpers */
 
-.h-pad {
-	padding-inline: var(--pad-h);
-}
-
 @import 'visually-hidden';
 
 .icon-link {
@@ -73,7 +68,7 @@ a {
 	}
 }
 
-.inline-list {
+nav ul {
 	display: flex;
 	align-items: center;
 	gap: 1rem;
@@ -93,20 +88,16 @@ a {
 		line-height: 1.7;
 	}
 
-	:is(h1, h2, h3, p, ul) {
-		margin: 0;
-	}
-
-	:is(h1, h2, h3) {
-		font-family: var(--font-title);
-	}
-
 	li:not(:first-of-type) {
 		margin-block-start: 0.75rem;
 	}
 
 	pre {
-		background-color: var(--color-surface);
+		background-color: hsl(0 0% 10%);
+
+		@media (prefers-color-scheme: light) {
+			background-color: hsl(0 0% 95%);
+		}
 	}
 }
 
@@ -125,20 +116,6 @@ header {
 	gap: 1rem;
 	padding-block: 2rem;
 	font-size: 1.2rem;
-	font-family: var(--font-title);
-
-	> a:first-of-type {
-		text-decoration: none;
-		color: CanvasText;
-		border: 0.125em solid CanvasText;
-		padding-inline: 0.375em;
-		padding-block: 0.25em;
-
-		&:hover {
-			color: Canvas;
-			background-color: CanvasText;
-		}
-	}
 }
 
 footer {
@@ -150,10 +127,6 @@ footer {
 	gap: 1rem;
 	padding-block: 2rem;
 	margin-block-start: 2rem;
-}
-
-.colophon {
-	margin: 0;
 }
 
 main {
