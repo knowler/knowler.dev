@@ -3,6 +3,7 @@
 	block-size: 100%;
 	font-family: system-ui, sans-serif;
 	font-size: 1.2rem;
+	line-height: 1.5;
 
 	--color-accent-default: hsl(156 50% 50%);
 
@@ -26,10 +27,6 @@ body {
 		"banner" max-content
 		"content" auto
 		"colophon" max-content;
-}
-
-:is(h1, h2, h3, p, ul) {
-	margin: 0;
 }
 
 a {
@@ -80,23 +77,24 @@ nav ul {
 
 /* Prose */
 .prose {
-	display: grid;
-	row-gap: 1em;
-	max-inline-size: min(64ch, 100vw);
-
-	p {
-		line-height: 1.7;
-	}
-
-	li:not(:first-of-type) {
-		margin-block-start: 0.75rem;
-	}
+  max-inline-size: min(64ch, 100vw);
 
 	pre {
+		inline-size: 100%;
+		overflow-x: auto;
+		tab-size: 2ch;
 		background-color: hsl(0 0% 10%);
 
 		@media (prefers-color-scheme: light) {
 			background-color: hsl(0 0% 95%);
+		}
+
+		> code {
+			inline-size: 100%;
+		}
+
+		.hljs {
+			background-color: unset;
 		}
 	}
 }
@@ -106,7 +104,6 @@ nav ul {
 .skip-link {
 	align-self: center;
 	justify-self: center;
-	margin: 1rem;
 }
 
 header {
@@ -124,25 +121,7 @@ footer {
 	align-items: center;
 	justify-content: space-between;
 	justify-self: stretch;
-	gap: 1rem;
+	column-gap: 1rem;
 	padding-block: 2rem;
 	margin-block-start: 2rem;
-}
-
-main {
-	display: grid;
-	align-content: start;
-	row-gap: 2rem;
-}
-
-.flow {
-	--_space: var(--space, 1rem);
-
-	& > * {
-		margin-block: 0;
-	}
-
-	& > * + * {
-		margin-block-start: var(--_space);
-	}
 }
