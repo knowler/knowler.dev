@@ -149,9 +149,6 @@ export default function Public() {
 								<NavLink to="/privacy">Privacy</NavLink>
 							</li>
 							<li>
-								<NavLink to="/contact">Contact</NavLink>
-							</li>
-							<li>
 								<NavLink to="/webmention" rel="webmention">Webmention</NavLink>
 							</li>
 						</ul>
