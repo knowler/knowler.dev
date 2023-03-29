@@ -1,10 +1,12 @@
-import { ActionFunction, json, LinksFunction } from "@remix-run/node";
+import { ActionFunction, json, LinksFunction, MetaFunction } from "@remix-run/node";
 import { Form, useActionData } from "@remix-run/react";
-import mail from "@sendgrid/mail";
 import { getFormData } from "remix-params-helper";
 import { z } from "zod";
 import { prisma } from "~/db.server";
+import { getSeoMeta } from "~/seo";
 import webmentionFormStyles from './webmention.css';
+
+export const meta: MetaFunction = () => getSeoMeta({title: 'Webmention'});
 
 export const links: LinksFunction = () => [
 	{rel: "stylesheet", href: webmentionFormStyles},
@@ -42,12 +44,14 @@ export default function Webmention() {
 			<p>If the platform you are using doesn’t already support Webmentions, then you can use this form to manually send one for content you link to on my website.</p>
 			<Form method="post" name="webmention">
 				<form-field>
-					<label htmlFor="source">Source (your content)</label>
-					<input type="url" id="source" name="source" required />
+					<label htmlFor="source">Source</label>
+					<p id="source-hint" className="hint">The URL for your content.</p>
+					<input type="url" id="source" name="source" required aria-describedby="source-hint" />
 				</form-field>
 				<form-field>
-					<label htmlFor="target" style={{ display: 'block', fontWeight: 500 }}>Target (my content)</label>
-					<input type="url" id="target" name="target" required />
+					<label htmlFor="target" style={{ display: 'block', fontWeight: 500 }}>Target</label>
+					<p id="target-hint" className="hint">The URL for my content.</p>
+					<input type="url" id="target" name="target" required aria-describedby="target-hint" />
 				</form-field>
 				<input type="text" name="robotName" hidden />
 				<button>Send Webmention</button>

@@ -1,6 +1,6 @@
 form[name="webmention"] {
 	display: grid;
-	justify-content: start;
+	justify-items: start;
 	row-gap: 1rem;
 
 	form-field {
@@ -10,12 +10,41 @@ form[name="webmention"] {
 
 		label {
 			font-weight: 500;
+			font-size: 1.25rem;
+			line-height: 1;
+		}
+
+		.hint {
+			margin-block: 0;
+			line-height: 1;
 		}
 
 		input {
+			background-color: var(--color-canvas-muted);
+			border: 0.0625em solid var(--color-fg-default);
+			border-radius: 0.25em;
 			font-size: inherit;
-			padding-block: 0.25em;
-			padding-inline: 0.375em;
+			padding-block: 0.625em;
+			padding-inline: 0.75em;
+			line-height: inherit;
+			inline-size: 32ch;
+		}
+	}
+
+	button {
+		background-color: var(--color-accent-default);
+		color: var(--color-canvas-default);
+		border: 0;
+		border-radius: 0.25rem;
+		padding-inline: 0.75rem;
+		min-block-size: 2.75rem;
+		font: inherit;
+		font-weight: 500;
+		line-height: inherit;
+		transition: background-color 0.2s ease-in-out;
+
+		&:hover {
+			background-color: var(--color-accent-emphasis);
 		}
 	}
 }
