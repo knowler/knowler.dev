@@ -22,11 +22,10 @@ html {
 
 body {
 	block-size: inherit;
-	margin: 0;
 	padding: clamp(1rem, 4vw, 2rem);
 	display: grid;
-	justify-items: start;
 	max-inline-size: 48rem;
+	margin-block: 0;
 	margin-inline: auto;
 	grid-template:
 		"banner" max-content
