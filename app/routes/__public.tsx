@@ -64,12 +64,7 @@ export default function Public() {
 									className="icon-link"
 									title="@knowler on GitHub"
 								>
-									<span className="visually-hidden">@knowler on GitHub</span>
-									<GitHubLogoIcon
-										aria-hidden
-										width={undefined}
-										height={undefined}
-									/>
+									<span className="visually-hidden">@knowler on GitHub</span> <GitHubLogoIcon aria-hidden width="1.25em" height="1.25em" />
 								</a>
 							</li>
 							<li>
@@ -79,8 +74,7 @@ export default function Public() {
 									className="icon-link"
 									title="@knowler@sunny.garden on Mastodon"
 								>
-									<span className="visually-hidden">@knowler@sunny.garden on Mastodon</span>
-									<MastodonIcon aria-hidden />
+									<span className="visually-hidden">@knowler@sunny.garden on Mastodon</span> <MastodonIcon aria-hidden width="1.25em" height="1.25em" />
 								</a>
 							</li>
 						</ul>
