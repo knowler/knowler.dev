@@ -98,6 +98,9 @@ export default function Public() {
 							<li>
 								<NavLink to="/webmention">Webmention</NavLink>
 							</li>
+							<li>
+								<NavLink to="/feed.xml">RSS</NavLink>
+							</li>
 						</ul>
 					</nav>
 				</footer>
