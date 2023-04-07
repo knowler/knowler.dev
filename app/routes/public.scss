@@ -11,7 +11,11 @@ html {
 	color: var(--color-fg-default);
 	color-scheme: dark;
 	block-size: 100%;
-	font-family: system-ui, sans-serif;
+	// On system-ui:
+	// - Edge started supporting it in January 2020 when it switch to Chromium.
+	// - Firefox started supporting it September 2021.
+	// - Internet Explorer doesn’t support it.
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 	font-size: 1.2rem;
 	line-height: 1.5;
 }
