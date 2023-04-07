@@ -31,6 +31,7 @@ export default function App() {
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
   viewport: "width=device-width, initial-scale=1",
+	'color-scheme': 'dark light',
 	//webmention: `${new URL('webmention', process.env.BASE_URL)}`,
 	...seoMeta,
 });
