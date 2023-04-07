@@ -4,6 +4,7 @@ import { json, LinksFunction, LoaderArgs } from "@remix-run/node";
 import { commitSession, getSession } from "~/session.server";
 import { MastodonIcon } from "~/components/mastodon-icon";
 import publicStyles from "./public.css";
+import { isCSSNakedDay } from "~/css-naked-day";
 
 export const links: LinksFunction = () => [
 	{
@@ -42,6 +43,7 @@ export default function Public() {
 				<a href="#content" className="skip-link visually-hidden">
 					Skip to content
 				</a>
+				{isCSSNakedDay() ? <p>Happy <a href="https://css-naked-day.github.io/">CSS Naked Day</a>, enjoy!</p> : null}
 				<header>
 					<NavLink to="/" className="site-title">
 						Nathan Knowler

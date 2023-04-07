@@ -4,6 +4,7 @@ import isbot from 'isbot';
 import { RemixServer } from "@remix-run/react";
 import type { EntryContext } from "@remix-run/node";
 import { etag } from "remix-etag";
+import { isCSSNakedDay } from "~/css-naked-day";
 
 const ABORT_DELAY = 5000;
 
@@ -26,7 +27,8 @@ export default function handleRequest(
 
           responseHeaders.set('Content-Type', 'text/html');
 					responseHeaders.set('Link', `${new URL('webmention', process.env.BASE_URL as string)}; rel="webmention"`);
-					responseHeaders.set('content-security-policy', "default-src 'self'; style-src 'self' 'unsafe-inline';")
+
+					responseHeaders.set('content-security-policy', `default-src 'self'; style-src ${isCSSNakedDay() ? "'none'" : "'self' 'unsafe-inline'"};`)
 
           resolve(
 						etag({
