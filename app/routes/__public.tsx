@@ -37,6 +37,7 @@ export default function Public() {
 		<html lang="en-ca">
 			<head>
 				<Meta />
+				<base href={process.env.BASE_URL} />
 				<Links />
 			</head>
 			<body>
