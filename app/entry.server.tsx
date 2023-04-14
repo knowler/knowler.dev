@@ -28,7 +28,7 @@ export default function handleRequest(
           responseHeaders.set('Content-Type', 'text/html');
 					responseHeaders.set('Link', `${new URL('webmention', process.env.BASE_URL as string)}; rel="webmention"`);
 
-					responseHeaders.set('content-security-policy', `default-src 'self'; style-src ${isCSSNakedDay() ? "'none'" : "'self' 'unsafe-inline'"};`)
+					if (isCSSNakedDay()) responseHeaders.set('content-security-policy', "style-src 'none'");
 
           resolve(
 						etag({
