@@ -1,4 +1,4 @@
-import { Links, LiveReload, Meta, NavLink, Outlet } from "@remix-run/react";
+import { Links, LiveReload, Meta, NavLink, Outlet, useLocation } from "@remix-run/react";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { json, LinksFunction, LoaderArgs } from "@remix-run/node";
 import { commitSession, getSession } from "~/session.server";
@@ -33,11 +33,13 @@ export async function loader({ request }: LoaderArgs) {
 }
 
 export default function Public() {
+	const {pathname} = useLocation();
 	return (
 		<html lang="en-ca">
 			<head>
 				<Meta />
 				<base href={process.env.BASE_URL} />
+				<link rel="canonical" href={new URL(pathname, process.env.BASE_URL).toString()} />
 				<Links />
 			</head>
 			<body>
