@@ -64,7 +64,7 @@ export default function NewPost() {
 			</form-field>
 			<form-field>
 				<label htmlFor="post-content">Content</label>
-				<Editor id="post-content" name="content" required />
+				<textarea id="post-content" name="content" required />
 			</form-field>
 			<form-field>
 				<label htmlFor="post-published-at">Published At</label>
