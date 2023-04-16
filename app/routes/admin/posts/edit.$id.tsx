@@ -76,7 +76,7 @@ export default function PostEditor() {
 				<TextareaField label="Description" name="description" id="post-description" defaultValue={post.description} />
 				<form-field>
 					<label htmlFor="post-content">Content</label>
-					<Editor id="post-content" name="content" required defaultValue={post.markdown} />
+					<textarea id="post-content" name="content" required defaultValue={post.markdown} />
 				</form-field>
 				<label>
 					Publish <input type="checkbox" name="published" defaultChecked={post.published} />
