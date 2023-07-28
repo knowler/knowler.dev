@@ -1,0 +1,1 @@
+export {renderFile} from "pug";

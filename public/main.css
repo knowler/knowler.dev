@@ -1,0 +1,45 @@
+html {
+	color-scheme: dark;
+	font-family: system-ui, sans-serif;
+}
+
+.visually-hidden {
+	border-width: 0;
+	clip: rect(0, 0, 0, 0);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+.skip-link:focus {
+	height: unset;
+	width: unset;
+	clip: unset;
+}
+
+header {
+	display: grid;
+	gap: 0.5rem;
+}
+
+header > a:only-of-type {
+	text-decoration: none;
+	justify-self: start;
+}
+
+:where(header, footer) > nav > ul {
+	list-style: none;
+	padding-inline-start: 0;
+	margin-block: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+
+a[aria-current="page"] {
+	text-decoration: none;
+}

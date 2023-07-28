@@ -1,14 +1,4 @@
 node_modules
-
-/.cache
-/build
-/public/build
-/public/elements/*.js
-/public/elements/*.js.map
-!/public/elements/slug-input.js
-!/public/elements/restart-animations.js
-/prisma/data.db
-/prisma/data.db-journal
 .env
-/app/**/*.css
-/app/**/*.css.map
+prefs.arc
+public/static.json
