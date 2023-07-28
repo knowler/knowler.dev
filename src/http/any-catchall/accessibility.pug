@@ -6,23 +6,29 @@ include /mixins/h
 block content
 	+h-entry(title)
 		p.
-			I want this website to be as accessible as possible. I am building
-			this website with this goal in mind. This page will be used to
-			document how I intend on meeting this goal, how I am testing the
-			accessibility of this website, and if there are any known
-			accessibility issues.
+			I want this website to be as accessible as possible and so I am
+			building it with that goal at the forefront of my mind. This page
+			will be used to document how I intend on meeting this goal, how I
+			am testing the accessibility of this website, and if there are any
+			known accessibility issues. This website is currently in the midst
+			of a massive overhaul, so there will be changes all of the time.
+			It’s my goal to develop this website to conform to
+			#[abbr(title="Web Content Accessibility Guidelines") WCAG] 2.2 for
+			all Level A and Level AA success criteria.
 		+h2("Features")
-		p.
-			This site uses #[abbr(title="Accessible Rich Internet Applications") ARIA]
-			attributes when necessary to improve the experience.
+		p This site uses #[abbr(title="Accessible Rich Internet Applications") ARIA] attributes when necessary to improve the experience.
 		+h2("Testing")
 		p.
-			Currently, I am testing with macOS’ VoiceOver screen reader. In
-			the future I’d like to test on Windows as well.
+			Primarily being a macOS and iOS user, I regularly test using
+			VoiceOver with Safari throughout development. I make a concerted
+			effort to test on Windows using NVDA with Firefox and on Android,
+			Talkback. If I am able to resurrect my Manjaro Linux install, I
+			will test with the Orca screen reader.
 		+h2("Issues")
 		p.
-			I’ve done my best with ensuring sufficient WCAG 2.1 AA contrast so
-			far.
+			At this point in the overhaul, I have not implemented an
+			accessible colour scheme to override the browser default color
+			scheme which is not fully accessible.
 		+h2("Feedback")
 		p.
 			If you find any other issues that I haven’t accounted for, please

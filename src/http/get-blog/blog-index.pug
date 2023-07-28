@@ -2,6 +2,9 @@ extends /layouts/public
 
 include /mixins/h
 
+append head
+	style: include blog-index.css
+
 block content
 	article
 		+h1("Blog")

@@ -1,0 +1,10 @@
+ol {
+	display: grid;
+	gap: 1rem;
+	list-style: none;
+	padding-inline-start: 0;
+}
+
+article :where(h2, p) {
+	margin-block: 0;
+}
