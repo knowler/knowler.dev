@@ -1,6 +1,9 @@
 @app
 knowler
 
+@begin
+appID SXK9SZ5X
+
 @static
 prune true
 fingerprint true
