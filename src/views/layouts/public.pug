@@ -14,7 +14,7 @@ append head
 	link(rel="alternate" href="/feed.xml" type="application/rss+xml" title="RSS")
 
 block body
-	a(href="#content").skip-link.visually-hidden Skip to content
+	a(href=`${new URL(canonical).pathname}#content`).skip-link.visually-hidden Skip to content
 	header
 		+nav-link(href="/") Nathan Knowler
 		nav(aria-label="primary")

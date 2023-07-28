@@ -18,6 +18,6 @@ get /blog/:slug
 
 # Webmentions
 get /webmention
-#post /webmention
+post /webmention
 
 any /*

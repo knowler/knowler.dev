@@ -2,6 +2,8 @@ import arc from '@architect/functions';
 import { view } from '@architect/shared/view.js';
 
 export const handler = arc.http.async(request => {
+
+
 	return {
 		statusCode: 200,
 		headers: {
@@ -9,7 +11,8 @@ export const handler = arc.http.async(request => {
 		},
 		body: view('webmention.pug', request, {
 			title: 'Webmention',
-			issues: [],
+			issues: request.session?.issues ?? [],
 		}),
+		session: {},
 	};
 });

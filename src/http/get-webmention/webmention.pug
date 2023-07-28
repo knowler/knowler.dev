@@ -8,7 +8,8 @@ block content
 		If the platform you are using doesn’t already support Webmentions,
 		then you can use this form to manually send one for content you link
 		to on my website.
-	form(method="post")
+	form(method="post" novalidate)
 		+text-field(name="source" type="url" description="The URL for your content.") Source
-		+text-field(name="source" type="url" description="The URL for my content.") Target
+		+text-field(name="target" type="url" description="The URL for my content.") Target
+		input(name="robotName" hidden)
 		button Send Webmention

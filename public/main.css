@@ -1,7 +1,37 @@
+*, ::before, ::after {
+	box-sizing: border-box;
+}
+
 html {
 	color-scheme: dark;
 	font-family: system-ui, sans-serif;
 	line-height: 1.5;
+	block-size: 100%;
+}
+
+body {
+	block-size: 100%;
+	display: grid;
+	align-items: start;
+	margin: 0;
+	padding: 1rem;
+	grid-template:
+		"header" max-content
+		"main" auto
+		"footer" max-content;
+}
+
+header {
+	grid-area: header;
+}
+
+main {
+	grid-area: main;
+}
+
+footer {
+	grid-area: footer;
+	align-self: end;
 }
 
 .visually-hidden {
@@ -14,6 +44,12 @@ html {
 	position: absolute;
 	white-space: nowrap;
 	width: 1px;
+}
+
+.skip-link {
+	background-color: Canvas;
+	padding-block: 0.25em;
+	padding-inline: 0.5em;
 }
 
 .skip-link:focus {
@@ -61,6 +97,6 @@ a[aria-current="page"] {
 	text-decoration: none;
 }
 
-.h-entry p {
-	max-inline-size: 64ch;
+ p {
+	max-inline-size: 52ch;
 }
