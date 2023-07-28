@@ -1,4 +1,4 @@
 node_modules
 .env
 prefs.arc
-public/static.json
+static.json
