@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "urlpattern-polyfill": "^9.0.0"
+  }
+}
