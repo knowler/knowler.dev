@@ -32,3 +32,5 @@ get /privacy
 # Webmentions
 #get /webmention
 #post /webmention
+
+any /*

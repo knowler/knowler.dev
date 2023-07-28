@@ -1,0 +1,7 @@
+{
+	"type": "module",
+  "dependencies": {
+    "just-kebab-case": "^4.2.0",
+    "pug": "^3.0.2"
+  }
+}

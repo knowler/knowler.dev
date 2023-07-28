@@ -1,6 +1,7 @@
 html {
 	color-scheme: dark;
 	font-family: system-ui, sans-serif;
+	line-height: 1.5;
 }
 
 .visually-hidden {
@@ -42,4 +43,8 @@ header > a:only-of-type {
 
 a[aria-current="page"] {
 	text-decoration: none;
+}
+
+.h-entry p {
+	max-inline-size: 64ch;
 }

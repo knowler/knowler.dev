@@ -1,5 +1,5 @@
 import arc from '@architect/functions';
-import { view } from '@architect/shared/view.mjs';
+import { view } from '@architect/shared/view/index.js';
 
 export const handler = arc.http.async(request => {
 	return {
