@@ -1,6 +1,6 @@
 import arc from '@architect/functions';
 import asap from '@architect/asap';
-import { view } from '@architect/shared/view/index.js';
+import { view } from '@architect/shared/view.js';
 
 const staticProxy = asap({
   passthru: true,
@@ -12,7 +12,7 @@ function notFound(request) {
 		statusCode: 404,
 		headers: {
 			'cache-control': 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0',
-			'content-type': 'text/html; charset=utf8'
+			'content-type': 'text/html; charset=utf8',
 		},
 		body: view('404.pug', request),
 	};

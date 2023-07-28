@@ -7,8 +7,8 @@ export const handler = arc.http.async(request => {
 		headers: {
 			'content-type': 'text/html; charset=utf8',
 		},
-		body: view('about.pug', request, {
-			title: 'About',
+		body: view('webmention.pug', request, {
+			title: 'Webmention',
 		}),
 	};
 });

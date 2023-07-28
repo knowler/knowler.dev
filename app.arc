@@ -30,7 +30,7 @@ get /privacy
 #get /blog/hello-world
 
 # Webmentions
-#get /webmention
+get /webmention
 #post /webmention
 
 any /*
