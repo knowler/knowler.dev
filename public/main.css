@@ -22,6 +22,18 @@ html {
 	clip: unset;
 }
 
+h1 {
+	font-variation-settings: "wdth" 120;
+}
+
+h2 {
+	font-variation-settings: "wdth" 110;
+}
+
+h1, h2, h3, h4 {
+	font-weight: 300;
+}
+
 header {
 	display: grid;
 	gap: 0.5rem;
@@ -30,6 +42,10 @@ header {
 header > a:only-of-type {
 	text-decoration: none;
 	justify-self: start;
+	text-transform: lowercase;
+	font-variation-settings: "wdth" 125;
+	font-weight: 200;
+	font-size: 1.75rem;
 }
 
 :where(header, footer) > nav > ul {

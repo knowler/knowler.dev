@@ -14,9 +14,10 @@ function notFound(request) {
 			'cache-control': 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0',
 			'content-type': 'text/html; charset=utf8',
 		},
-		body: view('404.pug', request),
+		body: view('404.pug', request, {
+			title: 'Not Found',
+		}),
 	};
 }
-
 
 export const handler = arc.http.async(staticProxy, notFound);
