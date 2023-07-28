@@ -4,16 +4,16 @@ import kebabCase from 'just-kebab-case';
 
 export function view(filePath, request, context = {}) {
 	return pug.renderFile(filePath, {
-		canonical: new URL(request.path, process.env.SITE_URL),
+		canonical: new URL(trimTrailingSlash(request.path), process.env.SITE_URL),
 		asset: arc.static,
 		basedir: './node_modules/@architect/views',
-		isCurrentPath(path) {
-				const normalizedPath = path.endsWith('/') ? path : `${path}/`;
-				const normalizedRequestPath = request.path.endsWith('/') ? request.path : `${request.path}/`;
-				return normalizedPath === normalizedRequestPath;
-		},
+		isCurrentPath: path => trimTrailingSlash(path) === trimTrailingSlash(request.path),
 		kebabCase,
 		pretty: true,
 		...context,
 	});
+}
+
+function trimTrailingSlash(path) {
+	return path.endsWith('/') ? path.slice(0, -1) : path;
 }
