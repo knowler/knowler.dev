@@ -11,6 +11,7 @@ export const handler = arc.http.async(request => {
 		},
 		body: view('webmention.pug', request, {
 			title: 'Webmention',
+			formData: request.session?.formData ?? {},
 			issues: request.session?.issues ?? [],
 		}),
 		session: {},

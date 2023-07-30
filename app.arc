@@ -21,3 +21,6 @@ get /webmention
 post /webmention
 
 any /*
+
+@events
+incoming-webmention
