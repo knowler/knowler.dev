@@ -1,3 +1,5 @@
+import { contentType } from "https://deno.land/std@0.200.0/media_types/mod.ts";
+
 const assetPattern = new URLPattern({ pathname: "/:filename.:extension" });
 const html = String.raw;
 const home = html`
