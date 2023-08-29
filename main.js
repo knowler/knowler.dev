@@ -24,7 +24,7 @@ function homePage(request) {
 
 	const body = renderFile("./routes/index.pug", {
 		basedir: "./views",
-		title: "Welcome – Nathan Knowler",
+		title: "Welcome",
 		canonical: request.url,
 		isCurrentPath(path) {
 			const normalizedPath = path.endsWith("/") ? path : `${path}/`;
