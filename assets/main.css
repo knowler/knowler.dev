@@ -58,6 +58,10 @@ footer {
 	clip: unset;
 }
 
+a {
+	color: hsl(160 54% 70%);
+}
+
 h1 {
 	font-variation-settings: "wdth" 120;
 }
