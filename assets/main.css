@@ -1,0 +1,102 @@
+*, ::before, ::after {
+	box-sizing: border-box;
+}
+
+html {
+	color-scheme: light dark;
+	font-family: system-ui, sans-serif;
+	line-height: 1.5;
+	block-size: 100%;
+}
+
+body {
+	block-size: 100%;
+	display: grid;
+	align-items: start;
+	margin: 0;
+	padding: 1rem;
+	grid-template:
+		"header" max-content
+		"main" auto
+		"footer" max-content;
+}
+
+header {
+	grid-area: header;
+}
+
+main {
+	grid-area: main;
+}
+
+footer {
+	grid-area: footer;
+	align-self: end;
+}
+
+.visually-hidden {
+	border-width: 0;
+	clip: rect(0, 0, 0, 0);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+.skip-link {
+	background-color: Canvas;
+	padding-block: 0.25em;
+	padding-inline: 0.5em;
+}
+
+.skip-link:focus {
+	height: unset;
+	width: unset;
+	clip: unset;
+}
+
+h1 {
+	font-variation-settings: "wdth" 120;
+}
+
+h2 {
+	font-variation-settings: "wdth" 110;
+}
+
+h1, h2, h3, h4 {
+	font-weight: 300;
+}
+
+header {
+	display: grid;
+	gap: 0.5rem;
+}
+
+header > a:only-of-type {
+	text-decoration: none;
+	justify-self: start;
+	text-transform: lowercase;
+	font-variation-settings: "wdth" 125;
+	font-weight: 200;
+	font-size: 1.75rem;
+}
+
+:where(header, footer) > nav > ul {
+	list-style: none;
+	padding-inline-start: 0;
+	margin-block: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+
+a[aria-current="page"] {
+	text-decoration: none;
+}
+
+ p {
+	max-inline-size: 52ch;
+}

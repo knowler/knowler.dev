@@ -1,9 +1,0 @@
-@mixin root {
-	/* Colour schemes */
-	--dark: 1;
-	--light: calc(var(--dark) * -1);
-	/* Visitor media prefers light */
-	@media (prefers-color-scheme: light) { &:not([data-color-scheme="dark"]) { --dark: -1; } }
-	/* Visitor wants light (when media wants dark) */
-	&[data-color-scheme="light"] { --dark: -1; }
-}

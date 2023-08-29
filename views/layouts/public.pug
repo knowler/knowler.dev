@@ -1,0 +1,40 @@
+extends base
+
+include /mixins/nav-link.pug
+
+append head
+	title #{title} – Nathan Knowler
+	if description
+		meta(name="description" content=description)
+	base(href=process.env.SITE_URL)
+	link(rel="canonical" href=canonical)
+	meta(name="webmention" content=new URL("/webmention", process.env.SITE_URL))
+	link(rel="stylesheet" href=asset("/main.css"))
+	link(rel="author" href="/about" title="About the author")
+	link(rel="alternate" href="/feed.xml" type="application/rss+xml" title="RSS")
+
+block body
+	a(href=`${new URL(canonical).pathname}#content`).skip-link.visually-hidden Skip to content
+	header
+		+nav-link(href="/") Nathan Knowler
+		nav(aria-label="primary")
+			ul(role="list")
+				li: +nav-link(href="/") Home
+				li: +nav-link(href="/about") About
+				li: +nav-link(href="/blog") Blog
+				li: a(rel="me" href="https://github.com/knowler")
+					span.visually-hidden @knowler on GitHub
+					include /icons/github.svg
+				li: a(rel="me" href="https://sunny.garden/@knowler")
+					span.visually-hidden @knowler@sunny.garden on Mastodon
+					include /icons/mastodon.svg
+	main#content
+		block content
+	footer
+		p &copy; 2023 Nathan Knowler. All rights reserved.
+		nav(aria-label="secondary")
+			ul(role="list")
+				li: +nav-link(href="/accessibility") Accessibility
+				li: +nav-link(href="/privacy") Privacy
+				li: +nav-link(href="/webmention") Webmention
+				li: a(href="/feed.xml") RSS
