@@ -1,0 +1,43 @@
+extends base
+
+include /_mixins/nav-link.pug
+
+append head
+	title #{title} – Nathan Knowler
+	if description
+		meta(name="description" content=description)
+	base(href=SITE_URL)
+	link(rel="canonical" href=canonical)
+	-//meta(name="webmention" content=new URL("/webmention", SITE_URL))
+	link(rel="stylesheet" href="/main.css")
+	-//link(rel="author" href="/about" title="About the author")
+	link(rel="alternate" href="/feed.xml" type="application/rss+xml" title="RSS")
+	script(type="module"): include under-construction-element.js
+
+block body
+	a(href=`${new URL(canonical).pathname}#content`).skip-link.visually-hidden Skip to content
+	aside
+		p I’m in the midst of rebuilding my website. #[small Sorry for the deadlinks.]
+	header
+		+nav-link(href="/") Nathan Knowler
+		nav(aria-label="primary")
+			ul(role="list")
+				li: +nav-link(href="/") Welcome
+				-//li: +nav-link(href="/about") About
+				-//li: +nav-link(href="/blog") Blog
+				li: a(rel="me" href="https://github.com/knowler")
+					span.visually-hidden @knowler on GitHub
+					include /_icons/github.svg
+				li: a(rel="me" href="https://sunny.garden/@knowler")
+					span.visually-hidden @knowler@sunny.garden on Mastodon
+					include /_icons/mastodon.svg
+	main#content
+		block content
+	footer
+		p &copy; 2023 Nathan Knowler. All rights reserved.
+		nav(aria-label="secondary")
+			ul(role="list")
+				-//li: +nav-link(href="/accessibility") Accessibility
+				-//li: +nav-link(href="/privacy") Privacy
+				-//li: +nav-link(href="/webmention") Webmention
+				li: a(href="/feed.xml") RSS

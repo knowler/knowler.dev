@@ -16,9 +16,35 @@ body {
 	margin: 0;
 	padding: 1rem;
 	grid-template:
+		"message" min-content
 		"header" max-content
 		"main" auto
 		"footer" max-content;
+}
+
+body > aside {
+	grid-area: message;
+	background-color: hsl(0deg 0% 20% / 0.2);
+	margin-block-start: -1rem;
+	margin-inline: -1rem;
+	margin-block-end: 1rem;
+	padding: 1rem;
+	display: flex;
+	column-gap: 0.5em;
+}
+
+aside > button {
+	font: inherit;
+	line-height: inherit;
+	background: none;
+	padding: 0;
+	border: 0;
+	text-decoration: underline;
+	text-underline-offset: 0.15em;
+}
+
+aside > p:only-of-type {
+	margin-block: 0;
 }
 
 header {

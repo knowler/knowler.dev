@@ -1,0 +1,13 @@
+extends /_layouts/public
+
+include /_mixins/h-entry
+include /_mixins/text-field
+
+block content
+	+h-entry("Webmention")
+		p If the platform you are using doesn’t already support Webmentions, then you can use this form to manually send one for content you link to on my website.
+		form(method="post")
+			+text-field(name="source" description="The URL for your content") Source URL
+			+text-field(name="target" description="The URL for my content") Target URL
+			input(name="robotName" style={display: 'none !important'})
+			button Send Webmention
