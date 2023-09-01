@@ -237,5 +237,28 @@
     "https://deno.land/x/case@2.1.1/vendor/nonWordRegexp.ts": "c1a052629a694144b48c66b0175a22a83f4d61cb40f4e45293fc5d6b123f927e",
     "https://deno.land/x/pug@v0.1.6/mod.ts": "9df7616eb45d868cce773386a74737224355b3ada8f94cf6d362f2bff152ca65",
     "https://esm.sh/v128/pug@3.0.2/deno/pug.bundle.mjs": "321ae6e9704b02ddbd015fe8b60fc2893800353135e05f978581803f06886b3a"
+  },
+  "npm": {
+    "specifiers": {
+      "feed": "feed@4.2.2"
+    },
+    "packages": {
+      "feed@4.2.2": {
+        "integrity": "sha512-u5/sxGfiMfZNtJ3OvQpXcvotFpYkL0n9u9mM2vkui2nGo8b4wvDkJ8gAkYqbA8QpGyFCv3RK0Z+Iv+9veCS9bQ==",
+        "dependencies": {
+          "xml-js": "xml-js@1.6.11"
+        }
+      },
+      "sax@1.2.4": {
+        "integrity": "sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==",
+        "dependencies": {}
+      },
+      "xml-js@1.6.11": {
+        "integrity": "sha512-7rVi2KMfwfWFl+GpPg6m80IVMWXLRjO+PxTq7V2CDhoGak0wzYzFgUY2m4XJ47OGdXd8eLE8EmwfAmdjw7lC1g==",
+        "dependencies": {
+          "sax": "sax@1.2.4"
+        }
+      }
+    }
   }
 }

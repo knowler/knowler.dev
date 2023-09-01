@@ -8,6 +8,7 @@ import * as blogIndexRoute from "~/routes/blog.index.js";
 import * as blogPostRoute from "~/routes/blog.[slug].js";
 import * as webmentionRoute from "~/routes/webmention.js";
 import * as pageRoute from "~/routes/[page].js";
+import * as feedRoute from "~/routes/feed.xml.js";
 
 const SITE_URL = Deno.env.get("SITE_URL");
 const assetPattern = new URLPattern({ pathname: "/:filename+.:extension" });
@@ -18,12 +19,13 @@ const publicRoutes = [
 	blogIndexRoute,
 	blogPostRoute,
 	webmentionRoute,
+	feedRoute,
 	pageRoute,
 ];
 
 async function handle(request) {
   const url = new URL(request.url);
-  const assetMatch = assetPattern.exec({ pathname: url.pathname });
+	const assetMatch = url.pathname !== "/feed.xml" && assetPattern.exec({ pathname: url.pathname });
 
   console.log(request.method, url.pathname, {asset: Boolean(assetMatch)});
 
@@ -88,14 +90,14 @@ async function matchRequestToRoutes(request, routes) {
 			// TODO: idk what this first condition is anymore. Maybe remove it?
       if ('module' in route) {
         const module = await route.module();
-        response = await module[request.method]({request, params: matched.pathname?.groups, view})
+        response = await module[request.method]({request, params: matched.pathname?.groups, view});
       } else {
 				let methodHandler = route[request.method];
 				// Fallback to GET if POST method not found
 				// TODO: Does it make sense to error out with a 405 instead?
 				if (!methodHandler && request.method === "POST") methodHandler = route.GET;
 				if (!methodHandler) throw `Missing method handler for: ${request.method} ${url.pathname}`;
-        response = await methodHandler({request, params: matched.pathname?.groups, view})
+        response = await methodHandler({request, params: matched.pathname?.groups, view});
       }
       return response
     }
