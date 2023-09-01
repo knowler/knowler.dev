@@ -2,6 +2,10 @@
 	box-sizing: border-box;
 }
 
+:root {
+	--color-accent: hsl(160 80% 20%);
+}
+
 @media (prefers-color-scheme: dark) {
 	:root {
 		--color-accent: hsl(160 54% 70%);
@@ -99,7 +103,7 @@ footer {
 }
 
 a {
-	color: var(--accent-color)
+	color: var(--color-accent);
 }
 
 h1 {
