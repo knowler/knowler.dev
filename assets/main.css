@@ -2,8 +2,14 @@
 	box-sizing: border-box;
 }
 
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-accent: hsl(160 54% 70%);
+	}
+}
+
 :focus-visible {
-	outline: 0.125em dashed hsl(160 54% 70%);
+	outline: 0.125em dashed var(--color-accent, currentColor);
 	outline-offset: 0.125em;
 	border-radius: 0.25em;
 }
@@ -92,10 +98,8 @@ footer {
 	clip: unset;
 }
 
-@media (prefers-color-scheme: dark) {
-	a {
-		color: hsl(160 54% 70%);
-	}
+a {
+	color: var(--accent-color)
 }
 
 h1 {
