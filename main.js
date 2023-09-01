@@ -4,7 +4,10 @@ import kebabCase from "case/paramCase";
 import { getSession } from "~/sessions.js";
 
 import * as indexRoute from "~/routes/index.js";
+import * as blogIndexRoute from "~/routes/blog.index.js";
+import * as blogPostRoute from "~/routes/blog.[slug].js";
 import * as webmentionRoute from "~/routes/webmention.js";
+import * as pageRoute from "~/routes/[page].js";
 
 const SITE_URL = Deno.env.get("SITE_URL");
 const assetPattern = new URLPattern({ pathname: "/:filename+.:extension" });
@@ -12,14 +15,17 @@ const sudoRoutePattern = new URLPattern({ pathname: "/sudo/:etc+" });
 
 const publicRoutes = [
 	indexRoute,
+	blogIndexRoute,
+	blogPostRoute,
 	webmentionRoute,
+	pageRoute,
 ];
 
 async function handle(request) {
   const url = new URL(request.url);
   const assetMatch = assetPattern.exec({ pathname: url.pathname });
 
-  console.log(url.pathname, Boolean(assetMatch));
+  console.log(request.method, url.pathname, {asset: Boolean(assetMatch)});
 
   let response;
 
@@ -79,11 +85,17 @@ async function matchRequestToRoutes(request, routes) {
     let response;
     if (matched) {
       const view = createView(request);
+			// TODO: idk what this first condition is anymore. Maybe remove it?
       if ('module' in route) {
         const module = await route.module();
         response = await module[request.method]({request, params: matched.pathname?.groups, view})
       } else {
-        response = await route[request.method]({request, params: matched.pathname?.groups, view})
+				let methodHandler = route[request.method];
+				// Fallback to GET if POST method not found
+				// TODO: Does it make sense to error out with a 405 instead?
+				if (!methodHandler && request.method === "POST") methodHandler = route.GET;
+				if (!methodHandler) throw `Missing method handler for: ${request.method} ${url.pathname}`;
+        response = await methodHandler({request, params: matched.pathname?.groups, view})
       }
       return response
     }
@@ -102,7 +114,7 @@ function createView(request) {
     return new Response(
       renderFile(`./routes/${template}.pug`, {
 				basedir: './routes',
-				canonical: request.url, // TODO: normalize
+				canonical: request.url, // TODO: normalize (i.e. trim trailing slash)
 				SITE_URL,
         isCurrentPath(path) {
           const normalizedPath = path.endsWith('/') ? path : `${path}/`;

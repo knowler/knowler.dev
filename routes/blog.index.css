@@ -1,0 +1,15 @@
+.h-entry ol {
+	list-style: none;
+	padding-inline-start: 0;
+}
+
+.h-entry ol h2 {
+	margin-block-end: 0;
+}
+.h-entry ol p {
+	margin-block-start: 0;
+	margin-block-end: 0;
+}
+.h-entry ol time {
+	font-style: italic;
+}

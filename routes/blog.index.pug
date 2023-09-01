@@ -1,0 +1,25 @@
+extends /_layouts/public
+
+include /_mixins/h-entry
+
+append head
+	style: include blog.index.css
+
+block content
+	+h-entry("Blog")
+		p This is my blog.
+		unless posts.length > 0
+			p There are no posts.
+		else 
+			ol(reversed role="list")
+				each post in posts
+					li: article
+						mixin blog-post-title
+							h2: a(href=`/blog/${post.slug}`)= post.title
+						if post.subtitle
+							hgroup: +blog-post-title
+						else
+							+blog-post-title
+						if post.description
+							p= post.description
+						time(datetime=post.publishedAt) #{new Date(post.publishedAt).toDateString()}

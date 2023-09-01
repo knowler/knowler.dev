@@ -1,0 +1,139 @@
+<p>HTML is awesome; it includes so much out-of-the-box. For example,
+<code>&#x3C;form></code> will validate its controls upon submission and report if there
+are any validation errors. You can use attributes like <code>required</code>,
+<code>maxlength</code>, <code>pattern</code>, etc. to set the validation for different fields.
+While these can get you pretty far, sometimes you might want to provide
+some more complex validation. Often, this is where developers plop
+<code>novalidate</code> on the <code>&#x3C;form></code> element and then use full replacement for
+the browser’s built-in validation. Instead of replacing it, you can use
+the Web platform’s Constraint Validation API to extend the built-in
+functionality.</p>
+<h2 id="using-the-constraint-validation-api">Using the Constraint Validation API</h2>
+<p>The <a href="https://developer.mozilla.org/en-US/docs/Web/API/Constraint_validation">Constraint Validation
+API</a>
+allows one to add custom complex validation in their forms (among other
+things not described in this post).</p>
+<p>Here’s an example: there are two text inputs that you want to be unique
+from each other. We’ll wrap them in a custom element, since they are
+great for bundling up this sort of functionality.</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">form</span>></span>
+	<span class="hljs-tag">&#x3C;<span class="hljs-name">unique-values</span>></span>
+		<span class="hljs-tag">&#x3C;<span class="hljs-name">fieldset</span>></span>
+			<span class="hljs-tag">&#x3C;<span class="hljs-name">legend</span>></span>Unique values<span class="hljs-tag">&#x3C;/<span class="hljs-name">legend</span>></span>
+			<span class="hljs-tag">&#x3C;<span class="hljs-name">label</span>></span>A <span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"a"</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
+			<span class="hljs-tag">&#x3C;<span class="hljs-name">label</span>></span>B <span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"b"</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
+		<span class="hljs-tag">&#x3C;/<span class="hljs-name">fieldset</span>></span>
+	<span class="hljs-tag">&#x3C;/<span class="hljs-name">unique-values</span>></span>
+	<span class="hljs-tag">&#x3C;<span class="hljs-name">button</span>></span>Submit<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">form</span>></span>
+</code></pre>
+<p>Now, let’s scaffold the custom element and listen for the <code>input</code> event
+on the <code>&#x3C;fieldset></code>:</p>
+<pre><code class="hljs language-javascript"><span class="hljs-keyword">class</span> <span class="hljs-title class_">UniqueValues</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">HTMLElement</span> {
+  <span class="hljs-keyword">get</span> <span class="hljs-title function_">fieldset</span>() { <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">':scope > fieldset'</span>); }
+
+  <span class="hljs-title function_">connectedCallback</span>(<span class="hljs-params"></span>) {
+		<span class="hljs-variable language_">this</span>.<span class="hljs-property">fieldset</span>.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">'input'</span>, <span class="hljs-function"><span class="hljs-params">event</span> =></span> {
+			<span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> set and report the validity.</span>
+		});
+  }
+}
+
+<span class="hljs-variable language_">window</span>.<span class="hljs-property">customElements</span>.<span class="hljs-title function_">define</span>(<span class="hljs-string">'unique-values'</span>, <span class="hljs-title class_">UniqueValues</span>);
+</code></pre>
+<p>The Constraint Validation API provides a few methods for setting,
+checking, and reporting validity. We’ll use
+<code>.setCustomValidity(message)</code> and <code>.reportValidity()</code>. The first allows
+us to set a custom error message. The second is what spawns the tooltip
+on a form control.</p>
+<p>We’ll use the <code>input</code> event as our validation logic isn’t very costly
+performance-wise. This also follows how HTML seems to work. If you want
+to see for yourself, use CSS to style the <code>:invalid</code> state of a form
+control with one the basic HTML validation constraints (e.g. <code>required</code>,
+<code>minlength</code>, <code>pattern</code>). The validity is checked as the input changes.</p>
+<p>In the <code>input</code> event handler for <code>&#x3C;fieldset></code>, we can compare the values
+of both nested controls, then set and report the validity accordingly.</p>
+<pre><code class="hljs language-javascript"><span class="hljs-variable language_">this</span>.<span class="hljs-property">fieldset</span>.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">'input'</span>, <span class="hljs-function"><span class="hljs-params">event</span> =></span> {
+	<span class="hljs-keyword">const</span> {a, b} = event.<span class="hljs-property">currentTarget</span>.<span class="hljs-property">elements</span>;
+
+	<span class="hljs-keyword">if</span> (a.<span class="hljs-property">value</span> === b.<span class="hljs-property">value</span>) {
+		<span class="hljs-comment">// If the values are the same, set the error, and report it on</span>
+		<span class="hljs-comment">// the current form control.</span>
+		a.<span class="hljs-title function_">setCustomValidity</span>(<span class="hljs-string">'A and B must be unique.'</span>);
+		b.<span class="hljs-title function_">setCustomValidity</span>(<span class="hljs-string">'A and B must be unique.'</span>);
+		event.<span class="hljs-property">target</span>.<span class="hljs-title function_">reportValidity</span>();
+	} <span class="hljs-keyword">else</span> {
+		<span class="hljs-comment">// If the values aren’t the same, clear the error on each</span>
+		<span class="hljs-comment">// control.</span>
+		a.<span class="hljs-title function_">setCustomValidity</span>(<span class="hljs-string">''</span>);
+		b.<span class="hljs-title function_">setCustomValidity</span>(<span class="hljs-string">''</span>);
+	}
+});
+</code></pre>
+<p>Now, if you pay close attention to how HTML’s built-in validation works,
+you’ll notice that the tooltip doesn’t show until a submission attempt
+is made. I’m not presenting any hard opinion about whether or not you
+should do the same. That’s a decision that’s best determined by research
+and context, but that’s outside of the scope of this blog post.</p>
+<p>You’ll also notice that HTML’s validation also takes place when the
+elements are first added to a page. We can move the event listener
+callback into a method.</p>
+<pre><code class="hljs language-javascript"><span class="hljs-title function_">connectedCallback</span>(<span class="hljs-params"></span>) {
+	<span class="hljs-variable language_">this</span>.<span class="hljs-title function_">validate</span>();
+	<span class="hljs-variable language_">this</span>.<span class="hljs-property">fieldset</span>.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">'input'</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">validate</span>.<span class="hljs-title function_">bind</span>(<span class="hljs-variable language_">this</span>));
+}
+
+<span class="hljs-title function_">validate</span>(<span class="hljs-params">event</span>) {
+	<span class="hljs-keyword">const</span> {a, b} = <span class="hljs-variable language_">this</span>.<span class="hljs-property">fieldset</span>.<span class="hljs-property">elements</span>; <span class="hljs-comment">// Might as well use fieldset</span>
+
+	<span class="hljs-keyword">if</span> (a.<span class="hljs-property">value</span> === b.<span class="hljs-property">value</span>) {
+		a.<span class="hljs-title function_">setCustomValidity</span>(<span class="hljs-string">'A and B must be unique.'</span>);
+		b.<span class="hljs-title function_">setCustomValidity</span>(<span class="hljs-string">'A and B must be unique.'</span>);
+		<span class="hljs-comment">// We’ll optionally chain the report call as the event won’t be</span>
+		<span class="hljs-comment">// there on page load and it shouldn’t report immediately anyway.</span>
+		event?.<span class="hljs-property">target</span>.<span class="hljs-title function_">reportValidity</span>();
+	} <span class="hljs-keyword">else</span> {
+		a.<span class="hljs-title function_">setCustomValidity</span>(<span class="hljs-string">''</span>);
+		b.<span class="hljs-title function_">setCustomValidity</span>(<span class="hljs-string">''</span>);
+	}
+}
+</code></pre>
+<p>Now, here is the code altogether. Remember, this is just a demo. This
+code is not as robust as it could be (e.g. there are checks I’ve
+left out, missing teardown, and it’s not very reusable).</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">form</span>></span>
+	<span class="hljs-tag">&#x3C;<span class="hljs-name">unique-values</span>></span>
+		<span class="hljs-tag">&#x3C;<span class="hljs-name">fieldset</span>></span>
+			<span class="hljs-tag">&#x3C;<span class="hljs-name">legend</span>></span>Unique values<span class="hljs-tag">&#x3C;/<span class="hljs-name">legend</span>></span>
+			<span class="hljs-tag">&#x3C;<span class="hljs-name">label</span>></span>A <span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"a"</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
+			<span class="hljs-tag">&#x3C;<span class="hljs-name">label</span>></span>B <span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"b"</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
+		<span class="hljs-tag">&#x3C;/<span class="hljs-name">fieldset</span>></span>
+	<span class="hljs-tag">&#x3C;/<span class="hljs-name">unique-values</span>></span>
+	<span class="hljs-tag">&#x3C;<span class="hljs-name">button</span>></span>Submit<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">form</span>></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">script</span>></span><span class="javascript">
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">UniqueValues</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">HTMLElement</span> {
+  <span class="hljs-keyword">get</span> <span class="hljs-title function_">fieldset</span>() { <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">':scope > fieldset'</span>); }
+
+	<span class="hljs-title function_">connectedCallback</span>(<span class="hljs-params"></span>) {
+		<span class="hljs-variable language_">this</span>.<span class="hljs-title function_">validate</span>();
+		<span class="hljs-variable language_">this</span>.<span class="hljs-property">fieldset</span>.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">'input'</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">validate</span>.<span class="hljs-title function_">bind</span>(<span class="hljs-variable language_">this</span>));
+	}
+
+	<span class="hljs-title function_">validate</span>(<span class="hljs-params">event</span>) {
+		<span class="hljs-keyword">const</span> {a, b} = <span class="hljs-variable language_">this</span>.<span class="hljs-property">fieldset</span>.<span class="hljs-property">elements</span>;
+
+		<span class="hljs-keyword">if</span> (a.<span class="hljs-property">value</span> === b.<span class="hljs-property">value</span>) {
+			a.<span class="hljs-title function_">setCustomValidity</span>(<span class="hljs-string">'A and B must be unique.'</span>);
+			b.<span class="hljs-title function_">setCustomValidity</span>(<span class="hljs-string">'A and B must be unique.'</span>);
+			event?.<span class="hljs-property">target</span>.<span class="hljs-title function_">reportValidity</span>();
+		} <span class="hljs-keyword">else</span> {
+			a.<span class="hljs-title function_">setCustomValidity</span>(<span class="hljs-string">''</span>);
+			b.<span class="hljs-title function_">setCustomValidity</span>(<span class="hljs-string">''</span>);
+		}
+	}
+}
+
+<span class="hljs-variable language_">window</span>.<span class="hljs-property">customElements</span>.<span class="hljs-title function_">define</span>(<span class="hljs-string">'unique-values'</span>, <span class="hljs-title class_">UniqueValues</span>);
+</span><span class="hljs-tag">&#x3C;/<span class="hljs-name">script</span>></span>
+</code></pre>

@@ -1,0 +1,50 @@
+<p>When managing event listeners in custom elements, there tends to be a
+bit of boilerplate that needs to be done for <em>every</em> event listener:</p>
+<ul>
+<li>Storing the bound event listener as a property of the class inevitably
+in the constructor (so remember to call <code>super()</code>);</li>
+<li>Adding the event listener;</li>
+<li>Removing the event listener.</li>
+</ul>
+<p>It might not seem like a lot, but your custom element’s class can easily
+get a bit bloated.</p>
+<p>A little known and newer feature of <a href="http://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener"><code>EventTarget.addEventListener()</code></a>
+is the <code>signal</code> property in the options object which it takes as a third
+paramter. It expects an <a href="http://developer.mozilla.org/en-US/docs/Web/API/AbortSignal"><code>AbortSignal</code></a> which it will use to remove
+the event listener. You can get and call an <code>AbortSignal</code> with an
+<a href="http://developer.mozilla.org/en-US/docs/Web/API/AbortController"><code>AbortController</code></a>. I store this on a base class which extends
+<code>HTMLElement</code>, create an easy accessor for the <code>AbortSignal</code>, and then
+call <a href="http://developer.mozilla.org/en-US/docs/Web/API/AbortController/abort"><code>AbortController.abort()</code></a> in <code>disconnectedCallback()</code>:</p>
+<pre><code class="hljs language-javascript"><span class="hljs-keyword">class</span> <span class="hljs-title class_">BaseElement</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">HTMLElement</span> {
+	#disconnectionController = <span class="hljs-keyword">new</span> <span class="hljs-title class_">AbortController</span>();
+
+	disconnectSignal = <span class="hljs-variable language_">this</span>.#disconnectionController.<span class="hljs-property">signal</span>;
+
+	<span class="hljs-title function_">disconnectedCallback</span>(<span class="hljs-params"></span>) {
+		<span class="hljs-variable language_">this</span>.#disconnectionController.<span class="hljs-title function_">abort</span>(<span class="hljs-string">"element disconnected"</span>);
+	}
+}
+</code></pre>
+<p>My custom elements can just extend the base element class and use the
+<code>AbortSignal</code> when adding event listeners:</p>
+<pre><code class="hljs language-javascript"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyButton</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">BaseElement</span> {
+	<span class="hljs-keyword">get</span> <span class="hljs-title function_">button</span>() {
+		<span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">':scope > button'</span>);
+	}
+
+	<span class="hljs-title function_">connectedCallback</span>(<span class="hljs-params"></span>) {
+		<span class="hljs-variable language_">this</span>.<span class="hljs-property">button</span>.<span class="hljs-title function_">addEventListener</span>(
+			<span class="hljs-string">'click'</span>,
+			<span class="hljs-variable language_">this</span>.#onClick.<span class="hljs-title function_">bind</span>(<span class="hljs-variable language_">this</span>),
+			{ <span class="hljs-attr">signal</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-property">disconnectSignal</span> },
+		);
+	}
+
+	#<span class="hljs-title function_">onClick</span>(<span class="hljs-params">event</span>) { <span class="hljs-comment">/* Handle event */</span> }
+}
+</code></pre>
+<p>Since you don’t need to remove the event listener manually, you can even
+use a closure instead of creating a class method. It’s up to you.</p>
+<h2 id="browser-support">Browser Support</h2>
+<p>If you don’t need to support Safari prior to 15 on macOS and iOS then
+you are good to go. <a href="https://caniuse.com/mdn-api_eventtarget_addeventlistener_options_parameter_options_signal_parameter">Take a look at the support table</a>.</p>

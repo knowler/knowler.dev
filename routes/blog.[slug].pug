@@ -1,0 +1,9 @@
+extends /_layouts/public
+
+include /_mixins/h
+
+block content
+	article.h-entry
+		+h1(title).p-name
+		p #[time(datetime=post.publishedAt) #{new Date(post.publishedAt).toDateString()}] – #[a(href=canonical) Permalink]
+		.e-content !{post.html}

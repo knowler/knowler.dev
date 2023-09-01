@@ -1,0 +1,93 @@
+<p>Large projects and mono repos can be a pain to navigate. <strong>gg</strong>
+is a small script I use almost everyday to make it easier.</p>
+<p>If you’ve ever worked with WordPress — or really most CMSes for
+that matter — the base application configuration, themes,
+plugins, etc. are typically given their own sub directories to
+help isolate them. For WordPress development, I use the
+<a href="https://roots.io">Roots</a> stack and it does a great job of
+making the project structure relavant, however, since it is
+still WordPress, the project structure is not exactly flat.
+Often I’ll need to jump to Trellis’ directory to start the
+development VM, run a deploy, or update an environment’s
+configuration, but shortly after jump back to the directory of
+the theme or plugin I’m working on. Remembering the level of
+depth and simply writing out the path can be a tedious and
+erroneous task.</p>
+<h2 id="a-simple-solution">A simple solution</h2>
+<p><strong>gg</strong> is a very simple Bash script I wrote to make is 100%
+easier to jump between directories in a large project. Here’s a
+short clip of it in action with a Roots project:</p>
+<p>{{ youtube(id="w0SjUNTfzKk", class="youtube") }}</p>
+<h2 id="breaking-down-the-script">Breaking down the script</h2>
+<p>There are a few requirements you will need before you get started:</p>
+<p><strong>Requirements</strong>: <code>git</code>, <a href="https://github.com/junegunn/fzf"><code>fzf</code></a>, <a href="https://github.com/sharkdp/fd"><code>fd</code></a>, <a href="https://github.com/ggreer/the_silver_searcher"><code>ag</code></a></p>
+<p>You most likely should be able to achieve the same thing with
+built-in tools or alternatives to <code>fd</code> and <code>ag</code> (maybe even
+<code>fzf</code>), but for this tutorial, I’ll use the tools listed above.
+One note before diving into the script, I do have the following
+set for my FZF default command:</p>
+<pre><code class="hljs language-bash"><span class="hljs-built_in">export</span> FZF_DEFAULT_COMMAND=<span class="hljs-string">'ag -g ""'</span>
+</code></pre>
+<p>The script itself is pretty simple. There are two parts to it.
+First, if we want to see all of the directories within our
+project, even if we are already in a nested directory, we will
+need to jump to the root of the Git repo. Luckily, it is
+relatively easy to do this with Git. Using Git’s <code>rev-parse</code>
+subcommand with the <code>--show-toplevel</code> flag, we can get “the
+absolute path of the top-level-directory.” Since this is useful
+in itself, but still a tad cumbersome to remember and write out,
+we’ll create a function for it:</p>
+<pre><code class="hljs language-bash"><span class="hljs-function"><span class="hljs-title">gr</span></span>() {
+  <span class="hljs-built_in">cd</span> `git rev-parse --show-toplevel`
+}
+</code></pre>
+<p>If you already have a set of Git-aliases, you might find naming
+conflicts with the ones I will create in this tutorial and in
+that case, or in the case you don’t like the names I’ve picked,
+you will need to use a different name.</p>
+<p>The next step is to create an easy way to find a sub-directory.
+If you’ve ever used a fuzzy-search tool, you’ll know that that
+they are pretty great. Knowing the fuzzy-search capabilities of
+<code>fzf</code>, I know I can do something like <code>cd $(fzf)</code> to almost
+achieve what we’re looking for, however, that finds directories
+and files, the latter of which we do not need. Luckily, we can
+use a finder tool with <code>fzf</code> to get what we need. I’ll use <code>fd</code>
+to achieve this:</p>
+<pre><code class="hljs language-bash"><span class="hljs-function"><span class="hljs-title">gd</span></span>() {
+  <span class="hljs-built_in">cd</span> `
+    fd --<span class="hljs-built_in">type</span> d --hidden --follow --exclude .git \
+    | fzf --preview <span class="hljs-string">"ls -Ap {}"</span>
+  `
+}
+</code></pre>
+<p>We are telling <code>fd</code> to just find directories, follow symbolic
+links, allow hidden directories, but exclude the <code>.git</code>
+directory. Luckily, <code>fd</code> already respects <code>.gitignore</code> so we do
+not need to worry about dependencies or build files polluting
+our search selection. Also, we are making it fancy with a
+preview window of the selected directory’s contents.</p>
+<p>I prefer to leave these as separate functions in case I want to
+just jump to the Git repo root or jump to a sub-directoy within
+the current directory. For the final <code>gg</code> command, we can just
+use an alias:</p>
+<pre><code class="hljs language-bash"><span class="hljs-built_in">alias</span> gg=<span class="hljs-string">"gr &#x26;&#x26; gd"</span>
+</code></pre>
+<p>And that’s it. Here’s the full and final script:</p>
+<pre><code class="hljs language-bash"><span class="hljs-meta">#!/usr/bin/env bash</span>
+
+<span class="hljs-comment"># Go to Git root</span>
+<span class="hljs-function"><span class="hljs-title">gr</span></span>() {
+  <span class="hljs-built_in">cd</span> `git rev-parse --show-toplevel`
+}
+
+<span class="hljs-comment"># Go to sub-directory</span>
+<span class="hljs-function"><span class="hljs-title">gd</span></span>() {
+  <span class="hljs-built_in">cd</span> `
+    fd --<span class="hljs-built_in">type</span> d --hidden --follow --exclude .git \
+    | fzf --preview <span class="hljs-string">"ls -Ap {}"</span>
+  `
+}
+
+<span class="hljs-comment"># Go to a directory within the current Git repository</span>
+<span class="hljs-built_in">alias</span> gg=<span class="hljs-string">"gr &#x26;&#x26; gd"</span>
+</code></pre>
