@@ -1,4 +1,4 @@
-import { Feed } from "npm:feed";
+import { Feed } from "feed";
 import { posts } from "~/models/posts.js";
 
 const me = {

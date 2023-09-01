@@ -236,7 +236,11 @@
     "https://deno.land/x/case@2.1.1/vendor/camelCaseUpperRegexp.ts": "292de54a698370f90adcdf95727993d09888b7f33d17f72f8e54ba75f7791787",
     "https://deno.land/x/case@2.1.1/vendor/nonWordRegexp.ts": "c1a052629a694144b48c66b0175a22a83f4d61cb40f4e45293fc5d6b123f927e",
     "https://deno.land/x/pug@v0.1.6/mod.ts": "9df7616eb45d868cce773386a74737224355b3ada8f94cf6d362f2bff152ca65",
-    "https://esm.sh/v128/pug@3.0.2/deno/pug.bundle.mjs": "321ae6e9704b02ddbd015fe8b60fc2893800353135e05f978581803f06886b3a"
+    "https://esm.sh/feed@4.2.2": "3dd30815b6f73a674fe3a994803496b01163448bd297b084fd2eb2af1289bbca",
+    "https://esm.sh/v128/pug@3.0.2/deno/pug.bundle.mjs": "321ae6e9704b02ddbd015fe8b60fc2893800353135e05f978581803f06886b3a",
+    "https://esm.sh/v131/feed@4.2.2/denonext/feed.mjs": "d78e6bb2c239b4a9d5b61fd17550df495bfcced5b7bea90a24d5c4d1941e142e",
+    "https://esm.sh/v131/sax@1.2.4/denonext/sax.mjs": "c709f5e231d178e08230a3e35ea55a1d4ccccefa69e47a7cb7da37adb5b342dd",
+    "https://esm.sh/v131/xml-js@1.6.11/denonext/xml-js.mjs": "30e2f7a7b587ecfa2a49ed6af931a67cbc7d0733c6f34de49dbfaa3a0a746100"
   },
   "npm": {
     "specifiers": {
