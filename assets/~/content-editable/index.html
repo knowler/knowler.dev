@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Content Editable Playground</title>
+		<link rel="stylesheet" href="main.css">
+		<script type="module" src="main.js"></script>
+	</head>
+	<body>
+		<form method="POST">
+			<label for="content">Content</label>
+			<kno-toolbar slot="toolbar">
+				<button type="button" name="bold">Bold</button>
+				<button type="button" name="italic">Italic</button>
+				<button type="button" name="heading1">Heading 1</button>
+				<button type="button" name="heading2">Heading 2</button>
+				<button type="button" name="heading3">Heading 3</button>
+				<button type="button" name="heading4">Heading 4</button>
+				<button type="button" name="heading5">Heading 5</button>
+			</kno-toolbar>
+			<kno-editor id="content" name="content">
+				<p>Hello, World!</p>
+			</kno-editor>
+
+			<!--
+			<label for="reference-textarea">Reference Textarea</label>
+			<textarea id="reference-textarea" name="reference-textarea"></textarea>
+			-->
+		</form>
+	</body>
+</html>
