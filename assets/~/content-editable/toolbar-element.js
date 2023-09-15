@@ -3,7 +3,7 @@ export class ToolbarElement extends HTMLElement {
 
 	connectedCallback() {
 		if (!this.shadowRoot) {
-			this.attachShadow({mode: 'open'});
+			this.attachShadow({ mode: "open" });
 			this.#internals = this.attachInternals();
 			this.shadowRoot.innerHTML = `
 				<style>
@@ -20,15 +20,15 @@ export class ToolbarElement extends HTMLElement {
 		}
 
 		this.tabIndex = 0;
-		this.#internals.role = 'toolbar';
-		this.#internals.ariaOrientation = 'horizontal';
+		this.#internals.role = "toolbar";
+		this.#internals.ariaOrientation = "horizontal";
 
-		this.addEventListener('focus', event => {
-			console.log('element focused', event.target);
+		this.addEventListener("focus", (event) => {
+			console.log("element focused", event.target);
 		});
 	}
 
-	static define(prefix = 'kno') {
+	static define(prefix = "kno") {
 		const toolbarTagName = `${prefix}-toolbar`;
 
 		if (!window.customElements.get(toolbarTagName)) {

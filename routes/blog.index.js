@@ -1,6 +1,6 @@
 import { posts } from "~/models/posts.js";
 
-export async function GET({view}) {
+export async function GET({ view }) {
 	return view(
 		"blog.index",
 		{
@@ -10,4 +10,4 @@ export async function GET({view}) {
 	);
 }
 
-export const pattern = new URLPattern({pathname: "/blog{/}?"});
+export const pattern = new URLPattern({ pathname: "/blog{/}?" });

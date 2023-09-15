@@ -1,4 +1,4 @@
-export function GET({view}) {
+export function GET({ view }) {
 	return view(
 		"webmention",
 		{
@@ -9,4 +9,7 @@ export function GET({view}) {
 	);
 }
 
-export const pattern = new URLPattern({pathname: "/webmention"});
+export async function POST({ request }) {
+}
+
+export const pattern = new URLPattern({ pathname: "/webmention" });

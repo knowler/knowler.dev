@@ -2,6 +2,7 @@ extends /_layouts/public
 
 include /_mixins/h-entry
 include /_mixins/text-field
+include /_mixins/honey-pot
 
 block content
 	+h-entry("Webmention")
@@ -9,5 +10,5 @@ block content
 		form(method="post")
 			+text-field(name="source" description="The URL for your content") Source URL
 			+text-field(name="target" description="The URL for my content") Target URL
-			input(name="robotName" style={display: 'none !important'})
+			+honey-pot
 			button Send Webmention

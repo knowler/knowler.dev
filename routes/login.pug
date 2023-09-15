@@ -1,0 +1,17 @@
+extends /_layouts/base
+
+include /_mixins/text-field
+include /_mixins/honey-pot
+
+append head
+	title #{title} – Nathan Knowler
+	style: include login.css
+
+block body
+	main
+		h1 Sign In
+		form(method="POST")
+			+text-field(name="username") Username
+			+text-field(name="password" type="password") Password
+			+honey-pot
+			button Sign In

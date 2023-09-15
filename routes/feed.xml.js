@@ -2,19 +2,19 @@ import { Feed } from "feed";
 import { posts } from "~/models/posts.js";
 
 const me = {
-	name: 'Nathan Knowler',
-	link: 'https://knowler.dev',
+	name: "Nathan Knowler",
+	link: "https://knowler.dev",
 };
 
 export async function GET() {
 	const feed = new Feed({
-		title: 'Nathan Knowler',
-		description: 'Some words.',
-		id: 'https://knowler.dev/',
-		link: 'https://knowler.dev/',
-		language: 'en-CA',
-		copyright: 'All rights reservered 2022, Nathan Knowler',
-		generator: 'Deno',
+		title: "Nathan Knowler",
+		description: "Some words.",
+		id: "https://knowler.dev/",
+		link: "https://knowler.dev/",
+		language: "en-CA",
+		copyright: "All rights reservered 2022, Nathan Knowler",
+		generator: "Deno",
 		author: me,
 	});
 
@@ -33,8 +33,8 @@ export async function GET() {
 	return new Response(feed.rss2(), {
 		status: 200,
 		headers: {
-			'Content-Type': 'text/xml',
-			'Cache-Control': 'max-age=1800',
+			"Content-Type": "text/xml",
+			"Cache-Control": "max-age=1800",
 		},
 	});
 }

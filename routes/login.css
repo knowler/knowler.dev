@@ -1,0 +1,43 @@
+@layer default, component;
+
+@layer default {
+	:root {
+		color-scheme: dark;
+	}
+
+	html {
+		font-family: system-ui;
+		line-height: 1.5;
+	}
+}
+
+@layer component {
+	.form-field {
+		display: grid;
+		justify-items: start;
+		row-gap: 0.5rem;
+	}
+}
+
+form {
+	display: grid;
+	justify-items: start;
+	row-gap: 1rem;
+}
+
+label {
+	font-weight: 500;
+}
+
+input:is(:not([type]), [type="password"]) {
+	font: inherit;
+	padding-block: 0.5em;
+	padding-inline: 0.75em;
+	border-radius: 0.5em;
+	border: 0.125em solid CanvasText;
+}
+
+button {
+	font: inherit;
+	line-height: inherit;
+}

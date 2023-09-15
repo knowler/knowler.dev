@@ -1,24 +1,27 @@
 export class RestartAnimationsElement extends HTMLElement {
 	#controller;
 
-	get #buttonElement() { return this.shadowRoot.querySelector(':host > button'); }
+	get #buttonElement() {
+		return this.shadowRoot.querySelector(":host > button");
+	}
 
 	connectedCallback() {
 		if (!this.shadowRoot) {
-			this.attachShadow({mode: 'open'});
-			this.shadowRoot.innerHTML = '<button type="button"><slot>Restart Animations</slot></button>';
+			this.attachShadow({ mode: "open" });
+			this.shadowRoot.innerHTML =
+				'<button type="button"><slot>Restart Animations</slot></button>';
 			this.#controller = new AbortController();
 		}
 
 		this.#buttonElement?.addEventListener(
-			'click',
+			"click",
 			this.#restartAnimations.bind(this),
 			{ signal: this.#controller.signal },
 		);
 	}
 
 	disconnectedCallback() {
-		this.#controller.abort('element disconnected');
+		this.#controller.abort("element disconnected");
 	}
 
 	#restartAnimations() {
@@ -29,9 +32,12 @@ export class RestartAnimationsElement extends HTMLElement {
 	}
 
 	static define() {
-		if (!window.customElements.get('restart-animations')) {
+		if (!window.customElements.get("restart-animations")) {
 			window.RestartAnimationsElement = RestartAnimationsElement;
-			window.customElements.define('restart-animations', RestartAnimationsElement);
+			window.customElements.define(
+				"restart-animations",
+				RestartAnimationsElement,
+			);
 		}
 	}
 }

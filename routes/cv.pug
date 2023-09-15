@@ -1,0 +1,53 @@
+extends /_layouts/public
+
+append head
+	style: include cv.css
+
+block content
+	article(class="h-resume")
+		h1#curriculum-vitae Curriculum Vitae
+		p.p-summary A Senior Frontend Developer at Kettle, focused on building highly interactive user interfaces at that accessible and a joy to use.
+		aside
+			nav(aria-labelledby="curriculum-vitae")
+				ol
+					li: a(href="/cv#nathan-knowler") Nathan Knowler
+					li: a(href="/cv#professional-experience") Professional Experience
+					li: a(href="/cv#education") Education
+		section
+			h2.p-name#nathan-knowler Nathan Knowler
+			dl
+				dt Pronouns
+				dd He/him/his
+
+				dt Location
+				dd Winnipeg, Manitoba, Canada
+
+				dt Email
+				dd nathan@knowler.dev
+
+				dt GitHub
+				dd: a(href="https://github.com/knowler") knowler
+
+				dt LinkedIn
+				dd: a(href="https://linkedin.com/in/knowler") knowler
+		section
+			h2#professional-experience Professional Experience
+			ol(reversed)
+				each experience in professionalExperiences
+					li: article.p-experience.h-event
+						h3
+							| #[span.p-job-title= experience.position]
+							| at
+							| #[span.h-card #[a.p-org.u-url(href=experience.company.website rel="noreferrer")= experience.company.name]]
+						if experience.workingLocation
+							p 
+								span Remote from #[span.p-location= experience.workingLocation] to #{experience.company.location}
+						else
+							p.p-location= experience.company.location
+						p
+							| Started 
+							| #[time.dt-start(datetime=experience.startDate)= experience.startDate]
+							| and ended 
+							| #[time.dt-end(datetime=experience.endDate)= experience.endDate]
+						if experience.description
+							p.p-summary= experience.description

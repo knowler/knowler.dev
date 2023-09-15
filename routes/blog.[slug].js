@@ -1,10 +1,10 @@
 import { renderFile } from "pug";
 import { posts } from "~/models/posts.js";
 
-export async function GET({view, params}) {
-	const post = posts.find(({slug}) => slug === params.slug)
+export async function GET({ view, params }) {
+	const post = posts.find(({ slug }) => slug === params.slug);
 
-	if (!post) throw new Response("Not found", {status: 404});
+	if (!post) throw new Response("Not found", { status: 404 });
 
 	post.html = await Deno.readTextFile(`./routes/_blog/${post.slug}.html`);
 
@@ -18,4 +18,4 @@ export async function GET({view, params}) {
 	);
 }
 
-export const pattern = new URLPattern({pathname: "/blog/:slug{/}?"})
+export const pattern = new URLPattern({ pathname: "/blog/:slug{/}?" });

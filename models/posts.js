@@ -4,7 +4,8 @@ export const posts = [
 	{
 		"slug": "extending-html-form-validation",
 		"title": "Extending HTML Form Validation",
-		"description": "A quick and practical introduction for using the Constraint Validation API to extend HTML Form Validation.",
+		"description":
+			"A quick and practical introduction for using the Constraint Validation API to extend HTML Form Validation.",
 		"publishedAt": "2022-11-23T01:26:11.931Z",
 	},
 	{
@@ -51,10 +52,10 @@ export const posts = [
 		"slug": "hello-world",
 		"title": "Hello, World!",
 		"publishedAt": "2018-12-31T16:30:00.000Z",
-	}
+	},
 ];
 
-export async function GET({view}) {
+export async function GET({ view }) {
 	return view(
 		"blog.index",
 		{
@@ -64,4 +65,4 @@ export async function GET({view}) {
 	);
 }
 
-export const pattern = new URLPattern({pathname: "/blog{/}?"});
+export const pattern = new URLPattern({ pathname: "/blog{/}?" });

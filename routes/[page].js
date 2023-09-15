@@ -17,12 +17,16 @@ const pages = new Map([
 	}],
 ]);
 
-export async function GET({view, params}) {
+export async function GET({ view, params }) {
 	const page = pages.get(params.page);
 
-	if (!page || !page.published) throw new Response("Not found", {status: 404});
+	if (!page || !page.published) {
+		throw new Response("Not found", { status: 404 });
+	}
 
-	if (!page.html) page.html = await Deno.readTextFile(`./routes/_pages/${params.page}.html`);
+	if (!page.html) {
+		page.html = await Deno.readTextFile(`./routes/_pages/${params.page}.html`);
+	}
 
 	return view("[page]", {
 		title: page.title,
@@ -30,4 +34,4 @@ export async function GET({view, params}) {
 	});
 }
 
-export const pattern = new URLPattern({pathname: "/:page{/}?"})
+export const pattern = new URLPattern({ pathname: "/:page{/}?" });
