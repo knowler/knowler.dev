@@ -2,6 +2,11 @@
 
 export const posts = [
 	{
+		slug: "the-allure-of-complex-user-interface-challenges",
+		title: "The Allure of Complex User Interface Challenges",
+		"publishedAt": "2023-09-21T16:55:00.000Z",
+	},
+	{
 		"slug": "extending-html-form-validation",
 		"title": "Extending HTML Form Validation",
 		"description":
