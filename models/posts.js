@@ -2,6 +2,11 @@
 
 export const posts = [
 	{
+		slug: "a-brief-anecdote-and-a-snippet-from-my-tailwind-labs-application",
+		title: "A Brief Anecdote & a Snippet From My Tailwind Labs Application",
+		publishedAt: "2023-09-21T21:00:00.000Z",
+	},
+	{
 		slug: "the-allure-of-complex-user-interface-challenges",
 		title: "The Allure of Complex User Interface Challenges",
 		"publishedAt": "2023-09-21T16:55:00.000Z",
