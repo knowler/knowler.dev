@@ -23,5 +23,5 @@ export function pugRenderer() {
 		);
 
 		await next();
-	}
+	};
 }

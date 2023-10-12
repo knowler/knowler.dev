@@ -1,24 +1,22 @@
-const LOGIN_PATH = Deno.env.get("LOGIN_PATH");
-
-export function GET({ view }) {
-	return view("login", {
+export function get(c) {
+	return c.render("login", {
 		title: "Sign In",
 		issues: [],
 		formData: {},
 	});
 }
 
-export async function POST({ request }) {
-	const formData = await request.formData();
+export async function post(c) {
+	const formData = await c.req.formData();
 
-	console.log(Array.from(formData));
-
-	return new Response(null, {
-		status: 303,
-		headers: {
-			location: `/${LOGIN_PATH}`,
-		},
-	});
+	if (
+		formData.get("username") !== Deno.env.get("SUDO_USERNAME") ||
+		formData.get("password") !== Deno.env.get("SUDO_PASSWORD")
+	) {
+		return c.redirect(`/${Deno.env.get("LOGIN_PATH")}`, 303);
+	} else {
+		const session = c.get("session");
+		session.set("authorized", true);
+		return c.redirect("/sudo", 303);
+	}
 }
-
-export const pattern = new URLPattern({ pathname: `/${LOGIN_PATH}{/}?` });
