@@ -65,14 +65,16 @@ export const posts = [
 	},
 ];
 
-export async function GET({ view }) {
-	return view(
-		"blog.index",
-		{
-			title: "Blog",
-			posts,
-		},
-	);
+export async function getPosts() {
+	return posts;
 }
 
-export const pattern = new URLPattern({ pathname: "/blog{/}?" });
+export async function getPost(queriedSlug) {
+	const post = posts.find(({ slug }) => slug === queriedSlug);
+
+	if (!post) throw "post not found";
+
+	post.html = await Deno.readTextFile(`./routes/_blog/${post.slug}.html`);
+
+	return post;
+}

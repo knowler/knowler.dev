@@ -1,5 +1,5 @@
-export function GET({ view }) {
-	return view(
+export function GET(c) {
+	return c.render(
 		"[page]",
 		{
 			title: "Welcome",
@@ -10,5 +10,3 @@ export function GET({ view }) {
 		},
 	);
 }
-
-export const pattern = new URLPattern({ pathname: "/" });

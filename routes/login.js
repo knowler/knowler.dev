@@ -1,4 +1,4 @@
-const LOGIN_PATH = Deno.env.get('LOGIN_PATH');
+const LOGIN_PATH = Deno.env.get("LOGIN_PATH");
 
 export function GET({ view }) {
 	return view("login", {

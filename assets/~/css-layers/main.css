@@ -1,0 +1,11 @@
+@layer base, components, layout;
+
+@layer base {
+	*, ::before, ::after {
+		box-sizing: border-box;
+	}
+}
+
+header > nav {
+	padding: 2rem;
+}

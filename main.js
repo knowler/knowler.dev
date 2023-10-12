@@ -1,162 +1,151 @@
-import { contentType } from "std/media_types";
+import { Hono } from "hono";
+import { logger, serveStatic } from "hono/middleware";
 import { renderFile } from "pug";
 import kebabCase from "case/paramCase";
-import { getSession } from "~/sessions.js";
+import { processWebmention } from "~/jobs/process-webmention.js";
+import kv from "~/kv.js";
+import { getPage } from "~/models/pages.js";
+import { getPost, getPosts } from "~/models/posts.js";
+import { Feed } from "feed";
 
-import * as indexRoute from "~/routes/index.js";
-import * as blogIndexRoute from "~/routes/blog.index.js";
-import * as blogPostRoute from "~/routes/blog.[slug].js";
-import * as webmentionRoute from "~/routes/webmention.js";
-import * as pageRoute from "~/routes/[page].js";
-import * as feedRoute from "~/routes/feed.xml.js";
-import * as loginRoute from "~/routes/login.js";
-import * as cvRoute from "~/routes/cv.js";
+kv.listenQueue(async (message) => {
+	switch (message.action) {
+		case "process-webmention": {
+			await processWebmention(message.payload);
+			break;
+		}
+		case undefined:
+			throw "undefined action";
+		default:
+			throw `unknown action: ${message.action}`;
+	}
+});
 
-const SITE_URL = Deno.env.get("SITE_URL");
-const assetPattern = new URLPattern({ pathname: "/:filename+.:extension" });
-const sudoRoutePattern = new URLPattern({ pathname: "/sudo/:etc+" });
+const app = new Hono();
 
-const publicRoutes = [
-	indexRoute,
-	blogIndexRoute,
-	blogPostRoute,
-	webmentionRoute,
-	feedRoute,
-	loginRoute,
-	cvRoute,
-	pageRoute,
-];
-
-async function handle(request) {
-	const url = new URL(request.url);
-	const assetMatch = url.pathname !== "/feed.xml" &&
-		assetPattern.exec({ pathname: url.pathname });
-
-	console.log(request.method, url.pathname, { asset: Boolean(assetMatch) });
-
-	let response;
-
-	if (assetMatch) {
-		response = await serveStatic({ params: assetMatch?.pathname.groups });
-	} else {
-		const isSudoRoute = sudoRoutePattern.test({ pathname: url.pathname });
-		try {
-			response = isSudoRoute
-				? handleSudoRoute(request)
-				: handlePublicRoute(request);
-		} catch (errorOrResponse) {
-			response = errorOrResponse instanceof Response
-				? errorOrResponse
-				: new Response(
-					`<pre><code>${
-						JSON.stringify(errorOrResponse?.message, null, 2)
-					}</code></pre>`,
-					{
-						status: 500,
-						headers: {
-							"content-type": "text/html; charset=utf8",
-						},
+app.use("*", async (c, next) => {
+	c.setRenderer((template, data = {}) =>
+		c.html(
+			renderFile(
+				`./routes/${template}.pug`,
+				{
+					basedir: "./routes",
+					canonical: c.req.url, // TODO: normalize (i.e. trim trailing slash)
+					isCurrentPath(path) {
+						const normalizedPath = path.endsWith("/") ? path : `${path}/`;
+						const normalizedRequestPath = c.req.path.endsWith("/")
+							? c.req.path
+							: `${c.req.path}/`;
+						return normalizedPath === normalizedRequestPath;
 					},
-				);
-		}
-	}
-
-	return response;
-}
-
-async function handleSudoRoute() {
-	const session = await getSession(request);
-	console.log(session);
-	// TODO: implement
-	console.warn("Unimplemented");
-}
-
-function handlePublicRoute(request) {
-	return matchRequestToRoutes(request, publicRoutes);
-}
-
-async function serveStatic({ params }) {
-	const { extension, filename } = params;
-
-	if (!filename) return new Response(null, { status: 500 });
-
-	const filePath = `assets/${filename}.${extension}`;
-	const fileUrl = new URL(filePath, import.meta.url);
-
-	const body = await Deno.readFile(fileUrl);
-	if (!body) return new Response(null, { status: 404 });
-
-	return new Response(body, {
-		headers: {
-			"content-type": contentType(extension),
-		},
-	});
-}
-
-async function matchRequestToRoutes(request, routes) {
-	const url = new URL(request.url);
-	for (const route of routes) {
-		const matched = route.pattern.exec({ pathname: url.pathname });
-		let response;
-		if (matched) {
-			const view = createView(request);
-			// TODO: idk what this first condition is anymore. Maybe remove it?
-			if ("module" in route) {
-				const module = await route.module();
-				response = await module[request.method]({
-					request,
-					params: matched.pathname?.groups,
-					view,
-				});
-			} else {
-				let methodHandler = route[request.method];
-				// Fallback to GET if POST method not found
-				// TODO: Does it make sense to error out with a 405 instead?
-				if (!methodHandler && request.method === "POST") {
-					methodHandler = route.GET;
-				}
-				if (!methodHandler) {
-					throw `Missing method handler for: ${request.method} ${url.pathname}`;
-				}
-				response = await methodHandler({
-					request,
-					params: matched.pathname?.groups,
-					view,
-				});
-			}
-			return response;
-		}
-	}
-
-	return new Response("Not found", { status: 404 });
-}
-
-function createView(request) {
-	const url = new URL(request.url);
-
-	return function view(template, context = {}, init = {}) {
-		init.headers ??= new Headers();
-		init.headers.set("content-type", "text/html; charset=utf8");
-
-		return new Response(
-			renderFile(`./routes/${template}.pug`, {
-				basedir: "./routes",
-				canonical: request.url, // TODO: normalize (i.e. trim trailing slash)
-				SITE_URL,
-				isCurrentPath(path) {
-					const normalizedPath = path.endsWith("/") ? path : `${path}/`;
-					const normalizedRequestPath = url.pathname.endsWith("/")
-						? url.pathname
-						: `${url.pathname}/`;
-					return normalizedPath === normalizedRequestPath;
+					currentPath: c.req.path,
+					kebabCase,
+					...data,
 				},
-				currentPath: url.pathname,
-				kebabCase,
-				...context,
-			}),
-			init,
-		);
-	};
-}
+			),
+		)
+	);
 
-Deno.serve(handle);
+	await next();
+});
+
+app.use("*", logger());
+app.use("*", serveStatic({ root: "./assets" }));
+app.notFound((c) => c.json({ message: "Not Found", ok: false }, 404));
+
+app.get("/", async (c) => {
+	const page = await getPage("home");
+
+	return c.render("[page]", {
+		title: page.title,
+		page,
+	});
+});
+
+// Rewrite trailing slashes
+app.use("*", async (c, next) => {
+	if (c.req.path.endsWith("/")) {
+		return c.redirect(c.req.path.replace(/\/$/, ""), 301);
+	}
+	await next();
+});
+
+const me = {
+	name: "Nathan Knowler",
+	link: "https://knowler.dev",
+};
+
+app.use("/feed.xml", async (c) => {
+	const posts = await getPosts();
+
+	const feed = new Feed({
+		title: "Nathan Knowler",
+		description: "Some words.",
+		id: "https://knowler.dev/",
+		link: "https://knowler.dev/",
+		language: "en-CA",
+		copyright: "All rights reservered 2022, Nathan Knowler",
+		generator: "Deno",
+		author: me,
+	});
+
+	for (const post of posts) {
+		feed.addItem({
+			id: post.slug,
+			title: post.title,
+			description: post.description || undefined,
+			link: `https://knowler.dev/blog/${post.slug}`,
+			date: new Date(post.publishedAt),
+			content: await Deno.readTextFile(`./routes/_blog/${post.slug}.html`),
+			author: [me],
+		});
+	}
+
+	c.header("content-type", "text/xml; charset=UTF-8");
+	c.header("cache-control", "max-age=1800");
+
+	return c.body(feed.rss2());
+});
+
+app.get("/blog", async (c) => {
+	const posts = await getPosts();
+
+	return c.render(
+		"blog.index",
+		{
+			title: "Blog",
+			posts,
+		},
+	);
+});
+
+app.get("/blog/:slug", async (c) => {
+	try {
+		const params = c.req.param();
+		const post = await getPost(params.slug);
+
+		return c.render("blog.[slug]", {
+			title: post.title,
+			description: post.description,
+			post,
+		});
+	} catch (_) {
+		return c.notFound();
+	}
+});
+
+app.get("/:page", async (c) => {
+	try {
+		const params = c.req.param();
+		const page = await getPage(params.page);
+
+		return c.render("[page]", {
+			title: page.title,
+			page,
+		});
+	} catch (_) {
+		return c.notFound();
+	}
+});
+
+Deno.serve(app.fetch);
