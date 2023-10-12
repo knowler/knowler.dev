@@ -8,14 +8,15 @@ append head
 		meta(name="description" content=description)
 	meta(name="author" content="Nathan Knowler")
 	base(href=SITE_URL)
-	link(rel="canonical" href=canonical)
+	if canonical
+		link(rel="canonical" href=canonical)
 	-//meta(name="webmention" content=new URL("/webmention", SITE_URL))
 	link(rel="stylesheet" href="/main.css")
 	link(rel="author" href="/about" title="About the author")
 	link(rel="alternate" href="/feed.xml" type="application/rss+xml" title="RSS")
 
 block body
-	a(href=`${new URL(canonical).pathname}#content`).skip-link.visually-hidden Skip to content
+	a(href=`${currentPath}#content`).skip-link.visually-hidden Skip to content
 	aside
 		p I’m in the midst of rebuilding my website. #[small Sorry for the deadlinks.]
 	header
