@@ -15,6 +15,7 @@ export function pugRenderer() {
 						},
 						currentPath: trimTrailingSlash(c.req.path),
 						kebabCase,
+						SITE_URL: Deno.env.get("SITE_URL"),
 						...data,
 					},
 				),
