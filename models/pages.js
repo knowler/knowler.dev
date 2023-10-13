@@ -11,7 +11,7 @@ export async function getPage(slug) {
 }
 
 export async function getPages() {
-	const iter = kv.list(["pages"]);
+	const iter = kv.list({ prefix: "pages" });
 	const pages = [];
 
 	for await (const record of iter) pages.push(record.value);
