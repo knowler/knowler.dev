@@ -3,6 +3,10 @@ const migrations = new Map([
 		"2023_10_12_create_migrations_store",
 		() => import("~/migrations/2023_10_12_create_migrations_store.js"),
 	],
+	[
+		"2023_10_13_add_existing_pages",
+		() => import("~/migrations/2023_10_13_add_existing_pages.js"),
+	],
 ]);
 
 export async function runMigrations() {

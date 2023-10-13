@@ -1,36 +1,20 @@
-const pages = new Map([
-	["home", {
-		title: "Welcome",
-		published: true,
-	}],
-	["about", {
-		title: "About",
-		published: true,
-	}],
-	["uses", {
-		title: "Uses",
-		published: true,
-	}],
-	["accessibility", {
-		title: "Accessibility Statement",
-		published: true,
-	}],
-	["privacy", {
-		title: "Privacy",
-		published: true,
-	}],
-]);
+import kv from "~/kv.js";
 
 export async function getPage(slug) {
-	const page = pages.get(slug);
+	const idRecord = await kv.get(["pagesBySlug", slug]);
+	if (!idRecord.value) throw `page not found with slug: ${slug}`;
 
-	if (!page || !page.published) throw "page not found";
+	const pageRecord = await kv.get(["pages", idRecord.value]);
+	if (!pageRecord.value) throw `page not found with id: ${idRecord.value}`;
 
-	page.html = await Deno.readTextFile(`./routes/_pages/${slug}.html`);
-
-	return page;
+	return pageRecord.value;
 }
 
 export async function getPages() {
+	const iter = kv.list(["pages"]);
+	const pages = [];
+
+	for await (const record of iter) pages.push(record.value);
+
 	return pages;
 }
