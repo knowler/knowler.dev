@@ -26,7 +26,7 @@ import { get as getSudoIndexRoute } from "~/routes/sudo/index.js";
 import { get as getSudoContentCollectionTypeIndexRoute } from "~/routes/sudo/content.[collectionType].index.js";
 import { get as getSudoWebmentionsIndexRoute } from "~/routes/sudo/webmentions.index.js";
 
-import { dynamicImport } from 'https://deno.land/x/import@0.2.1/mod.ts';
+import { dynamicImport } from "import";
 
 try {
 	const migrationFiles = [

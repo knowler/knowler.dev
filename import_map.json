@@ -7,6 +7,7 @@
 		"hono/middleware": "https://deno.land/x/hono@v3.7.6/middleware.ts",
 		"hono/helpers": "https://deno.land/x/hono@v3.7.6/helpers.ts",
 		"hono_sessions": "https://deno.land/x/hono_sessions@v0.3.2/mod.ts",
+		"import": "https://deno.land/x/import@0.2.1/mod.ts",
 		"pug": "https://deno.land/x/pug@v0.1.6/mod.ts",
 		"std/http": "https://deno.land/std@0.200.0/http/mod.ts",
 		"std/media_types": "https://deno.land/std@0.200.0/media_types/mod.ts"
