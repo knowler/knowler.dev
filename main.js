@@ -22,9 +22,11 @@ import {
 	get as getLoginRoute,
 	post as postLoginRoute,
 } from "~/routes/login.js";
-//import { get as getSudoIndexRoute } from "~/routes/sudo/index.js";
+import { get as getSudoIndexRoute } from "~/routes/sudo/index.js";
 import { get as getSudoContentCollectionTypeIndexRoute } from "~/routes/sudo/content.[collectionType].index.js";
 import { get as getSudoWebmentionsIndexRoute } from "~/routes/sudo/webmentions.index.js";
+
+import { dynamicImport } from 'https://deno.land/x/import@0.2.1/mod.ts';
 
 try {
 	const migrationFiles = [
@@ -45,7 +47,7 @@ try {
 
 	console.log("migrations to run", migrationsToRun);
 	for (const file of migrationsToRun) {
-		const { migrate } = await import(file);
+		const { migrate } = await dynamicImport(file);
 
 		await migrate();
 		await kv.set(["migrations", file], true);
@@ -117,7 +119,7 @@ sudo.use("*", async (c, next) => {
 	if (session.get("authorized") !== true) return c.notFound();
 	await next();
 });
-sudo.get("/", dynamicGet("~/routes/sudo/index.js"));
+sudo.get("/", getSudoIndexRoute);
 sudo.get("/content/:collectionType", getSudoContentCollectionTypeIndexRoute);
 sudo.get("/content/:collectionType/new", (c) => {
 	const { collectionType } = c.req.param();
@@ -137,10 +139,3 @@ sudo.get("/exit", (c) => {
 app.route("/sudo", sudo);
 
 Deno.serve(app.fetch);
-
-function dynamicGet(path) {
-	return async (c, next) => {
-		const { get } = await import(path);
-		return get(c, next);
-	};
-}
