@@ -26,33 +26,9 @@ import { get as getSudoIndexRoute } from "~/routes/sudo/index.js";
 import { get as getSudoContentCollectionTypeIndexRoute } from "~/routes/sudo/content.[collectionType].index.js";
 import { get as getSudoWebmentionsIndexRoute } from "~/routes/sudo/webmentions.index.js";
 
-//try {
-//	const migrationFiles = [
-//		"./migrations/2023_10_12_create_migrations_store.js",
-//	];
-//	const migrationsToRun = [];
-//	for (const file of migrationFiles) {
-//		// TODO: it would be more economical to many get all at once.
-//		const migration = await kv.get(["migrations", file]);
-//
-//		// Migration hasn’t run: add it to the todo list
-//		if (!migration?.value) migrationsToRun.push(file);
-//		// There is a missing migration in between the ones that have run.
-//		else if (migrationsToRun.length > 0) throw `missing migration: ${file}`;
-//		// Migration has run: continue looking for migrations which haven’t run.
-//		else continue;
-//	}
-//
-//	console.log("migrations to run", migrationsToRun);
-//	for (const file of migrationsToRun) {
-//		const { migrate } = await dynamicImport(file);
-//
-//		await migrate();
-//		await kv.set(["migrations", file], true);
-//	}
-//} catch (error) {
-//	console.error(error);
-//}
+import { runMigrations } from "~/migrations.js";
+
+await runMigrations();
 
 kv.listenQueue(async (message) => {
 	switch (message.action) {
