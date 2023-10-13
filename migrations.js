@@ -7,6 +7,14 @@ const migrations = new Map([
 		"2023_10_13_add_existing_pages",
 		() => import("~/migrations/2023_10_13_add_existing_pages.js"),
 	],
+	[
+		"2023_10_13_add_existing_posts",
+		() => import("~/migrations/2023_10_13_add_existing_posts.js"),
+	],
+	[
+		"2023_10_13_add_html_to_posts",
+		() => import("~/migrations/2023_10_13_add_html_to_posts.js"),
+	],
 ]);
 
 export async function runMigrations() {

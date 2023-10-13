@@ -1,34 +1,14 @@
-import { getPage, getPages } from "~/models/pages.js";
-import { getPost, getPosts } from "~/models/posts.js";
-
-const modelByCollectionType = {
-	pages: {
-		labels: {
-			singular: "Page",
-			multiple: "Pages",
-		},
-		get: getPage,
-		getMany: getPages,
-	},
-	posts: {
-		labels: {
-			singular: "Post",
-			multiple: "Posts",
-		},
-		get: getPost,
-		getMany: getPosts,
-	},
-};
+import { getModelForCollection } from "~/models/collection.js";
 
 export async function get(c) {
 	const { collectionType } = c.req.param();
-	const collection = modelByCollectionType[collectionType];
-	const collectionItems = await collection.getMany();
+	const { labels, getMany } = getModelForCollection(collectionType);
+	const collectionItems = await getMany();
 
 	return c.render("sudo/content.[collectionType].index", {
-		title: collection.labels.multiple,
-		labels: collection.labels,
+		title: labels.multiple,
+		labels: labels,
 		type: collectionType,
-		items: collectionItems.entries(),
+		items: collectionItems,
 	});
 }

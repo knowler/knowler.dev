@@ -1,10 +1,10 @@
 import { trimTrailingSlash } from "~/utils/trim-trailing-slash.js";
-import { getPost } from "~/models/posts.js";
+import { getPostBySlug } from "~/models/posts.js";
 
 export async function get(c, next) {
 	try {
 		const params = c.req.param();
-		const post = await getPost(params.slug);
+		const post = await getPostBySlug(params.slug);
 
 		return c.render("blog.[slug]", {
 			title: post.title,

@@ -1,80 +1,26 @@
-// TODO: actually use the database.
+import kv from "~/kv.js";
 
-export const posts = [
-	{
-		slug: "a-brief-anecdote-and-a-snippet-from-my-tailwind-labs-application",
-		title: "A Brief Anecdote & a Snippet From My Tailwind Labs Application",
-		publishedAt: "2023-09-21T21:00:00.000Z",
-	},
-	{
-		slug: "the-allure-of-complex-user-interface-challenges",
-		title: "The Allure of Complex User Interface Challenges",
-		"publishedAt": "2023-09-21T16:55:00.000Z",
-	},
-	{
-		"slug": "extending-html-form-validation",
-		"title": "Extending HTML Form Validation",
-		"description":
-			"A quick and practical introduction for using the Constraint Validation API to extend HTML Form Validation.",
-		"publishedAt": "2022-11-23T01:26:11.931Z",
-	},
-	{
-		"slug": "im-on-mastodon",
-		"title": "I’m on Mastodon",
-		"publishedAt": "2022-11-05T05:44:00.000Z",
-	},
-	{
-		"slug": "managing-event-listeners-in-custom-elements",
-		"title": "Managing Event Listeners in Custom Elements",
-		"publishedAt": "2022-10-06T23:33:00.000Z",
-	},
-	{
-		"slug": "2020-in-music",
-		"title": "2020 in music",
-		"publishedAt": "2020-12-30T23:10:00.000Z",
-	},
-	{
-		"slug": "open-in-codesandbox-bookmarklet",
-		"title": "Bookmarklet: Open GitHub Repo in CodeSandbox",
-		"publishedAt": "2020-01-15T01:37:00.000Z",
-	},
-	{
-		"slug": "introduction-to-clover",
-		"title": "Introduction to Clover",
-		"publishedAt": "2019-03-05T10:57:00.000Z",
-	},
-	{
-		"slug": "gg-a-git-directory-jumping-helper",
-		"title": "gg: a Git directory jumping helper",
-		"publishedAt": "2019-02-22T14:20:00.000Z",
-	},
-	{
-		"slug": "rust-for-a-rusty-game-developer",
-		"title": "Rust For A Rusty Game Developer",
-		"publishedAt": "2019-01-31T16:31:00.000Z",
-	},
-	{
-		"slug": "2018-in-music",
-		"title": "2018 in music and a look to the future",
-		"publishedAt": "2018-12-31T19:00:00.000Z",
-	},
-	{
-		"slug": "hello-world",
-		"title": "Hello, World!",
-		"publishedAt": "2018-12-31T16:30:00.000Z",
-	},
-];
+export async function getPost(id) {
+	const postRecord = await kv.get(["posts", id]);
+	if (!postRecord.value) throw `post not found with id: ${id}`;
 
-export async function getPosts() {
-	return posts;
+	return postRecord.value;
 }
 
-export async function getPost(queriedSlug) {
-	const post = posts.find(({ slug }) => slug === queriedSlug);
+export async function getPostBySlug(slug) {
+	const idRecord = await kv.get(["postsBySlug", slug]);
+	if (!idRecord.value) throw `post not found with slug: ${slug}`;
 
-	if (!post) throw "post not found";
+	return await getPost(idRecord.value);
+}
 
-	post.html = await Deno.readTextFile(`./routes/_blog/${post.slug}.html`);
+export async function getPosts() {
+	const iter = kv.list({ prefix: ["posts"] });
+	const posts = [];
 
-	return post;
+	for await (const record of iter) posts.push(record.value);
+
+	posts.sort((a, b) => new Date(a.publishedAt) - new Date(b.publishedAt));
+
+	return posts;
 }

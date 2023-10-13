@@ -24,6 +24,7 @@ import {
 } from "~/routes/login.js";
 import { get as getSudoIndexRoute } from "~/routes/sudo/index.js";
 import { get as getSudoContentCollectionTypeIndexRoute } from "~/routes/sudo/content.[collectionType].index.js";
+import { get as getSudoContentCollectionTypeItemRoute } from "~/routes/sudo/content.[collectionType].[itemId].js";
 import { get as getSudoWebmentionsIndexRoute } from "~/routes/sudo/webmentions.index.js";
 
 import { runMigrations } from "~/migrations.js";
@@ -99,10 +100,7 @@ sudo.get("/content/:collectionType/new", (c) => {
 	const { collectionType } = c.req.param();
 	return c.text(`new ${collectionType}`);
 });
-sudo.get("/content/:collectionType/:itemId", (c) => {
-	const { collectionType, itemId } = c.req.param();
-	return c.text(`editing ${collectionType} ${itemId}`);
-});
+sudo.get("/content/:collectionType/:itemId", getSudoContentCollectionTypeItemRoute);
 sudo.get("/webmentions", getSudoWebmentionsIndexRoute);
 sudo.get("/exit", (c) => {
 	const session = c.get("session");

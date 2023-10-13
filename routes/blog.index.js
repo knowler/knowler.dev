@@ -8,7 +8,7 @@ export async function get(c) {
 		"blog.index",
 		{
 			title: "Blog",
-			posts,
+			posts: posts.reverse(),
 			canonical: trimTrailingSlash(c.req.url),
 		},
 	);

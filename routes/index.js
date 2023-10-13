@@ -1,7 +1,7 @@
-import { getPage } from "~/models/pages.js";
+import { getPageBySlug } from "~/models/pages.js";
 
 export async function get(c) {
-	const page = await getPage("welcome");
+	const page = await getPageBySlug("welcome");
 
 	return c.render("[page]", {
 		title: page.title,
