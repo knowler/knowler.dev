@@ -22,6 +22,37 @@ import {
 	get as getLoginRoute,
 	post as postLoginRoute,
 } from "~/routes/login.js";
+//import { get as getSudoIndexRoute } from "~/routes/sudo/index.js";
+import { get as getSudoContentCollectionTypeIndexRoute } from "~/routes/sudo/content.[collectionType].index.js";
+import { get as getSudoWebmentionsIndexRoute } from "~/routes/sudo/webmentions.index.js";
+
+try {
+	const migrationFiles = [
+		"./migrations/2023_10_12_create_migrations_store.js",
+	];
+	const migrationsToRun = [];
+	for (const file of migrationFiles) {
+		// TODO: it would be more economical to many get all at once.
+		const migration = await kv.get(["migrations", file]);
+
+		// Migration hasn’t run: add it to the todo list
+		if (!migration?.value) migrationsToRun.push(file);
+		// There is a missing migration in between the ones that have run.
+		else if (migrationsToRun.length > 0) throw `missing migration: ${file}`;
+		// Migration has run: continue looking for migrations which haven’t run.
+		else continue;
+	}
+
+	console.log("migrations to run", migrationsToRun);
+	for (const file of migrationsToRun) {
+		const { migrate } = await import(file);
+
+		await migrate();
+		await kv.set(["migrations", file], true);
+	}
+} catch (error) {
+	console.error(error);
+}
 
 kv.listenQueue(async (message) => {
 	switch (message.action) {
@@ -64,6 +95,7 @@ app.notFound(get404Route);
 
 app.get("/feed.xml", getFeedRoute);
 app.get("/", getIndexRoute);
+app.get("/:page", getPageRoute);
 app.get("/blog", getBlogIndexRoute);
 app.get("/blog/:slug", getBlogPostRoute);
 
@@ -85,7 +117,17 @@ sudo.use("*", async (c, next) => {
 	if (session.get("authorized") !== true) return c.notFound();
 	await next();
 });
-sudo.get("/", (c) => c.text("Sudo"));
+sudo.get("/", dynamicGet("~/routes/sudo/index.js"));
+sudo.get("/content/:collectionType", getSudoContentCollectionTypeIndexRoute);
+sudo.get("/content/:collectionType/new", (c) => {
+	const { collectionType } = c.req.param();
+	return c.text(`new ${collectionType}`);
+});
+sudo.get("/content/:collectionType/:itemId", (c) => {
+	const { collectionType, itemId } = c.req.param();
+	return c.text(`editing ${collectionType} ${itemId}`);
+});
+sudo.get("/webmentions", getSudoWebmentionsIndexRoute);
 sudo.get("/exit", (c) => {
 	const session = c.get("session");
 	session.set("authorized", false);
@@ -94,6 +136,11 @@ sudo.get("/exit", (c) => {
 
 app.route("/sudo", sudo);
 
-app.get("/:page", getPageRoute);
-
 Deno.serve(app.fetch);
+
+function dynamicGet(path) {
+	return async (c, next) => {
+		const { get } = await import(path);
+		return get(c, next);
+	};
+}

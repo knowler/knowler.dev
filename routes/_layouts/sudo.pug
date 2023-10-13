@@ -1,4 +1,18 @@
 extends base
 
+include /_mixins/nav-link
+
 append head
-	title Sudo
+	title #{title} – Sudo – Nathan Knowler
+	style: include sudo.css
+
+block body
+	header
+		nav
+			+nav-link(href="/sudo") sudo
+			+nav-link(href="/sudo/content/pages") pages
+			+nav-link(href="/sudo/content/posts") posts
+			+nav-link(href="/sudo/webmentions") webmentions
+			a(href="/sudo/exit") exit
+	main#content
+		block content

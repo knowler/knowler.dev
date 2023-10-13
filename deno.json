@@ -3,7 +3,7 @@
 		"useTabs": true
 	},
 	"tasks": {
-		"dev": "deno run --unstable --allow-read=. --allow-net --allow-env --watch main.js"
+		"dev": "deno run --unstable --allow-all --watch main.js"
 	},
 	"importMap": "./import_map.json"
 }

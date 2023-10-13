@@ -1,7 +1,7 @@
 import { trimTrailingSlash } from "~/utils/trim-trailing-slash.js";
 import { getPage } from "~/models/pages.js";
 
-export async function get(c) {
+export async function get(c, next) {
 	try {
 		const params = c.req.param();
 		const page = await getPage(params.page);
@@ -12,6 +12,6 @@ export async function get(c) {
 			canonical: trimTrailingSlash(c.req.url),
 		});
 	} catch (_) {
-		return c.notFound();
+		await next();
 	}
 }

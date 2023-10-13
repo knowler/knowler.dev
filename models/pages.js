@@ -30,3 +30,7 @@ export async function getPage(slug) {
 
 	return page;
 }
+
+export async function getPages() {
+	return pages;
+}

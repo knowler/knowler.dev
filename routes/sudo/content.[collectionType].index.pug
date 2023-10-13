@@ -1,0 +1,12 @@
+extends /_layouts/sudo
+
+block content
+	h1= title
+	a(href=`/sudo/content/${type}/new`) New #{labels.singular}
+	ul
+		each [slug, item] of items
+			li
+				h2= item.title
+				ul
+					li: a(href=`/sudo/content/${type}/${slug}`) Edit
+					li: a(href=`/${slug === "home" ? "" : slug}`) View
