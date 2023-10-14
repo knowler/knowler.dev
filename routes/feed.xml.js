@@ -27,7 +27,7 @@ export async function get(c) {
 			description: post.description || undefined,
 			link: `https://knowler.dev/blog/${post.slug}`,
 			date: new Date(post.publishedAt),
-			content: await Deno.readTextFile(`./routes/_blog/${post.slug}.html`),
+			content: post.html,
 			author: [me],
 		});
 	}
