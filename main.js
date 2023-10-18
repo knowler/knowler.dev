@@ -11,6 +11,8 @@ import { noRobots } from "~/middleware/no-robots.js";
 import { processWebmention } from "~/jobs/process-webmention.js";
 import kv from "~/kv.js";
 
+import { invariant } from "~/utils/invariant.js";
+
 /** Routes */
 import { get as get404Route } from "~/routes/404.js";
 import { get as getIndexRoute } from "~/routes/index.js";
@@ -28,6 +30,12 @@ import { get as getSudoContentCollectionTypeItemRoute } from "~/routes/sudo/cont
 import { get as getSudoWebmentionsIndexRoute } from "~/routes/sudo/webmentions.index.js";
 
 import { runMigrations } from "~/migrations.js";
+
+const SITE_URL = Deno.env.get("SITE_URL");
+const LOGIN_PATH = Deno.env.get("LOGIN_PATH");
+
+invariant(SITE_URL);
+invariant(LOGIN_PATH);
 
 await runMigrations();
 
@@ -60,7 +68,7 @@ app.use(
 		encryptionKey: Deno.env.get("SESSION_KEY"),
 		cookieOptions: {
 			path: "/",
-			domain: new URL(Deno.env.get("SITE_URL")).hostname,
+			domain: new URL(SITE_URL).hostname,
 			httpOnly: true,
 			secure: false,
 			sameSite: "Lax",
@@ -78,7 +86,7 @@ app.get("/blog/:slug", getBlogPostRoute);
 
 /** Login route */
 app
-	.use(`/${Deno.env.get("LOGIN_PATH")}`, noRobots(), async (c, next) => {
+	.use(`/${LOGIN_PATH}`, noRobots(), async (c, next) => {
 		const session = c.get("session");
 		if (session.get("authorized") === true) return c.redirect("/sudo");
 		await next();
@@ -105,7 +113,7 @@ sudo.get("/webmentions", getSudoWebmentionsIndexRoute);
 sudo.get("/exit", (c) => {
 	const session = c.get("session");
 	session.set("authorized", false);
-	return c.redirect(`/${Deno.env.get("LOGIN_PATH")}`);
+	return c.redirect(`/${LOGIN_PATH}`);
 });
 
 app.route("/sudo", sudo);
