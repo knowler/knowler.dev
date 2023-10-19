@@ -3,7 +3,8 @@
 		"useTabs": true
 	},
 	"tasks": {
-		"dev": "deno run --unstable --allow-all --watch main.js"
+		"dev": "deno run --unstable --allow-all --watch main.js",
+		"seed": "deno run --unstable --allow-all tools/seed-local.js"
 	},
 	"importMap": "./import_map.json"
 }
