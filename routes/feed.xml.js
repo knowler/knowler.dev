@@ -20,7 +20,7 @@ export async function get(c) {
 		author: me,
 	});
 
-	for (const post of posts) {
+	for (const post of posts.reverse()) {
 		feed.addItem({
 			id: post.slug,
 			title: post.title,
