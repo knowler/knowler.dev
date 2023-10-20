@@ -33,7 +33,7 @@ export async function get(c) {
 	}
 
 	c.header("content-type", "text/xml; charset=UTF-8");
-	c.header("cache-control", "s-maxage=1800");
+	c.header("Cache-Control", "s-maxage=1800");
 
 	return c.body(feed.rss2());
 }
