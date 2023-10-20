@@ -55,6 +55,8 @@ kv.listenQueue(async (message) => {
 const app = new Hono();
 const sudo = new Hono();
 
+app.get("/feed.xml", getFeedRoute);
+
 app.use(
 	"*",
 	pugRenderer(),
@@ -78,7 +80,6 @@ app.use(
 
 app.notFound(get404Route);
 
-app.get("/feed.xml", getFeedRoute);
 app.get("/", getIndexRoute);
 app.get("/:page", getPageRoute);
 app.get("/blog", getBlogIndexRoute);
