@@ -1,5 +1,93 @@
-*, ::before, ::after {
-	box-sizing: border-box;
+@layer base, composition, utility, block, exception;
+
+@layer base {
+	*, ::before, ::after {
+		box-sizing: border-box;
+	}
+
+	html {
+		color-scheme: light dark;
+	}
+
+	/* Text Elements */
+	a {
+		color: var(--color-accent);
+	}
+		a[aria-current="page"] {
+			text-decoration: none;
+		}
+
+	/** NOT ALL USED: The last three aren’t used on every page */
+	h1, h2, h3, h4 {
+		font-weight: 300;
+		font-variation-settings: "wdth" var(--fvs-wdth, 100);
+	}
+
+	h1 { --fvs-wdth: 120; }
+	h2 { --fvs-wdth: 110; }
+}
+
+	/* Layout */
+
+@layer block {
+	html {
+		block-size: 100%;
+		color-scheme: light dark;
+		font-family: system-ui, sans-serif;
+		line-height: 1.5;
+	}
+
+	body {
+		align-items: start;
+		block-size: 100%;
+		display: grid;
+		grid-template:
+			"message" min-content
+			"header" max-content
+			"main" auto
+			"footer" max-content / 100%;
+		margin: 0;
+		padding: 1rem;
+	}
+		/** On every page for now, but not always. */
+		body > aside:only-of-type {
+			grid-area: message;
+			background-color: hsl(0deg 0% 20% / 0.2);
+			margin-block-start: -1rem;
+			margin-block-end: 1rem;
+			justify-self: center;
+			inline-size: 100%;
+			box-sizing: content-box;
+			padding: 1rem;
+			display: flex;
+			column-gap: 0.5em;
+		}
+			body > aside:only-of-type > p:only-of-type {
+				margin-block: 0;
+			}
+
+	header {
+		display: grid;
+		gap: 0.5rem;
+		grid-area: header;
+	}
+		header > a:only-of-type {
+			text-decoration: none;
+			justify-self: start;
+			text-transform: lowercase;
+			font-variation-settings: "wdth" 125;
+			font-weight: 200;
+			font-size: 1.75rem;
+		}
+
+	main {
+		grid-area: main;
+	}
+
+	footer {
+		align-self: end;
+		grid-area: footer;
+	}
 }
 
 :root {
@@ -16,66 +104,6 @@
 	outline: 0.125em dashed var(--color-accent, currentColor);
 	outline-offset: 0.125em;
 	border-radius: 0.25em;
-}
-
-html {
-	color-scheme: light dark;
-	font-family: system-ui, sans-serif;
-	line-height: 1.5;
-	block-size: 100%;
-}
-
-body {
-	block-size: 100%;
-	display: grid;
-	align-items: start;
-	margin: 0;
-	padding: 1rem;
-	grid-template:
-		"message" min-content
-		"header" max-content
-		"main" auto
-		"footer" max-content / 100%;
-}
-
-body > aside {
-	grid-area: message;
-	background-color: hsl(0deg 0% 20% / 0.2);
-	margin-block-start: -1rem;
-	margin-block-end: 1rem;
-	justify-self: center;
-	inline-size: 100%;
-	box-sizing: content-box;
-	padding: 1rem;
-	display: flex;
-	column-gap: 0.5em;
-}
-
-aside > button {
-	font: inherit;
-	line-height: inherit;
-	background: none;
-	padding: 0;
-	border: 0;
-	text-decoration: underline;
-	text-underline-offset: 0.15em;
-}
-
-aside > p:only-of-type {
-	margin-block: 0;
-}
-
-header {
-	grid-area: header;
-}
-
-main {
-	grid-area: main;
-}
-
-footer {
-	grid-area: footer;
-	align-self: end;
 }
 
 .visually-hidden {
@@ -102,36 +130,6 @@ footer {
 	clip: unset;
 }
 
-a {
-	color: var(--color-accent);
-}
-
-h1 {
-	font-variation-settings: "wdth" 120;
-}
-
-h2 {
-	font-variation-settings: "wdth" 110;
-}
-
-h1, h2, h3, h4 {
-	font-weight: 300;
-}
-
-header {
-	display: grid;
-	gap: 0.5rem;
-}
-
-header > a:only-of-type {
-	text-decoration: none;
-	justify-self: start;
-	text-transform: lowercase;
-	font-variation-settings: "wdth" 125;
-	font-weight: 200;
-	font-size: 1.75rem;
-}
-
 :where(header, footer) > nav > ul {
 	list-style: none;
 	padding-inline-start: 0;
@@ -141,10 +139,6 @@ header > a:only-of-type {
 	align-items: center;
 	gap: 0.5rem;
 	line-height: 1;
-}
-
-a[aria-current="page"] {
-	text-decoration: none;
 }
 
  p {
