@@ -13,7 +13,7 @@ block content
 		form(method="post" novalidate)
 			if success
 				aside.success: p Successfully sent Webmention!
-			+text-field(name="source" description="The URL for your content") Source URL
-			+text-field(name="target" description="The URL for my content") Target URL
+			+text-field(type="url" name="source" description="The URL for your content") Source URL
+			+text-field(type="url" name="target" description="The URL for my content") Target URL
 			+honey-pot
 			button Send Webmention
