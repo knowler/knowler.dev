@@ -14,6 +14,7 @@ const post = {
 	id: crypto.randomUUID(),
 	slug: attrs.slug ?? paramCase(attrs.title),
 	title: attrs.title,
+	description: attrs.description,
 	publishedAt: new Date().toISOString(),
 	published: attrs.published ?? true,
 	html: body,
