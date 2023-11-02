@@ -16,3 +16,9 @@ for await (const post of posts) {
 	await local.set(["posts", post.value.id], post.value);
 	await local.set(["postsBySlug", post.value.slug], post.value.id);
 }
+
+const webmentions = production.list({ prefix: ["webmentions"] });
+
+for await (const webmention of webmentions) {
+	await local.set(["webmentions", webmention.value.id], webmention.value);
+}
