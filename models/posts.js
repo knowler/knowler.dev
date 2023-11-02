@@ -1,4 +1,16 @@
 import kv from "~/kv.js";
+import { getWebmention } from "./webmention.js";
+
+/**
+ * @typedef {Object} Post
+ * @param {string} id
+ * @param {string} [slug]
+ * @param {string} [title]
+ * @param {string} [description]
+ * @param {string} [html]
+ * @param {boolean} published
+ * @param {string} publishedAt
+ */
 
 export async function getPost(id) {
 	const postRecord = await kv.get(["posts", id]);
@@ -7,11 +19,20 @@ export async function getPost(id) {
 	return postRecord.value;
 }
 
-export async function getPostBySlug(slug) {
+export async function getPostBySlug(slug, options = { withWebmentions: false }) {
 	const idRecord = await kv.get(["postsBySlug", slug]);
 	if (!idRecord.value) throw `post not found with slug: ${slug}`;
+	const post = await getPost(idRecord.value);
 
-	return await getPost(idRecord.value);
+	if (options.withWebmentions) {
+		if ('webmentions' in post)  {
+			for (const [index, webmentionId] of post.webmentions.entries()) {
+				post.webmentions[index] = await getWebmention(webmentionId);
+			}
+		} else post.webmentions = [];
+	}
+
+	return post;
 }
 
 export async function getPosts() {
@@ -23,4 +44,29 @@ export async function getPosts() {
 	posts.sort((a, b) => new Date(a.publishedAt) - new Date(b.publishedAt));
 
 	return posts;
+}
+
+export async function createPost(data = {}) {
+	const newPostData = {
+		id: crypto.randomUUID(),
+		...data,
+	};
+
+	// If this is a draft, don’t require a slug
+	if (newPostData.published) {
+		if (!newPostData.slug) throw "Slug is required for a published post";
+
+		// Check if the post exists
+		const existingPost = await kv.get(["postsBySlug", newPostData.slug]);
+
+		if (existingPost.value) throw `Post already exists with slug: ${newPostData.slug} (${existingPost.value})`;
+
+		newPostData.publishedAt ??= new Date().toISOString();
+	}
+
+	const post = await kv.set(["posts", newPostData.id], newPostData);
+	// Associate slug
+	if (newPostData.publishedAt) await kv.set(["postsBySlug", newPostData.slug], newPostData.id);
+
+	return post.value;
 }

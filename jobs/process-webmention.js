@@ -1,5 +1,20 @@
 import kv from "~/kv.js";
 import { mf2 } from "npm:microformats-parser";
+import { getPostBySlug } from "~/models/posts.js";
+
+// TODO: differentiate error types
+async function postForTarget(url) {
+	const postPattern = new URLPattern({ pathname: "/blog/:slug{/}?" });
+  const slug = postPattern.exec({ pathname: url.pathname })?.pathname?.groups?.slug;
+
+	if (!slug) throw `Not a post`;
+
+	const post = await getPostBySlug(slug, { withWebmentions: true });
+
+	if (!post) throw `No post found`;
+
+	return post;
+}
 
 /**
  * @see https://www.w3.org/TR/webmention/
@@ -8,27 +23,48 @@ export async function processWebmention({ source, target }) {
 	const sourceURL = new URL(source);
 	const targetURL = new URL(target);
 
-	// TODO: am I following redirects properly? And what’s a good limit? (see 3.2.2)
-	const response = await fetch(sourceURL.href);
+	try {
+		const post = await postForTarget(targetURL);
+		const existingWebmention = post.webmentions.find(webmention => webmention.source === source);
+		const id = existingWebmention?.id ?? crypto.randomUUID();
 
-	if (!response.ok) throw "Something went wrong";
+		// TODO: Ensure redirects are handled properly (see 3.2.2).
+		const response = await fetch(sourceURL.href);
 
-	const html = await response.text();
+		if (!response.ok) throw "Could not fetch source";
 
-	if (html.indexOf(targetURL.href) === -1) throw "No mention here";
+		const html = await response.text();
 
-	// TODO: What all do I need to store here? It would be good to figure
-	// out what the needs of the UI for displaying them are.
+		// The target URL must be in the source page for it to be a valid
+		// Webmention
+		if (html.indexOf(targetURL.href) === -1) throw "Target URL not found in source document";
 
-	const { items } = mf2(html, { baseUrl: source });
+		const { items } = mf2(html, { baseUrl: source });
+		const hEntry = items.find((item) => item.type?.includes("h-entry"));
 
-	const hEntry = items.find((item) => item.type?.includes("h-entry"));
+		// TODO: store a bit more information here (e.g. author name, a URL
+		// to an avatar, etc.).
+		// TODO: determine the type
 
-	if (hEntry) {
-		const id = crypto.randomUUID();
+		// Persist Webmention (or updated data)
+		await kv.set(["webmentions", id], {
+			id,
+			source,
+			target,
+			hEntry,
+		});
+		console.log(`Stored webmention ${id}`, { source, target });
 
-		// TODO: Need to determine if we need to update the existing web mention
-
-		await kv.set(["webmention", id], { source, target, hEntry });
+		// Setup relationship with post
+		if (!existingWebmention) {
+			post.webmentions.map(webmention => webmention.id);
+			post.webmentions.push(id);
+			await kv.set(["posts", post.id], post);
+			console.log(`Associated webmention with post: ${post.slug} (${post.id})`);
+		}
+	} catch (error) {
+		// TODO: differentiate errors and throw for real errors (which will
+		// allow the queued job to retry).
+		console.error(error, { source, target });
 	}
 }

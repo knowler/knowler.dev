@@ -21,6 +21,10 @@ import { get as getBlogIndexRoute } from "~/routes/blog.index.js";
 import { get as getBlogPostRoute } from "~/routes/blog.[slug].js";
 import { get as getPageRoute } from "~/routes/[page].js";
 import {
+	get as getWebmentionRoute,
+	post as postWebmentionRoute,
+} from "~/routes/webmention.js";
+import {
 	get as getLoginRoute,
 	post as postLoginRoute,
 } from "~/routes/login.js";
@@ -84,6 +88,8 @@ app.get("/", getIndexRoute);
 app.get("/:page", getPageRoute);
 app.get("/blog", getBlogIndexRoute);
 app.get("/blog/:slug", getBlogPostRoute);
+app.get("/webmention", getWebmentionRoute);
+app.post("/webmention", postWebmentionRoute);
 
 /** Login route */
 app

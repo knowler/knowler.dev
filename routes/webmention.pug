@@ -4,10 +4,15 @@ include /_mixins/h-entry
 include /_mixins/text-field
 include /_mixins/honey-pot
 
+append head
+	style: include webmention.css
+
 block content
 	+h-entry("Webmention")
-		p If the platform you are using doesn’t already support Webmentions, then you can use this form to manually send one for content you link to on my website.
-		form(method="post")
+		p If the platform you are using doesn’t already support Webmentions, then you can use this form to manually send one for the content you link to on my website.
+		form(method="post" novalidate)
+			if success
+				aside.success: p Successfully sent Webmention!
 			+text-field(name="source" description="The URL for your content") Source URL
 			+text-field(name="target" description="The URL for my content") Target URL
 			+honey-pot

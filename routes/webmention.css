@@ -1,0 +1,31 @@
+main form {
+	display: grid;
+	justify-items: start;
+	gap: 1rem;
+}
+
+.form-field label {
+	font-weight: 500;
+}
+
+:root {
+	--color-error: crimson;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-error: tomato;
+	}
+}
+
+.field-error {
+	color: var(--color-error);
+}
+
+.success p {
+	font-weight: 600;
+	margin-block: 0;
+	padding: 0.5rem;
+	border: 0.125em dashed var(--color-accent);
+	color: var(--color-accent);
+}
