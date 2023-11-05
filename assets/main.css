@@ -1,3 +1,4 @@
+/** @see http://cube.fyi */
 @layer base, composition, utility, block, exception;
 
 @layer base {
@@ -5,143 +6,190 @@
 		box-sizing: border-box;
 	}
 
-	html {
-		color-scheme: light dark;
+	:root {
+		--color-accent: hsl(160 80% 20%);
+		--color-canvas-muted: hsl(160 20% 95%);
 	}
 
-	/* Text Elements */
-	a {
-		color: var(--color-accent);
-	}
-		a[aria-current="page"] {
-			text-decoration: none;
+	@media (prefers-color-scheme: dark) {
+		:root {
+			--color-canvas: hsl(160 10% 5%);
+			--color-canvas-muted: hsl(160 20% 10%);
+			--color-accent: hsl(160 54% 70%);
 		}
-
-	/** NOT ALL USED: The last three aren’t used on every page */
-	h1, h2, h3, h4 {
-		font-weight: 300;
-		font-variation-settings: "wdth" var(--fvs-wdth, 100);
 	}
 
-	h1 { --fvs-wdth: 120; }
-	h2 { --fvs-wdth: 110; }
-}
-
-	/* Layout */
-
-@layer block {
 	html {
-		block-size: 100%;
 		color-scheme: light dark;
-		font-family: system-ui, sans-serif;
-		line-height: 1.5;
+		font-family: system-ui;
 	}
 
 	body {
-		align-items: start;
-		block-size: 100%;
-		display: grid;
-		grid-template:
-			"message" min-content
-			"header" max-content
-			"main" auto
-			"footer" max-content / 100%;
-		margin: 0;
-		padding: 1rem;
-	}
-		/** On every page for now, but not always. */
-		body > aside:only-of-type {
-			grid-area: message;
-			background-color: hsl(0deg 0% 20% / 0.2);
-			margin-block-start: -1rem;
-			margin-block-end: 1rem;
-			justify-self: center;
-			inline-size: 100%;
-			box-sizing: content-box;
 			padding: 1rem;
-			display: flex;
-			column-gap: 0.5em;
+	}
+
+	a {
+		color: var(--color-accent);
+	}
+	a[aria-current="page"] {
+		text-decoration: none;
+	}
+}
+
+@layer utility {
+	.visually-hidden {
+		border-width: 0;
+		clip: rect(0, 0, 0, 0);
+		height: 1px;
+		margin: -1px;
+		overflow: hidden;
+		padding: 0;
+		position: absolute;
+		white-space: nowrap;
+		width: 1px;
+	}
+
+	.visually-hidden:focus {
+		height: unset;
+		width: unset;
+		clip: unset;
+	}
+}
+
+@layer block {
+	.skip-link {
+		background-color: Canvas;
+		padding-block: 0.25em;
+		padding-inline: 0.5em;
+	}
+
+	nav ul {
+		list-style: none;
+		padding-inline-start: 0;
+		display: flex;
+		align-items: baseline;
+		column-gap: 0.5rem;
+	}
+
+	main :is(p, li) {
+		max-inline-size: 52ch;
+	}
+}
+
+@supports selector(& a) {
+	@layer base {
+
+		html {
+			background-color: var(--color-canvas);
 		}
-			body > aside:only-of-type > p:only-of-type {
-				margin-block: 0;
+
+		:focus-visible {
+			outline: 0.125em dashed var(--color-accent, currentColor);
+			outline-offset: 0.125em;
+			border-radius: 0.25em;
+		}
+
+		/* Text Elements */
+
+		/** NOT ALL USED: The last three aren’t used on every page */
+		h1, h2, h3, h4 {
+			font-weight: 300;
+			font-variation-settings: "wdth" var(--fvs-wdth, 100);
+		}
+
+		h1 { --fvs-wdth: 120; }
+		h2 { --fvs-wdth: 110; }
+	}
+
+	/* Layout */
+
+	@layer block {
+		html {
+			block-size: 100%;
+			color-scheme: light dark;
+			font-family: system-ui, sans-serif;
+			line-height: 1.5;
+		}
+
+		body {
+			align-items: start;
+			block-size: 100%;
+			display: grid;
+			grid-template:
+				"message" min-content
+				"header" max-content
+				"main" auto
+				"footer" max-content / 100%;
+			margin: 0;
+
+			/** On every page for now, but not always. */
+			> aside:only-of-type {
+				grid-area: message;
+				background-color: hsl(0deg 0% 20% / 0.2);
+				margin-block-start: -1rem;
+				margin-block-end: 1rem;
+				justify-self: center;
+				inline-size: 100%;
+				box-sizing: content-box;
+				padding: 1rem;
+				display: flex;
+				column-gap: 0.5em;
+
+				> p:only-of-type {
+					margin-block: 0;
+				}
 			}
-
-	header {
-		display: grid;
-		gap: 0.5rem;
-		grid-area: header;
-	}
-		header > a:only-of-type {
-			text-decoration: none;
-			justify-self: start;
-			text-transform: lowercase;
-			font-variation-settings: "wdth" 125;
-			font-weight: 200;
-			font-size: 1.75rem;
 		}
 
-	main {
-		grid-area: main;
+		header {
+			display: grid;
+			gap: 0.5rem;
+			grid-area: header;
+
+			> a:only-of-type {
+				text-decoration: none;
+				justify-self: start;
+				text-transform: lowercase;
+				font-variation-settings: "wdth" 125;
+				font-weight: 200;
+				font-size: 1.75rem;
+			}
+		}
+
+		main {
+			grid-area: main;
+		}
+
+		footer {
+			background-color: var(--color-canvas-muted);
+			align-self: end;
+			grid-area: footer;
+			padding-block: 1.25rem;
+			padding-inline: 1rem;
+			margin-inline: -1rem;
+			margin-block-end: -1rem;
+
+			margin-trim: block;
+			@supports not (margin-trim: block) {
+				> :first-child {
+					margin-block-start: 0;
+				}
+				> :last-child {
+					margin-block-end: 0;
+				}
+			}
+		}
 	}
 
-	footer {
-		align-self: end;
-		grid-area: footer;
+	:where(header, footer) > nav > ul {
+		list-style: none;
+		padding-inline-start: 0;
+		margin-block: 0;
+		display: flex;
+		font-variation-settings: "wdth" 110;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.5rem;
+		line-height: 1;
 	}
-}
-
-:root {
-	--color-accent: hsl(160 80% 20%);
-}
-
-@media (prefers-color-scheme: dark) {
-	:root {
-		--color-accent: hsl(160 54% 70%);
-	}
-}
-
-:focus-visible {
-	outline: 0.125em dashed var(--color-accent, currentColor);
-	outline-offset: 0.125em;
-	border-radius: 0.25em;
-}
-
-.visually-hidden {
-	border-width: 0;
-	clip: rect(0, 0, 0, 0);
-	height: 1px;
-	margin: -1px;
-	overflow: hidden;
-	padding: 0;
-	position: absolute;
-	white-space: nowrap;
-	width: 1px;
-}
-
-.skip-link {
-	background-color: Canvas;
-	padding-block: 0.25em;
-	padding-inline: 0.5em;
-}
-
-.skip-link:focus {
-	height: unset;
-	width: unset;
-	clip: unset;
-}
-
-:where(header, footer) > nav > ul {
-	list-style: none;
-	padding-inline-start: 0;
-	margin-block: 0;
-	display: flex;
-	font-variation-settings: "wdth" 110;
-	flex-wrap: wrap;
-	align-items: center;
-	gap: 0.5rem;
-	line-height: 1;
-}
-
-p, li {
-	max-inline-size: 52ch;
 }

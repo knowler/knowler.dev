@@ -34,7 +34,11 @@ block body
 	main#content
 		block content
 	footer
-		p &copy; 2023 Nathan Knowler. All rights reserved.
+		mixin license-link
+			a(rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/").
+				CC-BY-NC-SA 4.0 license
+		p #[a(href="https://github.com/knowler/knowler.dev") Code] and content by Nathan Knowler.
+		p Except if noted otherwise, content on this website is licensed under a #[+license-link].
 		nav(aria-label="secondary")
 			ul(role="list")
 				li: +nav-link(href="/accessibility") Accessibility
