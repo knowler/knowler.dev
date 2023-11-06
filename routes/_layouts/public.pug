@@ -17,8 +17,10 @@ append head
 
 block body
 	a(href=`${currentPath}#content`).skip-link.visually-hidden Skip to content
-	header
-		+nav-link(href="/").h-card Nathan Knowler
+	header.h-card
+		+nav-link(href="/").u-url
+			span(hidden).u-photo https://github.com/knowler.png
+			span.p-name Nathan Knowler
 		nav(aria-label="primary")
 			ul(role="list")
 				li: +nav-link(href="/") Welcome
