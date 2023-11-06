@@ -180,4 +180,8 @@
 		gap: 0.5rem;
 		line-height: 1;
 	}
+
+	pre {
+		tab-size: 2ch;
+	}
 }
