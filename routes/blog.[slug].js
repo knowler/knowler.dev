@@ -1,5 +1,6 @@
 import { trimTrailingSlash } from "~/utils/trim-trailing-slash.js";
 import { getPostBySlug } from "~/models/posts.js";
+import { winnipegDateTime } from "~/utils/winnipeg-datetime.js";
 
 export async function get(c, next) {
 	try {
@@ -11,6 +12,7 @@ export async function get(c, next) {
 			description: post.description,
 			post,
 			canonical: trimTrailingSlash(c.req.url),
+			prettyDateString: winnipegDateTime(new Date(post.publishedAt)),
 		});
 	} catch (error) {
 		console.error(error);

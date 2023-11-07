@@ -8,7 +8,7 @@ append head
 block content
 	article.h-entry
 		+h1(title).p-name
-		p #[time(datetime=post.publishedAt) #{new Date(post.publishedAt).toDateString()}] – #[a(href=canonical) Permalink]
+		p #[time(datetime=post.publishedAt).dt-published= prettyDateString] – #[a(href=canonical).u-url Permalink]
 		.e-content !{post.html}
 	aside
 		h2 Webmentions

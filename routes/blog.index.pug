@@ -22,4 +22,4 @@ block content
 							+blog-post-title
 						if post.description
 							p= post.description
-						time(datetime=post.publishedAt) #{new Date(post.publishedAt).toDateString()}
+						time(datetime=post.publishedAt)= post.prettyDateString
