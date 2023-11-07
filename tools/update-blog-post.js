@@ -1,5 +1,7 @@
 import { extract } from "https://deno.land/std@0.205.0/front_matter/toml.ts";
 import { stringify } from "https://deno.land/std@0.205.0/toml/mod.ts";
+import { htmlToMarkdown } from "~/utils/html-to-markdown.js";
+import { markdownToHTML } from "~/utils/markdown-to-html.js";
 
 const DENO_KV_DB_UUID = Deno.env.get("DENO_KV_DB_UUID");
 const kv = await Deno.openKv(`https://api.deno.com/databases/${DENO_KV_DB_UUID}/connect`);
@@ -23,11 +25,13 @@ if (!postRecord?.value) {
 const post = postRecord.value;
 const { html, updatedAt: _updatedAt, ...postWithoutHTML } = post;
 
-const fileName = `${post.id}.html`
+const markdown = String(await htmlToMarkdown(html));
+
+const fileName = `${post.id}.md`
 
 const frontmatter = stringify(postWithoutHTML);
 
-await Deno.writeTextFile(fileName, `---toml\n${frontmatter}---\n${html}`);
+await Deno.writeTextFile(fileName, `---toml\n${frontmatter}---\n${markdown}`);
 
 const command = new Deno.Command("nvim", {
 	args: [fileName],
@@ -43,7 +47,7 @@ if (output.success) {
 		const { body, attrs } = extract(file);
 		const updatedPost = {
 			...attrs,
-			html: body,
+			html: String(await markdownToHTML(body)),
 			updatedAt: new Date().toISOString(),
 		}
 		await kv.set(["posts", post.id], updatedPost);
