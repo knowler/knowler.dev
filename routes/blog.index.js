@@ -5,6 +5,8 @@ import { winnipegDateTime } from "~/utils/winnipeg-datetime.js";
 export async function get(c) {
 	const posts = await getPosts();
 
+	c.header("cache-control", "max-age=600");
+
 	return c.render(
 		"blog.index",
 		{

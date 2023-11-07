@@ -41,8 +41,10 @@
     }
   },
   "redirects": {
+    "http://esm.sh/gh/tunnckoCore/deno-httpcache-kv/mod.ts": "https://esm.sh/gh/tunnckoCore/deno-httpcache-kv@b421412079/mod.ts",
     "https://deno.land/x/brotli/mod.ts": "https://deno.land/x/brotli@0.1.7/mod.ts",
-    "https://deno.land/x/hono_sessions/mod.ts": "https://deno.land/x/hono_sessions@v0.3.2/mod.ts"
+    "https://deno.land/x/hono_sessions/mod.ts": "https://deno.land/x/hono_sessions@v0.3.2/mod.ts",
+    "https://esm.sh/http-cache-semantics": "https://esm.sh/http-cache-semantics@4.1.1"
   },
   "remote": {
     "https://deno.land/std@0.140.0/_util/assert.ts": "e94f2eb37cebd7f199952e242c77654e43333c1ac4c5c700e929ea3aa5489f74",
@@ -583,12 +585,16 @@
     "https://deno.land/x/url_concat@1.0.0-beta.1/deps.ts": "4b91c9fef1af94bf2b6c81a942ad3d093ea5709feb7b566416691f549d97bb5f",
     "https://deno.land/x/url_concat@1.0.0-beta.1/mod.ts": "349e5737346f3c49df1378f5f8fc49759daab7df17ee8042419acd34ad78a107",
     "https://esm.sh/feed@4.2.2": "3dd30815b6f73a674fe3a994803496b01163448bd297b084fd2eb2af1289bbca",
+    "https://esm.sh/gh/tunnckoCore/deno-httpcache-kv@b421412079/mod.ts": "fa111d0f55ff4e12f7e8952247263b04232a7c85b4bd684882bb6c6874483d9e",
+    "https://esm.sh/http-cache-semantics@4.1.1": "ac00fe70f07cc191b4968359af9b17ddff5df43c391780674a3b01b880e8860f",
     "https://esm.sh/iron-webcrypto@0.10.1": "6ae72d25aa143bcdc354671e0eb98e6bb47f3a52336a631aa7cc9b383b4978a3",
     "https://esm.sh/nanoid@4.0.0/async": "635564e916c2aa77440eb18f16f0e0549f3a9186fa9a4a35af7606a628716cfa",
     "https://esm.sh/v128/pug@3.0.2/deno/pug.bundle.mjs": "321ae6e9704b02ddbd015fe8b60fc2893800353135e05f978581803f06886b3a",
     "https://esm.sh/v131/feed@4.2.2/denonext/feed.mjs": "d78e6bb2c239b4a9d5b61fd17550df495bfcced5b7bea90a24d5c4d1941e142e",
     "https://esm.sh/v131/sax@1.2.4/denonext/sax.mjs": "c709f5e231d178e08230a3e35ea55a1d4ccccefa69e47a7cb7da37adb5b342dd",
     "https://esm.sh/v131/xml-js@1.6.11/denonext/xml-js.mjs": "30e2f7a7b587ecfa2a49ed6af931a67cbc7d0733c6f34de49dbfaa3a0a746100",
+    "https://esm.sh/v133/gh/tunnckoCore/deno-httpcache-kv@b421412079/denonext/mod.ts.js": "598b663735f4423317d0342fffb006931d71cc4f11133cac55d78b6841a38b84",
+    "https://esm.sh/v133/http-cache-semantics@4.1.1/denonext/http-cache-semantics.mjs": "38a8007e1f213275b42604e565d1d610f929a281f85cf3a54339fd1204966b32",
     "https://esm.sh/v133/iron-webcrypto@0.10.1/denonext/iron-webcrypto.mjs": "9b3b373a6337fd063f72d6400590575c732c32430c88d79564e8f5ce729249d4",
     "https://esm.sh/v133/nanoid@4.0.0/denonext/async.js": "6b0a5168af3e068b4b4e0b3790ee2d96b9b38a84e3741293bd5108d39c60cecd"
   }

@@ -6,6 +6,7 @@ import { CookieStore, sessionMiddleware } from "hono_sessions";
 import { pugRenderer } from "~/middleware/pug-renderer.js";
 import { rewriteWithoutTrailingSlashes } from "~/middleware/rewrite-without-trailing-slashes.js";
 import { noRobots } from "~/middleware/no-robots.js";
+import { cache } from "~/middleware/cache.js";
 
 /** Jobs */
 import { processWebmention } from "~/jobs/process-webmention.js";
@@ -59,41 +60,45 @@ kv.listenQueue(async (message) => {
 const app = new Hono();
 const sudo = new Hono();
 
-app.get("/feed.xml", getFeedRoute);
+const s = sessionMiddleware({
+	store: new CookieStore(),
+	sessionCookieName: "__session",
+	expireAfterSeconds: 60 * 60 * 24 * 7,
+	encryptionKey: Deno.env.get("SESSION_KEY"),
+	cookieOptions: {
+		path: "/",
+		domain: new URL(SITE_URL).hostname,
+		httpOnly: true,
+		secure: false,
+		sameSite: "Lax",
+	},
+});
 
 app.use(
 	"*",
 	pugRenderer(),
 	logger(),
+	cache(),
 	serveStatic({ root: "./assets" }),
 	rewriteWithoutTrailingSlashes(),
-	sessionMiddleware({
-		store: new CookieStore(),
-		sessionCookieName: "__session",
-		expireAfterSeconds: 60 * 60 * 24 * 7,
-		encryptionKey: Deno.env.get("SESSION_KEY"),
-		cookieOptions: {
-			path: "/",
-			domain: new URL(SITE_URL).hostname,
-			httpOnly: true,
-			secure: false,
-			sameSite: "Lax",
-		},
-	}),
 );
 
 app.notFound(get404Route);
+
+app.get("/feed.xml", getFeedRoute);
 
 app.get("/", getIndexRoute);
 app.get("/:page", getPageRoute);
 app.get("/blog", getBlogIndexRoute);
 app.get("/blog/:slug", getBlogPostRoute);
+
+app.use("/webmention", s);
 app.get("/webmention", getWebmentionRoute);
 app.post("/webmention", postWebmentionRoute);
 
 /** Login route */
 app
-	.use(`/${LOGIN_PATH}`, noRobots(), async (c, next) => {
+	.use(`/${LOGIN_PATH}`, s, noRobots(), async (c, next) => {
 		const session = c.get("session");
 		if (session.get("authorized") === true) return c.redirect("/sudo");
 		await next();
@@ -102,7 +107,7 @@ app
 	.post(postLoginRoute);
 
 /** Sudo routes */
-sudo.use("*", noRobots());
+sudo.use("*", s, noRobots());
 sudo.use("*", async (c, next) => {
 	const session = c.get("session");
 	// Intentionally do not expose the login URL
