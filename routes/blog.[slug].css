@@ -16,6 +16,13 @@ main > .h-entry ~ aside li a {
 	line-height: 1.1;
 }
 
+.h-entry h1 + p {
+	margin-block-start: 0.5em;
+	margin-block-end: 2rem;
+	font-variation-settings: "wdth" 110;
+	font-size: clamp(1rem, 0.9rem + 1vw, 1.5rem);
+}
+
 .hljs {
   color: #24292e;
   background: #ffffff;
