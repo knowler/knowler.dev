@@ -7,7 +7,7 @@ const me = {
 };
 
 export async function get(c) {
-	const posts = await getPosts();
+	const posts = await getPosts({ limit: 10 });
 
 	const feed = new Feed({
 		title: "Nathan Knowler",
@@ -33,7 +33,7 @@ export async function get(c) {
 	}
 
 	c.header("content-type", "text/xml; charset=UTF-8");
-	c.header("cache-control", "max-age=0");
+	c.header("cache-control", "max-age=1200");
 
 	return c.body(feed.rss2());
 }

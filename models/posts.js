@@ -35,8 +35,8 @@ export async function getPostBySlug(slug, options = { withWebmentions: false }) 
 	return post;
 }
 
-export async function getPosts() {
-	const iter = kv.list({ prefix: ["posts"] });
+export async function getPosts(options = {}) {
+	const iter = kv.list({ prefix: ["posts"] }, options);
 	const posts = [];
 
 	for await (const record of iter) posts.push(record.value);
