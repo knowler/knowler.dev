@@ -7,7 +7,7 @@ const me = {
 };
 
 export async function get(c) {
-	const posts = await getPosts({ limit: 10 });
+	const posts = await getPosts();
 
 	const feed = new Feed({
 		title: "Nathan Knowler",
@@ -20,7 +20,9 @@ export async function get(c) {
 		author: me,
 	});
 
+	let count = 1;
 	for (const post of posts.reverse()) {
+		if (count === 10) break;
 		feed.addItem({
 			id: post.slug,
 			title: post.title,
@@ -30,6 +32,7 @@ export async function get(c) {
 			content: post.html,
 			author: [me],
 		});
+		count++;
 	}
 
 	c.header("content-type", "text/xml; charset=UTF-8");
