@@ -9,7 +9,7 @@ const [contentFile] = Deno.args;
 
 const text = await Deno.readTextFile(contentFile);
 
-const {attrs, body} = await extract(text);
+const {attrs, body} = extract(text);
 
 const post = {
 	id: crypto.randomUUID(),
