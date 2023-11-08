@@ -1,3 +1,4 @@
+import { markdownToHTML } from "../utils/markdown-to-html.js";
 import { extract } from "https://deno.land/std@0.204.0/front_matter/toml.ts";
 import paramCase from "https://deno.land/x/case@2.1.1/paramCase.ts";
 
@@ -17,7 +18,7 @@ const post = {
 	description: attrs.description,
 	publishedAt: new Date().toISOString(),
 	published: attrs.published ?? true,
-	html: body,
+	html: String(await markdownToHTML(body)),
 }
 
 await kv.set(["posts", post.id], post);
