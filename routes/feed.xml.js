@@ -33,7 +33,7 @@ export async function get(c) {
 	}
 
 	c.header("content-type", "text/xml; charset=UTF-8");
-	c.header("cache-control", "max-age=600");
+	c.header("cache-control", "max-age=0");
 
 	return c.body(feed.rss2());
 }
