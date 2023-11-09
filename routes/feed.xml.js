@@ -15,7 +15,7 @@ export async function get(c) {
 		id: "https://knowler.dev/",
 		link: "https://knowler.dev/",
 		language: "en-CA",
-		copyright: "All rights reserved 2023, Nathan Knowler",
+		copyright: "Code and content by Nathan Knowler. Except if noted otherwise, content on this website is licensed under a CC BY-NC-SA 4.0 license.",
 		generator: "Deno",
 		author: me,
 	});
