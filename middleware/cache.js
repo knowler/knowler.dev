@@ -17,7 +17,7 @@ export function cache() {
 			}
 
 			if (!c.res.headers.has("cache-control")) {
-				c.header("cache-control", "s-maxage=60");
+				c.header("cache-control", "s-maxage=3600");
 			}
 			c.header("x-cache-status", "MISS");
 			await cache.put(key, c.res);
