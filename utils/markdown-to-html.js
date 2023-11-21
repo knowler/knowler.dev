@@ -1,4 +1,4 @@
-import {unified} from "npm:unified";
+import { unified } from "npm:unified";
 import remarkParse from "npm:remark-parse";
 import remarkRehype from "npm:remark-rehype";
 import rehypeHighlight from "npm:rehype-highlight";

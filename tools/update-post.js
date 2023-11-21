@@ -9,12 +9,13 @@ import { markdownToHTML } from "../utils/markdown-to-html.js";
 
 const posts = await arrayFromAsync(
 	kv.list({ prefix: ["posts"] }),
-	entry => entry.value,
+	(entry) => entry.value,
 );
-const slugs = posts.map(post => post.slug).join("\n");
+const slugs = posts.map((post) => post.slug).join("\n");
 
-const echo = new Deno.Command("echo", { args: [ slugs ] });
-const fzf = new Deno.Command("fzf", { stdin: "piped", stdout: "piped" }).spawn();
+const echo = new Deno.Command("echo", { args: [slugs] });
+const fzf = new Deno.Command("fzf", { stdin: "piped", stdout: "piped" })
+	.spawn();
 
 const echoOutput = await echo.output();
 
@@ -32,8 +33,8 @@ if (!fzfOutput.success) {
 }
 
 const slug = new TextDecoder().decode(fzfOutput.stdout).trim();
-const post = posts.find(p => p.slug === slug);
-const {html, ...postWithoutHtml} = post;
+const post = posts.find((p) => p.slug === slug);
+const { html, ...postWithoutHtml } = post;
 
 const markdown = String(await htmlToMarkdown(html));
 const frontmatter = stringify(postWithoutHtml);
@@ -44,7 +45,8 @@ const fileName = `${post.id}.md`;
 
 await Deno.writeTextFile(fileName, markdownWithFrontmatter);
 
-const editor = new Deno.Command(Deno.env.get("EDITOR"), { args: [ fileName ] }).spawn();
+const editor = new Deno.Command(Deno.env.get("EDITOR"), { args: [fileName] })
+	.spawn();
 const editorOutput = await editor.output();
 
 if (!editorOutput.success) {
@@ -58,9 +60,11 @@ const updatedPost = {
 	...attrs,
 	html: String(await markdownToHTML(body)),
 	updatedAt: new Date().toISOString(),
-}
+};
 
 await kv.set(["posts", post.id], updatedPost);
 await Deno.remove(fileName);
 
-console.log(`Successfully updated post: https://knowler/blog/${updatedPost.slug}`);
+console.log(
+	`Successfully updated post: https://knowler/blog/${updatedPost.slug}`,
+);

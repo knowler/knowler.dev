@@ -11,7 +11,7 @@ export async function get(c) {
 		"blog.index",
 		{
 			title: "Blog",
-			posts: posts.reverse().map(post => {
+			posts: posts.reverse().map((post) => {
 				post.prettyDateString = winnipegDateTime(new Date(post.publishedAt));
 				return post;
 			}),

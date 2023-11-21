@@ -1,7 +1,9 @@
 const DENO_KV_DB_UUID = Deno.env.get("DENO_KV_DB_UUID");
 
 const local = await Deno.openKv();
-const production = await Deno.openKv(`https://api.deno.com/databases/${DENO_KV_DB_UUID}/connect`);
+const production = await Deno.openKv(
+	`https://api.deno.com/databases/${DENO_KV_DB_UUID}/connect`,
+);
 
 const pages = production.list({ prefix: ["pages"] });
 

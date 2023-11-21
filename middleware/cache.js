@@ -3,7 +3,6 @@ import { kvCachesOpen } from "http://esm.sh/gh/tunnckoCore/deno-httpcache-kv/mod
 const CACHE = { open: kvCachesOpen };
 
 export function cache() {
-
 	return async (c, next) => {
 		const key = c.req.url;
 		const cache = await CACHE.open("http-v0-cache");
@@ -22,8 +21,8 @@ export function cache() {
 			c.header("x-cache-status", "MISS");
 			await cache.put(key, c.res);
 		} else {
-			cachedResponse.headers.set("x-cache-status", "HIT")
+			cachedResponse.headers.set("x-cache-status", "HIT");
 			return new Response(cachedResponse.body, cachedResponse);
 		}
-	}
+	};
 }

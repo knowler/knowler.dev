@@ -5,7 +5,8 @@ import { getPostBySlug } from "~/models/posts.js";
 // TODO: differentiate error types
 async function postForTarget(url) {
 	const postPattern = new URLPattern({ pathname: "/blog/:slug{/}?" });
-  const slug = postPattern.exec({ pathname: url.pathname })?.pathname?.groups?.slug;
+	const slug = postPattern.exec({ pathname: url.pathname })?.pathname?.groups
+		?.slug;
 
 	if (!slug) throw `Not a post`;
 
@@ -25,7 +26,9 @@ export async function processWebmention({ source, target }) {
 
 	try {
 		const post = await postForTarget(targetURL);
-		const existingWebmention = post.webmentions.find(webmention => webmention.source === source);
+		const existingWebmention = post.webmentions.find((webmention) =>
+			webmention.source === source
+		);
 		const id = existingWebmention?.id ?? crypto.randomUUID();
 
 		// TODO: Ensure redirects are handled properly (see 3.2.2).
@@ -37,7 +40,9 @@ export async function processWebmention({ source, target }) {
 
 		// The target URL must be in the source page for it to be a valid
 		// Webmention
-		if (html.indexOf(targetURL.href) === -1) throw "Target URL not found in source document";
+		if (html.indexOf(targetURL.href) === -1) {
+			throw "Target URL not found in source document";
+		}
 
 		const { items } = mf2(html, { baseUrl: source });
 		const hEntry = items.find((item) => item.type?.includes("h-entry"));
@@ -57,7 +62,7 @@ export async function processWebmention({ source, target }) {
 
 		// Setup relationship with post
 		if (!existingWebmention) {
-			post.webmentions.map(webmention => webmention.id);
+			post.webmentions.map((webmention) => webmention.id);
 			post.webmentions.push(id);
 			await kv.set(["posts", post.id], post);
 			console.log(`Associated webmention with post: ${post.slug} (${post.id})`);

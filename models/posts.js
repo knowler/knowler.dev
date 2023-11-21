@@ -19,13 +19,16 @@ export async function getPost(id) {
 	return postRecord.value;
 }
 
-export async function getPostBySlug(slug, options = { withWebmentions: false }) {
+export async function getPostBySlug(
+	slug,
+	options = { withWebmentions: false },
+) {
 	const idRecord = await kv.get(["postsBySlug", slug]);
 	if (!idRecord.value) throw `post not found with slug: ${slug}`;
 	const post = await getPost(idRecord.value);
 
 	if (options.withWebmentions) {
-		if ('webmentions' in post)  {
+		if ("webmentions" in post) {
 			for (const [index, webmentionId] of post.webmentions.entries()) {
 				post.webmentions[index] = await getWebmention(webmentionId);
 			}
@@ -59,14 +62,18 @@ export async function createPost(data = {}) {
 		// Check if the post exists
 		const existingPost = await kv.get(["postsBySlug", newPostData.slug]);
 
-		if (existingPost.value) throw `Post already exists with slug: ${newPostData.slug} (${existingPost.value})`;
+		if (existingPost.value) {
+			throw `Post already exists with slug: ${newPostData.slug} (${existingPost.value})`;
+		}
 
 		newPostData.publishedAt ??= new Date().toISOString();
 	}
 
 	const post = await kv.set(["posts", newPostData.id], newPostData);
 	// Associate slug
-	if (newPostData.publishedAt) await kv.set(["postsBySlug", newPostData.slug], newPostData.id);
+	if (newPostData.publishedAt) {
+		await kv.set(["postsBySlug", newPostData.slug], newPostData.id);
+	}
 
 	return post.value;
 }

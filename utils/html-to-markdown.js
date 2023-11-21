@@ -1,5 +1,5 @@
-import {unified} from "npm:unified";
-import {toHtml} from "npm:hast-util-to-html"
+import { unified } from "npm:unified";
+import { toHtml } from "npm:hast-util-to-html";
 import remarkStringify from "npm:remark-stringify";
 import remarkReferenceLinks from "npm:remark-reference-links";
 import rehypeParse from "npm:rehype-parse";
@@ -11,12 +11,12 @@ export function htmlToMarkdown(html) {
 		.use(rehypeRemark, {
 			handlers: {
 				abbr(state, node) {
-					const result = {type: "html", value: toHtml(node)};
+					const result = { type: "html", value: toHtml(node) };
 					state.patch(node, result);
 					return result;
 				},
 				small(state, node) {
-					const result = {type: "html", value: toHtml(node)};
+					const result = { type: "html", value: toHtml(node) };
 					state.patch(node, result);
 					return result;
 				},

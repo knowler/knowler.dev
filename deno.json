@@ -5,7 +5,7 @@
 	"tasks": {
 		"dev": "deno run --unstable --allow-all --watch main.js",
 		"seed": "deno run --unstable --allow-all tools/seed-local.js",
-		"publish-post": "deno run --unstable --allow-all tools/publish-post.js"
+		"publish-post": "deno run --unstable --allow-all tools/publish-post.js",
 		"update-post": "deno run --unstable --allow-all tools/update-post.js"
 	},
 	"importMap": "./import_map.json"

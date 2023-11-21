@@ -32,7 +32,10 @@ import {
 import { get as getSudoIndexRoute } from "~/routes/sudo/index.js";
 import { get as getSudoContentCollectionTypeIndexRoute } from "~/routes/sudo/content.[collectionType].index.js";
 import { get as getSudoContentCollectionTypeItemRoute } from "~/routes/sudo/content.[collectionType].[itemId].js";
-import { get as getSudoWebmentionsIndexRoute } from "~/routes/sudo/webmentions.index.js";
+import {
+	get as getSudoWebmentionsIndexRoute,
+	post as postSudoWebmentionsIndexRoute,
+} from "~/routes/sudo/webmentions.index.js";
 
 import { runMigrations } from "~/migrations.js";
 
@@ -120,8 +123,12 @@ sudo.get("/content/:collectionType/new", (c) => {
 	const { collectionType } = c.req.param();
 	return c.text(`new ${collectionType}`);
 });
-sudo.get("/content/:collectionType/:itemId", getSudoContentCollectionTypeItemRoute);
+sudo.get(
+	"/content/:collectionType/:itemId",
+	getSudoContentCollectionTypeItemRoute,
+);
 sudo.get("/webmentions", getSudoWebmentionsIndexRoute);
+sudo.post("/webmentions", postSudoWebmentionsIndexRoute);
 sudo.get("/exit", (c) => {
 	const session = c.get("session");
 	session.set("authorized", false);
