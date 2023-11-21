@@ -12,32 +12,10 @@ import { cache } from "~/middleware/cache.js";
 import { processWebmention } from "~/jobs/process-webmention.js";
 import kv from "~/kv.js";
 
+/** Utils */
 import { invariant } from "~/utils/invariant.js";
-import { deferImportGet, deferImportPost } from "~/utils/import.ts";
 
-/** Routes */
-import { get as get404Route } from "~/routes/404.js";
-import { get as getIndexRoute } from "~/routes/index.js";
-import { get as getFeedRoute } from "~/routes/feed.xml.js";
-import { get as getBlogIndexRoute } from "~/routes/blog.index.js";
-import { get as getBlogPostRoute } from "~/routes/blog.[slug].js";
-import { get as getPageRoute } from "~/routes/[page].js";
-import {
-	get as getWebmentionRoute,
-	post as postWebmentionRoute,
-} from "~/routes/webmention.js";
-import {
-	get as getLoginRoute,
-	post as postLoginRoute,
-} from "~/routes/login.js";
-import { get as getSudoIndexRoute } from "~/routes/sudo/index.js";
-import { get as getSudoContentCollectionTypeIndexRoute } from "~/routes/sudo/content.[collectionType].index.js";
-import { get as getSudoContentCollectionTypeItemRoute } from "~/routes/sudo/content.[collectionType].[itemId].js";
-import {
-	get as getSudoWebmentionsIndexRoute,
-	post as postSudoWebmentionsIndexRoute,
-} from "~/routes/sudo/webmentions.index.js";
-
+/** Migration runner */
 import { runMigrations } from "~/migrations.js";
 
 const SITE_URL = Deno.env.get("SITE_URL");
@@ -87,32 +65,76 @@ app.use(
 	rewriteWithoutTrailingSlashes(),
 );
 
-app.notFound(get404Route);
+app.notFound(async (...args) => {
+	const { get } = await import("~/routes/404.js");
+	return get(...args);
+});
 
-app.get("/feed.xml", getFeedRoute);
+/**
+ * PUBLIC ROUTES
+ */
 
-app.get("/", getIndexRoute);
-app.get("/:page", getPageRoute);
-app.get("/blog", getBlogIndexRoute);
-app.get("/blog/:slug", getBlogPostRoute);
+app.get("/feed.xml", async (...args) => {
+	const { get } = await import("~/routes/feed.xml.js");
+	return get(...args);
+});
+
+app.get("/", async (...args) => {
+	const { get } = await import("~/routes/index.js");
+	return get(...args);
+});
+app.get("/:page", async (...args) => {
+	const { get } = await import("~/routes/[page].js");
+	return get(...args);
+});
+app.get("/blog", async (...args) => {
+	const { get } = await import("~/routes/blog.index.js");
+	return get(...args);
+});
+app.get("/blog/:slug", async (...args) => {
+	const { get } = await import("~/routes/blog.[slug].js");
+	return get(...args);
+});
 
 app.use("/webmention", s);
-app.get("/webmention", getWebmentionRoute);
-app.post("/webmention", postWebmentionRoute);
+app.get("/webmention", async (...args) => {
+	const { get } = await import("~/routes/webmention.js");
+	return get(...args);
+});
+app.post("/webmention", async (...args) => {
+	const { post } = await import("~/routes/webmention.js");
+	return post(...args);
+});
 
-app.get("/patterns", deferImportGet("~/routes/patterns/index.js"));
+/**
+ * PATTERNS
+ */
+app.get("/patterns", async (...args) => {
+	const { get } = await import("~/routes/patterns/index.js");
+	return get(...args);
+});
 
-/** Login route */
+/**
+ * LOGIN ROUTE
+ */
 app
 	.use(`/${LOGIN_PATH}`, s, noRobots(), async (c, next) => {
 		const session = c.get("session");
 		if (session.get("authorized") === true) return c.redirect("/sudo");
 		await next();
 	})
-	.get(getLoginRoute)
-	.post(postLoginRoute);
+	.get(async () => {
+		const { get } = await import("~/routes/login.js");
+		return get(...arguments);
+	})
+	.post(async () => {
+		const { post } = await import("~/routes/login.js");
+		return post(...arguments);
+	});
 
-/** Sudo routes */
+/**
+ * SUDO ROUTES
+ */
 sudo.use("*", s, noRobots());
 sudo.use("*", async (c, next) => {
 	const session = c.get("session");
@@ -120,18 +142,37 @@ sudo.use("*", async (c, next) => {
 	if (session.get("authorized") !== true) return c.notFound();
 	await next();
 });
-sudo.get("/", getSudoIndexRoute);
-sudo.get("/content/:collectionType", getSudoContentCollectionTypeIndexRoute);
+sudo.get("/", async (...args) => {
+	const { get } = await import("~/routes/sudo/index.js");
+	return get(...args);
+});
+sudo.get("/content/:collectionType", async (...args) => {
+	const { get } = await import(
+		"~/routes/sudo/content.[collectionType].index.js"
+	);
+	return get(...args);
+});
 sudo.get("/content/:collectionType/new", (c) => {
 	const { collectionType } = c.req.param();
 	return c.text(`new ${collectionType}`);
 });
 sudo.get(
 	"/content/:collectionType/:itemId",
-	getSudoContentCollectionTypeItemRoute,
+	async (...args) => {
+		const { get } = await import(
+			"~/routes/sudo/content.[collectionType].[itemId].js"
+		);
+		return get(...args);
+	},
 );
-sudo.get("/webmentions", getSudoWebmentionsIndexRoute);
-sudo.post("/webmentions", postSudoWebmentionsIndexRoute);
+sudo.get("/webmentions", async (...args) => {
+	const { get } = await import("~/routes/sudo/webmentions.index.js");
+	return get(...args);
+});
+sudo.post("/webmentions", async (...args) => {
+	const { post } = await import("~/routes/sudo/webmentions.index.js");
+	return post(...args);
+});
 sudo.get("/exit", (c) => {
 	const session = c.get("session");
 	session.set("authorized", false);
