@@ -1,0 +1,18 @@
+extends /_layouts/pattern
+
+append head
+	style: include switch.css
+	script(type="module"): include switch.script.js
+
+block content
+	h1= title
+	aside
+		p: strong This exploration is still a work in progress.
+	form(method="post")
+		div: label #[input(type="checkbox")] A standard checkbox
+		div: label #[input(role="switch" type="checkbox")] A checkbox with switch role
+		fieldset
+			legend Custom elements that require JavaScript without a fallback
+			div: label #[input-switch(name="input-switch")] A custom element with switch role
+			div: label #[input-switch(name="input-switch-checked" checked)] A custom element with switch role (already checked)
+		button Submit

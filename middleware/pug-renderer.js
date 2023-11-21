@@ -1,6 +1,10 @@
 import { renderFile } from "pug";
 import kebabCase from "case/paramCase";
 import { trimTrailingSlash } from "~/utils/trim-trailing-slash.js";
+import { invariant } from "~/utils/invariant.js";
+
+const SITE_URL = Deno.env.get("SITE_URL");
+invariant(SITE_URL);
 
 export function pugRenderer() {
 	return async (c, next) => {
@@ -15,7 +19,7 @@ export function pugRenderer() {
 						},
 						currentPath: trimTrailingSlash(c.req.path),
 						kebabCase,
-						SITE_URL: Deno.env.get("SITE_URL"),
+						SITE_URL,
 						...data,
 					},
 				),

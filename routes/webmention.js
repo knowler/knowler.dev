@@ -1,4 +1,8 @@
 import kv from "~/kv.js";
+import { invariant } from "~/utils/invariant.js";
+
+const SITE_URL = Deno.env.get("SITE_URL");
+invariant(SITE_URL);
 
 // TODO: implement UI for webmentions
 export function get(c) {
@@ -59,7 +63,6 @@ export async function post(c) {
 	if (!URL.canParse(target)) {
 		issues.push({ field: "target", message: "Source URL is not a valid URL." });
 	}
-	const SITE_URL = Deno.env.get("SITE_URL");
 	if (target && new URL(target).origin !== SITE_URL) {
 		issues.push({
 			field: "target",

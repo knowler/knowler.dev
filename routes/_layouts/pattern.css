@@ -1,0 +1,12 @@
+@layer base, components;
+
+@layer base {
+	*, ::before, ::after {
+		box-sizing: border-box;
+	}
+
+	html {
+		color-scheme: dark light;
+		font-family: system-ui;
+	}
+}

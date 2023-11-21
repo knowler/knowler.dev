@@ -2,11 +2,11 @@ import { Hono } from "hono";
 
 /** Middlewares */
 import { logger, serveStatic } from "hono/middleware";
-import { CookieStore, sessionMiddleware } from "hono_sessions";
 import { pugRenderer } from "~/middleware/pug-renderer.js";
 import { rewriteWithoutTrailingSlashes } from "~/middleware/rewrite-without-trailing-slashes.js";
 import { noRobots } from "~/middleware/no-robots.js";
 import { cache } from "~/middleware/cache.js";
+import { s } from "~/middleware/session.js";
 
 /** Jobs */
 import { processWebmention } from "~/jobs/process-webmention.js";
@@ -15,16 +15,9 @@ import kv from "~/kv.js";
 /** Utils */
 import { invariant } from "~/utils/invariant.js";
 
-/** Migration runner */
-import { runMigrations } from "~/migrations.js";
-
-const SITE_URL = Deno.env.get("SITE_URL");
 const LOGIN_PATH = Deno.env.get("LOGIN_PATH");
 
-invariant(SITE_URL);
 invariant(LOGIN_PATH);
-
-await runMigrations();
 
 kv.listenQueue(async (message) => {
 	switch (message.action) {
@@ -40,21 +33,6 @@ kv.listenQueue(async (message) => {
 });
 
 const app = new Hono();
-const sudo = new Hono();
-
-const s = sessionMiddleware({
-	store: new CookieStore(),
-	sessionCookieName: "__session",
-	expireAfterSeconds: 60 * 60 * 24 * 7,
-	encryptionKey: Deno.env.get("SESSION_KEY"),
-	cookieOptions: {
-		path: "/",
-		domain: new URL(SITE_URL).hostname,
-		httpOnly: true,
-		secure: false,
-		sameSite: "Lax",
-	},
-});
 
 app.use(
 	"*",
@@ -109,13 +87,11 @@ app.post("/webmention", async (...args) => {
 /**
  * PATTERNS
  */
-app.get("/patterns", async (...args) => {
-	const { get } = await import("~/routes/patterns/index.js");
-	return get(...args);
-});
+const { patterns } = await import("~/routes/patterns.js");
+app.route("/patterns", patterns);
 
 /**
- * LOGIN ROUTE
+ * LOGIN & SUDO ROUTES
  */
 app
 	.use(`/${LOGIN_PATH}`, s, noRobots(), async (c, next) => {
@@ -123,62 +99,16 @@ app
 		if (session.get("authorized") === true) return c.redirect("/sudo");
 		await next();
 	})
-	.get(async () => {
+	.get(async (...args) => {
 		const { get } = await import("~/routes/login.js");
-		return get(...arguments);
+		return get(...args);
 	})
-	.post(async () => {
+	.post(async (...args) => {
 		const { post } = await import("~/routes/login.js");
-		return post(...arguments);
+		return post(...args);
 	});
 
-/**
- * SUDO ROUTES
- */
-sudo.use("*", s, noRobots());
-sudo.use("*", async (c, next) => {
-	const session = c.get("session");
-	// Intentionally do not expose the login URL
-	if (session.get("authorized") !== true) return c.notFound();
-	await next();
-});
-sudo.get("/", async (...args) => {
-	const { get } = await import("~/routes/sudo/index.js");
-	return get(...args);
-});
-sudo.get("/content/:collectionType", async (...args) => {
-	const { get } = await import(
-		"~/routes/sudo/content.[collectionType].index.js"
-	);
-	return get(...args);
-});
-sudo.get("/content/:collectionType/new", (c) => {
-	const { collectionType } = c.req.param();
-	return c.text(`new ${collectionType}`);
-});
-sudo.get(
-	"/content/:collectionType/:itemId",
-	async (...args) => {
-		const { get } = await import(
-			"~/routes/sudo/content.[collectionType].[itemId].js"
-		);
-		return get(...args);
-	},
-);
-sudo.get("/webmentions", async (...args) => {
-	const { get } = await import("~/routes/sudo/webmentions.index.js");
-	return get(...args);
-});
-sudo.post("/webmentions", async (...args) => {
-	const { post } = await import("~/routes/sudo/webmentions.index.js");
-	return post(...args);
-});
-sudo.get("/exit", (c) => {
-	const session = c.get("session");
-	session.set("authorized", false);
-	return c.redirect(`/${LOGIN_PATH}`);
-});
-
+const { sudo } = await import("~/routes/sudo.js");
 app.route("/sudo", sudo);
 
 Deno.serve(app.fetch);
