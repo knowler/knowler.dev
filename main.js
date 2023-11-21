@@ -13,6 +13,7 @@ import { processWebmention } from "~/jobs/process-webmention.js";
 import kv from "~/kv.js";
 
 import { invariant } from "~/utils/invariant.js";
+import { deferImportGet, deferImportPost } from "~/utils/import.ts";
 
 /** Routes */
 import { get as get404Route } from "~/routes/404.js";
@@ -99,9 +100,7 @@ app.use("/webmention", s);
 app.get("/webmention", getWebmentionRoute);
 app.post("/webmention", postWebmentionRoute);
 
-app.get("/patterns", (...args) =>
-	import("~/routes/patterns/index.js").then(module => module.get(...args))
-);
+app.get("/patterns", deferImportGet("~/routes/patterns/index.js"));
 
 /** Login route */
 app
