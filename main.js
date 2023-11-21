@@ -99,6 +99,10 @@ app.use("/webmention", s);
 app.get("/webmention", getWebmentionRoute);
 app.post("/webmention", postWebmentionRoute);
 
+app.get("/patterns", (...args) =>
+	import("~/routes/patterns/index.js").then(module => module.get(...args))
+);
+
 /** Login route */
 app
 	.use(`/${LOGIN_PATH}`, s, noRobots(), async (c, next) => {
