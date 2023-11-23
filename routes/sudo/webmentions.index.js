@@ -1,8 +1,7 @@
 import kv from "~/kv.js";
-import { arrayFromAsync } from "~/utils/array-from-async.js";
 
 export async function get(c) {
-	const webmentions = await arrayFromAsync(
+	const webmentions = await Array.fromAsync(
 		kv.list({ prefix: ["webmentions"] }),
 		(item) => item.value,
 	);

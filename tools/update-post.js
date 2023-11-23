@@ -1,5 +1,4 @@
 import { htmlToMarkdown } from "~/utils/html-to-markdown.js";
-import { arrayFromAsync } from "~/utils/array-from-async.js";
 
 import { stringify } from "std/toml";
 import { extract } from "std/front_matter/toml";
@@ -7,7 +6,7 @@ import { extract } from "std/front_matter/toml";
 import { kv } from "./utils/production-kv.js";
 import { markdownToHTML } from "../utils/markdown-to-html.js";
 
-const posts = await arrayFromAsync(
+const posts = await Array.fromAsync(
 	kv.list({ prefix: ["posts"] }),
 	(entry) => entry.value,
 );
