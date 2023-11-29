@@ -5,7 +5,7 @@ import { winnipegDateTime } from "~/utils/winnipeg-datetime.js";
 export async function get(c, next) {
 	try {
 		const params = c.req.param();
-		const post = await getPostBySlug(params.slug, { withWebmentions: true });
+		const post = await getPostBySlug(params.slug);
 
 		return c.render("blog.[slug]", {
 			title: post.title,
