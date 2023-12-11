@@ -16,6 +16,12 @@ main > .h-entry ~ aside li a {
 	line-height: 1.1;
 }
 
+.h-entry h2 {
+	font-size: clamp(1.25rem, 1.25rem + 4vw, 2.5rem);
+	max-inline-size: 20ch;
+	line-height: 1.1;
+}
+
 .h-entry h1 + p {
 	margin-block-start: 0.5em;
 	margin-block-end: 2rem;
