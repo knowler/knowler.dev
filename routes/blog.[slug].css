@@ -29,6 +29,13 @@ main > .h-entry ~ aside li a {
 	font-size: clamp(1rem, 0.9rem + 1vw, 1.5rem);
 }
 
+pre {
+  background: #ffffff;
+	padding: 1rem;
+	max-inline-size: 48em;
+	overflow-x: auto;
+}
+
 .hljs {
   color: #24292e;
   background: #ffffff;
@@ -145,6 +152,10 @@ main > .h-entry ~ aside li a {
 }
 
 @media (prefers-color-scheme: dark) {
+	pre {
+		background: #0d1117;
+	}
+
 	.hljs {
 		color: #c9d1d9;
 		background: #0d1117;
