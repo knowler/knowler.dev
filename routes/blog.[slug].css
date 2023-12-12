@@ -44,6 +44,22 @@ main > .h-entry ~ aside li a {
 
 .h-entry :is(p, li) > code {
 	font-size: 0.9em;
+	display: inline-block;
+	padding-inline: 0.25em;
+	padding-block: -0.125em;
+	margin-block: -0.125em;
+	border-radius: 0.25em;
+	word-spacing: -0.1em;
+
+	background: #fff;
+	color: #005cc5;
+}
+
+@media (prefers-color-scheme: dark) {
+	.h-entry :is(p, li) > code {
+		background: #0d1117;
+		color: #79c0ff;
+	}
 }
 
 pre {
