@@ -11,15 +11,16 @@ main > .h-entry ~ aside li a {
 .h-entry h1 {
 	font-size: clamp(1.5rem, 1.5rem + 4vw, 4rem);
 	margin-block-end: 0.2em;
-	max-inline-size: 16ch;
-	text-wrap: balance;
+	max-inline-size: 18ch;
+	text-wrap: pretty;
 	line-height: 1.1;
 }
 
 .h-entry h2 {
 	font-size: clamp(1.25rem, 1.25rem + 4vw, 2.5rem);
-	max-inline-size: 20ch;
+	max-inline-size: 28ch;
 	line-height: 1.1;
+	text-wrap: pretty;
 }
 
 .h-entry h1 + p {
@@ -29,11 +30,30 @@ main > .h-entry ~ aside li a {
 	font-size: clamp(1rem, 0.9rem + 1vw, 1.5rem);
 }
 
+.h-entry :is(p, li) {
+	font-variation-settings: "wdth" 90;
+	font-size: clamp(1rem, 0.8rem + 4vw, 1.25rem);
+	font-weight: 250;
+	max-inline-size: 64ch;
+	letter-spacing: 0.01em;
+}
+
+.h-entry :is(p, li) > strong {
+	font-weight: 450;
+}
+
+.h-entry :is(p, li) > code {
+	font-size: 0.9em;
+}
+
 pre {
   background: #ffffff;
-	padding: 1rem;
-	max-inline-size: 48em;
+	padding: var(--padding);
+	margin-inline: calc(-1 * var(--padding));
+	font-size: clamp(0.7rem, 0.7rem + 0.5vw, 1.125rem);
+	inline-size: 100vw;
 	overflow-x: auto;
+	line-height: 2;
 }
 
 .hljs {

@@ -26,7 +26,8 @@
 	}
 
 	body {
-		padding: 1rem;
+		--padding: clamp(1rem, 0.9rem + 4vw, 2rem);
+		padding: var(--padding);
 	}
 
 	:focus-visible {
@@ -152,10 +153,10 @@
 	footer {
 		background-color: var(--color-canvas-muted);
 		grid-area: footer;
-		padding-block: 1.25rem;
-		padding-inline: 1rem;
-		margin-inline: -1rem;
-		margin-block-end: -1rem;
+		padding-block: calc(var(--padding) + 0.25rem);
+		padding-inline: var(--padding);
+		margin-inline: calc(-1 * var(--padding));
+		margin-block-end: calc(-1 * var(--padding));
 		margin-block-start: 1rem;
 		margin-trim: block;
 	}
