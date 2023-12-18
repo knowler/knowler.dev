@@ -19,9 +19,7 @@ const LOGIN_PATH = Deno.env.get("LOGIN_PATH");
 
 invariant(LOGIN_PATH);
 
-Deno.addSignalListener("SIGINT", () => {
-	console.log("SIGINT");
-});
+globalThis.addEventListener("unload", () => console.log("UNLOAD"));
 
 kv.listenQueue(async (message) => {
 	switch (message.action) {
