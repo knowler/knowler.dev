@@ -19,8 +19,8 @@ const LOGIN_PATH = Deno.env.get("LOGIN_PATH");
 
 invariant(LOGIN_PATH);
 
-globalThis.addEventListener("beforeunload", () => {
-	console.log("About to shut down isolate…");
+Deno.addSignalListener("SIGINT", () => {
+	console.log("SIGINT");
 });
 
 kv.listenQueue(async (message) => {
