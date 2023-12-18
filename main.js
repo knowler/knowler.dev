@@ -19,6 +19,10 @@ const LOGIN_PATH = Deno.env.get("LOGIN_PATH");
 
 invariant(LOGIN_PATH);
 
+globalThis.addEventListener("beforeunload", () => {
+	console.log("About to shut down isolate…");
+});
+
 kv.listenQueue(async (message) => {
 	switch (message.action) {
 		case "process-webmention": {
