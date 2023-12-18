@@ -67,7 +67,7 @@ pre {
 	padding: var(--padding);
 	margin-inline: calc(-1 * var(--padding));
 	font-size: clamp(0.7rem, 0.7rem + 0.5vw, 1.125rem);
-	inline-size: 100vw;
+	inline-size: calc(100% + (2 * var(--padding)));
 	overflow-x: auto;
 	line-height: 2;
 }
