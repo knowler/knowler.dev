@@ -1,0 +1,20 @@
+mixin env(env)
+	if Deno.env.get("ENV") === env
+		block
+
+mixin flag(flag)
+	if (flags && flags.has(flag))
+		block
+
+mixin feature-flags-form
+	style: include feature-flags-form.css
+	script(type="module"): include feature-flags-element.js
+	feature-flags
+		button(slot="toggle" type="button") Set Feature Flags
+		dialog(slot="dialog")
+			h2 Feature Flags
+			form(method="dialog")
+				label
+					input(name="blog:breadcrumbs" type="checkbox" switch)
+					| Breadcrumbs for blog posts
+				button Save chosen feature flags

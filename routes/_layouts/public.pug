@@ -1,6 +1,7 @@
 extends base
 
 include /_mixins/nav-link.pug
+include /_mixins/feature-flags.pug
 
 append head
 	title #{title} – Nathan Knowler
@@ -48,3 +49,5 @@ block body
 				li: +nav-link(href="/privacy") Privacy
 				li: +nav-link(href="/webmention") Webmention
 				li: a(href="/feed.xml") RSS
+				+env("development")
+					li: +nav-link(href="/feature-flags") Feature Flags

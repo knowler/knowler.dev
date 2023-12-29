@@ -6,10 +6,19 @@ append head
 	style: include blog.[slug].css
 
 block content
+	+flag("blog:breadcrumbs")
+		nav.breadcrumbs(aria-label="Breadcrumbs")
+			ol
+				li: a(href="/blog") Blog
+				li: a(aria-current="page" href=canonical)= title
 	article.h-entry
 		+h1(title).p-name
 		p #[time(datetime=post.publishedAt).dt-published= prettyDateString] – #[a(href=canonical).u-url Permalink]
 		.e-content !{post.html}
+	+env("development")
+		article
+			h2 About the author
+			p #[strong Nathan Knowler] is building websites. He’s interested in accessibility, progressive enhancements, and Web Components.
 	-//aside
 	-//	h2 Webmentions
 	-//	if post.webmentions.length > 0

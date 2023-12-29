@@ -1,0 +1,19 @@
+extends /_layouts/public
+
+include /_mixins/honey-pot
+
+block content
+	h1 Feature Flags
+	p.
+		These are features that I am currently working on and are either
+		experimental or not quite ready for the mainline experience. Often,
+		they might even require Web Platform features not available in all
+		browsers. Also, note that by opting in to any of these features, you
+		are opting out of HTTP caching for my website, since I use cookies
+		to store these settings.
+	form(method="POST")
+		+honey-pot
+		label
+			input(name="blog:breadcrumbs" type="checkbox" switch checked=flags.has("blog:breadcrumbs"))
+			| Breadcrumbs on blog posts
+		button Save Feature Flags

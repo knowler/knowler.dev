@@ -15,6 +15,7 @@ import kv from "~/kv.js";
 /** Utils */
 import { invariant } from "~/utils/invariant.js";
 
+const ENV = Deno.env.get("ENV");
 const LOGIN_PATH = Deno.env.get("LOGIN_PATH");
 
 invariant(LOGIN_PATH);
@@ -40,7 +41,18 @@ app.use(
 	"*",
 	pugRenderer(),
 	logger(),
-	cache(),
+	// set-cookie filter: we only need cookies on pages with forms on them or if we have feature flags set
+	async (c, next) => {
+		await next();
+
+		if (["/webmention", "/feature-flags"].includes(c.req.path)) return;
+
+		const flags = c.get("session")?.get("flags");
+
+		if (!flags) c.header("set-cookie", undefined);
+	},
+	s,
+	ENV === "development" ? (c, next) => next() : cache(),
 	serveStatic({ root: "./assets" }),
 	rewriteWithoutTrailingSlashes(),
 );
@@ -76,7 +88,6 @@ app.get("/blog/:slug", async (...args) => {
 	return get(...args);
 });
 
-app.use("/webmention", s);
 app.get("/webmention", async (...args) => {
 	const { get } = await import("~/routes/webmention.js");
 	return get(...args);
@@ -85,6 +96,17 @@ app.post("/webmention", async (...args) => {
 	const { post } = await import("~/routes/webmention.js");
 	return post(...args);
 });
+
+if (ENV === "development") {
+	app.get("/feature-flags", async (...args) => {
+		const { get } = await import("~/routes/feature-flags.js");
+		return get(...args);
+	});
+	app.post("/feature-flags", async (...args) => {
+		const { post } = await import("~/routes/feature-flags.js");
+		return post(...args);
+	});
+}
 
 /**
  * PATTERNS
