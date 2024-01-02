@@ -6,8 +6,9 @@ import { pugRenderer } from "~/middleware/pug-renderer.js";
 import { rewriteWithoutTrailingSlashes } from "~/middleware/rewrite-without-trailing-slashes.js";
 import { noRobots } from "~/middleware/no-robots.js";
 import { cache } from "~/middleware/cache.js";
-import { s } from "~/middleware/session.js";
-import { CookieStore, sessionMiddleware } from "hono_sessions";
+import { auth } from "~/middleware/auth.js";
+import { sessionMiddleware } from "~/middleware/session.js";
+import { CookieStore } from "hono_sessions";
 
 /** Jobs */
 import { processWebmention } from "~/jobs/process-webmention.js";
@@ -45,16 +46,31 @@ app.use(
 	pugRenderer(),
 	logger(),
 	// set-cookie filter: we only need cookies on pages with forms on them or if we have feature flags set
-	//async (c, next) => {
-	//	await next();
+	async (c, next) => {
+		await next();
 
-	//	if (["/webmention", "/feature-flags", `/${LOGIN_PATH}`, "/sudo"].includes(c.req.path)) return;
+		if (new URLPattern({ pathname: "/sudo*" }).test({ pathname: c.req.path })) return;
+		if (["/webmention", "/feature-flags", `/${LOGIN_PATH}`].includes(c.req.path)) return;
 
-	//	const flags = c.get("session")?.get("flags");
+		const flags = c.get("__flags_session")?.get("flags");
 
-	//	if (!flags) c.header("set-cookie", undefined);
-	//},
-	//s,
+		console.log(flags);
+
+		if (!flags) c.header("set-cookie", undefined);
+	},
+	sessionMiddleware({
+		store: new CookieStore(),
+		sessionCookieName: "__flags_session",
+		expireAfterSeconds: 60 * 60 * 24 * 7,
+		encryptionKey: SESSION_KEY,
+		cookieOptions: {
+			path: "/",
+			domain: new URL(SITE_URL).hostname,
+			httpOnly: true,
+			secure: true,
+			sameSite: "Strict",
+		},
+	}),
 	ENV === "development" ? (c, next) => next() : cache(),
 	serveStatic({ root: "./assets" }),
 	rewriteWithoutTrailingSlashes(),
@@ -134,8 +150,8 @@ app.route("/patterns", patterns);
  * LOGIN & SUDO ROUTES
  */
 app
-	.use(`/${LOGIN_PATH}`, s, noRobots(), async (c, next) => {
-		const session = c.get("session");
+	.use(`/${LOGIN_PATH}`, auth, noRobots(), async (c, next) => {
+		const session = c.get("__auth_session");
 		if (session.get("authorized") === true) return c.redirect("/sudo");
 		await next();
 	})

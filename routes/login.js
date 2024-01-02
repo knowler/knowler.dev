@@ -15,7 +15,7 @@ export async function post(c) {
 	) {
 		return c.redirect(`/${Deno.env.get("LOGIN_PATH")}`, 303);
 	} else {
-		const session = c.get("session");
+		const session = c.get("__auth_session");
 		session.set("authorized", true);
 		return c.redirect("/sudo", 303);
 	}

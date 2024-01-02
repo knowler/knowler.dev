@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { noRobots } from "~/middleware/no-robots.js";
-import { s } from "~/middleware/session.js";
+import { auth } from "~/middleware/auth.js";
 import { invariant } from "~/utils/invariant.js";
 
 const LOGIN_PATH = Deno.env.get("LOGIN_PATH");
@@ -11,8 +11,8 @@ const sudo = new Hono();
 /**
  * SUDO ROUTES
  */
-sudo.use("*", s, noRobots(), async (c, next) => {
-	const session = c.get("session");
+sudo.use("*", auth, noRobots(), async (c, next) => {
+	const session = c.get("__auth_session");
 	// Intentionally do not expose the login URL
 	if (session.get("authorized") !== true) return c.notFound();
 	await next();
@@ -49,7 +49,7 @@ sudo.post("/webmentions", async (...args) => {
 	return post(...args);
 });
 sudo.get("/exit", (c) => {
-	const session = c.get("session");
+	const session = c.get("__auth_session");
 	session.set("authorized", false);
 	return c.redirect(`/${LOGIN_PATH}`);
 });

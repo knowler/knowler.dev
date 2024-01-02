@@ -3,7 +3,7 @@ import { getPostBySlug } from "~/models/posts.js";
 import { winnipegDateTime } from "~/utils/winnipeg-datetime.js";
 
 export async function get(c, next) {
-	const flags = c.get("session")?.get("flags");
+	const flags = c.get("__flags_session")?.get("flags");
 
 	try {
 		const params = c.req.param();

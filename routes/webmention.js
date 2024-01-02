@@ -6,7 +6,7 @@ invariant(SITE_URL);
 
 // TODO: implement UI for webmentions
 export function get(c) {
-	const session = c.get("session");
+	const session = c.get("__webmention_session");
 	const url = new URL(c.req.url);
 	const issues = session.get("issues") ?? [];
 	const formData = session.get("formData") ??
@@ -29,7 +29,7 @@ export function get(c) {
 }
 
 export async function post(c) {
-	const session = c.get("session");
+	const session = c.get("__webmention_session");
 	// This is a very naïve check to see if the referrer was the
 	// webmention form on this website.
 	// TODO: update this to support webmention forms on individual blog

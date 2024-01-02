@@ -7,6 +7,7 @@
 		"hono/middleware": "https://deno.land/x/hono@v3.11.11/middleware.ts",
 		"hono/helpers": "https://deno.land/x/hono@v3.11.11/helpers.ts",
 		"hono_sessions": "https://deno.land/x/hono_sessions@v0.3.3/mod.ts",
+		"nanoid": "https://esm.sh/nanoid@4.0.0/async",
 		"pug": "https://deno.land/x/pug@v0.1.6/mod.ts",
 		"std/front_matter/toml": "https://deno.land/std@0.200.0/front_matter/toml.ts",
 		"std/http": "https://deno.land/std@0.200.0/http/mod.ts",

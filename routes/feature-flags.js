@@ -1,5 +1,5 @@
 export function get(c) {
-	const session = c.get("session");
+	const session = c.get("__flags_session");
 
 	return c.render("feature-flags", {
 		title: "Feature Flags",
@@ -8,7 +8,7 @@ export function get(c) {
 }
 
 export async function post(c) {
-	const session = c.get("session");
+	const session = c.get("__flags_session");
 
 	const formData = await c.req.formData();
 
