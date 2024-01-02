@@ -23,3 +23,5 @@ block content
 						if post.description
 							p= post.description
 						time(datetime=post.publishedAt)= post.prettyDateString
+						if post.webmentions && post.webmentions.length > 0
+							p #{post.webmentions.length} #{post.webmentions.length > 1 ? "webmentions" : "webmention"}
