@@ -62,7 +62,7 @@ export async function processWebmention({ source, target }) {
 
 		// Setup relationship with post
 		if (!existingWebmention) {
-			post.webmentions.map((webmention) => webmention.id);
+			post.webmentions = post.webmentions.map((webmention) => webmention.id);
 			post.webmentions.push(id);
 			await kv.set(["posts", post.id], post);
 			console.log(`Associated webmention with post: ${post.slug} (${post.id})`);
