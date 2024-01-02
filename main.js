@@ -7,6 +7,7 @@ import { rewriteWithoutTrailingSlashes } from "~/middleware/rewrite-without-trai
 import { noRobots } from "~/middleware/no-robots.js";
 import { cache } from "~/middleware/cache.js";
 import { s } from "~/middleware/session.js";
+import { CookieStore, sessionMiddleware } from "hono_sessions";
 
 /** Jobs */
 import { processWebmention } from "~/jobs/process-webmention.js";
@@ -17,10 +18,12 @@ import { invariant } from "~/utils/invariant.js";
 
 const ENV = Deno.env.get("ENV");
 const LOGIN_PATH = Deno.env.get("LOGIN_PATH");
+const SITE_URL = Deno.env.get("SITE_URL");
+const SESSION_KEY = Deno.env.get("SESSION_KEY");
 
 invariant(LOGIN_PATH);
-
-globalThis.addEventListener("unload", () => console.log("UNLOAD"));
+invariant(SITE_URL);
+invariant(SESSION_KEY);
 
 kv.listenQueue(async (message) => {
 	switch (message.action) {
@@ -42,16 +45,16 @@ app.use(
 	pugRenderer(),
 	logger(),
 	// set-cookie filter: we only need cookies on pages with forms on them or if we have feature flags set
-	async (c, next) => {
-		await next();
+	//async (c, next) => {
+	//	await next();
 
-		if (["/webmention", "/feature-flags"].includes(c.req.path)) return;
+	//	if (["/webmention", "/feature-flags", `/${LOGIN_PATH}`, "/sudo"].includes(c.req.path)) return;
 
-		const flags = c.get("session")?.get("flags");
+	//	const flags = c.get("session")?.get("flags");
 
-		if (!flags) c.header("set-cookie", undefined);
-	},
-	s,
+	//	if (!flags) c.header("set-cookie", undefined);
+	//},
+	//s,
 	ENV === "development" ? (c, next) => next() : cache(),
 	serveStatic({ root: "./assets" }),
 	rewriteWithoutTrailingSlashes(),
@@ -88,6 +91,19 @@ app.get("/blog/:slug", async (...args) => {
 	return get(...args);
 });
 
+app.use("/webmention", sessionMiddleware({
+	store: new CookieStore(),
+	sessionCookieName: "__webmention_session",
+	expireAfterSeconds: 60 * 60 * 24 * 7,
+	encryptionKey: SESSION_KEY,
+	cookieOptions: {
+		path: "/webmention",
+		domain: new URL(SITE_URL).hostname,
+		httpOnly: true,
+		secure: true,
+		sameSite: "Strict",
+	},
+}));
 app.get("/webmention", async (...args) => {
 	const { get } = await import("~/routes/webmention.js");
 	return get(...args);
