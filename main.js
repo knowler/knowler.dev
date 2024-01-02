@@ -54,8 +54,6 @@ app.use(
 
 		const flags = c.get("__flags_session")?.get("flags");
 
-		console.log(flags);
-
 		if (!flags) c.header("set-cookie", undefined);
 	},
 	sessionMiddleware({
