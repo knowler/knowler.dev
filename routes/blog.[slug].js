@@ -7,7 +7,7 @@ export async function get(c, next) {
 
 	try {
 		const params = c.req.param();
-		const post = await getPostBySlug(params.slug);
+		const post = await getPostBySlug(params.slug, { withWebmentions: true });
 
 		return c.render("blog.[slug]", {
 			title: post.title,
