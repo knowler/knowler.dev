@@ -8,10 +8,6 @@ main > .h-entry ~ aside li a {
 	word-break: break-all;
 }
 
-nav.breadcrumbs [aria-current="page"] {
-	color: CanvasText;
-}
-
 .h-entry h1 {
 	font-size: clamp(1.5rem, 1.5rem + 4vw, 4rem);
 	margin-block-end: 0.2em;

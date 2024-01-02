@@ -4,6 +4,7 @@ export function get(c) {
 	return c.render("feature-flags", {
 		title: "Feature Flags",
 		flags: new Set(session.get("flags")),
+		success: session.get("success"),
 	});
 }
 
@@ -12,7 +13,8 @@ export async function post(c) {
 
 	const formData = await c.req.formData();
 
-	console.log(Array.from(formData));
+	// Bad actor
+	if (formData.get("robotName") !== "") return c.redirect("feature-flags", 303);
 
 	const flags = new Set(session.get("flags"));
 
@@ -21,6 +23,8 @@ export async function post(c) {
 
 	if (flags.size === 0) session.set("flags", undefined);
 	else session.set("flags", Array.from(flags));
+
+	session.flash("success", true);
 
 	return c.redirect("/feature-flags", 303);
 }

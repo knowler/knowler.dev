@@ -9,8 +9,24 @@ block content
 	+flag("blog:breadcrumbs")
 		nav.breadcrumbs(aria-label="Breadcrumbs")
 			ol
-				li: a(href="/blog") Blog
+				li #[a(href="/blog") Blog] #[span(aria-hidden="true") – ]
 				li: a(aria-current="page" href=canonical)= title
+		style.
+			nav.breadcrumbs {
+				translate: 0 2rem;
+			}
+			nav.breadcrumbs ol {
+				padding-inline-start: 0;
+				margin-block: 0;
+				list-style: none;
+				display: flex;
+			}
+			nav.breadcrumbs [aria-current="page"] {
+				color: CanvasText;
+			}
+			nav.breadcrumbs li {
+				white-space: pre;
+			}
 	article.h-entry
 		+h1(title).p-name
 		p #[time(datetime=post.publishedAt).dt-published= prettyDateString] – #[a(href=canonical).u-url Permalink]

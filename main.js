@@ -129,16 +129,14 @@ app.post("/webmention", async (...args) => {
 	return post(...args);
 });
 
-if (ENV === "development") {
-	app.get("/feature-flags", async (...args) => {
-		const { get } = await import("~/routes/feature-flags.js");
-		return get(...args);
-	});
-	app.post("/feature-flags", async (...args) => {
-		const { post } = await import("~/routes/feature-flags.js");
-		return post(...args);
-	});
-}
+app.get("/feature-flags", async (...args) => {
+	const { get } = await import("~/routes/feature-flags.js");
+	return get(...args);
+});
+app.post("/feature-flags", async (...args) => {
+	const { post } = await import("~/routes/feature-flags.js");
+	return post(...args);
+});
 
 /**
  * PATTERNS

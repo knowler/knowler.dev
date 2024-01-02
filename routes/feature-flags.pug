@@ -2,6 +2,9 @@ extends /_layouts/public
 
 include /_mixins/honey-pot
 
+append head
+	style: include feature-flags.css
+
 block content
 	h1 Feature Flags
 	p.
@@ -12,6 +15,8 @@ block content
 		are opting out of HTTP caching for my website, since I use cookies
 		to store these settings.
 	form(method="POST")
+		if success
+			aside.success: p Updated feature flags.
 		+honey-pot
 		label
 			input(name="blog:breadcrumbs" type="checkbox" switch checked=flags.has("blog:breadcrumbs"))
