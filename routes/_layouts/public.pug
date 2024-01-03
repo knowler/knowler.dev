@@ -49,4 +49,5 @@ block body
 				li: +nav-link(href="/privacy") Privacy
 				li: +nav-link(href="/webmention") Webmention
 				li: a(href="/feed.xml") RSS
-				li: +nav-link(href="/feature-flags") Feature Flags
+				+env("development")
+					li: +nav-link(href="/feature-flags") Feature Flags
