@@ -46,30 +46,40 @@ app.use(
 	pugRenderer(),
 	logger(),
 	// set-cookie filter: we only need cookies on pages with forms on them or if we have feature flags set
-	async (c, next) => {
-		await next();
+	//async (c, next) => {
+	//	await next();
 
-		if (new URLPattern({ pathname: "/sudo*" }).test({ pathname: c.req.path })) return;
-		if (["/webmention", "/feature-flags", `/${LOGIN_PATH}`].includes(c.req.path)) return;
+	//	if (new URLPattern({ pathname: "/sudo*" }).test({ pathname: c.req.path })) return;
+	//	if (["/webmention", "/feature-flags", `/${LOGIN_PATH}`].includes(c.req.path)) return;
 
-		const flags = c.get("__flags_session")?.get("flags");
+	//	const flags = c.get("__flags_session")?.get("flags");
 
-		if (!flags) c.header("set-cookie", undefined);
-	},
-	sessionMiddleware({
-		store: new CookieStore(),
-		sessionCookieName: "__flags_session",
-		expireAfterSeconds: 60 * 60 * 24 * 7,
-		encryptionKey: SESSION_KEY,
-		cookieOptions: {
-			path: "/",
-			domain: new URL(SITE_URL).hostname,
-			httpOnly: true,
-			secure: true,
-			sameSite: "Strict",
-		},
-	}),
-	ENV === "development" ? (c, next) => next() : cache(),
+	//	if (!flags) c.header("set-cookie", undefined);
+	//},
+	//sessionMiddleware({
+	//	store: new CookieStore(),
+	//	sessionCookieName: "__flags_session",
+	//	expireAfterSeconds: 60 * 60 * 24 * 7,
+	//	encryptionKey: SESSION_KEY,
+	//	cookieOptions: {
+	//		path: "/",
+	//		domain: new URL(SITE_URL).hostname,
+	//		httpOnly: true,
+	//		secure: true,
+	//		sameSite: "Strict",
+	//	},
+	//}),
+	//async (c, next) => {
+	//	if (new URLPattern({ pathname: "/sudo*" }).test({ pathname: c.req.path })) return;
+	//	if (["/webmention", "/feature-flags", `/${LOGIN_PATH}`].includes(c.req.path)) return;
+
+	//	const flags = c.get("__flags_session")?.get("flags");
+
+	//	if (!flags) c.header("set-cookie", undefined);
+
+	//	await next();
+	//},
+	cache(),
 	serveStatic({ root: "./assets" }),
 	rewriteWithoutTrailingSlashes(),
 );
@@ -127,14 +137,16 @@ app.post("/webmention", async (...args) => {
 	return post(...args);
 });
 
-app.get("/feature-flags", async (...args) => {
-	const { get } = await import("~/routes/feature-flags.js");
-	return get(...args);
-});
-app.post("/feature-flags", async (...args) => {
-	const { post } = await import("~/routes/feature-flags.js");
-	return post(...args);
-});
+if (ENV === "development") {
+	app.get("/feature-flags", async (...args) => {
+		const { get } = await import("~/routes/feature-flags.js");
+		return get(...args);
+	});
+	app.post("/feature-flags", async (...args) => {
+		const { post } = await import("~/routes/feature-flags.js");
+		return post(...args);
+	});
+}
 
 /**
  * PATTERNS
