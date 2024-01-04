@@ -23,6 +23,13 @@ main > .h-entry ~ aside li a {
 	text-wrap: pretty;
 }
 
+.h-entry h3 {
+	font-size: clamp(1.125rem, 1.125rem + 4vw, 2rem);
+	max-inline-size: 32ch;
+	line-height: 1.1;
+	text-wrap: pretty;
+}
+
 .h-entry h1 + p {
 	margin-block-start: 0.5em;
 	margin-block-end: 2rem;
