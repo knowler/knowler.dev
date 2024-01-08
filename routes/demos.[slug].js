@@ -1,3 +1,5 @@
+import kv from "~/kv.js";
+
 export async function get(c, next) {
 	try {
 		const demo = (await kv.get(["demos", params.slug])).value;
