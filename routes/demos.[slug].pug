@@ -3,7 +3,7 @@ extends /_layouts/base
 include /_mixins/open-with-codepen
 
 append head
-	title #{demo.title ?? "Untitled"} – Demos – Nathan Knowler
+	title #{demo.title ? demo.title : "Untitled"} – Demos – Nathan Knowler
 	if demo.description
 		meta(name="description" content=demo.description)
 	style!= demo.css
