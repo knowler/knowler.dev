@@ -62,9 +62,12 @@ const updatedPost = {
 	updatedAt: new Date().toISOString(),
 };
 
+const url = `https://knowler/blog/${updatedPost.slug}`;
+
 await kv.set(["posts", post.id], updatedPost);
+await kv.delete(["kv-httpcache", url])
 await Deno.remove(fileName);
 
 console.log(
-	`Successfully updated post: https://knowler/blog/${updatedPost.slug}`,
+	`Successfully updated post: ${url}`,
 );
