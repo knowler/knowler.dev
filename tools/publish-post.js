@@ -25,3 +25,6 @@ const post = {
 
 await kv.set(["posts", post.id], post);
 await kv.set(["postsBySlug", post.slug], post.id);
+// Clear cache for blog index and feed
+await kv.delete(["kv-httpcache", "https://knowler.dev/blog"]);
+await kv.delete(["kv-httpcache", "https://knowler.dev/feed.xml"]);
