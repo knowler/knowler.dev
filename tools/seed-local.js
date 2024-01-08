@@ -9,7 +9,7 @@ const pages = production.list({ prefix: ["pages"] });
 
 for await (const page of pages) {
 	await local.set(["pages", page.value.id], page.value);
-	await local.set(["pagejBySlug", page.value.slug], page.value.id);
+	await local.set(["pagesBySlug", page.value.slug], page.value.id);
 }
 
 const posts = production.list({ prefix: ["posts"] });
