@@ -12,6 +12,6 @@ export async function get(c, next) {
 			canonical: trimTrailingSlash(c.req.url),
 		});
 	} catch (_) {
-		await next();
+		return c.notFound();
 	}
 }

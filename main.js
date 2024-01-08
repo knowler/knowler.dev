@@ -101,10 +101,6 @@ app.get("/", async (...args) => {
 	const { get } = await import("~/routes/index.js");
 	return get(...args);
 });
-app.get("/:page", async (...args) => {
-	const { get } = await import("~/routes/[page].js");
-	return get(...args);
-});
 app.get("/blog", async (...args) => {
 	const { get } = await import("~/routes/blog.index.js");
 	return get(...args);
@@ -178,6 +174,13 @@ app
 
 const { sudo } = await import("~/routes/sudo.js");
 app.route("/sudo", sudo);
+
+/* Page and static asset routes */
+
+app.get("/:page{[a-z0-9-]+}", async (...args) => {
+	const { get } = await import("~/routes/[page].js");
+	return get(...args);
+});
 
 app.use("*", serveStatic({ root: "./assets" }));
 
