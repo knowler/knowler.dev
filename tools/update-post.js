@@ -66,6 +66,7 @@ const url = `https://knowler/blog/${updatedPost.slug}`;
 
 await kv.set(["posts", post.id], updatedPost);
 await kv.delete(["kv-httpcache", url])
+await kv.delete(["kv-httpcache", "https://knowler.dev/feed.xml"])
 await Deno.remove(fileName);
 
 console.log(
