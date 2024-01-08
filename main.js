@@ -79,7 +79,7 @@ app.use(
 
 	//	await next();
 	//},
-	cache(),
+	ENV === "development" ? (_, next) => next() : cache(),
 	serveStatic({ root: "./assets" }),
 	rewriteWithoutTrailingSlashes(),
 );
@@ -147,6 +147,11 @@ if (ENV === "development") {
 		return post(...args);
 	});
 }
+
+app.get("/demos/:slug", async (...args) => {
+	const { get } = await import ("~/routes/demos.[slug].js");
+	return get(...args);
+});
 
 /**
  * PATTERNS
