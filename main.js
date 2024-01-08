@@ -80,7 +80,6 @@ app.use(
 	//	await next();
 	//},
 	ENV === "development" ? (_, next) => next() : cache(),
-	serveStatic({ root: "./assets" }),
 	rewriteWithoutTrailingSlashes(),
 );
 
@@ -179,5 +178,7 @@ app
 
 const { sudo } = await import("~/routes/sudo.js");
 app.route("/sudo", sudo);
+
+app.use("*", serveStatic({ root: "./assets" }));
 
 Deno.serve(app.fetch);
