@@ -66,9 +66,10 @@ async function createDemo() {
 
 	await kv.set(["demos", id], demo);
 
-	console.log(`https://knowler.dev/demos/${id}`);
-
 	await Deno.remove(tempDir, { recursive: true });
+	const url = `https://knowler.dev/demos/${id}`;
+	console.log(url);
+	new Deno.Command("open", { args: [ url ] }).spawn();
 }
 
 async function editDemo(urlOrId) {
@@ -133,6 +134,7 @@ async function editDemo(urlOrId) {
 		await kv.set(["demos", demoId], demo);
 		const url = `https://knowler.dev/demos/${demoId}`;
 		await kv.delete(["kv-httpcache", url]);
+		await kv.delete(["kv-httpcache", `${url}?codepen`]);
 		console.log(`Updated: ${url}`);
 
 		await Deno.remove(tempDir, { recursive: true });

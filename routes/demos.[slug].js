@@ -2,7 +2,6 @@ import kv from "~/kv.js";
 
 export async function get(c, next) {
 	try {
-		console.log(c.header("referer"));
 		const params = c.req.param();
 		const demo = (await kv.get(["demos", params.slug])).value;
 		const query = c.req.query();

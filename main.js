@@ -44,7 +44,10 @@ const app = new Hono();
 app.use(
 	"*",
 	pugRenderer(),
-	logger(),
+	async (c, next) => {
+		console.log("Referer:", c.header("referer"));
+		await next();
+	},
 	// set-cookie filter: we only need cookies on pages with forms on them or if we have feature flags set
 	//async (c, next) => {
 	//	await next();
