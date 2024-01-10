@@ -44,6 +44,7 @@ const app = new Hono();
 app.use(
 	"*",
 	pugRenderer(),
+	logger(),
 	async (c, next) => {
 		const referer = c.header("referer");
 		if (referer) console.log("Referer:", referer);
