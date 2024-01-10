@@ -46,7 +46,7 @@ app.use(
 	pugRenderer(),
 	logger(),
 	async (c, next) => {
-		const referer = c.header("referer");
+		const referer = c.req.header("referer");
 		if (referer) console.log("Referer:", referer);
 		await next();
 	},
