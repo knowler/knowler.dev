@@ -45,7 +45,8 @@ app.use(
 	"*",
 	pugRenderer(),
 	async (c, next) => {
-		console.log("Referer:", c.header("referer"));
+		const referer = c.header("referer");
+		if (referer) console.log("Referer:", referer);
 		await next();
 	},
 	// set-cookie filter: we only need cookies on pages with forms on them or if we have feature flags set
