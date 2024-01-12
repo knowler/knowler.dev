@@ -62,7 +62,7 @@ async function createDemo() {
 	console.log("What does it do?");
 	demo.description = prompt("Description:", demo.description);
 
-	demo.html = render(demo.pug);
+	demo.html = render(demo.pug, { pretty: true });
 
 	await kv.set(["demos", id], demo);
 
@@ -129,7 +129,7 @@ async function editDemo(urlOrId) {
 		demo.title = prompt("Title:", demo.title);
 		demo.description = prompt("Description:", demo.description);
 
-		demo.html = render(demo.pug);
+		demo.html = render(demo.pug, { pretty: true });
 
 		await kv.set(["demos", demoId], demo);
 		const url = `https://knowler.dev/demos/${demoId}`;
