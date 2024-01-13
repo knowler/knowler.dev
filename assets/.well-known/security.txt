@@ -1,2 +1,2 @@
 Contact: mailto:nathan+security@knowler.dev
-Expires: 2024-01-01T00:00:00.000Z
+Expires: 2025-01-01T00:00:00.000Z
