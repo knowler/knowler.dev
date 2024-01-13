@@ -1,11 +1,11 @@
 const elementsMap = new WeakMap();
 
-export function assertComputed(element, property, value) {
+export function assertComputed({element, pseudo, property, value}) {
 	let computedStyle;
 	if (elementsMap.has(element)) {
 		computedStyle = elementsMap.get(element)
 	} else {
-		computedStyle = window.getComputedStyle(element);
+		computedStyle = window.getComputedStyle(element, pseudo);
 		elementsMap.set(element, computedStyle);
 	}
 
