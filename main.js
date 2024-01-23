@@ -26,6 +26,14 @@ invariant(LOGIN_PATH);
 invariant(SITE_URL);
 invariant(SESSION_KEY);
 
+const channel = new BroadcastChannel("testing");
+
+channel.addEventListener("message", event => {
+	console.log("Received message:", event.data, event.source);
+});
+
+channel.postMessage("Isolate started…");
+
 kv.listenQueue(async (message) => {
 	switch (message.action) {
 		case "process-webmention": {
