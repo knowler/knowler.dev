@@ -27,18 +27,24 @@ invariant(LOGIN_PATH);
 invariant(SITE_URL);
 invariant(SESSION_KEY);
 
-const cacheChannel = new BroadcastChannel("cache");
+const DENO_REGION = Deno.env.get("DENO_REGION");
+const KV_REGION = Deno.env.get("KV_REGION");
+const IS_KV_REGION = DENO_REGION === KV_REGION;
 
-cacheChannel.addEventListener("message", event => {
-	const { action, payload } = event.data;
+if (IS_KV_REGION) {
+	const cacheChannel = new BroadcastChannel("cache");
 
-	if (action === "request") {
-		cacheChannel.postMessage({
-			action: "response",
-			payload: payload === "pages" ? pagesCache : postsCache,
-		});
-	}
-})
+	cacheChannel.addEventListener("message", event => {
+		const { action, payload } = event.data;
+
+		if (action === "request") {
+			cacheChannel.postMessage({
+				action: "response",
+				payload: payload === "pages" ? pagesCache : payload === "posts" ? postsCache : [],
+			});
+		}
+	})
+}
 
 kv.listenQueue(async (message) => {
 	switch (message.action) {
