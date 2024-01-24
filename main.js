@@ -23,6 +23,9 @@ import { get as getBlogPostRoute } from "~/routes/blog.[slug].js";
 import { get as getBlogIndexRoute } from "~/routes/blog.index.js";
 import { get as getPageRoute } from "~/routes/[page].js";
 
+import { Pages } from "~/models/pages.js";
+import { Posts } from "~/models/posts.js";
+
 const ENV = Deno.env.get("ENV");
 const LOGIN_PATH = Deno.env.get("LOGIN_PATH");
 const SITE_URL = Deno.env.get("SITE_URL");
@@ -46,9 +49,18 @@ kv.listenQueue(async (message) => {
 });
 
 const app = new Hono();
+const pages = new Pages();
+const posts = new Posts();
 
 app.use(
 	"*",
+	async (c, next) => {
+
+		c.set("pages", pages);
+		c.set("posts", posts);
+
+		await next();
+	},
 	pugRenderer(),
 	logger(),
 	async (c, next) => {
@@ -139,7 +151,6 @@ const { sudo } = await import("~/routes/sudo.js");
 app.route("/sudo", sudo);
 
 /* Page and static asset routes */
-
 app.get("/:page{[a-z0-9-]+}", getPageRoute);
 
 app.use("*", serveStatic({ root: "./assets" }));

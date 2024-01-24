@@ -7,7 +7,7 @@ const me = {
 };
 
 export async function get(c) {
-	const posts = await getPosts();
+	const posts = await c.get("posts").list();
 
 	const feed = new Feed({
 		title: "Nathan Knowler",

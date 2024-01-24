@@ -1,9 +1,8 @@
 import { trimTrailingSlash } from "~/utils/trim-trailing-slash.js";
-import { getPosts } from "~/models/posts.js";
 import { winnipegDateTime } from "~/utils/winnipeg-datetime.js";
 
 export async function get(c) {
-	const posts = await getPosts();
+	const posts = await c.get("posts").list();
 
 	c.header("cache-control", "s-maxage=14400");
 

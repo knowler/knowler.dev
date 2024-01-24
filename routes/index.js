@@ -1,7 +1,5 @@
-import { getPageBySlug } from "~/models/pages.js";
-
 export async function get(c) {
-	const page = await getPageBySlug("welcome");
+	const page = await c.get("pages").get("welcome");
 
 	return c.render("[page]", {
 		title: page.title,

@@ -1,15 +1,5 @@
 import kv from "~/kv.js";
 
-let kvPostReads = 0;
-
-console.log("populating posts cache");
-export const postsCache = new Map(
-	await Array.fromAsync(
-		kv.list({ prefix: ["posts"] }),
-		record => [record.value.slug, record.value],
-	),
-);
-
 /**
  * @typedef {Object} Post
  * @param {string} id
@@ -23,20 +13,13 @@ export const postsCache = new Map(
 
 export async function getPost(id) {
 	const postRecord = await kv.get(["posts", id]);
-	console.log("post model reads", ++kvPostReads);
 	if (!postRecord.value) throw `post not found with id: ${id}`;
 
 	return postRecord.value;
 }
 
 export async function getPostBySlug(slug) {
-	if (postsCache.has(slug)) {
-		console.log("has cached post");
-		return postsCache.get(slug);
-	}
-
 	const idRecord = await kv.get(["postsBySlug", slug]);
-	console.log("post model reads", ++kvPostReads);
 	if (!idRecord.value) throw `post not found with slug: ${slug}`;
 	const post = await getPost(idRecord.value);
 
@@ -44,15 +27,9 @@ export async function getPostBySlug(slug) {
 }
 
 export async function getPosts(options = {}) {
-	let posts = [];
-	if (postsCache.size > 0) {
-		console.log("has cached posts");
-		posts = Array.from(postsCache.values());
-	} else {
-		const iter = kv.list({ prefix: ["posts"] }, options);
-		for await (const record of iter) posts.push(record.value);
-		console.log("post model reads", ++kvPostReads);
-	}
+	const posts = [];
+	const iter = kv.list({ prefix: ["posts"] }, options);
+	for await (const record of iter) posts.push(record.value);
 
 	posts.sort((a, b) => new Date(a.publishedAt) - new Date(b.publishedAt));
 
@@ -86,4 +63,44 @@ export async function createPost(data = {}) {
 	}
 
 	return post.value;
+}
+
+export class Posts {
+	hasList = false;
+	cache = new Map();
+
+	async get(slug) {
+		if (this.cache.has(slug)) {
+			console.log(`has cached post for slug: ${slug}`);
+			return this.cache.get(slug);
+		}
+
+		console.log(`reading post for slug: ${slug}`);
+
+		const slugRecord = await kv.get(["postsBySlug", slug]);
+		if (!slugRecord.value) throw `post not found with slug: ${slug}`;
+
+		const postRecord = await kv.get(["posts", slugRecord.value]);
+		if (!postRecord.value) throw `post not found for id: ${slugRecord.value}`;
+
+		this.cache.set(slug, postRecord.value);
+
+		return postRecord.value;
+	}
+
+	async list() {
+		if (!this.hasList) {
+			console.log("populating posts cache");
+			for await (const record of kv.list({ prefix: ["posts"] })) {
+				this.cache.set(record.value.slug, record.value);
+			}
+			this.hasList = true;
+		} else console.log("already has post list");
+
+		const posts = Array.from(this.cache.values());
+
+		posts.sort((a, b) => new Date(a.publishedAt) - new Date(b.publishedAt));
+
+		return posts;
+	}
 }

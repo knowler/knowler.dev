@@ -1,10 +1,9 @@
 import { trimTrailingSlash } from "~/utils/trim-trailing-slash.js";
-import { getPageBySlug } from "~/models/pages.js";
 
-export async function get(c, next) {
+export async function get(c) {
 	try {
 		const params = c.req.param();
-		const page = await getPageBySlug(params.page);
+		const page = await c.get("pages").get(params.page)
 
 		return c.render("[page]", {
 			title: page.title,

@@ -1,13 +1,12 @@
 import { trimTrailingSlash } from "~/utils/trim-trailing-slash.js";
-import { getPostBySlug } from "~/models/posts.js";
 import { winnipegDateTime } from "~/utils/winnipeg-datetime.js";
 
 export async function get(c, next) {
 	const flags = c.get("__flags_session")?.get("flags");
 
 	try {
-		const params = c.req.param();
-		const post = await getPostBySlug(params.slug, { withWebmentions: true });
+		const { slug } = c.req.param();
+		const post = await c.get("posts").get(slug);
 
 		return c.render("blog.[slug]", {
 			title: post.title,
