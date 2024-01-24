@@ -48,10 +48,14 @@ export async function getPostBySlug(
 }
 
 export async function getPosts(options = {}) {
-	const iter = kv.list({ prefix: ["posts"] }, options);
-	const posts = [];
-
-	for await (const record of iter) posts.push(record.value);
+	let posts = [];
+	if (postsCache.size > 0) {
+		console.log("has cached posts");
+		posts = Array.from(postsCache.values());
+	} else {
+		const iter = kv.list({ prefix: ["posts"] }, options);
+		for await (const record of iter) posts.push(record.value);
+	}
 
 	posts.sort((a, b) => new Date(a.publishedAt) - new Date(b.publishedAt));
 
