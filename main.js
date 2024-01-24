@@ -34,6 +34,7 @@ const IS_KV_REGION = DENO_REGION === KV_REGION;
 if (IS_KV_REGION) {
 	const cacheChannel = new BroadcastChannel("cache");
 
+	console.log("Listening for cache requests");
 	cacheChannel.addEventListener("message", event => {
 		const { action, payload } = event.data;
 
