@@ -106,12 +106,13 @@ export class Posts {
 
 			this.cache.set(slug, postRecord.value);
 		} else {
+			let handleMessage;
 			try {
 				console.log("fetching cached post from read region");
 				await new Promise((resolve, reject) => {
 					const timeout = setTimeout(reject, 2_500);
 					this.channel.postMessage({ action: "get", payload: slug });
-					this.channel.addEventListener("message", event => {
+					handleMessage = event => {
 						const { action, payload } = event.data;
 						if (action === "response-get" && slug === payload.slug) {
 							clearTimeout(timeout);
@@ -119,7 +120,8 @@ export class Posts {
 							this.cache.set(slug, payload);
 							resolve();
 						}
-					});
+					}
+					this.channel.addEventListener("message", handleMessage);
 				});
 			} catch (_) {
 				console.log(`[timed out] reading post for slug: ${slug}`);
@@ -130,6 +132,8 @@ export class Posts {
 				if (!postRecord.value) throw `post not found for id: ${slugRecord.value}`;
 
 				this.cache.set(slug, postRecord.value);
+			} finally {
+				this.channel.removeEventListener("message", handleMessage);
 			}
 		}
 	}
@@ -154,11 +158,12 @@ export class Posts {
 			this.hasList = true;
 		} else {
 			console.log("fetching posts cache from read region");
+			let handleMessage;
 			try {
 				await new Promise((resolve, reject) => {
 					const timeout = setTimeout(reject, 2_500);
 					this.channel.postMessage({ action: "list" });
-					this.channel.addEventListener("message", event => {
+					handleMessage = event => {
 						const { action, payload } = event.data;
 						if (action === "response-list") {
 							clearTimeout(timeout);
@@ -167,7 +172,8 @@ export class Posts {
 							this.hasList = true;
 							resolve();
 						}
-					});
+					};
+					this.channel.addEventListener("message", handleMessage);
 				});
 			} catch(_) {
 				console.log("[timed out] populating posts cache");
@@ -175,6 +181,8 @@ export class Posts {
 					this.cache.set(record.value.slug, record.value);
 				}
 				this.hasList = true;
+			} finally {
+				this.channel.removeEventListener("message", handleMessage);
 			}
 		}
 	}
