@@ -31,14 +31,15 @@ const peersChannel = new BroadcastChannel("peers");
 
 peersChannel.addEventListener("message", event => {
 	const { action, payload } = event.data;
+	let now;
 	switch (event.data) {
 		case "ping":
-			const now = performance.now();
+			now = performance.now();
 			console.log(action, { elapsed: now - event.payload });
 			peersChannel.postMessage({ action: "pong", payload: performance.now() });
 			break;
 		case "pong":
-			const now = performance.now();
+			now = performance.now();
 			console.log(action, { elapsed: now - event.payload });
 			break;
 	}
