@@ -15,9 +15,6 @@ import kv from "~/kv.js";
 
 /** Utils */
 import { invariant } from "~/utils/invariant.js";
-import { pagesCache } from "./models/pages.js";
-import { postsCache } from "./models/posts.js";
-import { channel } from "./utils/get-cached-from-read-region.js";
 
 const ENV = Deno.env.get("ENV");
 const LOGIN_PATH = Deno.env.get("LOGIN_PATH");
@@ -27,24 +24,6 @@ const SESSION_KEY = Deno.env.get("SESSION_KEY");
 invariant(LOGIN_PATH);
 invariant(SITE_URL);
 invariant(SESSION_KEY);
-
-const DENO_REGION = Deno.env.get("DENO_REGION");
-const KV_REGION = Deno.env.get("KV_REGION");
-const IS_KV_REGION = DENO_REGION === KV_REGION;
-
-if (IS_KV_REGION) {
-	console.log("Listening for cache requests");
-	channel.addEventListener("message", event => {
-		console.log("read region got mail", { action, payload });
-		const { action, payload } = event.data;
-		if (action === "request") {
-			channel.postMessage({
-				action: "response",
-				payload: payload === "pages" ? pagesCache : payload === "posts" ? postsCache : [],
-			});
-		}
-	});
-}
 
 kv.listenQueue(async (message) => {
 	switch (message.action) {
@@ -70,41 +49,6 @@ app.use(
 		if (referer) console.log("Referer:", referer);
 		await next();
 	},
-	// set-cookie filter: we only need cookies on pages with forms on them or if we have feature flags set
-	//async (c, next) => {
-	//	await next();
-
-	//	if (new URLPattern({ pathname: "/sudo*" }).test({ pathname: c.req.path })) return;
-	//	if (["/webmention", "/feature-flags", `/${LOGIN_PATH}`].includes(c.req.path)) return;
-
-	//	const flags = c.get("__flags_session")?.get("flags");
-
-	//	if (!flags) c.header("set-cookie", undefined);
-	//},
-	//sessionMiddleware({
-	//	store: new CookieStore(),
-	//	sessionCookieName: "__flags_session",
-	//	expireAfterSeconds: 60 * 60 * 24 * 7,
-	//	encryptionKey: SESSION_KEY,
-	//	cookieOptions: {
-	//		path: "/",
-	//		domain: new URL(SITE_URL).hostname,
-	//		httpOnly: true,
-	//		secure: true,
-	//		sameSite: "Strict",
-	//	},
-	//}),
-	//async (c, next) => {
-	//	if (new URLPattern({ pathname: "/sudo*" }).test({ pathname: c.req.path })) return;
-	//	if (["/webmention", "/feature-flags", `/${LOGIN_PATH}`].includes(c.req.path)) return;
-
-	//	const flags = c.get("__flags_session")?.get("flags");
-
-	//	if (!flags) c.header("set-cookie", undefined);
-
-	//	await next();
-	//},
-	//ENV === "development" ? (_, next) => next() : cache(),
 	rewriteWithoutTrailingSlashes(),
 );
 
