@@ -108,17 +108,31 @@ export class Posts {
 
 			this.cache.set(slug, postRecord.value);
 		} else {
-			console.log("fetching cached post from read region");
-			await new Promise(resolve => {
-				this.channel.postMessage({ action: "get", payload: slug });
-				this.channel.addEventListener("message", event => {
-					const { action, payload } = event.data;
-					if (action === "response-get" && slug === payload.slug) {
-						this.cache.set(slug, payload);
-						resolve();
-					}
+			try {
+				console.log("fetching cached post from read region");
+				await new Promise((resolve, reject) => {
+					const timeout = setTimeout(reject, 2_500);
+					this.channel.postMessage({ action: "get", payload: slug });
+					this.channel.addEventListener("message", event => {
+						const { action, payload } = event.data;
+						if (action === "response-get" && slug === payload.slug) {
+							clearTimeout(timeout);
+							console.log(`caching post with slug: ${slug}`);
+							this.cache.set(slug, payload);
+							resolve();
+						}
+					});
 				});
-			});
+			} catch (_) {
+				console.log(`[timed out] reading post for slug: ${slug}`);
+				const slugRecord = await kv.get(["postsBySlug", slug]);
+				if (!slugRecord.value) throw `post not found with slug: ${slug}`;
+
+				const postRecord = await kv.get(["posts", slugRecord.value]);
+				if (!postRecord.value) throw `post not found for id: ${slugRecord.value}`;
+
+				this.cache.set(slug, postRecord.value);
+			}
 		}
 	}
 
@@ -142,18 +156,28 @@ export class Posts {
 			this.hasList = true;
 		} else {
 			console.log("fetching posts cache from read region");
-			await new Promise(resolve => {
-				this.channel.postMessage({ action: "list" });
-				this.channel.addEventListener("message", event => {
-					const { action, payload } = event.data;
-					if (action === "response-list") {
-						console.log("populating posts cache");
-						this.cache = payload;
-						this.hasList = true;
-						resolve();
-					}
+			try {
+				await new Promise((resolve, reject) => {
+					const timeout = setTimeout(reject, 2_500);
+					this.channel.postMessage({ action: "list" });
+					this.channel.addEventListener("message", event => {
+						const { action, payload } = event.data;
+						if (action === "response-list") {
+							clearTimeout(timeout);
+							console.log("populating posts cache");
+							this.cache = payload;
+							this.hasList = true;
+							resolve();
+						}
+					});
 				});
-			});
+			} catch(_) {
+				console.log("[timed out] populating posts cache");
+				for await (const record of kv.list({ prefix: ["posts"] })) {
+					this.cache.set(record.value.slug, record.value);
+				}
+				this.hasList = true;
+			}
 		}
 	}
 
