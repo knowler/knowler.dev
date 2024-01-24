@@ -15,7 +15,9 @@ import kv from "~/kv.js";
 
 /** Utils */
 import { invariant } from "~/utils/invariant.js";
-import { handleCacheRequest } from "./utils/get-cached-from-read-region.js";
+import { pagesCache } from "./models/pages.js";
+import { postsCache } from "./models/posts.js";
+import { channel } from "./utils/get-cached-from-read-region.js";
 
 const ENV = Deno.env.get("ENV");
 const LOGIN_PATH = Deno.env.get("LOGIN_PATH");
@@ -30,7 +32,19 @@ const DENO_REGION = Deno.env.get("DENO_REGION");
 const KV_REGION = Deno.env.get("KV_REGION");
 const IS_KV_REGION = DENO_REGION === KV_REGION;
 
-if (IS_KV_REGION) handleCacheRequest();
+if (IS_KV_REGION) {
+	console.log("Listening for cache requests");
+	channel.addEventListener("message", event => {
+		console.log("read region got mail", { action, payload });
+		const { action, payload } = event.data;
+		if (action === "request") {
+			channel.postMessage({
+				action: "response",
+				payload: payload === "pages" ? pagesCache : payload === "posts" ? postsCache : [],
+			});
+		}
+	});
+}
 
 kv.listenQueue(async (message) => {
 	switch (message.action) {

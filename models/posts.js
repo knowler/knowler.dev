@@ -1,10 +1,23 @@
 import kv from "~/kv.js";
 import { getWebmention } from "./webmention.js";
-import { getCachedFromReadRegion } from "~/utils/get-cached-from-read-region.js";
+import { channel } from "~/utils/get-cached-from-read-region.js";
 
 const DENO_REGION = Deno.env.get("DENO_REGION");
 const KV_REGION = Deno.env.get("KV_REGION");
 const IS_KV_REGION = DENO_REGION === KV_REGION;
+
+function getCachedFromReadRegion(model) {
+	return new Promise((resolve) => {
+		channel.addEventListener("message", event => {
+			const { action, payload } = event.data;
+			if (action === "response") {
+				console.log({ action, size: payload?.size });
+				resolve(payload);
+			}
+		});
+		channel.postMessage({ action: "request", payload: model });
+	});
+}
 
 export const postsCache = new Map(
 	IS_KV_REGION
