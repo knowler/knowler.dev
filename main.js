@@ -29,7 +29,6 @@ invariant(SESSION_KEY);
 
 const DENO_REGION = Deno.env.get("DENO_REGION");
 const KV_REGION = Deno.env.get("KV_REGION");
-console.log({ DENO_REGION, KV_REGION });
 const IS_KV_REGION = DENO_REGION === KV_REGION;
 
 if (IS_KV_REGION) {
