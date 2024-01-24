@@ -41,6 +41,8 @@ peersChannel.addEventListener("message", event => {
 	}
 });
 
+peersChannel.postMessage("ping");
+
 kv.listenQueue(async (message) => {
 	switch (message.action) {
 		case "process-webmention": {
