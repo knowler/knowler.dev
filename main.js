@@ -27,6 +27,20 @@ invariant(LOGIN_PATH);
 invariant(SITE_URL);
 invariant(SESSION_KEY);
 
+const peersChannel = new BroadcastChannel("peers");
+
+peersChannel.addEventListener("message", event => {
+	switch (event.data) {
+		case "ping":
+			console.log(event.data, event.source);
+			peersChannel.postMessage("pong");
+			break;
+		case "pong":
+			console.log(event.data, event.source);
+			break;
+	}
+});
+
 kv.listenQueue(async (message) => {
 	switch (message.action) {
 		case "process-webmention": {
