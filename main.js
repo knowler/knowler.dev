@@ -16,6 +16,8 @@ import kv from "~/kv.js";
 
 /** Utils */
 import { invariant } from "~/utils/invariant.js";
+import { pagesCache } from "./models/pages.js";
+import { postsCache } from "./models/posts.js";
 
 const ENV = Deno.env.get("ENV");
 const LOGIN_PATH = Deno.env.get("LOGIN_PATH");
@@ -26,20 +28,17 @@ invariant(LOGIN_PATH);
 invariant(SITE_URL);
 invariant(SESSION_KEY);
 
-const channel = new BroadcastChannel("testing");
-
-channel.addEventListener("message", event => {
-	console.log("Received message:", event.data, event.source);
-});
-
-channel.postMessage("Isolate started…");
-
 kv.listenQueue(async (message) => {
 	switch (message.action) {
 		case "process-webmention": {
 			await processWebmention(message.payload);
 			break;
 		}
+		case "populate-cache":
+			for await (const record of kv.list({ prefix: ["pages"] })) pagesCache.set(record.value.slug, record.value);
+			for await (const record of kv.list({ prefix: ["posts"] })) postsCache.set(record.value.slug, record.value);
+
+			break;
 		case undefined:
 			throw "undefined action";
 		default:
@@ -92,7 +91,7 @@ app.use(
 
 	//	await next();
 	//},
-	ENV === "development" ? (_, next) => next() : cache(),
+	//ENV === "development" ? (_, next) => next() : cache(),
 	rewriteWithoutTrailingSlashes(),
 );
 

@@ -1,5 +1,7 @@
 import kv from "~/kv.js";
 
+export const pagesCache = new Map();
+
 export async function getPage(id) {
 	const pageRecord = await kv.get(["pages", id]);
 	if (!pageRecord.value) throw `page not found with id: ${id}`;
@@ -8,6 +10,13 @@ export async function getPage(id) {
 }
 
 export async function getPageBySlug(slug) {
+	if (pagesCache.has(slug)) {
+		console.log("Has cached page");
+		return pagesCache.get(slug);
+	}
+
+	kv.enqueue({ action: "populate-cache" });
+
 	const idRecord = await kv.get(["pagesBySlug", slug]);
 	if (!idRecord.value) throw `page not found with slug: ${slug}`;
 
