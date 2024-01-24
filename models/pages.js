@@ -34,7 +34,7 @@ export class Pages {
 			const { action, payload } = event.data;
 			switch (action) {
 				case "get":
-					if (!this.cache.has(payload) && IS_KV_REGION) await this.fetchPost(payload);
+					if (!this.cache.has(payload) && IS_KV_REGION) await this.fetchPage(payload);
 					if (this.cache.has(payload)) this.channel.postMessage({ action: "response-get", payload: this.cache.get(payload) })
 				break;
 			}
