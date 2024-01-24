@@ -5,9 +5,7 @@ const DENO_REGION = Deno.env.get("DENO_REGION");
 const KV_REGION = Deno.env.get("KV_REGION");
 const IS_KV_REGION = DENO_REGION === KV_REGION;
 
-if (!IS_KV_REGION) {
-	console.log(await getCachedFromReadRegion("pages"));
-}
+if (!IS_KV_REGION) getCachedFromReadRegion("pages").then(console.log);
 
 export const pagesCache = new Map(
 	await Array.fromAsync(

@@ -6,9 +6,7 @@ const DENO_REGION = Deno.env.get("DENO_REGION");
 const KV_REGION = Deno.env.get("KV_REGION");
 const IS_KV_REGION = DENO_REGION === KV_REGION;
 
-if (!IS_KV_REGION) {
-	console.log(await getCachedFromReadRegion("posts"));
-}
+if (!IS_KV_REGION) getCachedFromReadRegion("posts").then(console.log);
 
 export const postsCache = new Map(
 	await Array.fromAsync(

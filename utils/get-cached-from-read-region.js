@@ -4,6 +4,7 @@ export function getCachedFromReadRegion(model) {
 	return new Promise((resolve) => {
 		channel.addEventListener("message", event => {
 			const { action, payload } = event.data;
+			console.log({ action, payload });
 			if (action === "response") resolve(payload);
 		});
 		channel.postMessage({ action: "request", payload: model });
