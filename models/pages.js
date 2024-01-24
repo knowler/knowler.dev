@@ -1,5 +1,7 @@
 import kv from "~/kv.js";
 
+const IS_KV_REGION = Deno.env.get("KV_REGION") === Deno.env.get("DENO_REGION");
+
 export async function getPage(id) {
 	const pageRecord = await kv.get(["pages", id]);
 	if (!pageRecord.value) throw `page not found with id: ${id}`;
@@ -25,23 +27,70 @@ export async function getPages() {
 
 export class Pages {
 	cache = new Map();
+	channel = new BroadcastChannel("pages");
+
+	constructor() {
+		this.channel.addEventListener("message", async event => {
+			const { action, payload } = event.data;
+			switch (action) {
+				case "get":
+					if (!this.cache.has(payload) && IS_KV_REGION) await this.fetchPost(payload);
+					if (this.cache.has(payload)) this.channel.postMessage({ action: "response-get", payload: this.cache.get(payload) })
+				break;
+			}
+		});
+	}
 
 	async get(slug) {
-		if (this.cache.has(slug)) {
-			console.log(`has cached page for slug: ${slug}`);
-			return this.cache.get(slug);
+		if (!this.cache.has(slug)) await this.fetchPage(slug);
+		else console.log(`has cached page for slug: ${slug}`);
+
+		return this.cache.get(slug);
+	}
+
+	async fetchPage(slug) {
+		if (IS_KV_REGION) {
+			console.log(`reading page for slug: ${slug}`);
+
+			const slugRecord = await kv.get(["pagesBySlug", slug]);
+			if (!slugRecord.value) throw `page not found with slug: ${slug}`;
+
+			const pageRecord = await kv.get(["pages", slugRecord.value]);
+			if (!pageRecord.value) throw `page not found for id: ${slugRecord.value}`;
+
+			this.cache.set(slug, pageRecord.value);
+		} else {
+			let handleMessage;
+			try {
+				console.log("fetching cached page from read region");
+				await new Promise((resolve, reject) => {
+					const timeout = setTimeout(reject, 2_500);
+					this.channel.postMessage({ action: "get", payload: slug });
+					handleMessage = event => {
+						const { action, payload } = event.data;
+						if (action === "response-get" && slug === payload.slug) {
+							clearTimeout(timeout);
+							console.log(`caching page with slug: ${slug}`);
+							this.cache.set(slug, payload);
+							resolve();
+						}
+					}
+					this.channel.addEventListener("message", handleMessage);
+				});
+			} catch (_) {
+				console.log(`[timed out] reading page for slug: ${slug}`);
+
+				const slugRecord = await kv.get(["pagesBySlug", slug]);
+				if (!slugRecord.value) throw `page not found with slug: ${slug}`;
+
+				const pageRecord = await kv.get(["pages", slugRecord.value]);
+				if (!pageRecord.value) throw `page not found for id: ${slugRecord.value}`;
+
+				this.cache.set(slug, pageRecord.value);
+
+			} finally {
+				this.channel.removeEventListener("message", handleMessage);
+			}
 		}
-
-		console.log(`reading page for slug: ${slug}`);
-
-		const slugRecord = await kv.get(["pagesBySlug", slug]);
-		if (!slugRecord.value) throw `page not found with slug: ${slug}`;
-
-		const pageRecord = await kv.get(["pages", slugRecord.value]);
-		if (!pageRecord.value) throw `page not found for id: ${slugRecord.value}`;
-
-		this.cache.set(slug, pageRecord.value);
-
-		return pageRecord.value;
 	}
 }
