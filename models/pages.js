@@ -27,8 +27,6 @@ export async function getPageBySlug(slug) {
 		return pagesCache.get(slug);
 	}
 
-	kv.enqueue({ action: "populate-cache" });
-
 	const idRecord = await kv.get(["pagesBySlug", slug]);
 	if (!idRecord.value) throw `page not found with slug: ${slug}`;
 
