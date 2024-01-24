@@ -27,6 +27,19 @@ invariant(LOGIN_PATH);
 invariant(SITE_URL);
 invariant(SESSION_KEY);
 
+const cacheChannel = new BroadcastChannel("cache");
+
+cacheChannel.addEventListener("message", event => {
+	const { action, payload } = event.data;
+
+	if (action === "request") {
+		cacheChannel.postMessage({
+			action: "response",
+			payload: payload === "pages" ? pagesCache : postsCache,
+		});
+	}
+})
+
 kv.listenQueue(async (message) => {
 	switch (message.action) {
 		case "process-webmention": {

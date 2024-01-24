@@ -1,14 +1,17 @@
 import kv from "~/kv.js";
+import { getCachedFromReadRegion } from "~/utils/get-cached-from-read-region.js";
 
 const DENO_REGION = Deno.env.get("DENO_REGION");
 const KV_REGION = Deno.env.get("KV_REGION");
 const IS_KV_REGION = DENO_REGION === KV_REGION;
 
 export const pagesCache = new Map(
-	await Array.fromAsync(
-		kv.list({ prefix: ["pages"] }, { consistency: IS_KV_REGION ? "strong" : "eventual" }),
-		record => [record.value.slug, record.value],
-	),
+	IS_KV_REGION
+		? await Array.fromAsync(
+			kv.list({ prefix: ["pages"] }, { consistency: IS_KV_REGION ? "strong" : "eventual" }),
+			record => [record.value.slug, record.value],
+		)
+		: await getCachedFromReadRegion("pages")
 );
 
 export async function getPage(id) {
