@@ -31,21 +31,18 @@ const peersChannel = new BroadcastChannel("peers");
 
 peersChannel.addEventListener("message", event => {
 	const { action, payload } = event.data;
-	let now;
 	switch (event.data) {
 		case "ping":
-			now = performance.now();
-			console.log(action, { elapsed: now - event.payload });
+			console.log(action, { elapsed: performance.now() - payload });
 			peersChannel.postMessage({ action: "pong", payload: performance.now() });
 			break;
 		case "pong":
-			now = performance.now();
-			console.log(action, { elapsed: now - event.payload });
+			console.log(action, { elapsed: performance.now() - payload });
 			break;
 	}
 });
 
-peersChannel.postMessage("ping");
+peersChannel.postMessage({ action: "ping", payload: performance.now() });
 
 kv.listenQueue(async (message) => {
 	switch (message.action) {
