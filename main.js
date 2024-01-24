@@ -27,24 +27,6 @@ invariant(LOGIN_PATH);
 invariant(SITE_URL);
 invariant(SESSION_KEY);
 
-const peersChannel = new BroadcastChannel("peers");
-
-peersChannel.addEventListener("message", event => {
-	const { action, payload } = event.data;
-	const now = Date.now();
-	switch (action) {
-		case "ping":
-			console.log(action, { elapsed: now - payload });
-			peersChannel.postMessage({ action: "pong", payload: now });
-			break;
-		case "pong":
-			console.log(action, { elapsed: now - payload });
-			break;
-	}
-});
-
-peersChannel.postMessage({ action: "ping", payload: Date.now() });
-
 kv.listenQueue(async (message) => {
 	switch (message.action) {
 		case "process-webmention": {
