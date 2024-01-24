@@ -1,5 +1,4 @@
 import kv from "~/kv.js";
-import { getWebmention } from "./webmention.js";
 
 let kvPostReads = 0;
 
@@ -29,10 +28,7 @@ export async function getPost(id) {
 	return postRecord.value;
 }
 
-export async function getPostBySlug(
-	slug,
-	options = { withWebmentions: false },
-) {
+export async function getPostBySlug(slug) {
 	if (postsCache.has(slug)) {
 		console.log("has cached post");
 		return postsCache.get(slug);
@@ -42,14 +38,6 @@ export async function getPostBySlug(
 	console.log("post model reads", ++kvPostReads);
 	if (!idRecord.value) throw `post not found with slug: ${slug}`;
 	const post = await getPost(idRecord.value);
-
-	if (options.withWebmentions) {
-		if ("webmentions" in post) {
-			for (const [index, webmentionId] of post.webmentions.entries()) {
-				post.webmentions[index] = await getWebmention(webmentionId);
-			}
-		} else post.webmentions = [];
-	}
 
 	return post;
 }

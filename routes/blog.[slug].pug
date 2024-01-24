@@ -35,14 +35,15 @@ block content
 		article
 			h2 About the author
 			p #[strong Nathan Knowler] is building websites. He’s interested in accessibility, progressive enhancements, and Web Components.
-	aside
-		h2 Webmentions
-		if post.webmentions.length > 0
-			p #[a(href=`/webmention?target=${canonical}`) Send a Webmention]
-			details
-				summary= post.webmentions.length > 1 ? `${post.webmentions.length} Webmentions` : "1 Webmention"
-				ul
-					each webmention in post.webmentions
-						li: a(href=webmention.source)= webmention.hEntry ? webmention.hEntry.properties.name : webmention.source
-		else
-			p Be the first to #[a(href=`/webmention?target=${canonical}`) send a Webmention]!
+	+env("development")
+		aside
+			h2 Webmentions
+			if post.webmentions.length > 0
+				p #[a(href=`/webmention?target=${canonical}`) Send a Webmention]
+				details
+					summary= post.webmentions.length > 1 ? `${post.webmentions.length} Webmentions` : "1 Webmention"
+					ul
+						each webmention in post.webmentions
+							li: a(href=webmention.source)= webmention.hEntry ? webmention.hEntry.properties.name : webmention.source
+			else
+				p Be the first to #[a(href=`/webmention?target=${canonical}`) send a Webmention]!
