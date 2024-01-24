@@ -1,6 +1,7 @@
 import kv from "~/kv.js";
 
-const IS_KV_REGION = Deno.env.get("KV_REGION") === Deno.env.get("DENO_REGION");
+const REGION = Deno.env.get("DENO_REGION")
+const IS_KV_REGION = Deno.env.get("KV_REGION") === REGION;
 
 export async function getPage(id) {
 	const pageRecord = await kv.get(["pages", id]);
@@ -35,7 +36,7 @@ export class Pages {
 			switch (action) {
 				case "get":
 					if (!this.cache.has(payload) && IS_KV_REGION) await this.fetchPage(payload);
-					if (this.cache.has(payload)) this.channel.postMessage({ action: "response-get", payload: this.cache.get(payload) })
+					if (this.cache.has(payload)) this.channel.postMessage({ action: "response-get", payload: this.cache.get(payload), from: REGION })
 				break;
 			}
 		});
@@ -67,10 +68,10 @@ export class Pages {
 					const timeout = setTimeout(reject, 2_500);
 					this.channel.postMessage({ action: "get", payload: slug });
 					handleMessage = event => {
-						const { action, payload } = event.data;
+						const { action, payload, from } = event.data;
 						if (action === "response-get" && slug === payload.slug) {
 							clearTimeout(timeout);
-							console.log(`caching page with slug: ${slug}`);
+							console.log(`caching page with slug: ${slug} from ${from}`);
 							this.cache.set(slug, payload);
 							resolve();
 						}

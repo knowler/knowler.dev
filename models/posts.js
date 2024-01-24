@@ -1,6 +1,7 @@
 import kv from "~/kv.js";
 
-const IS_KV_REGION = Deno.env.get("KV_REGION") === Deno.env.get("DENO_REGION");
+const REGION = Deno.env.get("DENO_REGION");
+const IS_KV_REGION = Deno.env.get("KV_REGION") === REGION;
 
 /**
  * @typedef {Object} Post
@@ -78,11 +79,11 @@ export class Posts {
 			switch (action) {
 				case "list":
 					if (!this.hasList && IS_KV_REGION) await this.fetchList();
-					if (this.hasList) this.channel.postMessage({ action: "response-list", payload: this.cache });
+					if (this.hasList) this.channel.postMessage({ action: "response-list", payload: this.cache, from: REGION});
 					break;
 				case "get":
 					if (!this.cache.has(payload) && IS_KV_REGION) await this.fetchPost(payload);
-					if (this.cache.has(payload)) this.channel.postMessage({ action: "response-get", payload: this.cache.get(payload) })
+					if (this.cache.has(payload)) this.channel.postMessage({ action: "response-get", payload: this.cache.get(payload), REGION })
 				break;
 			}
 		});
@@ -113,10 +114,10 @@ export class Posts {
 					const timeout = setTimeout(reject, 2_500);
 					this.channel.postMessage({ action: "get", payload: slug });
 					handleMessage = event => {
-						const { action, payload } = event.data;
+						const { action, payload, from } = event.data;
 						if (action === "response-get" && slug === payload.slug) {
 							clearTimeout(timeout);
-							console.log(`caching post with slug: ${slug}`);
+							console.log(`caching post with slug: ${slug} from ${from}`);
 							this.cache.set(slug, payload);
 							resolve();
 						}
@@ -164,10 +165,10 @@ export class Posts {
 					const timeout = setTimeout(reject, 2_500);
 					this.channel.postMessage({ action: "list" });
 					handleMessage = event => {
-						const { action, payload } = event.data;
+						const { action, payload, from } = event.data;
 						if (action === "response-list") {
 							clearTimeout(timeout);
-							console.log("populating posts cache");
+							console.log(`populating posts cache from ${from}`);
 							this.cache = payload;
 							this.hasList = true;
 							resolve();
