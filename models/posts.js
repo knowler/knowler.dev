@@ -76,32 +76,50 @@ export class Posts {
 		if (IS_KV_REGION) {
 			this.channel.addEventListener("message", async event => {
 				const { action, payload } = event.data;
-
-				if (action === "list") {
-					if (!this.hasList) await this.fetchList();
-					this.channel.postMessage({ action: "response", payload: this.cache });
+				switch (action) {
+					case "list":
+						if (!this.hasList) await this.fetchList();
+						this.channel.postMessage({ action: "response-list", payload: this.cache });
+						break;
+					case "get":
+						if (!this.cache.has(payload)) await this.fetchPost(payload);
+						this.channel.postMessage({ action: "response-get", payload: this.cache.get(payload) })
+					break;
 				}
 			});
 		}
 	}
 
 	async get(slug) {
-		if (this.cache.has(slug)) {
-			console.log(`has cached post for slug: ${slug}`);
-			return this.cache.get(slug);
+		if (!this.cache.has(slug)) await this.fetchPost();
+		else console.log(`has cached post for slug: ${slug}`);
+
+		return this.cache.get(slug);
+	}
+
+	async fetchPost(slug) {
+		if (IS_KV_REGION) {
+			console.log(`reading post for slug: ${slug}`);
+			const slugRecord = await kv.get(["postsBySlug", slug]);
+			if (!slugRecord.value) throw `post not found with slug: ${slug}`;
+
+			const postRecord = await kv.get(["posts", slugRecord.value]);
+			if (!postRecord.value) throw `post not found for id: ${slugRecord.value}`;
+
+			this.cache.set(slug, postRecord.value);
+		} else {
+			console.log("fetching cached post from read region");
+			await new Promise(resolve => {
+				this.channel.postMessage({ action: "get", payload: slug });
+				this.channel.addEventListener("message", event => {
+					const { action, payload } = event.data;
+					if (action === "response-get" && slug === payload.slug) {
+						this.cache.set(slug, payload);
+						resolve();
+					}
+				});
+			});
 		}
-
-		console.log(`reading post for slug: ${slug}`);
-
-		const slugRecord = await kv.get(["postsBySlug", slug]);
-		if (!slugRecord.value) throw `post not found with slug: ${slug}`;
-
-		const postRecord = await kv.get(["posts", slugRecord.value]);
-		if (!postRecord.value) throw `post not found for id: ${slugRecord.value}`;
-
-		this.cache.set(slug, postRecord.value);
-
-		return postRecord.value;
 	}
 
 	async list() {
@@ -128,7 +146,7 @@ export class Posts {
 				this.channel.postMessage({ action: "list" });
 				this.channel.addEventListener("message", event => {
 					const { action, payload } = event.data;
-					if (action === "response") {
+					if (action === "response-list") {
 						console.log("populating posts cache");
 						this.cache = payload;
 						this.hasList = true;
