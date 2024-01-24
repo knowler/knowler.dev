@@ -1,17 +1,21 @@
 import { render, renderFile } from "pug";
 import en from "npm:nanoid-good/locale/en.js";
 import nanoidGood from "npm:nanoid-good/index.js";
-import { kv } from "./utils/production-kv.js";
 import { invariant } from "../utils/invariant.js";
 
 const EDITOR = Deno.env.get("EDITOR");
 invariant(EDITOR);
 
 switch (Deno.args[0]) {
-	case "delete": deleteDemo(); break;
 	case undefined:
 	case "new": createDemo(); break;
+
 	case "edit": editDemo(Deno.args[1]); break;
+
+	case "fork": forkDemo(Deno.args[1]); break;
+
+	case "delete": deleteDemo(); break;
+
 	default: editDemo(Deno.args[0]); break;
 }
 
@@ -20,8 +24,9 @@ async function createDemo() {
 
 	await Promise.all([
 		Deno.create(`${tempDir}/demo.pug`),
-		Deno.create(`${tempDir}/demo.css`),
+		Deno.writeTextFile(`${tempDir}/demo.css`, ":root {\n\tcolor-scheme: dark light;\n}"),
 		Deno.create(`${tempDir}/demo.js`),
+		Deno.writeTextFile(`${tempDir}/demo.json`, "{}"),
 	]);
 
 	let demo, id, readyToPublish;
@@ -64,6 +69,8 @@ async function createDemo() {
 
 	demo.html = render(demo.pug, { pretty: true });
 
+	const { kv } = await import("./utils/production-kv.js");
+
 	await kv.set(["demos", id], demo);
 
 	await Deno.remove(tempDir, { recursive: true });
@@ -74,6 +81,8 @@ async function createDemo() {
 
 async function editDemo(urlOrId) {
 	let demoId;
+
+	const { kv } = await import("./utils/production-kv.js");
 
 	if (urlOrId) {
 		const pattern = new URLPattern({ pathname: "/demos/:demoId" });
@@ -93,6 +102,7 @@ async function editDemo(urlOrId) {
 			Deno.writeTextFile(`${tempDir}/demo.pug`, demo.pug),
 			Deno.writeTextFile(`${tempDir}/demo.css`, demo.css),
 			Deno.writeTextFile(`${tempDir}/demo.js`, demo.js),
+			Deno.writeTextFile(`${tempDir}/demo.json`, JSON.stringify({ "title": demo.title, "description": demo.description }, null, 2)),
 		]);
 
 		let readyToSave;
@@ -108,12 +118,13 @@ async function editDemo(urlOrId) {
 				Deno.exit();
 			}
 
-			const [pug, css, js] = await Promise.all([
+			const [pug, css, js, meta] = await Promise.all([
 				Deno.readTextFile(`${tempDir}/demo.pug`),
 				Deno.readTextFile(`${tempDir}/demo.css`),
 				Deno.readTextFile(`${tempDir}/demo.js`),
+				Deno.readTextFile(`${tempDir}/demo.json`).then(text => JSON.parse(text)),
 			]);
-			demo.pug = pug; demo.css = css; demo.js = js; 
+			demo.pug = pug; demo.css = css; demo.js = js; demo.title = meta.title; demo.description = meta.description;
 
 			console.log(demo);
 			readyToSave = confirm("Ready to save and publish these changes?");
@@ -144,6 +155,8 @@ async function editDemo(urlOrId) {
 }
 
 async function deleteDemo() {
+	const { kv } = await import("./utils/production-kv.js");
+
 	const [_, urlOrId] = Deno.args;
 	let demoId;
 	let url;
@@ -171,15 +184,12 @@ html(lang="en-ca")
 	head
 		meta(charset="utf-8")
 		meta(name="viewport" content="width=device-width, initial-scale=1")
+		title= title
 		style!= demo.css
 		script(type="module")!= demo.js
 	body
 		| !{demo.html}
-		script.
-			const ws = new WebSocket("ws://localhost:4000");
-			ws.onmessage = e => {
-				if (e.data === "reload") location.reload();
-			}
+		script (new WebSocket("ws://localhost:4000")).onmessage = e => e.data === "reload" && location.reload();
 `;
 
 	return Deno.serve({
@@ -203,7 +213,9 @@ html(lang="en-ca")
 
 				return response;
 			} else {
+				const meta = JSON.parse(await Deno.readTextFile(`${tempDir}/demo.json`));
 				const html = render(TEMPLATE, {
+					title: meta?.json ?? "Untitled Demo",
 					demo: {
 						html: renderFile(`${tempDir}/demo.pug`),
 						css: await Deno.readTextFile(`${tempDir}/demo.css`),
@@ -218,4 +230,84 @@ html(lang="en-ca")
 			}
 		},
 	});
+}
+
+async function forkDemo(urlOrId) {
+	// Figure out the ID
+	// Get the existing demo
+	// Start up an editing environment with that content
+	// Work as if we’re saving a new one.
+	let demoId;
+
+	const { kv } = await import("./utils/production-kv.js");
+
+	if (urlOrId) {
+		const pattern = new URLPattern({ pathname: "/demos/:demoId" });
+		if (URL.canParse(urlOrId)) {
+			if (pattern.test(urlOrId)) demoId = pattern.exec(urlOrId).pathname.groups.demoId;
+			else throw "Invalid demo URL pattern";
+		} else demoId = urlOrId;
+
+		const record = await kv.get(["demos", demoId]);
+
+		if (!record) throw "Can’t find demo to fork";
+		const demo = record.value;
+
+		const tempDir = await Deno.makeTempDir();
+
+		await Promise.all([
+			Deno.writeTextFile(`${tempDir}/demo.pug`, demo.pug),
+			Deno.writeTextFile(`${tempDir}/demo.css`, demo.css),
+			Deno.writeTextFile(`${tempDir}/demo.js`, demo.js),
+			Deno.writeTextFile(`${tempDir}/demo.json`, JSON.stringify({ "title": demo.title, "description": demo.description }, null, 2)),
+		]);
+
+		let readyToSave;
+		while (!readyToSave) {
+			const server = createDemoServer(tempDir);
+			const editor = new Deno.Command(EDITOR, { args: [ `${tempDir}/demo.pug` ], cwd: tempDir }).spawn();
+			const editorOutput = await editor.output();
+			await server.shutdown();
+
+			if (!editorOutput.success) {
+				console.error(new TextDecoder().decode(editorOutput.stderr));
+				console.log("files at:", tempDir);
+				Deno.exit();
+			}
+
+			const [pug, css, js, meta] = await Promise.all([
+				Deno.readTextFile(`${tempDir}/demo.pug`),
+				Deno.readTextFile(`${tempDir}/demo.css`),
+				Deno.readTextFile(`${tempDir}/demo.js`),
+				Deno.readTextFile(`${tempDir}/demo.json`).then(text => JSON.parse(text)),
+			]);
+			demo.pug = pug; demo.css = css; demo.js = js; demo.title = meta.title; demo.description = meta.description;
+
+			console.log(demo);
+			readyToSave = confirm("Ready to save and publish these changes?");
+			if (!readyToSave) {
+				if (!confirm("Keep editing? (No will discard the changes.)")) {
+					Deno.remove(tempDir, { recursive: true });
+					Deno.exit();
+				}
+			}
+		}
+
+		console.log("Confirming some details");
+		demo.title = prompt("Title:", demo.title);
+		demo.description = prompt("Description:", demo.description);
+
+		demo.html = render(demo.pug, { pretty: true });
+
+		const nanoid = nanoidGood.nanoid(en);
+		const id = await nanoid(7);
+
+		await kv.set(["demos", id], demo);
+		const url = `https://knowler.dev/demos/${id}`;
+		console.log(`Created fork: ${url}`);
+
+		await Deno.remove(tempDir, { recursive: true });
+	} else {
+		console.log("Nothing to fork");
+	}
 }

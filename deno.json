@@ -7,6 +7,9 @@
 		"seed": "deno run --unstable --allow-all tools/seed-local.js",
 		"publish-post": "deno run --unstable --allow-all --no-lock tools/publish-post.js",
 		"update-post": "deno run --unstable --allow-all --no-lock tools/update-post.js",
+		"publish-page": "deno run --unstable --allow-all --no-lock tools/publish-page.js",
+		"update-page": "deno run --unstable --allow-all --no-lock tools/update-page.js",
+		"clear-cache": "deno run --unstable --allow-all --no-lock tools/clear-cache.js",
 		"demos": "deno run --unstable --allow-all tools/demos.js"
 	},
 	"importMap": "./import_map.json"
