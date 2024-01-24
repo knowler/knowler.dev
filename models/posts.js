@@ -1,6 +1,8 @@
 import kv from "~/kv.js";
 import { getWebmention } from "./webmention.js";
 
+let kvPostReads = 0;
+
 export const postsCache = new Map(
 	await Array.fromAsync(
 		kv.list({ prefix: ["posts"] }),
@@ -21,6 +23,7 @@ export const postsCache = new Map(
 
 export async function getPost(id) {
 	const postRecord = await kv.get(["posts", id]);
+	console.log("post model reads", ++kvPostReads);
 	if (!postRecord.value) throw `post not found with id: ${id}`;
 
 	return postRecord.value;
@@ -36,6 +39,7 @@ export async function getPostBySlug(
 	}
 
 	const idRecord = await kv.get(["postsBySlug", slug]);
+	console.log("post model reads", ++kvPostReads);
 	if (!idRecord.value) throw `post not found with slug: ${slug}`;
 	const post = await getPost(idRecord.value);
 
@@ -58,6 +62,7 @@ export async function getPosts(options = {}) {
 	} else {
 		const iter = kv.list({ prefix: ["posts"] }, options);
 		for await (const record of iter) posts.push(record.value);
+		console.log("post model reads", ++kvPostReads);
 	}
 
 	posts.sort((a, b) => new Date(a.publishedAt) - new Date(b.publishedAt));
