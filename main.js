@@ -30,13 +30,16 @@ invariant(SESSION_KEY);
 const peersChannel = new BroadcastChannel("peers");
 
 peersChannel.addEventListener("message", event => {
+	const { action, payload } = event.data;
 	switch (event.data) {
 		case "ping":
-			console.log(event.data, event.source);
-			peersChannel.postMessage("pong");
+			const now = performance.now();
+			console.log(action, { elapsed: now - event.payload });
+			peersChannel.postMessage({ action: "pong", payload: performance.now() });
 			break;
 		case "pong":
-			console.log(event.data, event.source);
+			const now = performance.now();
+			console.log(action, { elapsed: now - event.payload });
 			break;
 	}
 });
