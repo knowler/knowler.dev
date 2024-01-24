@@ -16,6 +16,13 @@ import kv from "~/kv.js";
 /** Utils */
 import { invariant } from "~/utils/invariant.js";
 
+/* Routes that access KV store */
+import { get as getFeedRoute } from "~/routes/feed.xml.js";
+import { get as getIndexRoute } from "~/routes/index.js";
+import { get as getBlogPostRoute } from "~/routes/blog.[slug].js";
+import { get as getBlogIndexRoute } from "~/routes/blog.index.js";
+import { get as getPageRoute } from "~/routes/[page].js";
+
 const ENV = Deno.env.get("ENV");
 const LOGIN_PATH = Deno.env.get("LOGIN_PATH");
 const SITE_URL = Deno.env.get("SITE_URL");
@@ -61,23 +68,10 @@ app.notFound(async (...args) => {
  * PUBLIC ROUTES
  */
 
-app.get("/feed.xml", async (...args) => {
-	const { get } = await import("~/routes/feed.xml.js");
-	return get(...args);
-});
-
-app.get("/", async (...args) => {
-	const { get } = await import("~/routes/index.js");
-	return get(...args);
-});
-app.get("/blog", async (...args) => {
-	const { get } = await import("~/routes/blog.index.js");
-	return get(...args);
-});
-app.get("/blog/:slug", async (...args) => {
-	const { get } = await import("~/routes/blog.[slug].js");
-	return get(...args);
-});
+app.get("/feed.xml", getFeedRoute);
+app.get("/", getIndexRoute);
+app.get("/blog", getBlogIndexRoute);
+app.get("/blog/:slug", getBlogPostRoute);
 
 app.use("/webmention", sessionMiddleware({
 	store: new CookieStore(),
@@ -146,10 +140,7 @@ app.route("/sudo", sudo);
 
 /* Page and static asset routes */
 
-app.get("/:page{[a-z0-9-]+}", async (...args) => {
-	const { get } = await import("~/routes/[page].js");
-	return get(...args);
-});
+app.get("/:page{[a-z0-9-]+}", getPageRoute);
 
 app.use("*", serveStatic({ root: "./assets" }));
 
