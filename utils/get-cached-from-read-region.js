@@ -3,7 +3,7 @@ import { postsCache } from "../models/posts.js";
 
 const channel = new BroadcastChannel("cache");
 
-export function handleCacheRequest() {
+export const handleCacheRequest = () => {
 	console.log("Listening for cache requests");
 	channel.addEventListener("message", event => {
 		console.log("read region got mail", { action, payload });
@@ -17,7 +17,7 @@ export function handleCacheRequest() {
 	});
 }
 
-export function getCachedFromReadRegion(model) {
+export const getCachedFromReadRegion = (model) => {
 	return new Promise((resolve) => {
 		channel.addEventListener("message", event => {
 			const { action, payload } = event.data;
