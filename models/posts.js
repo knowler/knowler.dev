@@ -2,6 +2,7 @@ import kv from "~/kv.js";
 
 let kvPostReads = 0;
 
+console.log("populating posts cache");
 export const postsCache = new Map(
 	await Array.fromAsync(
 		kv.list({ prefix: ["posts"] }),

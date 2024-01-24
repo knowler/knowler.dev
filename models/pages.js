@@ -2,6 +2,7 @@ import kv from "~/kv.js";
 
 let kvPageReads = 0;
 
+console.log("populating pages cache");
 export const pagesCache = new Map(
 	await Array.fromAsync(
 		kv.list({ prefix: ["pages"] }),
