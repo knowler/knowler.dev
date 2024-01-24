@@ -1,5 +1,7 @@
 import kv from "~/kv.js";
 
+const IS_KV_REGION = Deno.env.get("KV_REGION") === Deno.env.get("DENO_REGION");
+
 /**
  * @typedef {Object} Post
  * @param {string} id
@@ -68,6 +70,20 @@ export async function createPost(data = {}) {
 export class Posts {
 	hasList = false;
 	cache = new Map();
+	channel = new BroadcastChannel("posts");
+
+	constructor() {
+		if (IS_KV_REGION) {
+			this.channel.addEventListener("message", async event => {
+				const { action, payload } = event.data;
+
+				if (action === "list") {
+					if (!this.hasList) await this.fetchList();
+					this.channel.postMessage({ action: "response", payload: this.cache });
+				}
+			});
+		}
+	}
 
 	async get(slug) {
 		if (this.cache.has(slug)) {
@@ -89,13 +105,8 @@ export class Posts {
 	}
 
 	async list() {
-		if (!this.hasList) {
-			console.log("populating posts cache");
-			for await (const record of kv.list({ prefix: ["posts"] })) {
-				this.cache.set(record.value.slug, record.value);
-			}
-			this.hasList = true;
-		} else console.log("already has post list");
+		if (!this.hasList) await this.fetchList();
+		else console.log("already has post list");
 
 		const posts = Array.from(this.cache.values());
 
@@ -103,4 +114,29 @@ export class Posts {
 
 		return posts;
 	}
+
+	async fetchList() {
+		if (IS_KV_REGION) {
+			console.log("populating posts cache");
+			for await (const record of kv.list({ prefix: ["posts"] })) {
+				this.cache.set(record.value.slug, record.value);
+			}
+			this.hasList = true;
+		} else {
+			console.log("fetching posts cache from read region");
+			await new Promise(resolve => {
+				this.channel.postMessage({ action: "list" });
+				this.channel.addEventListener("message", event => {
+					const { action, payload } = event.data;
+					if (action === "response") {
+						console.log("populating posts cache");
+						this.cache = payload;
+						this.hasList = true;
+						resolve();
+					}
+				});
+			});
+		}
+	}
+
 }
