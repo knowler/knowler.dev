@@ -73,21 +73,19 @@ export class Posts {
 	channel = new BroadcastChannel("posts");
 
 	constructor() {
-		if (IS_KV_REGION) {
-			this.channel.addEventListener("message", async event => {
-				const { action, payload } = event.data;
-				switch (action) {
-					case "list":
-						if (!this.hasList) await this.fetchList();
-						this.channel.postMessage({ action: "response-list", payload: this.cache });
-						break;
-					case "get":
-						if (!this.cache.has(payload)) await this.fetchPost(payload);
-						this.channel.postMessage({ action: "response-get", payload: this.cache.get(payload) })
+		this.channel.addEventListener("message", async event => {
+			const { action, payload } = event.data;
+			switch (action) {
+				case "list":
+					if (!this.hasList && IS_KV_REGION) await this.fetchList();
+					if (this.hasList) this.channel.postMessage({ action: "response-list", payload: this.cache });
 					break;
-				}
-			});
-		}
+				case "get":
+					if (!this.cache.has(payload) && IS_KV_REGION) await this.fetchPost(payload);
+					if (this.cache.has(payload)) this.channel.postMessage({ action: "response-get", payload: this.cache.get(payload) })
+				break;
+			}
+		});
 	}
 
 	async get(slug) {
