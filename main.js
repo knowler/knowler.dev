@@ -38,6 +38,7 @@ if (IS_KV_REGION) {
 		const { action, payload } = event.data;
 
 		if (action === "request") {
+			console.log({ action, payload });
 			cacheChannel.postMessage({
 				action: "response",
 				payload: payload === "pages" ? pagesCache : payload === "posts" ? postsCache : [],

@@ -5,13 +5,15 @@ const DENO_REGION = Deno.env.get("DENO_REGION");
 const KV_REGION = Deno.env.get("KV_REGION");
 const IS_KV_REGION = DENO_REGION === KV_REGION;
 
+if (!IS_KV_REGION) {
+	console.log(await getCachedFromReadRegion("pages"));
+}
+
 export const pagesCache = new Map(
-	IS_KV_REGION
-		? await Array.fromAsync(
-			kv.list({ prefix: ["pages"] }, { consistency: IS_KV_REGION ? "strong" : "eventual" }),
-			record => [record.value.slug, record.value],
-		)
-		: await getCachedFromReadRegion("pages")
+	await Array.fromAsync(
+		kv.list({ prefix: ["pages"] }, { consistency: IS_KV_REGION ? "strong" : "eventual" }),
+		record => [record.value.slug, record.value],
+	),
 );
 
 export async function getPage(id) {
