@@ -5,7 +5,6 @@ import { logger, serveStatic } from "hono/middleware";
 import { pugRenderer } from "~/middleware/pug-renderer.js";
 import { rewriteWithoutTrailingSlashes } from "~/middleware/rewrite-without-trailing-slashes.js";
 import { noRobots } from "~/middleware/no-robots.js";
-import { cache } from "~/middleware/cache.js";
 import { auth } from "~/middleware/auth.js";
 import { sessionMiddleware } from "~/middleware/session.js";
 import { CookieStore } from "hono_sessions";
@@ -34,11 +33,6 @@ kv.listenQueue(async (message) => {
 			await processWebmention(message.payload);
 			break;
 		}
-		case "populate-cache":
-			for await (const record of kv.list({ prefix: ["pages"] })) pagesCache.set(record.value.slug, record.value);
-			for await (const record of kv.list({ prefix: ["posts"] })) postsCache.set(record.value.slug, record.value);
-
-			break;
 		case undefined:
 			throw "undefined action";
 		default:

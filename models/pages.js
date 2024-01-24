@@ -1,6 +1,11 @@
 import kv from "~/kv.js";
 
-export const pagesCache = new Map();
+export const pagesCache = new Map(
+	await Array.fromAsync(
+		kv.list({ prefix: ["pages"] }),
+		record => [record.value.slug, record.value],
+	),
+);
 
 export async function getPage(id) {
 	const pageRecord = await kv.get(["pages", id]);

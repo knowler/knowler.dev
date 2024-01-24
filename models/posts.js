@@ -1,7 +1,12 @@
 import kv from "~/kv.js";
 import { getWebmention } from "./webmention.js";
 
-export const postsCache = new Map();
+export const postsCache = new Map(
+	await Array.fromAsync(
+		kv.list({ prefix: ["posts"] }),
+		record => [record.value.slug, record.value],
+	),
+);
 
 /**
  * @typedef {Object} Post
@@ -29,8 +34,6 @@ export async function getPostBySlug(
 		console.log("has cached post");
 		return postsCache.get(slug);
 	}
-
-	kv.enqueue({ action: "populate-cache" });
 
 	const idRecord = await kv.get(["postsBySlug", slug]);
 	if (!idRecord.value) throw `post not found with slug: ${slug}`;
