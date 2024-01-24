@@ -31,7 +31,7 @@ const peersChannel = new BroadcastChannel("peers");
 
 peersChannel.addEventListener("message", event => {
 	const { action, payload } = event.data;
-	switch (event.data) {
+	switch (action) {
 		case "ping":
 			console.log(action, { elapsed: performance.now() - payload });
 			peersChannel.postMessage({ action: "pong", payload: performance.now() });
