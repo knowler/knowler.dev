@@ -113,18 +113,20 @@ export class Posts {
 					this.purgeCache();
 					break;
 				case "evict":
-					for (const page of payload) this.evict(page);
+					for (const post of payload) this.evict(post);
 					break;
 			}
 		});
 	}
 
 	purgeCache() {
+		console.log("purging cache");
 		this.cache = new Map();
 		this.hasList = false;
 	}
 
 	evict(slug) {
+		console.log(`evicting post: ${slug}`)
 		this.cache.delete(slug);
 		this.hasList = false;
 		console.assert(!this.cache.has(slug), `evicting page ${slug} failed`);

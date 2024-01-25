@@ -73,11 +73,13 @@ export class Pages {
 	}
 
 	purgeCache() {
+		console.log("purging cache");
 		this.hasList = false;
 		this.cache = new Map();
 	}
 
 	evict(slug) {
+		console.log(`evicting page: ${slug}`)
 		this.hasList = false;
 		this.cache.delete(slug);
 		console.assert(!this.cache.has(slug), `evicting page ${slug} failed`);
