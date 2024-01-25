@@ -30,6 +30,7 @@ const ENV = Deno.env.get("ENV");
 const LOGIN_PATH = Deno.env.get("LOGIN_PATH");
 const SITE_URL = Deno.env.get("SITE_URL");
 const SESSION_KEY = Deno.env.get("SESSION_KEY");
+const SUPER_SECRET_CACHE_PURGE_ROUTE = Deno.env.get("SUPER_SECRET_CACHE_PURGE_ROUTE");
 
 invariant(LOGIN_PATH);
 invariant(SITE_URL);
@@ -61,18 +62,19 @@ app.use(
 
 		await next();
 
-		queueMicrotask(() => {
-			// TODO: pages.hasList isn’t a thing lol
-			if (!posts.hasList) {
-				console.log("Updating posts cache from isolates");
-				posts.channel.postMessage({ action: "connected" });
-			}
-			if (!pages.hasList) {
-				console.log("Updating pages cache from isolates");
-				pages.channel.postMessage({ action: "connected" });
-			}
-		});
-
+		if (![SUPER_SECRET_CACHE_PURGE_ROUTE, "/favicon.ico", "/main.css"].includes(c.req.path)) {
+			queueMicrotask(() => {
+				// TODO: pages.hasList isn’t a thing lol
+				if (!posts.hasList) {
+					console.log("Updating posts cache from isolates");
+					posts.channel.postMessage({ action: "connected" });
+				}
+				if (!pages.hasList) {
+					console.log("Updating pages cache from isolates");
+					pages.channel.postMessage({ action: "connected" });
+				}
+			});
+		}
 	},
 	pugRenderer(),
 	logger(),
@@ -91,6 +93,36 @@ app.notFound(async (...args) => {
 
 /* Some common requests not to process */
 app.get("/admin", c => c.notFound());
+
+app.get(SUPER_SECRET_CACHE_PURGE_ROUTE, noRobots(), (c) => {
+	const { searchParams } = new URL(c.req.url);
+
+	if (searchParams.has("all")) {
+		c.get("pages").purgeCache();
+		c.get("posts").purgeCache();
+
+		c.get("pages").channel.postMessage({ action: "purge" });
+		c.get("posts").channel.postMessage({ action: "purge" });
+
+		return c.text("purged entire cache");
+	}
+
+	if (searchParams.has("page")) {
+		const pagesToEvict = searchParams.getAll("page");
+		for (const page of pagesToEvict) c.get("pages").evict(page.slug);
+		c.get("pages").channel.postMessage({ action: "evict", payload: pagesToEvict });
+		console.log(`evicted pages: ${pagesToEvict.join(", ")}`);
+	}
+
+	if (searchParams.has("post")) {
+		const postsToEvict = searchParams.getAll("post");
+		for (const post of postsToEvict) c.get("posts").evict(post.slug);
+		c.get("posts").channel.postMessage({ action: "evict", payload: postsToEvict });
+		console.log(`evicted posts: ${postsToEvict.join(", ")}`);
+	}
+
+	return c.text("evicted specified pages and posts from the cache");
+});
 
 /**
  * PUBLIC ROUTES

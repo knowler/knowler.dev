@@ -62,8 +62,25 @@ export class Pages {
 						}
 					}
 					break;
+				case "purge":
+					this.purgeCache();
+					break;
+				case "evict":
+					for (const page of payload) this.evict(page);
+					break;
 			}
 		});
+	}
+
+	purgeCache() {
+		this.hasList = false;
+		this.cache = new Map();
+	}
+
+	evict(slug) {
+		this.hasList = false;
+		this.cache.delete(slug);
+		console.assert(!this.cache.has(slug), `evicting page ${slug} failed`);
 	}
 
 	async get(slug) {

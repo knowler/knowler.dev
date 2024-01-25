@@ -109,8 +109,25 @@ export class Posts {
 						}
 					}
 					break;
+				case "purge":
+					this.purgeCache();
+					break;
+				case "evict":
+					for (const page of payload) this.evict(page);
+					break;
 			}
 		});
+	}
+
+	purgeCache() {
+		this.cache = new Map();
+		this.hasList = false;
+	}
+
+	evict(slug) {
+		this.cache.delete(slug);
+		this.hasList = false;
+		console.assert(!this.cache.has(slug), `evicting page ${slug} failed`);
 	}
 
 	async get(slug) {
