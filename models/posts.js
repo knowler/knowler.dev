@@ -103,6 +103,7 @@ export class Posts {
 				case "populate":
 					if (!this.hasList) {
 						if (event.data.hasList) this.hasList = true;
+						console.log(`populating posts cache from ${event.data.from}`);
 						for (const post of payload.values()) {
 							this.cache.set(post.slug, post);
 						}
