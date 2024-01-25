@@ -76,6 +76,9 @@ app.notFound(async (...args) => {
 	return get(...args);
 });
 
+/* Some common requests not to process */
+app.get("/admin", c => c.notFound());
+
 /**
  * PUBLIC ROUTES
  */
