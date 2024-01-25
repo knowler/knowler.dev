@@ -47,6 +47,10 @@ export class Pages {
 				break;
 			}
 		});
+
+		requestIdleCallback(() => {
+			console.log("Idle callback says hello!");
+		});
 	}
 
 	async get(slug) {
