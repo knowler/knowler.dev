@@ -92,8 +92,26 @@ export class Posts {
 						});
 					}
 				break;
+				case "connect":
+					this.channel.postMessage({
+						action: "populate",
+						payload: this.cache,
+						from: REGION,
+						hasList: this.hasList,
+					});
+					break;
+				case "populate":
+					if (!this.hasList) {
+						if (event.data.hasList) this.hasList = true;
+						for (const post of payload.values()) {
+							this.cache.set(post.slug, post);
+						}
+					}
+					break;
 			}
 		});
+
+		queueMicrotask(() => this.channel.postMessage({ action: "connect" }));
 	}
 
 	async get(slug) {
