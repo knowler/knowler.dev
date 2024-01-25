@@ -36,7 +36,14 @@ export class Pages {
 			switch (action) {
 				case "get":
 					if (!this.cache.has(payload) && IS_KV_REGION) await this.fetchPage(payload);
-					if (this.cache.has(payload)) this.channel.postMessage({ action: "response-get", payload: this.cache.get(payload), from: REGION })
+					if (this.cache.has(payload)) {
+						this.channel.postMessage({
+							action: "response-get",
+							payload: this.cache,
+							from: REGION,
+							hasList: this.hasList,
+						});
+					}
 				break;
 			}
 		});
@@ -68,11 +75,14 @@ export class Pages {
 					const timeout = setTimeout(reject, 2_500);
 					this.channel.postMessage({ action: "get", payload: slug });
 					handleMessage = event => {
-						const { action, payload, from } = event.data;
-						if (action === "response-get" && slug === payload.slug) {
+						const { action, payload, from, hasList } = event.data;
+						if (action === "response-get" && payload.has(slug)) {
 							clearTimeout(timeout);
+							for (const page of payload.values()) {
+								this.cache.set(page.slug, page);
+							}
+							if (hasList) this.hasList = true;
 							console.log(`caching page with slug: ${slug} from ${from}`);
-							this.cache.set(slug, payload);
 							resolve();
 						}
 					}

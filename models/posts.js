@@ -83,7 +83,14 @@ export class Posts {
 					break;
 				case "get":
 					if (!this.cache.has(payload) && IS_KV_REGION) await this.fetchPost(payload);
-					if (this.cache.has(payload)) this.channel.postMessage({ action: "response-get", payload: this.cache.get(payload), REGION })
+					if (this.cache.has(payload)) {
+						this.channel.postMessage({
+							action: "response-get",
+							payload: this.cache,
+							from: REGION,
+							hasList: this.hasList,
+						});
+					}
 				break;
 			}
 		});
@@ -114,11 +121,14 @@ export class Posts {
 					const timeout = setTimeout(reject, 2_500);
 					this.channel.postMessage({ action: "get", payload: slug });
 					handleMessage = event => {
-						const { action, payload, from } = event.data;
-						if (action === "response-get" && slug === payload.slug) {
+						const { action, payload, from, hasList } = event.data;
+						if (action === "response-get" && payload.has(slug)) {
 							clearTimeout(timeout);
 							console.log(`caching post with slug: ${slug} from ${from}`);
-							this.cache.set(slug, payload);
+							for (const post of payload.values()) {
+								this.cache.set(post.slug, post);
+							}
+							if (hasList) this.hasList = true;
 							resolve();
 						}
 					}

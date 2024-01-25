@@ -1,5 +1,4 @@
 import { Feed } from "feed";
-import { getPosts } from "~/models/posts.js";
 
 const me = {
 	name: "Nathan Knowler",
