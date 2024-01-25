@@ -60,6 +60,13 @@ app.use(
 		c.set("posts", posts);
 
 		await next();
+
+		queueMicrotask(() => {
+			// TODO: pages.hasList isn’t a thing lol
+			if (!posts.hasList) posts.channel.postMessage({ action: "connected" });
+			if (!pages.hasList) pages.channel.postMessage({ action: "connected" });
+		});
+
 	},
 	pugRenderer(),
 	logger(),

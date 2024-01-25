@@ -64,8 +64,6 @@ export class Pages {
 					break;
 			}
 		});
-
-		queueMicrotask(() => this.channel.postMessage({ action: "connect" }));
 	}
 
 	async get(slug) {
