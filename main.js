@@ -109,14 +109,14 @@ app.get(SUPER_SECRET_CACHE_PURGE_ROUTE, noRobots(), (c) => {
 
 	if (searchParams.has("page")) {
 		const pagesToEvict = searchParams.getAll("page");
-		for (const page of pagesToEvict) c.get("pages").evict(page.slug);
+		for (const page of pagesToEvict) c.get("pages").evict(page);
 		c.get("pages").channel.postMessage({ action: "evict", payload: pagesToEvict });
 		console.log(`evicted pages: ${pagesToEvict.join(", ")}`);
 	}
 
 	if (searchParams.has("post")) {
 		const postsToEvict = searchParams.getAll("post");
-		for (const post of postsToEvict) c.get("posts").evict(post.slug);
+		for (const post of postsToEvict) c.get("posts").evict(post);
 		c.get("posts").channel.postMessage({ action: "evict", payload: postsToEvict });
 		console.log(`evicted posts: ${postsToEvict.join(", ")}`);
 	}
