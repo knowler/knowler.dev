@@ -63,8 +63,14 @@ app.use(
 
 		queueMicrotask(() => {
 			// TODO: pages.hasList isn’t a thing lol
-			if (!posts.hasList) posts.channel.postMessage({ action: "connected" });
-			if (!pages.hasList) pages.channel.postMessage({ action: "connected" });
+			if (!posts.hasList) {
+				console.log("Updating posts cache from isolates");
+				posts.channel.postMessage({ action: "connected" });
+			}
+			if (!pages.hasList) {
+				console.log("Updating pages cache from isolates");
+				pages.channel.postMessage({ action: "connected" });
+			}
 		});
 
 	},
