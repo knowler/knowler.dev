@@ -57,7 +57,7 @@ export class Pages {
 					if (!this.hasList) {
 						if (event.data.hasList) this.hasList = true;
 						for (const page of payload.values()) {
-							this.cache.set(page.slug, post);
+							this.cache.set(page.slug, page);
 						}
 					}
 					break;
