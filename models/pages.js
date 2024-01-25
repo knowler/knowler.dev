@@ -48,8 +48,8 @@ export class Pages {
 			}
 		});
 
-		requestIdleCallback(() => {
-			console.log("Idle callback says hello!");
+		queueMicrotask(() => {
+			console.log("micro task");
 		});
 	}
 
