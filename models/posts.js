@@ -152,7 +152,7 @@ export class Posts {
 		} else {
 			let handleMessage;
 			try {
-				console.log("fetching cached post from read region");
+				console.log(`fetching cached post ${slug} from other isolates`);
 				await new Promise((resolve, reject) => {
 					const timeout = setTimeout(reject, 2_500);
 					this.channel.postMessage({ action: "get", payload: slug });
