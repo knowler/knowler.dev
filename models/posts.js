@@ -133,7 +133,7 @@ export class Posts {
 	}
 
 	async get(slug) {
-		if (!this.cache.has(slug)) await this.fetchPost();
+		if (!this.cache.has(slug)) await this.fetchPost(slug);
 		else console.log(`has cached post for slug: ${slug}`);
 
 		return this.cache.get(slug);
