@@ -62,11 +62,15 @@ const updatedPost = {
 	updatedAt: new Date().toISOString(),
 };
 
-const url = `https://knowler/blog/${updatedPost.slug}`;
+const url = `https://knowler.dev/blog/${updatedPost.slug}`;
 
 await kv.set(["posts", post.id], updatedPost);
-await kv.delete(["kv-httpcache", url])
-await kv.delete(["kv-httpcache", "https://knowler.dev/feed.xml"])
+
+const purgeURL = new URL(Deno.env.get("SUPER_SECRET_CACHE_PURGE_ROUTE_PROD"), "https://knowler.dev");
+purgeURL.searchParams.set("all", "");
+
+await fetch(purgeURL);
+
 await Deno.remove(fileName);
 
 console.log(
