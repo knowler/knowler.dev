@@ -106,6 +106,10 @@ const ignoreList = [
 	"/wp-content/*",
 	"/wp-includes/*",
 	"/cgi-bin/*",
+
+	// Might add these 
+	"/contact",
+	"/sitemap.xml",
 ];
 for (const ignoredRoute of ignoreList) app.get(ignoredRoute, c => c.notFound());
 
