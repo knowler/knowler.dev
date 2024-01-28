@@ -92,7 +92,18 @@ app.notFound(async (...args) => {
 });
 
 /* Some common requests not to process */
-app.get("/admin", c => c.notFound());
+const ignoreList = [
+	"*.php",
+	"/.env",
+	"/.git",
+	"/.git/*",
+	"/admin",
+	"/wp-admin/*",
+	"/wp-content/*",
+	"/wp-includes/*",
+	"/cgi-bin/*",
+];
+for (const ignoredRoute of ignoreList) app.get(ignoredRoute, c => c.notFound());
 
 app.get(SUPER_SECRET_CACHE_PURGE_ROUTE, noRobots(), (c) => {
 	const { searchParams } = new URL(c.req.url);
