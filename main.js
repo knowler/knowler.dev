@@ -93,7 +93,6 @@ app.notFound(async (...args) => {
 
 /* Some common requests not to process */
 const ignoreList = [
-	"//*",
 	"*.php",
 	"/.env",
 	"/.git",
