@@ -107,6 +107,8 @@ const ignoreList = [
 	"/wp-includes/*",
 	"/cgi-bin/*",
 
+	"/blog/MjAyNC1jc3", // TODO: cache bad URL requests like this so they don’t keep reading.
+
 	// Might add these 
 	"/contact",
 	"/sitemap.xml",
