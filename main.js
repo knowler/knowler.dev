@@ -78,9 +78,6 @@ app.use(
 	pugRenderer(),
 	logger(),
 	async (c, next) => {
-
-		console.log(c.env?.remoteAddr?.hostname, "connected");
-
 		const referer = c.req.header("referer");
 		if (referer) console.log("Referer:", referer);
 		await next();
@@ -111,7 +108,7 @@ const ignoreList = [
 
 	// TODO: cache bad URL requests like this so they don’t keep reading.
 	"/blog/MjAyNC1jc3",
-	"/blog/4870-css-wishlistW",
+	"/blog/2024-css-wishlistW",
 
 	// Might add these 
 	"/contact",
