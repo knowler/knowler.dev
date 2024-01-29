@@ -56,7 +56,6 @@ const posts = new Posts();
 app.use(
 	"*",
 	async (c, next) => {
-
 		c.set("pages", pages);
 		c.set("posts", posts);
 
@@ -79,6 +78,9 @@ app.use(
 	pugRenderer(),
 	logger(),
 	async (c, next) => {
+
+		console.log(c.env?.remoteAddr?.hostname, "connected");
+
 		const referer = c.req.header("referer");
 		if (referer) console.log("Referer:", referer);
 		await next();
@@ -107,7 +109,9 @@ const ignoreList = [
 	"/wp-includes/*",
 	"/cgi-bin/*",
 
-	"/blog/MjAyNC1jc3", // TODO: cache bad URL requests like this so they don’t keep reading.
+	// TODO: cache bad URL requests like this so they don’t keep reading.
+	"/blog/MjAyNC1jc3",
+	"/blog/4870-css-wishlistW",
 
 	// Might add these 
 	"/contact",
