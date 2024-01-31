@@ -189,29 +189,27 @@ app.post("/webmention", async (...args) => {
 	return post(...args);
 });
 
-if (ENV === "development") {
-	app.use("/flags", sessionMiddleware({
-		store: new CookieStore(),
-		sessionCookieName: "__flags_session",
-		expireAfterSeconds: 60 * 60 * 24 * 7,
-		encryptionKey: SESSION_KEY,
-		cookieOptions: {
-			path: "/flags",
-			domain: new URL(SITE_URL).hostname,
-			httpOnly: true,
-			secure: true,
-			sameSite: "Strict",
-		},
-	}));
-	app.get("/flags", async (...args) => {
-		const { get } = await import("~/routes/flags.js");
-		return get(...args);
-	});
-	app.post("/flags", async (...args) => {
-		const { post } = await import("~/routes/flags.js");
-		return post(...args);
-	});
-}
+app.use("/flags", sessionMiddleware({
+	store: new CookieStore(),
+	sessionCookieName: "__flags_session",
+	expireAfterSeconds: 60 * 60 * 24 * 7,
+	encryptionKey: SESSION_KEY,
+	cookieOptions: {
+		path: "/flags",
+		domain: new URL(SITE_URL).hostname,
+		httpOnly: true,
+		secure: true,
+		sameSite: "Strict",
+	},
+}));
+app.get("/flags", async (...args) => {
+	const { get } = await import("~/routes/flags.js");
+	return get(...args);
+});
+app.post("/flags", async (...args) => {
+	const { post } = await import("~/routes/flags.js");
+	return post(...args);
+});
 
 app.get("/demos/:slug", async (...args) => {
 	const { get } = await import ("~/routes/demos.[slug].js");
