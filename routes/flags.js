@@ -2,6 +2,7 @@ import { setSignedCookie } from "https://deno.land/x/hono@v3.12.8/middleware.ts"
 import { sign } from "https://deno.land/x/hono@v3.12.8/utils/jwt/jwt.ts";
 
 const SESSION_KEY = Deno.env.get("SESSION_KEY");
+const SITE_URL = Deno.env.get("SITE_URL");
 
 export function get(c) {
 	const session = c.get("__flags_session");
@@ -29,7 +30,7 @@ export async function post(c) {
 	await setSignedCookie(c, "flags", token, SESSION_KEY, {
 		path: "/",
 		secure: true,
-		domain: "localhost",
+		domain: new URL(SITE_URL).hostname,
 		httpOnly: true,
 		maxAge: 365 * 24 * 60 * 60,
 		sameSite: "Strict",
