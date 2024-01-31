@@ -3,7 +3,7 @@ extends /_layouts/public
 include /_mixins/honey-pot
 
 append head
-	style: include feature-flags.css
+	style: include flags.css
 
 block content
 	h1 Feature Flags
@@ -11,9 +11,7 @@ block content
 		These are features that I am currently working on and are either
 		experimental or not quite ready for the mainline experience. Often,
 		they might even require Web Platform features not available in all
-		browsers. Also, note that by opting in to any of these features, you
-		are opting out of HTTP caching for my website, since I use cookies
-		to store these settings.
+		browsers. #[strong Also, note that opting into these features means you are opting into cookies. None of these preferences are stored on the server.]
 	form(method="POST")
 		if success
 			aside.success: p Updated feature flags.

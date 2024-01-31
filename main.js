@@ -1,7 +1,10 @@
 import { Hono } from "hono";
 
 /** Middlewares */
-import { logger, serveStatic } from "hono/middleware";
+import { logger, serveStatic, getSignedCookie, setSignedCookie } from "hono/middleware";
+
+import { verify } from "https://deno.land/x/hono@v3.12.8/utils/jwt/jwt.ts";
+
 import { pugRenderer } from "~/middleware/pug-renderer.js";
 import { rewriteWithoutTrailingSlashes } from "~/middleware/rewrite-without-trailing-slashes.js";
 import { noRobots } from "~/middleware/no-robots.js";
@@ -74,6 +77,15 @@ app.use(
 				}
 			});
 		}
+	},
+	// Feature flags
+	async (c, next) => {
+		const token = await getSignedCookie(c, SESSION_KEY, "flags");
+		const flags = new Set(token ? await verify(token, SESSION_KEY) : []);
+
+		c.set("flags", flags);
+
+		await next();
 	},
 	pugRenderer(),
 	logger(),
@@ -178,12 +190,25 @@ app.post("/webmention", async (...args) => {
 });
 
 if (ENV === "development") {
-	app.get("/feature-flags", async (...args) => {
-		const { get } = await import("~/routes/feature-flags.js");
+	app.use("/flags", sessionMiddleware({
+		store: new CookieStore(),
+		sessionCookieName: "__flags_session",
+		expireAfterSeconds: 60 * 60 * 24 * 7,
+		encryptionKey: SESSION_KEY,
+		cookieOptions: {
+			path: "/flags",
+			domain: new URL(SITE_URL).hostname,
+			httpOnly: true,
+			secure: true,
+			sameSite: "Strict",
+		},
+	}));
+	app.get("/flags", async (...args) => {
+		const { get } = await import("~/routes/flags.js");
 		return get(...args);
 	});
-	app.post("/feature-flags", async (...args) => {
-		const { post } = await import("~/routes/feature-flags.js");
+	app.post("/flags", async (...args) => {
+		const { post } = await import("~/routes/flags.js");
 		return post(...args);
 	});
 }

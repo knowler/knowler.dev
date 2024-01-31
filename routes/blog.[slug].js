@@ -2,8 +2,6 @@ import { trimTrailingSlash } from "~/utils/trim-trailing-slash.js";
 import { winnipegDateTime } from "~/utils/winnipeg-datetime.js";
 
 export async function get(c, next) {
-	const flags = c.get("__flags_session")?.get("flags");
-
 	try {
 		const { slug } = c.req.param();
 		const post = await c.get("posts").get(slug);
@@ -14,7 +12,6 @@ export async function get(c, next) {
 			post,
 			canonical: trimTrailingSlash(c.req.url),
 			prettyDateString: winnipegDateTime(new Date(post.publishedAt)),
-			flags: new Set(flags),
 		});
 	} catch (error) {
 		console.error(error);

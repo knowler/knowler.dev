@@ -13,6 +13,7 @@ export function pugRenderer() {
 				renderFile(
 					`./routes/${template}.pug`,
 					{
+						flags: c.get("flags"),
 						basedir: "./routes",
 						isCurrentPath(path) {
 							return trimTrailingSlash(path) === trimTrailingSlash(c.req.path);
