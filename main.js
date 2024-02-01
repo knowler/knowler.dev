@@ -92,6 +92,7 @@ app.use(
 	async (c, next) => {
 		const referer = c.req.header("referer");
 		if (referer) console.log("Referer:", referer);
+		console.log("user agent", c.req.header("User-Agent"));
 		await next();
 	},
 	rewriteWithoutTrailingSlashes(),
