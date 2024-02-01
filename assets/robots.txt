@@ -44,3 +44,8 @@ Disallow: /
 
 User-agent: omgili
 Disallow: /
+
+# Arc Search
+
+User-agent: ArcMobile2
+Disallow: /
