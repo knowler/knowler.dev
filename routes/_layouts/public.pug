@@ -1,5 +1,9 @@
 extends base
 
+include /_mixins/env
+include /_mixins/flag
+include /_mixins/styles
+
 append head
 	title #{title} – Nathan Knowler
 	if description
@@ -12,11 +16,11 @@ append head
 	link(rel="stylesheet" href="/main.css")
 	link(rel="author" href="/about" title="About the author")
 	link(rel="alternate" href="/feed.xml" type="application/rss+xml" title="RSS")
-	unless styles.size === 0
-		style!= Array.from(styles).join("\n")
+	+styles
 
+include /_mixins/nav-list
 include /_mixins/nav-link
-include /_mixins/feature-flags
+
 block body
 	a(href=`${currentPath}#content`).skip-link.visually-hidden Skip to content
 	header.h-card
@@ -24,18 +28,18 @@ block body
 			span.p-name Nathan Knowler
 		span(hidden).u-photo https://github.com/knowler.png
 		span(hidden).p-note Building websites. Interested in Accessibility, Progressive Enhancement, and Web Components. Proudly Métis.
-		nav(aria-label="primary")
-			ul(role="list")
-				li: +nav-link(href="/") Welcome
-				li: +nav-link(href="/blog") Blog
-				li: +nav-link(href="/about") About
-				li: +nav-link(href="/uses") Uses
-				li: a(rel="me" href="https://github.com/knowler")
-					span.visually-hidden @knowler on GitHub
-					include /_icons/github.svg
-				li: a(rel="me" href="https://sunny.garden/@knowler")
-					span.visually-hidden @knowler@sunny.garden on Mastodon
-					include /_icons/mastodon.svg
+
+		+nav-list("primary")
+			li: +nav-link(href="/") Welcome
+			li: +nav-link(href="/blog") Blog
+			li: +nav-link(href="/about") About
+			li: +nav-link(href="/uses") Uses
+			li: a(rel="me" href="https://github.com/knowler")
+				span.visually-hidden @knowler on GitHub
+				include /_icons/github.svg
+			li: a(rel="me" href="https://sunny.garden/@knowler")
+				span.visually-hidden @knowler@sunny.garden on Mastodon
+				include /_icons/mastodon.svg
 	main#content
 		block content
 	footer
@@ -44,10 +48,9 @@ block body
 				CC BY-NC-SA 4.0 license
 		p #[a(href="https://github.com/knowler/knowler.dev") Code] and content by Nathan Knowler.
 		p Except if noted otherwise, content on this website is licensed under a #[+license-link].
-		nav(aria-label="secondary")
-			ul(role="list")
-				li: +nav-link(href="/accessibility") Accessibility
-				li: +nav-link(href="/privacy") Privacy
-				li: +nav-link(href="/webmention") Webmention
-				li: a(href="/feed.xml") RSS
-				li: +nav-link(href="/flags") Feature Flags
+		+nav-list("secondary")
+			li: +nav-link(href="/accessibility") Accessibility
+			li: +nav-link(href="/privacy") Privacy
+			li: +nav-link(href="/webmention") Webmention
+			li: a(href="/feed.xml") RSS
+			li: +nav-link(href="/flags") Feature Flags

@@ -1,0 +1,6 @@
+@layer block {
+	label:has(input[type="checkbox"]) {
+		display: flex;
+		gap: 0.25rem;
+	}
+}

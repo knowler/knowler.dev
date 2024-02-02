@@ -12,9 +12,4 @@
 		border: 0.125em dashed var(--color-accent);
 		color: var(--color-accent);
 	}
-
-	label:has(input[type="checkbox"]) {
-		display: flex;
-		gap: 0.25rem;
-	}
 }

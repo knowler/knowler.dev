@@ -1,9 +1,7 @@
 extends /_layouts/public
 
 include /_mixins/h-entry
-include /_mixins/form
-include /_mixins/checkbox-field
-include /_mixins/button
+include /_mixins/feature-flags-form
 
 block content
 	+h-entry("Feature Flags")
@@ -12,7 +10,4 @@ block content
 			experimental or not quite ready for the mainline experience. Often,
 			they might even require Web Platform features not available in all
 			browsers. #[strong Also, note that opting into these features means you are opting into cookies. None of these preferences are stored on the server.]
-		+form("Updated feature flags.")(method="POST")
-			+checkbox-field(name="blog:breadcrumbs" type="checkbox" switch checked=flags.has("blog:breadcrumbs"))
-				| Breadcrumbs on blog posts
-			+button Save Feature Flags
+		+feature-flags-form

@@ -7,11 +7,7 @@ append head
 
 block content
 	+flag("blog:breadcrumbs")
-		nav.breadcrumbs(aria-label="Breadcrumbs")
-			ol
-				li #[a(href="/blog") Blog] #[span(aria-hidden="true") – ]
-				li: a(aria-current="page" href=canonical)= title
-		style.
+		:css
 			nav.breadcrumbs {
 				translate: 0 2rem;
 			}
@@ -27,10 +23,15 @@ block content
 			nav.breadcrumbs li {
 				white-space: pre;
 			}
+		nav.breadcrumbs(aria-label="Breadcrumbs")
+			ol
+				li #[a(href="/blog") Blog] #[span(aria-hidden="true") – ]
+				li: a(aria-current="page" href=canonical)= title
 	article.h-entry
 		+h1(title).p-name
 		p #[time(datetime=post.publishedAt).dt-published= prettyDateString] – #[a(href=canonical).u-url Permalink]
 		.e-content !{post.html}
+
 	+env("development")
 		article
 			h2 About the author

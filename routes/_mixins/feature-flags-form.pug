@@ -1,0 +1,9 @@
+include form
+include checkbox-field
+include button
+
+mixin feature-flags-form
+	+form("Updated feature flags.")(method="POST")
+		+checkbox-field(name="blog:breadcrumbs" type="checkbox" switch checked=flags.has("blog:breadcrumbs"))
+			| Breadcrumbs on blog posts
+		+button Save Feature Flags

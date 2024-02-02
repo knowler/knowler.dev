@@ -1,7 +1,0 @@
-feature-flags:not(:defined) {
-	display: none;
-}
-
-feature-flags label {
-	display: block;
-}
