@@ -1,19 +1,14 @@
 extends /_layouts/public
 
 include /_mixins/h-entry
+include /_mixins/form
 include /_mixins/text-field
-include /_mixins/honey-pot
-
-append head
-	style: include webmention.css
+include /_mixins/button
 
 block content
 	+h-entry("Webmention")
 		p If the platform you are using doesn’t already support Webmentions, then you can use this form to manually send one for the content you link to on my website.
-		form(method="post" novalidate)
-			if success
-				aside.success: p Successfully sent Webmention!
+		+form("Successfully sent Webmention!")(method="post" novalidate)
 			+text-field(type="url" name="source" description="The URL for your content") Source URL
 			+text-field(type="url" name="target" description="The URL for my content") Target URL
-			+honey-pot
-			button Send Webmention
+			+button Send Webmention

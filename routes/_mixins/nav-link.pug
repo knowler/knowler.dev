@@ -1,3 +1,3 @@
-mixin nav-link()
-  a(aria-current=isCurrentPath(attributes.href) ? "page" : undefined)&attributes(attributes)
-    block
+mixin nav-link
+	a(aria-current=isCurrentPath(attributes.href) && "page")&attributes(attributes)
+		block

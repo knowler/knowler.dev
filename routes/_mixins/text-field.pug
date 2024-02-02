@@ -1,21 +1,22 @@
 mixin text-field
-  - let {id, optional, description, ...inputAttributes} = attributes
-  - let inputId = id ?? attributes.name
-  - let descriptionId = description && `${inputId}-description`
-  - let error = issues.find(issue => issue.field === attributes.name)
-  - let errorId = error && `${inputId}-error`
-  .form-field(class=(error && 'has-error'))
-    label(for=inputId)
-      block
-    if descriptionId
-      .field-description(id=descriptionId)= description
-    if errorId
-      .field-error(id=errorId)= error.message
-    input(
-      id=inputId
-      required=!optional
-      aria-describedby=descriptionId
-      aria-invalid=!!error
-      aria-errormessage=errorId
+	- let {id, optional, description, ...inputAttributes} = attributes
+	- let inputId = id ?? attributes.name
+	- let descriptionId = description && `${inputId}-description`
+	- let error = issues.find(issue => issue.field === attributes.name)
+	- let errorId = error && `${inputId}-error`
+	include:css text-field.css
+	.form-field(class=(error && 'has-error'))
+		label(for=inputId)
+			block
+		if descriptionId
+			.field-description(id=descriptionId)= description
+		if errorId
+			.field-error(id=errorId)= error.message
+		input(
+			id=inputId
+			required=!optional
+			aria-describedby=descriptionId
+			aria-invalid=!!error
+			aria-errormessage=errorId
 			value=formData[attributes.name]
-    )&attributes(inputAttributes)
+		)&attributes(inputAttributes)

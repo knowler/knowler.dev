@@ -1,0 +1,9 @@
+include honey-pot
+
+mixin form(successMessage)
+	include:css form.css
+	form&attributes(attributes)
+		+honey-pot
+		if success
+			aside.success: p= successMessage
+		block

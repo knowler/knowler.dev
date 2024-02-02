@@ -1,0 +1,14 @@
+@layer block {
+	button {
+		border-radius: 0.25em;
+		font-size: 1.25em;
+		font-weight: 500;
+		font-family: inherit;
+		font-variation-settings: "wdth" 110;
+		padding-block: 0.375em;
+		padding-inline: 0.5em;
+		border: none;
+		background-color: var(--color-accent);
+		color: Canvas;
+	}
+}

@@ -1,22 +1,18 @@
 extends /_layouts/public
 
-include /_mixins/honey-pot
-
-append head
-	style: include flags.css
+include /_mixins/h-entry
+include /_mixins/form
+include /_mixins/checkbox-field
+include /_mixins/button
 
 block content
-	h1 Feature Flags
-	p.
-		These are features that I am currently working on and are either
-		experimental or not quite ready for the mainline experience. Often,
-		they might even require Web Platform features not available in all
-		browsers. #[strong Also, note that opting into these features means you are opting into cookies. None of these preferences are stored on the server.]
-	form(method="POST")
-		if success
-			aside.success: p Updated feature flags.
-		+honey-pot
-		label
-			input(name="blog:breadcrumbs" type="checkbox" switch checked=flags.has("blog:breadcrumbs"))
-			| Breadcrumbs on blog posts
-		button Save Feature Flags
+	+h-entry("Feature Flags")
+		p.
+			These are features that I am currently working on and are either
+			experimental or not quite ready for the mainline experience. Often,
+			they might even require Web Platform features not available in all
+			browsers. #[strong Also, note that opting into these features means you are opting into cookies. None of these preferences are stored on the server.]
+		+form("Updated feature flags.")(method="POST")
+			+checkbox-field(name="blog:breadcrumbs" type="checkbox" switch checked=flags.has("blog:breadcrumbs"))
+				| Breadcrumbs on blog posts
+			+button Save Feature Flags

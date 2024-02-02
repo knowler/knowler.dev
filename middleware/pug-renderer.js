@@ -8,11 +8,19 @@ invariant(SITE_URL);
 
 export function pugRenderer() {
 	return async (c, next) => {
+		const styles = new Set();
 		c.setRenderer((template, data = {}) =>
 			c.html(
 				renderFile(
 					`./routes/${template}.pug`,
 					{
+						filters: {
+							css(text) {
+								styles.add(text);
+								return "";
+							}
+						},
+						styles,
 						flags: c.get("flags"),
 						basedir: "./routes",
 						isCurrentPath(path) {
@@ -24,7 +32,7 @@ export function pugRenderer() {
 						...data,
 					},
 				),
-			)
+			),
 		);
 
 		await next();

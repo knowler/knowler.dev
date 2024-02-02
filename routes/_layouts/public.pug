@@ -1,8 +1,5 @@
 extends base
 
-include /_mixins/nav-link.pug
-include /_mixins/feature-flags.pug
-
 append head
 	title #{title} – Nathan Knowler
 	if description
@@ -15,7 +12,11 @@ append head
 	link(rel="stylesheet" href="/main.css")
 	link(rel="author" href="/about" title="About the author")
 	link(rel="alternate" href="/feed.xml" type="application/rss+xml" title="RSS")
+	unless styles.size === 0
+		style!= Array.from(styles).join("\n")
 
+include /_mixins/nav-link
+include /_mixins/feature-flags
 block body
 	a(href=`${currentPath}#content`).skip-link.visually-hidden Skip to content
 	header.h-card

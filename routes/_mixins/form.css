@@ -1,0 +1,20 @@
+@layer block {
+	form {
+		display: grid;
+		justify-items: start;
+		gap: 1rem;
+	}
+
+	form .success p {
+		font-weight: 600;
+		margin-block: 0;
+		padding: 0.5rem;
+		border: 0.125em dashed var(--color-accent);
+		color: var(--color-accent);
+	}
+
+	label:has(input[type="checkbox"]) {
+		display: flex;
+		gap: 0.25rem;
+	}
+}
