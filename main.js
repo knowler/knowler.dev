@@ -28,6 +28,7 @@ import { get as getPageRoute } from "~/routes/[page].js";
 
 import { Pages } from "~/models/pages.js";
 import { Posts } from "~/models/posts.js";
+import { Demos } from "~/models/demos.js";
 
 const ENV = Deno.env.get("ENV");
 const LOGIN_PATH = Deno.env.get("LOGIN_PATH");
@@ -55,12 +56,14 @@ kv.listenQueue(async (message) => {
 const app = new Hono();
 const pages = new Pages();
 const posts = new Posts();
+const demos = new Demos();
 
 app.use(
 	"*",
 	async (c, next) => {
 		c.set("pages", pages);
 		c.set("posts", posts);
+		c.set("demos", demos);
 
 		await next();
 
@@ -74,6 +77,10 @@ app.use(
 				if (!pages.hasList) {
 					console.log("Updating pages cache from isolates");
 					pages.channel.postMessage({ action: "connected" });
+				}
+				if (!demos.hasList) {
+					console.log("Updating demos cache from isolates");
+					demos.channel.postMessage({ action: "connected" });
 				}
 			});
 		}
@@ -135,9 +142,11 @@ app.get(SUPER_SECRET_CACHE_PURGE_ROUTE, noRobots(), (c) => {
 	if (searchParams.has("all")) {
 		c.get("pages").purgeCache();
 		c.get("posts").purgeCache();
+		c.get("demos").purgeCache();
 
 		c.get("pages").channel.postMessage({ action: "purge" });
 		c.get("posts").channel.postMessage({ action: "purge" });
+		c.get("demos").channel.postMessage({ action: "purge" });
 
 		return c.text("purged entire cache");
 	}
@@ -156,7 +165,14 @@ app.get(SUPER_SECRET_CACHE_PURGE_ROUTE, noRobots(), (c) => {
 		console.log(`evicted posts: ${postsToEvict.join(", ")}`);
 	}
 
-	return c.text("evicted specified pages and posts from the cache");
+	if (searchParams.has("demo")) {
+		const demosToEvict = searchParams.getAll("post");
+		for (const post of demosToEvict) c.get("demos").evict(post);
+		c.get("demos").channel.postMessage({ action: "evict", payload: demosToEvict });
+		console.log(`evicted demos: ${demosToEvict.join(", ")}`);
+	}
+
+	return c.text("evicted specified pages, posts, and demos from the cache");
 });
 
 /**

@@ -1,9 +1,7 @@
-import kv from "~/kv.js";
-
 export async function get(c, next) {
 	try {
 		const params = c.req.param();
-		const demo = (await kv.get(["demos", params.slug])).value;
+		const demo = await c.get("demos").get(params.slug);
 		const query = c.req.query();
 
 		delete demo.pug;

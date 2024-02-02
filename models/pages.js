@@ -56,7 +56,7 @@ export class Pages {
 				case "populate":
 					if (!this.hasList) {
 						if (event.data.hasList) this.hasList = true;
-						console.log(`populating posts cache from ${event.data.from}`);
+						console.log(`populating pages cache from ${event.data.from}`);
 						for (const page of payload.values()) {
 							this.cache.set(page.slug, page);
 						}
