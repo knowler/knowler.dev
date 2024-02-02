@@ -34,8 +34,8 @@ export class Demos {
 					if (!this.hasList) {
 						if (event.data.hasList) this.hasList = true;
 						console.log(`populating demos cache from ${event.data.from}`);
-						for (const demo of payload.values()) {
-							this.cache.set(demo.slug, demo);
+						for (const [demoId, demo] of payload) {
+							this.cache.set(demoId, demo);
 						}
 					}
 					break;
@@ -43,7 +43,7 @@ export class Demos {
 					this.purgeCache();
 					break;
 				case "evict":
-					for (const demo of payload) this.evict(demo);
+					for (const demoId of payload.keys) this.evict(demoId);
 					break;
 			}
 		});
@@ -88,8 +88,8 @@ export class Demos {
 						const { action, payload, from, hasList } = event.data;
 						if (action === "response-get" && payload.has(slug)) {
 							clearTimeout(timeout);
-							for (const demo of payload.values()) {
-								this.cache.set(demo.slug, demo);
+							for (const [demoId, demo] of payload) {
+								this.cache.set(demoId, demo);
 							}
 							if (hasList) this.hasList = true;
 							console.log(`caching demo with slug: ${slug} from ${from}`);
