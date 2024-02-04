@@ -166,8 +166,8 @@ app.get(SUPER_SECRET_CACHE_PURGE_ROUTE, noRobots(), (c) => {
 	}
 
 	if (searchParams.has("demo")) {
-		const demosToEvict = searchParams.getAll("post");
-		for (const post of demosToEvict) c.get("demos").evict(post);
+		const demosToEvict = searchParams.getAll("demo");
+		for (const demo of demosToEvict) c.get("demos").evict(demo);
 		c.get("demos").channel.postMessage({ action: "evict", payload: demosToEvict });
 		console.log(`evicted demos: ${demosToEvict.join(", ")}`);
 	}

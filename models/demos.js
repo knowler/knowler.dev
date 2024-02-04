@@ -43,7 +43,7 @@ export class Demos {
 					this.purgeCache();
 					break;
 				case "evict":
-					for (const demoId of payload.keys) this.evict(demoId);
+					for (const demoId of payload.keys()) this.evict(demoId);
 					break;
 			}
 		});
