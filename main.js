@@ -19,13 +19,6 @@ import kv from "~/kv.js";
 /** Utils */
 import { invariant } from "~/utils/invariant.js";
 
-/* Routes that access KV store */
-import { get as getFeedRoute } from "~/routes/feed.xml.js";
-import { get as getIndexRoute } from "~/routes/index.js";
-import { get as getBlogPostRoute } from "~/routes/blog.[slug].js";
-import { get as getBlogIndexRoute } from "~/routes/blog.index.js";
-import { get as getPageRoute } from "~/routes/[page].js";
-
 import { Pages } from "~/models/pages.js";
 import { Posts } from "~/models/posts.js";
 import { Demos } from "~/models/demos.js";
@@ -179,10 +172,22 @@ app.get(SUPER_SECRET_CACHE_PURGE_ROUTE, noRobots(), (c) => {
  * PUBLIC ROUTES
  */
 
-app.get("/feed.xml", getFeedRoute);
-app.get("/", getIndexRoute);
-app.get("/blog", getBlogIndexRoute);
-app.get("/blog/:slug", getBlogPostRoute);
+app.get("/feed.xml", async (...args) => {
+	const { get } = await import ("~/routes/feed.xml.js");
+	return get(...args);
+});
+app.get("/", async (...args) => {
+	const { get } = await import ("~/routes/index.js");
+	return get(...args);
+});
+app.get("/blog", async (...args) => {
+	const { get } = await import ("~/routes/blog.index.js");
+	return get(...args);
+});
+app.get("/blog/:slug", async (...args) => {
+	const { get } = await import ("~/routes/blog.[slug].js");
+	return get(...args);
+});
 
 app.use("/webmention", sessionMiddleware({
 	store: new CookieStore(),
@@ -261,7 +266,10 @@ const { sudo } = await import("~/routes/sudo.js");
 app.route("/sudo", sudo);
 
 /* Page and static asset routes */
-app.get("/:page{[a-z0-9-]+}", getPageRoute);
+app.get("/:page{[a-z0-9-]+}", async (...args) => {
+	const { get } = await import ("~/routes/[page].js");
+	return get(...args);
+});
 
 app.use("*", serveStatic({ root: "./assets" }));
 
