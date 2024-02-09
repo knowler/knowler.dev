@@ -12,6 +12,7 @@
 		"std/front_matter/toml": "https://deno.land/std@0.213.0/front_matter/toml.ts",
 		"std/http": "https://deno.land/std@0.213.0/http/mod.ts",
 		"std/media_types": "https://deno.land/std@0.213.0/media_types/mod.ts",
-		"std/toml": "https://deno.land/std@0.213.0/toml/mod.ts"
+		"std/toml": "https://deno.land/std@0.213.0/toml/mod.ts",
+		"ulid": "https://deno.land/x/ulid@v0.3.0/mod.ts"
 	}
 }

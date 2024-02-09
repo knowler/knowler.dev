@@ -13,18 +13,18 @@ const text = await Deno.readTextFile(contentFile);
 
 const { attrs, body } = extract(text);
 
+const publishedAt = new Date();
+const id = ulid(Number(publishedAt));
+
 const post = {
-	id: crypto.randomUUID(),
+	id,
 	slug: attrs.slug ?? paramCase(attrs.title),
 	title: attrs.title,
 	description: attrs.description,
-	publishedAt: new Date().toISOString(),
+	publishedAt: publishedAt.toISOString(),
 	published: attrs.published ?? true,
 	html: String(await markdownToHTML(body)),
 };
 
 await kv.set(["posts", post.id], post);
 await kv.set(["postsBySlug", post.slug], post.id);
-// Clear cache for blog index and feed
-await kv.delete(["kv-httpcache", "https://knowler.dev/blog"]);
-await kv.delete(["kv-httpcache", "https://knowler.dev/feed.xml"]);
