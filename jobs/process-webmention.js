@@ -1,6 +1,6 @@
 import kv from "~/kv.js";
 import { mf2 } from "npm:microformats-parser";
-import { getPostBySlug } from "~/models/posts.js";
+//import { getPostBySlug } from "~/models/posts.js";
 
 // TODO: differentiate error types
 async function postForTarget(url) {
@@ -10,7 +10,9 @@ async function postForTarget(url) {
 
 	if (!slug) throw `Not a post`;
 
-	const post = await getPostBySlug(slug, { withWebmentions: true });
+	console.log("Reimplement");
+
+	//const post = await getPostBySlug(slug, { withWebmentions: true });
 
 	if (!post) throw `No post found`;
 

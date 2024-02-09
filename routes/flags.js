@@ -22,8 +22,10 @@ export async function post(c) {
 	// Bad actor
 	if (formData.get("robotName") !== "") return c.redirect("/flags", 303);
 
-	if (formData.has("blog:breadcrumbs")) flags.add("blog:breadcrumbs");
-	else flags.delete("blog:breadcrumbs");
+	for (const flag of c.get("allowedFlags")) {
+		if (formData.has(flag)) flags.add(flag);
+		else flags.delete(flag);
+	}
 
 	const token = await sign(Array.from(flags), SESSION_KEY);
 

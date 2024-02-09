@@ -6,4 +6,6 @@ mixin feature-flags-form
 	+form("Updated feature flags.")(method="POST")
 		+checkbox-field(name="blog:breadcrumbs" type="checkbox" switch checked=flags.has("blog:breadcrumbs"))
 			| Breadcrumbs on blog posts
+		+checkbox-field(name="blog:pagination" type="checkbox" switch checked=flags.has("blog:pagination"))
+			| Pagination for blog
 		+button Save Feature Flags

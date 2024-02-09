@@ -13,3 +13,8 @@
 .h-entry ol time {
 	font-style: italic;
 }
+
+nav[aria-label="pagination"] ol {
+	display: flex;
+	column-gap: 0.5rem;
+}
