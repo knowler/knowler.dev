@@ -8,11 +8,10 @@ export function getShadowRoots(root = document) {
 	);
 
 	let currentNode;
-	while (currentNode = iterator.nextNode()) shadowRoots.add(currentNode);
-
-	for (const shadowRoot of shadowRoots) {
-		for (const nestedShadowRoot of getShadowRoots(shadowRoot)) {
-			shadowRoots.add(nestedShadowRoot);
+	while (currentNode = iterator.nextNode()) {
+		shadowRoots.add(currentNode.shadowRoot);
+		for (const shadowRoot of getShadowRoots(currentNode.shadowRoot)) {
+			shadowRoots.add(shadowRoot);
 		}
 	}
 
