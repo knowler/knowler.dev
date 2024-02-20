@@ -64,6 +64,10 @@ export class CursorElement extends HTMLElement {
 			this.constructor.#appearanceStyleSheet,
 			this.#coordinatesStyleSheet,
 		);
+
+		if (CSS.supports("selector(_::-webkit-full-page-media)")) {
+			this.style.setProperty("--force-safari-to-invalidate-styles", 1);
+		}
 	}
 
 	set out(flag) {
