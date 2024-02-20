@@ -17,6 +17,11 @@ append head
 	link(rel="author" href="/about" title="About the author")
 	link(rel="alternate" href="/feed.xml" type="application/rss+xml" title="RSS")
 	+styles
+	+flag("ridiculous:cursor")
+		script(type="module").
+			import { CursorElement } from "./elements/cursor-element.js";
+
+			CursorElement.define();
 
 include /_mixins/nav-list
 include /_mixins/nav-link
@@ -39,3 +44,5 @@ block body
 			li: +nav-link(href="/webmention") Webmention
 			li: a(href="/feed.xml") RSS
 			li: +nav-link(href="/flags") Feature Flags
+	+flag("ridiculous:cursor")
+		kno-cursor

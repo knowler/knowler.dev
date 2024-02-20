@@ -53,6 +53,14 @@
 	a[aria-current="page"] {
 		text-decoration: none;
 	}
+
+	:is(a, button, label, input[type="checkbox"], input[type="radio"]) {
+		cursor: pointer;
+	}
+
+	a svg {
+		pointer-events: none;
+	}
 }
 
 @layer utility {

@@ -83,7 +83,13 @@ app.use(
 		const token = await getSignedCookie(c, SESSION_KEY, "flags");
 		const flags = new Set(token ? await verify(token, SESSION_KEY) : []);
 
-		c.set("allowedFlags", ["blog:breadcrumbs", "blog:pagination", "welcome:revamp", "experimental:dsd"]);
+		c.set("allowedFlags", [
+			"blog:breadcrumbs",
+			"blog:pagination",
+			ENV === "development" && "welcome:revamp",
+			"experimental:dsd",
+			"ridiculous:cursor",
+		].filter(Boolean));
 		c.set("flags", flags);
 
 		await next();

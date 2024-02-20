@@ -15,4 +15,8 @@ mixin feature-flags-form
 			legend Experimental
 			+checkbox-field(name="experimental:dsd" type="checkbox" switch checked=flags.has("experimental:dsd"))
 				| Declarative Shadow DOM (without polyfill)
+		fieldset
+			legend Ridiculous
+			+checkbox-field(name="ridiculous:cursor" type="checkbox" switch checked=flags.has("ridiculous:cursor"))
+				| Custom cursor
 		+button Save Feature Flags

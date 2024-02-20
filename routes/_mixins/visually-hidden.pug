@@ -3,7 +3,8 @@ mixin visually-hidden
 		visually-hidden&attributes(attributes)
 			template(shadowrootmode="open")
 				style: include visually-hidden.css
-				block
+				slot
+			block
 	else
 		span(class="visually-hidden")&attributes(attributes)
 			block
