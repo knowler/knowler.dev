@@ -65,7 +65,8 @@ export class CursorElement extends HTMLElement {
 			this.#coordinatesStyleSheet,
 		);
 
-		if (CSS.supports("selector(_::-webkit-full-page-media)")) {
+		// Not a great check, but whatever lol
+		if (CSS.supports("selector(:playing)")) {
 			this.style.setProperty("--force-safari-to-invalidate-styles", 1);
 		}
 	}
