@@ -26,14 +26,14 @@ export class CursorElement extends HTMLElement {
 			transition: scale 0.1s ease-in-out;
 		}
 
-		:host(:--out) {
+		:host(:is(:state(--out), :--out, [out])) {
 			scale: 0;
 		}
 	`;
 
 	static #documentStyleSheet = css`
 		@media (pointer: fine) {
-			:root:has(kno-cursor:defined:not(:--out)) {
+			:root:has(kno-cursor:defined:not(:is(:state(--out), :--out, [out]))) {
 				&, :hover {
 					cursor: none !important;
 				}
@@ -67,7 +67,9 @@ export class CursorElement extends HTMLElement {
 	}
 
 	set out(flag) {
-		this.#internals.states[flag ? "add" : "delete"]("--out");
+		if ("CustomStateSet" in window) {
+			this.#internals.states[flag ? "add" : "delete"]("--out");
+		} else this.toggleAttribute("out", flag);
 	}
 
 	connectedCallback() {
