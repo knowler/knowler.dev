@@ -8,4 +8,11 @@ mixin feature-flags-form
 			| Breadcrumbs on blog posts
 		+checkbox-field(name="blog:pagination" type="checkbox" switch checked=flags.has("blog:pagination"))
 			| Pagination for blog
+		+env("development")
+			+checkbox-field(name="welcome:revamp" type="checkbox" switch checked=flags.has("welcome:revamp"))
+				| Revamped welcome page
+		fieldset
+			legend Experimental
+			+checkbox-field(name="experimental:dsd" type="checkbox" switch checked=flags.has("experimental:dsd"))
+				| Declarative Shadow DOM (without polyfill)
 		+button Save Feature Flags

@@ -20,26 +20,11 @@ append head
 
 include /_mixins/nav-list
 include /_mixins/nav-link
+include /_mixins/site-header
 
 block body
 	a(href=`${currentPath}#content`).skip-link.visually-hidden Skip to content
-	header.h-card
-		+nav-link(href="/").u-url
-			span.p-name Nathan Knowler
-		span(hidden).u-photo https://github.com/knowler.png
-		span(hidden).p-note Building websites. Interested in Accessibility, Progressive Enhancement, and Web Components. Proudly Métis.
-
-		+nav-list("primary")
-			li: +nav-link(href="/") Welcome
-			li: +nav-link(href="/blog") Blog
-			li: +nav-link(href="/about") About
-			li: +nav-link(href="/uses") Uses
-			li: a(rel="me" href="https://github.com/knowler")
-				span.visually-hidden @knowler on GitHub
-				include /_icons/github.svg
-			li: a(rel="me" href="https://sunny.garden/@knowler")
-				span.visually-hidden @knowler@sunny.garden on Mastodon
-				include /_icons/mastodon.svg
+	+site-header
 	main#content
 		block content
 	footer
