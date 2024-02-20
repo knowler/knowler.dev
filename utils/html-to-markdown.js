@@ -20,6 +20,11 @@ export function htmlToMarkdown(html) {
 					state.patch(node, result);
 					return result;
 				},
+				iframe(state, node) {
+					const result = { type: "html", value: toHtml(node) };
+					state.patch(node, result);
+					return result;
+				},
 			},
 		})
 		.use(remarkReferenceLinks)
