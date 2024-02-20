@@ -84,8 +84,8 @@ export class CursorElement extends HTMLElement {
 	handleEvent(event) {
 		switch (event.type) {
 			case "pointermove":
-				this.#coordinatesStyleSheet.cssRules[0].styleMap.set("--x", event.clientX);
-				this.#coordinatesStyleSheet.cssRules[0].styleMap.set("--y", event.clientY);
+				this.#coordinatesStyleSheet.cssRules[0].style.setProperty("--x", event.clientX);
+				this.#coordinatesStyleSheet.cssRules[0].style.setProperty("--y", event.clientY);
 				break;
 
 			case "pointerover":
