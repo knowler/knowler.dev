@@ -1,3 +1,4 @@
 .env
 .envrc
 .kv-*
+.demos/tmp
