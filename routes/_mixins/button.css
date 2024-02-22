@@ -11,4 +11,12 @@
 		background-color: var(--color-accent);
 		color: Canvas;
 	}
+
+	@media (prefers-contrast: more) {
+		button {
+			background-color: Canvas;
+			color: CanvasText;
+			border: 0.125em solid CanvasText;
+		}
+	}
 }
