@@ -18,6 +18,7 @@ import kv from "~/kv.js";
 
 /** Utils */
 import { invariant } from "~/utils/invariant.js";
+import { isCSSNakedDay } from "~/utils/is-css-naked-day.js";
 
 import { Pages } from "~/models/pages.js";
 import { Posts } from "~/models/posts.js";
@@ -103,6 +104,12 @@ app.use(
 		await next();
 	},
 	rewriteWithoutTrailingSlashes(),
+	// CSS Naked Day
+	async (c, next) => {
+		c.res.headers.append("content-security-policy", `default-src 'self'; style-src ${isCSSNakedDay() ? "'none'" : "'self' 'unsafe-inline'"};`);
+
+		await next();
+	},
 );
 
 app.notFound(async (...args) => {
