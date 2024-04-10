@@ -104,10 +104,12 @@ app.use(
 		await next();
 	},
 	rewriteWithoutTrailingSlashes(),
+
 	// CSS Naked Day
 	async (c, next) => {
-		c.res.headers.append("content-security-policy", `default-src 'self'; style-src ${isCSSNakedDay() ? "'none'" : "'self' 'unsafe-inline'"};`);
-
+		if (isCSSNakedDay()) {
+			c.res.headers.append("content-security-policy", "style-src 'none'");
+		}
 		await next();
 	},
 );
