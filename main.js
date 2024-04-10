@@ -247,9 +247,13 @@ app.post("/flags", async (...args) => {
 	return post(...args);
 });
 
+app.get("/demos/*", async (c, next) => {
+	c.res.headers.delete("content-security-policy");
+	await next();
+});
+
 app.get("/demos/:slug", async (...args) => {
 	const { get } = await import ("~/routes/demos.[slug].js");
-	c.res.headers.delete("content-security-policy");
 	return get(...args);
 });
 
