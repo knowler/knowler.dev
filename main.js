@@ -294,4 +294,4 @@ app.get("/:page{[a-z0-9-]+}", async (...args) => {
 
 app.use("*", serveStatic({ root: "./assets" }));
 
-Deno.serve({ port: ENV === "production" ? 8000 : 3000 }, app.fetch);
+Deno.serve({ port: ENV === "production" ? 8000 : new URL(SITE_URL).port }, app.fetch);
