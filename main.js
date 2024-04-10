@@ -249,6 +249,7 @@ app.post("/flags", async (...args) => {
 
 app.get("/demos/:slug", async (...args) => {
 	const { get } = await import ("~/routes/demos.[slug].js");
+	c.res.headers.delete("content-security-policy");
 	return get(...args);
 });
 
