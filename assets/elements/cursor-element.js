@@ -24,19 +24,25 @@ export class CursorElement extends HTMLElement {
 			clip-path: circle();
 			translate: calc(var(--x, -100) * 1px - 50%) calc(var(--y, -100) * 1px - 50%);
 			transition: scale 0.1s ease-in-out;
-		}
-
-		:host(:is(:state(--out), :--out, [out])) {
 			scale: 0;
 		}
 	`;
 
 	static #documentStyleSheet = css`
 		@media (pointer: fine) {
-			:root:has(kno-cursor:defined:not(:is(:state(--out), :--out, [out]))) {
+			:root:hover kno-cursor {
+				scale: 1;
+			}
+
+			:root:has(kno-cursor:defined) {
 				&, :hover {
-					cursor: none !important;
+					cursor: none;
 				}
+			}
+
+			:root:has(:is(a, button, input, select, textarea, iframe):hover) {
+				:hover { cursor: pointer; }
+				kno-cursor { scale: 0; }
 			}
 		}
 	`;
@@ -51,9 +57,7 @@ export class CursorElement extends HTMLElement {
 
 	#internals = this.attachInternals();
 	shadowRoot = this.attachShadow({ mode: "open" });
-	#coordinatesStyleSheet = css`
-		:host {}
-	`;
+	#coordinatesStyleSheet = css`:host {}`;
 
 	constructor() {
 		super();
@@ -71,19 +75,8 @@ export class CursorElement extends HTMLElement {
 		}
 	}
 
-	set out(flag) {
-		if ("CustomStateSet" in window) {
-			this.#internals.states[flag ? "add" : "delete"]("--out");
-		} else this.toggleAttribute("out", flag);
-	}
-
 	connectedCallback() {
 		window.addEventListener("pointermove", this);
-		window.addEventListener("blur", this);
-		window.addEventListener("focus", this);
-		this.ownerDocument.documentElement.addEventListener("pointerleave", this);
-		this.ownerDocument.documentElement.addEventListener("pointerenter", this);
-		this.ownerDocument.documentElement.addEventListener("pointerover", this);
 	}
 
 	handleEvent(event) {
@@ -91,20 +84,6 @@ export class CursorElement extends HTMLElement {
 			case "pointermove":
 				this.#coordinatesStyleSheet.cssRules[0].style.setProperty("--x", event.clientX);
 				this.#coordinatesStyleSheet.cssRules[0].style.setProperty("--y", event.clientY);
-				break;
-
-			case "pointerover":
-				this.out = event.target.matches("a, button, input, label");
-				break;
-
-			case "blur":
-			case "pointerleave":
-				this.out = true;
-				break;
-
-			case "focus":
-			case "pointerenter":
-				this.out = false;
 				break;
 		}
 	}
