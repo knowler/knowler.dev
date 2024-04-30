@@ -1,0 +1,17 @@
+extends /_layouts/base
+
+append head
+	title “Source for #{demo.title ? demo.title : "Untitled"}” demo by Nathan Knowler
+	if demo.description
+		meta(name="description" content=demo.description)
+
+block body
+	details
+		summary HTML
+		pre: code=demo.html
+	details
+		summary CSS
+		pre: code=demo.css
+	details
+		summary JS
+		pre: code=demo.js

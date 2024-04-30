@@ -5,6 +5,13 @@ export async function get(c, next) {
 		const query = c.req.query();
 
 		delete demo.pug;
+
+		if (query.source) {
+			return c.render("demos.[slug].source", {
+				pretty: true,
+				demo,
+			});
+		}
 		
 		return c.render("demos.[slug]", {
 			pretty: true,
