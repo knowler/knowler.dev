@@ -6,7 +6,7 @@ export async function get(c, next) {
 
 		delete demo.pug;
 
-		if (query.source) {
+		if (query.source != null) {
 			return c.render("demos.[slug].source", {
 				pretty: true,
 				demo,
