@@ -4,14 +4,21 @@ append head
 	title “Source for #{demo.title ? demo.title : "Untitled"}” demo by Nathan Knowler
 	if demo.description
 		meta(name="description" content=demo.description)
+	style.
+		:root {
+			font-family: system-ui;
+		}
 
 block body
-	details
-		summary HTML
+	details(open)
+		summary Pug
+		pre: code=demo.pug
+	details(open)
+		summary Generated HTML
 		pre: code=demo.html
-	details
+	details(open)
 		summary CSS
 		pre: code=demo.css
-	details
-		summary JS
+	details(open)
+		summary JavaScript
 		pre: code=demo.js

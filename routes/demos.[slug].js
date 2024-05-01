@@ -4,14 +4,14 @@ export async function get(c, next) {
 		const demo = await c.get("demos").get(params.slug);
 		const query = c.req.query();
 
-		delete demo.pug;
-
 		if (query.source != null) {
 			return c.render("demos.[slug].source", {
 				pretty: true,
 				demo,
 			});
 		}
+
+		delete demo.pug;
 		
 		return c.render("demos.[slug]", {
 			pretty: true,
