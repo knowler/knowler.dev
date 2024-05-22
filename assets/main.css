@@ -23,6 +23,7 @@
 		background-color: var(--color-canvas);
 		color-scheme: light dark;
 		font-family: system-ui;
+		font-feature-settings: "ss06";
 	}
 
 	body {
