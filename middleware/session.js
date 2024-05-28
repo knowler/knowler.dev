@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import { getCookie, setCookie } from "hono/middleware";
+import { getCookie, setCookie } from "hono/cookie";
 import { CookieStore, Session, encrypt, decrypt } from "hono_sessions";
 
 export function sessionMiddleware(options) {

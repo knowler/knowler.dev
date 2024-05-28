@@ -1,9 +1,11 @@
 import { Hono } from "hono";
 
 /** Middlewares */
-import { logger, serveStatic, getSignedCookie, setSignedCookie } from "hono/middleware";
+import { serveStatic } from "hono/deno";
+import { logger } from "hono/logger";
+import { getSignedCookie, setSignedCookie } from "hono/cookie";
 
-import { verify } from "https://deno.land/x/hono@v3.12.8/utils/jwt/jwt.ts";
+import { verify } from "hono/jwt";
 
 import { pugRenderer } from "~/middleware/pug-renderer.js";
 import { rewriteWithoutTrailingSlashes } from "~/middleware/rewrite-without-trailing-slashes.js";
