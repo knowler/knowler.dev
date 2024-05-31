@@ -1,0 +1,13 @@
+{
+  "id": "01HKDQE55GA1ZYW96VTW2RFX8N",
+  "slug": "how-much-do-we-actually-need-templating",
+  "title": "How Much Do We Actually Need Templating?",
+  "description": "Is this a problem we invented in our pursuit of taming the cascade with class names?",
+  "publishedAt": "2024-01-05T21:11:03.600Z",
+  "published": true,
+  "webmentions": [
+    "15649215-4d8c-400d-bdfe-d3f5b02580d5"
+  ],
+  "updatedAt": "2024-02-20T15:47:46.853Z",
+  "html": "<p><strong>Update: yes we do</strong></p>\n<p>I’m wondering if the “burden of HTML structure” is greatly exaggerated due to practices like <abbr title=\"Block Element Modifier\">BEM</abbr>.</p>\n<p>In my opinion, it’s not so much writing the HTML, it’s wiring up all the classes correctly that makes it burdensome. The class names aren’t there so much to tell you what things are—that’s a nice benefit—but since they are technically necessary to tame the cascade. When the technical need for those class names is removed (i.e. using <code>@scope</code>) is the apparent need for templating still as strong?</p>\n<p>Don’t get me wrong, I think templating is great, I’m just wondering if we overplay its need when some of the underlying problems are being solved by other means.</p>"
+}

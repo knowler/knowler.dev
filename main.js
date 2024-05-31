@@ -65,11 +65,12 @@ app.use(
 
 		if (![SUPER_SECRET_CACHE_PURGE_ROUTE, "/favicon.ico", "/main.css"].includes(c.req.path)) {
 			queueMicrotask(() => {
-				// TODO: pages.hasList isn’t a thing lol
+				/*
 				if (!posts.hasList) {
 					console.log("Updating posts cache from isolates");
 					posts.channel.postMessage({ action: "connected" });
 				}
+				*/
 				if (!pages.hasList) {
 					console.log("Updating pages cache from isolates");
 					pages.channel.postMessage({ action: "connected" });
@@ -152,11 +153,11 @@ app.get(SUPER_SECRET_CACHE_PURGE_ROUTE, noRobots(), (c) => {
 
 	if (searchParams.has("all")) {
 		c.get("pages").purgeCache();
-		c.get("posts").purgeCache();
+		//c.get("posts").purgeCache();
 		c.get("demos").purgeCache();
 
 		c.get("pages").channel.postMessage({ action: "purge" });
-		c.get("posts").channel.postMessage({ action: "purge" });
+		//c.get("posts").channel.postMessage({ action: "purge" });
 		c.get("demos").channel.postMessage({ action: "purge" });
 
 		return c.text("purged entire cache");
@@ -169,12 +170,12 @@ app.get(SUPER_SECRET_CACHE_PURGE_ROUTE, noRobots(), (c) => {
 		console.log(`evicted pages: ${pagesToEvict.join(", ")}`);
 	}
 
-	if (searchParams.has("post")) {
-		const postsToEvict = searchParams.getAll("post");
-		for (const post of postsToEvict) c.get("posts").evict(post);
-		c.get("posts").channel.postMessage({ action: "evict", payload: postsToEvict });
-		console.log(`evicted posts: ${postsToEvict.join(", ")}`);
-	}
+	//if (searchParams.has("post")) {
+	//	const postsToEvict = searchParams.getAll("post");
+	//	for (const post of postsToEvict) c.get("posts").evict(post);
+	//	c.get("posts").channel.postMessage({ action: "evict", payload: postsToEvict });
+	//	console.log(`evicted posts: ${postsToEvict.join(", ")}`);
+	//}
 
 	if (searchParams.has("demo")) {
 		const demosToEvict = searchParams.getAll("demo");

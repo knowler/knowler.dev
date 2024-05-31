@@ -1,0 +1,11 @@
+{
+  "slug": "a-brief-anecdote-and-a-snippet-from-my-tailwind-labs-application",
+  "title": "A Brief Anecdote & a Snippet From My Tailwind Labs Application",
+  "publishedAt": "2023-09-21T21:00:00.000Z",
+  "id": "01HAWRNQ400272SXKHT1HFR74N",
+  "published": true,
+  "html": "<p>I’m reading lots as I try to write out my thoughts on Tailwind and utility CSS. I found something I wrote in my application for Tailwind Labs a little over 3 years ago:</p>\n<blockquote><p>“I’ve been an advocate of utility CSS for a long time. For me, it’s not just a fad or something I’m currently infatuated with. I don’t like utility CSS, because I hate CSS — I like it because I love CSS and I think that Tailwind is the best way to write CSS for beginners and for those who need it at scale. I recognize it isn’t perfect and I am actively seeking ways to overcome its shortcomings.”</p></blockquote>\n<p>If I were to revise that with what I think now, I’d probably say “a great way” instead of “the best way.” I might have been trying to look good to get the job—which I didn’t, but I did get an interview with Adam though (a career highlight or lowlight).</p>\n<p>Anyway, the notable part is that I didn’t use utility CSS or Tailwind because I thought CSS sucks—which seems to be in contrast with what a lot of Tailwind users think and what people think drove the creation and usage of utility CSS. More thoughts on that to come…</p>\n",
+  "webmentions": [
+    "f9ff580a-435d-4dff-a6ed-1ea4cefd9fbf"
+  ]
+}

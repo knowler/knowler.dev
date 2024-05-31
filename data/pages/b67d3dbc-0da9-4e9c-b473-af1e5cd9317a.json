@@ -1,0 +1,7 @@
+{
+  "id": "b67d3dbc-0da9-4e9c-b473-af1e5cd9317a",
+  "slug": "privacy",
+  "title": "Privacy Policy",
+  "published": true,
+  "html": "<p>I care deeply about respecting your privacy.</p>\n<p>If you have cookies enabled for this site, it will use a session cookie to help provide validation feedback when you fill out any forms. Anything entered into the forms may be persisted to a database. Get in touch with me if you want any data you’ve submitted through this website removed (i.e. webmentions for website or content you own).</p>\n<p>In the future, I might start tracking form validation errors so that I can make adjustments to the user experience. If I choose to do so, I’ll likely not store any identifiable content to the datasebase and just keep track of the types of validation errors.</p>"
+}

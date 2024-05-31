@@ -2,8 +2,10 @@ import { URLSearchParams } from "https://deno.land/std@0.177.1/node/url.ts";
 import kv from "~/kv.js";
 import { ulidFromISOString } from "~/utils/util-from-iso-string.js";
 
-const REGION = Deno.env.get("DENO_REGION");
-const IS_KV_REGION = Deno.env.get("KV_REGION") === REGION;
+//const REGION = Deno.env.get("DENO_REGION");
+//const IS_KV_REGION = Deno.env.get("KV_REGION") === REGION;
+
+const postsBySlug = new Map(JSON.parse(await Deno.readTextFile("./data/postsBySlug.json")).postsBySlug);
 
 /**
  * @typedef {Object} Post
@@ -19,9 +21,10 @@ const IS_KV_REGION = Deno.env.get("KV_REGION") === REGION;
 export class Posts {
 	hasList = false;
 	cache = new Map();
-	pagesCache = new Map();
-	channel = new BroadcastChannel("posts");
+	//pagesCache = new Map();
+	//channel = new BroadcastChannel("posts");
 
+	/*
 	constructor() {
 		this.channel.addEventListener("message", async event => {
 			const { action, payload } = event.data;
@@ -67,6 +70,7 @@ export class Posts {
 			}
 		});
 	}
+	*/
 
 	purgeCache() {
 		console.log("purging cache");
@@ -89,6 +93,11 @@ export class Posts {
 	}
 
 	async fetchPost(slug) {
+		const id = postsBySlug.get(slug);
+		const post = JSON.parse(await Deno.readTextFile(`./data/posts/${id}.json`));
+		this.cache.set(slug, post);
+
+		/*
 		if (IS_KV_REGION) {
 			console.log(`reading post for slug: ${slug}`);
 			const slugRecord = await kv.get(["postsBySlug", slug]);
@@ -132,9 +141,10 @@ export class Posts {
 				this.channel.removeEventListener("message", handleMessage);
 			}
 		}
+		*/
 	}
 
-	// TODO: figure out how to cache this
+	/*
 	async page(options) {
 		const pageKey = new URLSearchParams(!options ? "mostRecent" : options.oldest ? "oldest" : "");
 
@@ -184,6 +194,7 @@ export class Posts {
 
 		return page;
 	}
+	*/
 
 	async list() {
 		if (!this.hasList) await this.fetchList();
@@ -197,6 +208,14 @@ export class Posts {
 	}
 
 	async fetchList() {
+		for (const [slug, id] of postsBySlug) {
+			if (!this.cache.has(slug)) {
+				this.cache.set(slug, JSON.parse(await Deno.readTextFile(`./data/posts/${id}.json`)));
+			}
+		}
+		this.hasList = true;
+
+		/*
 		if (IS_KV_REGION) {
 			console.log("populating posts cache");
 			for await (const record of kv.list({ prefix: ["posts"] })) {
@@ -232,6 +251,7 @@ export class Posts {
 				this.channel.removeEventListener("message", handleMessage);
 			}
 		}
+		*/
 	}
 
 }

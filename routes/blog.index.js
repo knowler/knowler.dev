@@ -2,6 +2,7 @@ import { trimTrailingSlash } from "~/utils/trim-trailing-slash.js";
 import { winnipegDateTime } from "~/utils/winnipeg-datetime.js";
 
 export async function get(c) {
+	/*
 	let posts, page, isOldest, isMostRecent;
 
 	if (c.get("flags").has("blog:pagination")) {
@@ -18,6 +19,9 @@ export async function get(c) {
 	} else {
 		posts = (await c.get("posts").list()).reverse();
 	}
+	*/
+
+	let posts = (await c.get("posts").list()).reverse();
 
 	return c.render(
 		"blog.index",
@@ -27,8 +31,8 @@ export async function get(c) {
 				post.prettyDateString = winnipegDateTime(new Date(post.publishedAt));
 				return post;
 			}),
-			isMostRecent,
-			isOldest,
+			//isMostRecent,
+			//isOldest,
 			canonical: trimTrailingSlash(c.req.url),
 		},
 	);

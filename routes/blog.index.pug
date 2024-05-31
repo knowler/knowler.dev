@@ -12,15 +12,15 @@ block content
 		unless posts.length > 0
 			p There are no posts.
 		else 
-			+flag("blog:pagination")
-				nav(aria-label="pagination")
-					ol(reversed)
-						li: a(rel="first" aria-current=(isMostRecent && "page") href="/blog") Most Recent
-						unless isMostRecent
-							li: a(rel="prev" href=`/blog?after=${posts.at(0).publishedAt}`) Newer
-						unless isOldest
-							li: a(rel="next" href=`/blog?before=${posts.at(-1).publishedAt}`) Older
-						li: a(rel="last" aria-current=(isOldest && "page") href="/blog?oldest") Oldest
+			- //+flag("blog:pagination")
+			- //	nav(aria-label="pagination")
+			- //		ol(reversed)
+			- //			li: a(rel="first" aria-current=(isMostRecent && "page") href="/blog") Most Recent
+			- //			unless isMostRecent
+			- //				li: a(rel="prev" href=`/blog?after=${posts.at(0).publishedAt}`) Newer
+			- //			unless isOldest
+			- //				li: a(rel="next" href=`/blog?before=${posts.at(-1).publishedAt}`) Older
+			- //			li: a(rel="last" aria-current=(isOldest && "page") href="/blog?oldest") Oldest
 			ol(reversed role="list")
 				each post in posts
 					li: article
