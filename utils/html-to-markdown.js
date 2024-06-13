@@ -15,7 +15,27 @@ export function htmlToMarkdown(html) {
 					state.patch(node, result);
 					return result;
 				},
+				dfn(state, node) {
+					const result = { type: "html", value: toHtml(node) };
+					state.patch(node, result);
+					return result;
+				},
+				i(state, node) {
+					const result = { type: "html", value: toHtml(node) };
+					state.patch(node, result);
+					return result;
+				},
+				b(state, node) {
+					const result = { type: "html", value: toHtml(node) };
+					state.patch(node, result);
+					return result;
+				},
 				small(state, node) {
+					const result = { type: "html", value: toHtml(node) };
+					state.patch(node, result);
+					return result;
+				},
+				aside(state, node) {
 					const result = { type: "html", value: toHtml(node) };
 					state.patch(node, result);
 					return result;
