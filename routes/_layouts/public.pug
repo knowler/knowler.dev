@@ -12,7 +12,6 @@ append head
 	base(href=SITE_URL)
 	if canonical
 		link(rel="canonical" href=canonical)
-	meta(name="webmention" content=new URL("/webmention", SITE_URL))
 	link(rel="stylesheet" href="/main.css")
 	link(rel="author" href="/about" title="About the author")
 	link(rel="alternate" href="/feed.xml" type="application/rss+xml" title="RSS")
@@ -43,7 +42,6 @@ block body
 		+nav-list("secondary")
 			li: +nav-link(href="/accessibility") Accessibility
 			li: +nav-link(href="/privacy") Privacy
-			li: +nav-link(href="/webmention") Webmention
 			li: a(href="/feed.xml") RSS
 			li: +nav-link(href="/flags") Feature Flags
 	+flag("ridiculous:cursor")

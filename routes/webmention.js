@@ -4,26 +4,25 @@ import { invariant } from "~/utils/invariant.js";
 const SITE_URL = Deno.env.get("SITE_URL");
 invariant(SITE_URL);
 
-// TODO: implement UI for webmentions
 export function get(c) {
-	const session = c.get("__webmention_session");
-	const url = new URL(c.req.url);
-	const issues = session.get("issues") ?? [];
-	const formData = session.get("formData") ??
-		{ target: url.searchParams.get("target") ?? undefined };
-	const success = session.get("success");
+	//const session = c.get("__webmention_session");
+	//const url = new URL(c.req.url);
+	//const issues = session.get("issues") ?? [];
+	//const formData = session.get("formData") ??
+	//	{ target: url.searchParams.get("target") ?? undefined };
+	//const success = session.get("success");
 
-	if (issues.length > 0) c.status(422);
-	else if (success) c.status(202);
-	else c.status(200);
+	//if (issues.length > 0) c.status(422);
+	//else if (success) c.status(202);
+	//else c.status(200);
 
 	return c.render(
 		"webmention",
 		{
 			title: "Webmention",
-			success,
-			issues,
-			formData,
+			//success,
+			//issues,
+			//formData,
 		},
 	);
 }

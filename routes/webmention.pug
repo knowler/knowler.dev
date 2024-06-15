@@ -1,14 +1,11 @@
 extends /_layouts/public
 
 include /_mixins/h-entry
-include /_mixins/form
-include /_mixins/text-field
-include /_mixins/button
 
 block content
 	+h-entry("Webmention")
-		p If the platform you are using doesn’t already support Webmentions, then you can use this form to manually send one for the content you link to on my website.
-		+form("Successfully sent Webmention!")(method="post" novalidate)
-			+text-field(type="url" name="source" description="The URL for your content") Source URL
-			+text-field(type="url" name="target" description="The URL for my content") Target URL
-			+button Send Webmention
+		p.
+			I’ve decided to stop collecting Webmentions for the time being,
+			since it adds a lot of complexity to my website with very little
+			benefit. If you’ve written something that mentions my work, please
+			let me know on Mastodon: #[a(rel="me" href="https://sunny.garden/@knowler") @knowler@sunny.garden].

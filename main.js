@@ -15,7 +15,7 @@ import { sessionMiddleware } from "~/middleware/session.js";
 import { CookieStore } from "hono_sessions";
 
 /** Jobs */
-import { processWebmention } from "~/jobs/process-webmention.js";
+//import { processWebmention } from "~/jobs/process-webmention.js";
 import kv from "~/kv.js";
 
 /** Utils */
@@ -36,18 +36,18 @@ invariant(LOGIN_PATH);
 invariant(SITE_URL);
 invariant(SESSION_KEY);
 
-kv.listenQueue(async (message) => {
-	switch (message.action) {
-		case "process-webmention": {
-			await processWebmention(message.payload);
-			break;
-		}
-		case undefined:
-			throw "undefined action";
-		default:
-			throw `unknown action: ${message.action}`;
-	}
-});
+//kv.listenQueue(async (message) => {
+//	switch (message.action) {
+//		case "process-webmention": {
+//			await processWebmention(message.payload);
+//			break;
+//		}
+//		case undefined:
+//			throw "undefined action";
+//		default:
+//			throw `unknown action: ${message.action}`;
+//	}
+//});
 
 const app = new Hono();
 const pages = new Pages();
@@ -208,27 +208,30 @@ app.get("/blog/:slug", async (...args) => {
 	return get(...args);
 });
 
-app.use("/webmention", sessionMiddleware({
-	store: new CookieStore(),
-	sessionCookieName: "__webmention_session",
-	expireAfterSeconds: 60 * 60 * 24 * 7,
-	encryptionKey: SESSION_KEY,
-	cookieOptions: {
-		path: "/webmention",
-		domain: new URL(SITE_URL).hostname,
-		httpOnly: true,
-		secure: true,
-		sameSite: "Strict",
-	},
-}));
+const { garden } = await import("~/routes/garden.js");
+app.route("/garden", garden);
+
+//app.use("/webmention", sessionMiddleware({
+//	store: new CookieStore(),
+//	sessionCookieName: "__webmention_session",
+//	expireAfterSeconds: 60 * 60 * 24 * 7,
+//	encryptionKey: SESSION_KEY,
+//	cookieOptions: {
+//		path: "/webmention",
+//		domain: new URL(SITE_URL).hostname,
+//		httpOnly: true,
+//		secure: true,
+//		sameSite: "Strict",
+//	},
+//}));
 app.get("/webmention", async (...args) => {
 	const { get } = await import("~/routes/webmention.js");
 	return get(...args);
 });
-app.post("/webmention", async (...args) => {
-	const { post } = await import("~/routes/webmention.js");
-	return post(...args);
-});
+//app.post("/webmention", async (...args) => {
+//	const { post } = await import("~/routes/webmention.js");
+//	return post(...args);
+//});
 
 app.use("/flags", sessionMiddleware({
 	store: new CookieStore(),
