@@ -208,8 +208,8 @@ app.get("/blog/:slug", async (...args) => {
 	return get(...args);
 });
 
-const { garden } = await import("~/routes/garden.js");
-app.route("/garden", garden);
+//const { garden } = await import("~/routes/garden.js");
+//app.route("/garden", garden);
 
 //app.use("/webmention", sessionMiddleware({
 //	store: new CookieStore(),
