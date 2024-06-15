@@ -1,0 +1,9 @@
+{
+	"": "https://stylelint.io/user-guide/rules",
+	"rules": {
+		"block-no-empty": true,
+		"no-irregular-whitespace": true,
+		"at-rule-empty-line-before": "always",
+		"max-empty-lines": 1
+	}
+}
