@@ -37,6 +37,7 @@ const post = posts.find((p) => p.slug === slug);
 const { html, ...postWithoutHtml } = post;
 
 const markdown = String(await htmlToMarkdown(html));
+console.log(postWithoutHtml);
 const frontmatter = stringify(postWithoutHtml);
 
 const markdownWithFrontmatter = `---toml\n${frontmatter}---\n${markdown}`;
