@@ -32,7 +32,7 @@ block body
 	if isCSSNakedDay
 		p Happy #[a(href="https://css-naked-day.github.io") CSS Naked Day], enjoy!
 	+site-header
-	main#content
+	main#content(tabindex="-1")
 		block content
 	footer
 		mixin license-link
