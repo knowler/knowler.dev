@@ -1,13 +1,10 @@
 extends /_layouts/public
 
 include /_mixins/h-entry
-include /_mixins/feature-flags-form
 
 block content
 	+h-entry("Feature Flags")
 		p.
-			These are features that I am currently working on and are either
-			experimental or not quite ready for the mainline experience. Often,
-			they might even require Web Platform features not available in all
-			browsers. #[strong Also, note that opting into these features means you are opting into cookies. None of these preferences are stored on the server.]
-		+feature-flags-form
+			I added feature flags to my site as a way to experiment in public. I used
+			cookies to implement these, however, in order to leverage better caching
+			I’m re-evaluating how I do things. So for now, feature flags are on pause.

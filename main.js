@@ -83,21 +83,21 @@ app.use(
 		}
 	},
 	// Feature flags
-	async (c, next) => {
-		const token = await getSignedCookie(c, SESSION_KEY, "flags");
-		const flags = new Set(token ? await verify(token, SESSION_KEY) : []);
+	//async (c, next) => {
+	//	const token = await getSignedCookie(c, SESSION_KEY, "flags");
+	//	const flags = new Set(token ? await verify(token, SESSION_KEY) : []);
 
-		c.set("allowedFlags", [
-			"blog:breadcrumbs",
-			"blog:pagination",
-			ENV === "development" && "welcome:revamp",
-			"experimental:dsd",
-			"ridiculous:cursor",
-		].filter(Boolean));
-		c.set("flags", flags);
+	//	c.set("allowedFlags", [
+	//		"blog:breadcrumbs",
+	//		"blog:pagination",
+	//		ENV === "development" && "welcome:revamp",
+	//		"experimental:dsd",
+	//		"ridiculous:cursor",
+	//	].filter(Boolean));
+	//	c.set("flags", flags);
 
-		await next();
-	},
+	//	await next();
+	//},
 	pugRenderer(),
 	logger(),
 	async (c, next) => {
@@ -233,27 +233,27 @@ app.get("/webmention", async (...args) => {
 //	return post(...args);
 //});
 
-app.use("/flags", sessionMiddleware({
-	store: new CookieStore(),
-	sessionCookieName: "__flags_session",
-	expireAfterSeconds: 60 * 60 * 24 * 7,
-	encryptionKey: SESSION_KEY,
-	cookieOptions: {
-		path: "/flags",
-		domain: new URL(SITE_URL).hostname,
-		httpOnly: true,
-		secure: true,
-		sameSite: "Strict",
-	},
-}));
+//app.use("/flags", sessionMiddleware({
+//	store: new CookieStore(),
+//	sessionCookieName: "__flags_session",
+//	expireAfterSeconds: 60 * 60 * 24 * 7,
+//	encryptionKey: SESSION_KEY,
+//	cookieOptions: {
+//		path: "/flags",
+//		domain: new URL(SITE_URL).hostname,
+//		httpOnly: true,
+//		secure: true,
+//		sameSite: "Strict",
+//	},
+//}));
 app.get("/flags", async (...args) => {
 	const { get } = await import("~/routes/flags.js");
 	return get(...args);
 });
-app.post("/flags", async (...args) => {
-	const { post } = await import("~/routes/flags.js");
-	return post(...args);
-});
+//app.post("/flags", async (...args) => {
+//	const { post } = await import("~/routes/flags.js");
+//	return post(...args);
+//});
 
 app.get("/demos/*", async (c, next) => {
 	c.res.headers.delete("content-security-policy");

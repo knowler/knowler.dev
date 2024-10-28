@@ -17,11 +17,11 @@ append head
 	link(rel="alternate" href="/feed.xml" type="application/rss+xml" title="RSS")
 	meta(name="fediverse:creator" content="@knowler@sunny.garden")
 	+styles
-	+flag("ridiculous:cursor")
-		script(type="module").
-			import { CursorElement } from "./elements/cursor-element.js";
+	//+flag("ridiculous:cursor")
+	//	script(type="module").
+	//		import { CursorElement } from "./elements/cursor-element.js";
 
-			CursorElement.define();
+	//		CursorElement.define();
 
 include /_mixins/nav-list
 include /_mixins/nav-link
@@ -44,6 +44,6 @@ block body
 			li: +nav-link(href="/accessibility") Accessibility
 			li: +nav-link(href="/privacy") Privacy
 			li: a(href="/feed.xml") RSS
-			li: +nav-link(href="/flags") Feature Flags
-	+flag("ridiculous:cursor")
-		kno-cursor
+			//li: +nav-link(href="/flags") Feature Flags
+	//+flag("ridiculous:cursor")
+	//	kno-cursor
