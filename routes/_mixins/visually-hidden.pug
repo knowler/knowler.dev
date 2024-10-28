@@ -1,10 +1,3 @@
 mixin visually-hidden
-	if flags.has("experimental:dsd")
-		visually-hidden&attributes(attributes)
-			template(shadowrootmode="open")
-				style: include visually-hidden.css
-				slot
-			block
-	else
-		span(class="visually-hidden")&attributes(attributes)
-			block
+	span(class="visually-hidden")&attributes(attributes)
+		block
