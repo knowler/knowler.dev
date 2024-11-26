@@ -17,11 +17,6 @@ append head
 	link(rel="alternate" href="/feed.xml" type="application/rss+xml" title="RSS")
 	meta(name="fediverse:creator" content="@knowler@sunny.garden")
 	+styles
-	//+flag("ridiculous:cursor")
-	//	script(type="module").
-	//		import { CursorElement } from "./elements/cursor-element.js";
-
-	//		CursorElement.define();
 
 include /_mixins/nav-list
 include /_mixins/nav-link
@@ -44,6 +39,7 @@ block body
 			li: +nav-link(href="/accessibility") Accessibility
 			li: +nav-link(href="/privacy") Privacy
 			li: a(href="/feed.xml") RSS
-			//li: +nav-link(href="/flags") Feature Flags
-	//+flag("ridiculous:cursor")
-	//	kno-cursor
+		p.banners
+			-//a(href="https://anti-js-js.club/")
+			// Credit to Mu-An: https://github.com/muan/anti-js-js.club/issues/1#issue-2648107059
+			img(src="/banners/anti-javascript-javascript-club-member-88x31.png" alt="Member of the Anti-JavaScript Javascript Club" width="88" height="31")
