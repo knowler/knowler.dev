@@ -25,7 +25,7 @@ block content
 				each post in posts
 					li: article
 						mixin blog-post-title
-							h2: a(href=`/blog/${post.slug}`)= post.title
+							h2(style=`view-transition-name: post-title--${post.slug}`): a(href=`/blog/${post.slug}`)= post.title
 						if post.subtitle
 							hgroup: +blog-post-title
 						else

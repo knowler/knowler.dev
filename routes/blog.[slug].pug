@@ -28,7 +28,7 @@ block content
 	//			li #[a(href="/blog") Blog] #[span(aria-hidden="true") – ]
 	//			li: a(aria-current="page" href=canonical)= title
 	article.h-entry
-		+h1(title).p-name
+		+h1(title)(style=`view-transition-name: post-title--${post.slug}`).p-name
 		p #[time(datetime=post.publishedAt).dt-published= prettyDateString] – #[a(href=canonical).u-url Permalink]
 		.e-content !{post.html}
 
