@@ -163,6 +163,7 @@
 	}
 
 	footer {
+		content-visibility: auto;
 		background-color: var(--color-canvas-muted);
 		grid-area: footer;
 		padding-block: calc(var(--padding) + 0.25rem);
