@@ -1,7 +1,7 @@
 {
   "id": "01HHD7B2N9JNDX4DKC3GKCNHKG",
   "slug": "a-mental-model-for-styling-the-shadow-dom",
-  "title": "A Mental Model for Styling the Shadow DOM",
+  "title": "A mental model for styling the Shadow DOM",
   "description": "Writing styles for the Shadow DOM is like creating a user agent stylesheet for your custom element.",
   "publishedAt": "2023-12-11T19:58:21.865Z",
   "published": true,
