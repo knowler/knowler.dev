@@ -12,9 +12,11 @@
 		"clear-cache": "deno run --unstable-kv --allow-all --no-lock tools/clear-cache.js",
 		"demos": "deno run --unstable-kv --allow-all tools/demos.js",
 		"demos-app": "deno run --unstable-kv --allow-net --allow-env --allow-read --allow-write --watch tools/demos/main.js",
-		"garden": "deno run --unstable-kv --unstable-temporal --allow-all garden.js"
+		"garden": "deno run --unstable-kv --unstable-temporal --allow-all garden.js",
+		"test": "deno run -A npm:playwright test"
 	},
 	"imports": {
+		"@playwright/test": "npm:@playwright/test@^1.49.1",
 		"~/": "./",
 		"case/paramCase": "https://deno.land/x/case@2.2.0/paramCase.ts",
 		"feed": "https://esm.sh/feed@4.2.2",
@@ -27,5 +29,6 @@
 		"std/media_types": "https://deno.land/std@0.216.0/media_types/mod.ts",
 		"std/toml": "https://deno.land/std@0.216.0/toml/mod.ts",
 		"ulid": "https://deno.land/x/ulid@v0.3.0/mod.ts"
-	}
+	},
+	"nodeModulesDir": "auto"
 }

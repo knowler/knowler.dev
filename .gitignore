@@ -2,3 +2,5 @@
 .envrc
 .kv-*
 .demos/tmp
+node_modules
+test-results
