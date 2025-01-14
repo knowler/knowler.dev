@@ -20,7 +20,7 @@
 		"~/": "./",
 		"case/paramCase": "https://deno.land/x/case@2.2.0/paramCase.ts",
 		"feed": "https://esm.sh/feed@4.2.2",
-		"hono": "jsr:@hono/hono@^4.4.0",
+		"hono": "jsr:@hono/hono@^4.6.16",
 		"hono_sessions": "https://deno.land/x/hono_sessions@v0.3.3/mod.ts",
 		"nanoid": "https://esm.sh/nanoid@4.0.0/async",
 		"pug": "https://deno.land/x/pug@v0.1.6/mod.ts",
