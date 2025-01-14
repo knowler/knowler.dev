@@ -6,45 +6,7 @@ append head
 	style: include blog.[slug].css
 
 block content
-	//+flag("blog:breadcrumbs")
-	//	:css
-	//		nav.breadcrumbs {
-	//			translate: 0 2rem;
-	//		}
-	//		nav.breadcrumbs ol {
-	//			padding-inline-start: 0;
-	//			margin-block: 0;
-	//			list-style: none;
-	//			display: flex;
-	//		}
-	//		nav.breadcrumbs [aria-current="page"] {
-	//			color: CanvasText;
-	//		}
-	//		nav.breadcrumbs li {
-	//			white-space: pre;
-	//		}
-	//	nav.breadcrumbs(aria-label="Breadcrumbs")
-	//		ol
-	//			li #[a(href="/blog") Blog] #[span(aria-hidden="true") – ]
-	//			li: a(aria-current="page" href=canonical)= title
 	article.h-entry
 		+h1(title)(style=`view-transition-name: post-title--${post.slug}`).p-name
 		p #[time(datetime=post.publishedAt).dt-published= prettyDateString] – #[a(href=canonical).u-url Permalink]
 		.e-content !{post.html}
-
-	+env("development")
-		article
-			h2 About the author
-			p #[strong Nathan Knowler] is building websites. He’s interested in accessibility, progressive enhancements, and Web Components.
-	+env("none")
-		aside
-			h2 Webmentions
-			if post.webmentions.length > 0
-				p #[a(href=`/webmention?target=${canonical}`) Send a Webmention]
-				details
-					summary= post.webmentions.length > 1 ? `${post.webmentions.length} Webmentions` : "1 Webmention"
-					ul
-						each webmention in post.webmentions
-							li: a(href=webmention.source)= webmention.hEntry ? webmention.hEntry.properties.name : webmention.source
-			else
-				p Be the first to #[a(href=`/webmention?target=${canonical}`) send a Webmention]!

@@ -30,6 +30,11 @@ main > .h-entry ~ aside li a {
 	text-wrap: pretty;
 }
 
+.h-entry :is(h1, h2, h3) code {
+	hyphens: auto;
+	hyphenate-character: "";
+}
+
 .h-entry h1 + p {
 	margin-block-start: 0.5em;
 	margin-block-end: 2rem;
