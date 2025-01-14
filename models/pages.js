@@ -1,36 +1,12 @@
-import kv from "~/kv.js";
-
 const REGION = Deno.env.get("DENO_REGION")
 const IS_KV_REGION = Deno.env.get("KV_REGION") === REGION;
-
-export async function getPage(id) {
-	const pageRecord = await kv.get(["pages", id]);
-	if (!pageRecord.value) throw `page not found with id: ${id}`;
-
-	return pageRecord.value;
-}
-
-export async function getPageBySlug(slug) {
-	const idRecord = await kv.get(["pagesBySlug", slug]);
-	if (!idRecord.value) throw `page not found with slug: ${slug}`;
-
-	return await getPage(idRecord.value);
-}
-
-export async function getPages() {
-	const iter = kv.list({ prefix: ["pages"] });
-	const pages = [];
-
-	for await (const record of iter) pages.push(record.value);
-
-	return pages;
-}
 
 export class Pages {
 	cache = new Map();
 	channel = new BroadcastChannel("pages");
 
-	constructor() {
+	constructor(kv) {
+		this.kv = kv;
 		this.channel.addEventListener("message", async event => {
 			const { action, payload } = event.data;
 			switch (action) {
@@ -96,10 +72,10 @@ export class Pages {
 		if (IS_KV_REGION) {
 			console.log(`reading page for slug: ${slug}`);
 
-			const slugRecord = await kv.get(["pagesBySlug", slug]);
+			const slugRecord = await this.kv.get(["pagesBySlug", slug]);
 			if (!slugRecord.value) throw `page not found with slug: ${slug}`;
 
-			const pageRecord = await kv.get(["pages", slugRecord.value]);
+			const pageRecord = await this.kv.get(["pages", slugRecord.value]);
 			if (!pageRecord.value) throw `page not found for id: ${slugRecord.value}`;
 
 			this.cache.set(slug, pageRecord.value);
@@ -127,10 +103,10 @@ export class Pages {
 			} catch (_) {
 				console.log(`[timed out] reading page for slug: ${slug}`);
 
-				const slugRecord = await kv.get(["pagesBySlug", slug]);
+				const slugRecord = await this.kv.get(["pagesBySlug", slug]);
 				if (!slugRecord.value) throw `page not found with slug: ${slug}`;
 
-				const pageRecord = await kv.get(["pages", slugRecord.value]);
+				const pageRecord = await this.kv.get(["pages", slugRecord.value]);
 				if (!pageRecord.value) throw `page not found for id: ${slugRecord.value}`;
 
 				this.cache.set(slug, pageRecord.value);

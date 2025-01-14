@@ -1,5 +1,4 @@
 import { URLSearchParams } from "https://deno.land/std@0.177.1/node/url.ts";
-import kv from "~/kv.js";
 import { ulidFromISOString } from "~/utils/util-from-iso-string.js";
 
 const postsBySlug = new Map(JSON.parse(await Deno.readTextFile("./data/postsBySlug.json")).postsBySlug);

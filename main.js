@@ -9,9 +9,6 @@ import { pugRenderer } from "~/middleware/pug-renderer.js";
 import { rewriteWithoutTrailingSlashes } from "~/middleware/rewrite-without-trailing-slashes.js";
 import { noRobots } from "~/middleware/no-robots.js";
 
-/** Jobs */
-import kv from "~/kv.js";
-
 /** Utils */
 import { invariant } from "~/utils/invariant.js";
 import { isCSSNakedDay } from "~/utils/is-css-naked-day.js";
@@ -27,13 +24,17 @@ const SUPER_SECRET_CACHE_PURGE_ROUTE = Deno.env.get("SUPER_SECRET_CACHE_PURGE_RO
 invariant(SITE_URL);
 
 const app = new Hono();
-const pages = new Pages();
-const posts = new Posts();
-const demos = new Demos();
 
 app.use(
 	"*",
 	async (c, next) => {
+		const kv = await Deno.openKv();
+		c.set("kv", kv);
+
+		const pages = new Pages(kv);
+		const posts = new Posts(kv);
+		const demos = new Demos(kv);
+
 		c.set("pages", pages);
 		c.set("posts", posts);
 		c.set("demos", demos);
@@ -42,7 +43,7 @@ app.use(
 
 		if (![SUPER_SECRET_CACHE_PURGE_ROUTE, "/favicon.ico", "/main.css"].includes(c.req.path)) {
 			queueMicrotask(() => {
-				if (!pages.hasList) {
+				if (!c.get("pages").hasList) {
 					console.log("Updating pages cache from isolates");
 					pages.channel.postMessage({ action: "connected" });
 				}

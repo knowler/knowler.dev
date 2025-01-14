@@ -1,5 +1,3 @@
-import kv from "~/kv.js";
-
 const REGION = Deno.env.get("DENO_REGION")
 const IS_KV_REGION = Deno.env.get("KV_REGION") === REGION;
 
@@ -7,7 +5,8 @@ export class Demos {
 	cache = new Map();
 	channel = new BroadcastChannel("demos");
 
-	constructor() {
+	constructor(kv) {
+		this.kv = kv;
 		this.channel.addEventListener("message", async event => {
 			const { action, payload } = event.data;
 			switch (action) {
@@ -73,7 +72,7 @@ export class Demos {
 		if (IS_KV_REGION) {
 			console.log(`reading demo for slug: ${slug}`);
 
-			const demoRecord = await kv.get(["demos", slug]);
+			const demoRecord = await this.kv.get(["demos", slug]);
 			if (!demoRecord.value) throw `demo not found with slug: ${slug}`;
 
 			this.cache.set(slug, demoRecord.value);
@@ -101,7 +100,7 @@ export class Demos {
 			} catch (_) {
 				console.log(`[timed out] reading demo for slug: ${slug}`);
 
-				const demoRecord = await kv.get(["demos", slug]);
+				const demoRecord = await this.kv.get(["demos", slug]);
 				if (!demoRecord.value) throw `demo not found with slug: ${slug}`;
 
 				this.cache.set(slug, demoRecord.value);
