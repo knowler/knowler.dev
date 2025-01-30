@@ -13,11 +13,11 @@ import { noRobots } from "~/middleware/no-robots.js";
 import { invariant } from "~/utils/invariant.js";
 import { isCSSNakedDay } from "~/utils/is-css-naked-day.js";
 
-import { Pages } from "~/models/pages.js";
 import { Posts } from "~/models/posts.js";
 import { Demos } from "~/models/demos.js";
 
 const ENV = Deno.env.get("ENV");
+const DEPLOYMENT_ID = Deno.env.get("DENO_DEPLOYMENT_ID") ?? "DEV";
 const SITE_URL = Deno.env.get("SITE_URL");
 const SUPER_SECRET_CACHE_PURGE_ROUTE = Deno.env.get("SUPER_SECRET_CACHE_PURGE_ROUTE");
 
@@ -25,17 +25,16 @@ invariant(SITE_URL);
 
 const app = new Hono();
 
+const kv = await Deno.openKv();
+
 app.use(
 	"*",
 	async (c, next) => {
-		const kv = await Deno.openKv();
 		c.set("kv", kv);
 
-		const pages = new Pages(kv);
 		const posts = new Posts(kv);
 		const demos = new Demos(kv);
 
-		c.set("pages", pages);
 		c.set("posts", posts);
 		c.set("demos", demos);
 
@@ -43,10 +42,6 @@ app.use(
 
 		if (![SUPER_SECRET_CACHE_PURGE_ROUTE, "/favicon.ico", "/main.css"].includes(c.req.path)) {
 			queueMicrotask(() => {
-				if (!c.get("pages").hasList) {
-					console.log("Updating pages cache from isolates");
-					pages.channel.postMessage({ action: "connected" });
-				}
 				if (!demos.hasList) {
 					console.log("Updating demos cache from isolates");
 					demos.channel.postMessage({ action: "connected" });
@@ -55,13 +50,13 @@ app.use(
 		}
 	},
 	pugRenderer(),
-	logger(),
-	async (c, next) => {
-		const referer = c.req.header("referer");
-		if (referer) console.log("Referer:", referer);
-		console.log("user agent", c.req.header("User-Agent"));
-		await next();
-	},
+	//logger(),
+	//async (c, next) => {
+	//	const referer = c.req.header("referer");
+	//	if (referer) console.log("Referer:", referer);
+	//	console.log("user agent", c.req.header("User-Agent"));
+	//	await next();
+	//},
 	rewriteWithoutTrailingSlashes(),
 
 	// CSS Naked Day
@@ -142,7 +137,20 @@ app.get("/feed.xml", async (...args) => {
 	const { get } = await import ("~/routes/feed.xml.js");
 	return get(...args);
 });
+app.get(
+	"/", 
+	cache({
+		cacheName: c => {
+			console.count("computing cache name");
+			const cacheName = `${DEPLOYMENT_ID}.${Deno.env.get("CONTENT_VERSION")}`;
+			console.log(cacheName);
+			return cacheName;
+		},
+		wait: true,
+	}),
+);
 app.get("/", async (...args) => {
+	console.log("cache miss");
 	const { get } = await import ("~/routes/index.js");
 	return get(...args);
 });
@@ -187,3 +195,10 @@ app.get("/:page{[a-z0-9-]+}", async (...args) => {
 app.use("*", serveStatic({ root: "./assets" }));
 
 Deno.serve({ port: ENV === "production" ? 8000 : new URL(SITE_URL).port }, app.fetch);
+
+for await (const entries of kv.watch([["content_version"]])) {
+	for (const entry of entries) {
+		console.log("new content_version", entry.value);
+		Deno.env.set("CONTENT_VERSION", entry.value);
+	}
+}

@@ -63,11 +63,12 @@ const updatedPage = {
 const url = updatedPage.slug === "welcome" ? "https://knowler.dev/" : `https://knowler.dev/${updatedPage.slug}`;
 
 await kv.set(["pages", page.id], updatedPage);
+await kv.set(["content_version"], Date.now());
 
-const purgeURL = new URL(Deno.env.get("SUPER_SECRET_CACHE_PURGE_ROUTE_PROD"), "https://knowler.dev");
-purgeURL.searchParams.set("page", updatedPage.slug);
+//const purgeURL = new URL(Deno.env.get("SUPER_SECRET_CACHE_PURGE_ROUTE_PROD"), "https://knowler.dev");
+//purgeURL.searchParams.set("page", updatedPage.slug);
 
-await fetch(purgeURL);
+//await fetch(purgeURL);
 
 await Deno.remove(fileName);
 
