@@ -50,7 +50,7 @@ app.use(
 		}
 	},
 	pugRenderer(),
-	//logger(),
+	logger(),
 	//async (c, next) => {
 	//	const referer = c.req.header("referer");
 	//	if (referer) console.log("Referer:", referer);
@@ -187,6 +187,18 @@ app.get("/demos/:slug", async (...args) => {
 });
 
 /* Page and static asset routes */
+app.get(
+	"/:page{[a-z0-9-]+}", 
+	cache({
+		cacheName: c => {
+			console.count("computing cache name");
+			const cacheName = `${DEPLOYMENT_ID}.${Deno.env.get("CONTENT_VERSION")}`;
+			console.log(cacheName);
+			return cacheName;
+		},
+		wait: true,
+	}),
+);
 app.get("/:page{[a-z0-9-]+}", async (...args) => {
 	const { get } = await import ("~/routes/[page].js");
 	return get(...args);
