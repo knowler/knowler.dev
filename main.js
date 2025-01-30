@@ -27,6 +27,8 @@ const app = new Hono();
 
 const kv = await Deno.openKv();
 
+watchContentVersion();
+
 const contentCache = cacheMiddleware({
 	cacheName: c => {
 		console.count("computing cache name");
@@ -203,9 +205,12 @@ app.use("*", serveStatic({ root: "./assets" }));
 
 Deno.serve({ port: ENV === "production" ? 8000 : new URL(SITE_URL).port }, app.fetch);
 
-for await (const entries of kv.watch([["content_version"]])) {
-	for (const entry of entries) {
-		console.log("new content_version", entry.value);
-		Deno.env.set("CONTENT_VERSION", entry.value);
+async function watchContentVersion() {
+	for await (const entries of kv.watch([["content_version"]])) {
+		for (const entry of entries) {
+			console.log("content_version", entry.value);
+			Deno.env.set("CONTENT_VERSION", entry.value);
+		}
 	}
 }
+
