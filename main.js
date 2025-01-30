@@ -200,6 +200,7 @@ app.get(
 	}),
 );
 app.get("/:page{[a-z0-9-]+}", async (...args) => {
+	console.log("cache miss");
 	const { get } = await import ("~/routes/[page].js");
 	return get(...args);
 });
