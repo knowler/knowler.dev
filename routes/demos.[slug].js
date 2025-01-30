@@ -1,7 +1,9 @@
 export async function get(c, next) {
 	try {
 		const params = c.req.param();
-		const demo = await c.get("demos").get(params.slug);
+		const kv = c.get("kv");
+		const { value: demo } = await kv.get(["demos", params.slug]);
+		if (!demo) throw `Demo not found: ${params.slug}`;
 		const query = c.req.query();
 
 		if (query.source != null) {

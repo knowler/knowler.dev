@@ -145,10 +145,7 @@ async function editDemo(urlOrId) {
 		await kv.set(["demos", demoId], demo);
 		const url = `https://knowler.dev/demos/${demoId}`;
 
-		const purgeURL = new URL(Deno.env.get("SUPER_SECRET_CACHE_PURGE_ROUTE_PROD"), "https://knowler.dev");
-		purgeURL.searchParams.set("demo", demoId);
-
-		await fetch(purgeURL);
+		await kv.set(["demos_version"], Date.now());
 
 		console.log(`Updated: ${url}`);
 
@@ -176,9 +173,7 @@ async function deleteDemo() {
 		if (confirm(`${url}\nAre you sure you’d like to delete this demo?`)) {
 			await kv.delete(["demos", demoId]);
 
-			const purgeURL = new URL(Deno.env.get("SUPER_SECRET_CACHE_PURGE_ROUTE_PROD"), "https://knowler.dev");
-			purgeURL.searchParams.set("demo", demoId);
-			await fetch(purgeURL);
+			await kv.set(["demos_version"], Date.now());
 
 			console.log(`Deleted: ${url}`);
 		} else console.log(`${url} will see another day.`)

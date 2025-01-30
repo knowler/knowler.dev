@@ -14,7 +14,6 @@ import { invariant } from "~/utils/invariant.js";
 import { isCSSNakedDay } from "~/utils/is-css-naked-day.js";
 
 import { Posts } from "~/models/posts.js";
-import { Demos } from "~/models/demos.js";
 
 const ENV = Deno.env.get("ENV");
 const DEPLOYMENT_ID = Deno.env.get("DENO_DEPLOYMENT_ID") ?? Date.now();
@@ -31,7 +30,6 @@ watchContentVersion();
 
 const contentCache = cacheMiddleware({
 	cacheName: c => {
-		console.count("computing cache name");
 		const cacheName = `${DEPLOYMENT_ID}.${Deno.env.get("CONTENT_VERSION")}`;
 		console.log(cacheName);
 		return cacheName;
@@ -45,21 +43,10 @@ app.use(
 		c.set("kv", kv);
 
 		const posts = new Posts(kv);
-		const demos = new Demos(kv);
 
 		c.set("posts", posts);
-		c.set("demos", demos);
 
 		await next();
-
-		if (![SUPER_SECRET_CACHE_PURGE_ROUTE, "/favicon.ico", "/main.css"].includes(c.req.path)) {
-			queueMicrotask(() => {
-				if (!demos.hasList) {
-					console.log("Updating demos cache from isolates");
-					demos.channel.postMessage({ action: "connected" });
-				}
-			});
-		}
 	},
 	pugRenderer(),
 	logger(),
@@ -111,36 +98,6 @@ const ignoreList = [
 ];
 for (const ignoredRoute of ignoreList) app.get(ignoredRoute, c => c.notFound());
 
-app.get(SUPER_SECRET_CACHE_PURGE_ROUTE, noRobots(), (c) => {
-	const { searchParams } = new URL(c.req.url);
-
-	if (searchParams.has("all")) {
-		c.get("pages").purgeCache();
-		c.get("demos").purgeCache();
-
-		c.get("pages").channel.postMessage({ action: "purge" });
-		c.get("demos").channel.postMessage({ action: "purge" });
-
-		return c.text("purged entire cache");
-	}
-
-	if (searchParams.has("page")) {
-		const pagesToEvict = searchParams.getAll("page");
-		for (const page of pagesToEvict) c.get("pages").evict(page);
-		c.get("pages").channel.postMessage({ action: "evict", payload: pagesToEvict });
-		console.log(`evicted pages: ${pagesToEvict.join(", ")}`);
-	}
-
-	if (searchParams.has("demo")) {
-		const demosToEvict = searchParams.getAll("demo");
-		for (const demo of demosToEvict) c.get("demos").evict(demo);
-		c.get("demos").channel.postMessage({ action: "evict", payload: demosToEvict });
-		console.log(`evicted demos: ${demosToEvict.join(", ")}`);
-	}
-
-	return c.text("evicted specified pages, posts, and demos from the cache");
-});
-
 /**
  * PUBLIC ROUTES
  */
@@ -182,7 +139,16 @@ app.get("/demos/*", async (c, next) => {
 	await next();
 });
 
+app.get("/demos/:slug", cacheMiddleware({
+	cacheName: c => {
+		const cacheName = `${DEPLOYMENT_ID}.demos.${Deno.env.get("DEMOS_VERSION")}`;
+		console.log(cacheName);
+		return cacheName;
+	},
+	wait: true,
+}))
 app.get("/demos/:slug", async (...args) => {
+	console.log("cache miss");
 	const { get } = await import ("~/routes/demos.[slug].js");
 	return get(...args);
 });
@@ -206,10 +172,11 @@ app.use("*", serveStatic({ root: "./assets" }));
 Deno.serve({ port: ENV === "production" ? 8000 : new URL(SITE_URL).port }, app.fetch);
 
 async function watchContentVersion() {
-	for await (const entries of kv.watch([["content_version"]])) {
+	for await (const entries of kv.watch([["content_version"], ["demos_version"]])) {
 		for (const entry of entries) {
-			console.log("content_version", entry.value);
-			Deno.env.set("CONTENT_VERSION", entry.value);
+			const [key] = entry.key
+			console.log(key, entry.value);
+			Deno.env.set(key.toUpperCase(), entry.value);
 		}
 	}
 }
