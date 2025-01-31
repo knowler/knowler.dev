@@ -6,7 +6,9 @@ const me = {
 };
 
 export async function get(c) {
-	const posts = await c.get("posts").list();
+	const kv = c.get("kv");
+	const list = kv.list({ prefix: ["posts"] }, { limit: 10, reverse: true });
+	const posts = await Array.fromAsync(list, item => item.value);
 
 	const feed = new Feed({
 		title: "Nathan Knowler",
@@ -21,7 +23,7 @@ export async function get(c) {
 	});
 
 	let count = 1;
-	for (const post of posts.reverse()) {
+	for (const post of posts) {
 		if (count === 10) break;
 		feed.addItem({
 			id: post.slug,

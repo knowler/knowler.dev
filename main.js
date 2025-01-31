@@ -102,7 +102,9 @@ for (const ignoredRoute of ignoreList) app.get(ignoredRoute, c => c.notFound());
  * PUBLIC ROUTES
  */
 
+app.get("/feed.xml", contentCache);
 app.get("/feed.xml", async (...args) => {
+	console.log("cache miss");
 	const { get } = await import ("~/routes/feed.xml.js");
 	return get(...args);
 });
