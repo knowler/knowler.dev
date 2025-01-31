@@ -116,7 +116,9 @@ app.get("/blog", async (...args) => {
 	const { get } = await import ("~/routes/blog.index.js");
 	return get(...args);
 });
+app.get("/blog/:slug", contentCache);
 app.get("/blog/:slug", async (...args) => {
+	console.log("cache miss");
 	const { get } = await import ("~/routes/blog.[slug].js");
 	return get(...args);
 });

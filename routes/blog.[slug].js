@@ -4,7 +4,10 @@ import { winnipegDateTime } from "~/utils/winnipeg-datetime.js";
 export async function get(c, next) {
 	try {
 		const { slug } = c.req.param();
-		const post = await c.get("posts").get(slug);
+		const kv = c.get("kv");
+		const { value: id } = await kv.get(["postsBySlug", slug]);
+		if (!id) throw `Post with slug "${slug}" not found`;
+		const { value: post } = await kv.get(["posts", id]);
 
 		return c.render("blog.[slug]", {
 			title: post.title,
