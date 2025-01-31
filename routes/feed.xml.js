@@ -21,10 +21,12 @@ export async function get(c) {
 		generator: "Deno",
 		author: me,
 	});
-
+	
 	let count = 1;
 	for (const post of posts) {
-		if (count === 10) break;
+		// Store in the object cache if not already there
+		c.get("posts").store(post);
+
 		feed.addItem({
 			id: post.slug,
 			title: post.title,

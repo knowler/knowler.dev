@@ -46,9 +46,7 @@ app.use(
 	async (c, next) => {
 		c.set("kv", kv);
 
-		const posts = new Posts(kv);
-
-		c.set("posts", posts);
+		c.set("posts", new Posts(kv));
 
 		await next();
 	},

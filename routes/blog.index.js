@@ -2,7 +2,12 @@ import { trimTrailingSlash } from "~/utils/trim-trailing-slash.js";
 import { winnipegDateTime } from "~/utils/winnipeg-datetime.js";
 
 export async function get(c) {
-	let posts = (await c.get("posts").list()).reverse();
+	const posts = await Array.fromAsync(
+		c.get("kv").list({ prefix: ["posts"] }, { reverse: true }),
+		entry => entry.value,
+	);
+
+	for (const post of posts) c.get("posts").store(post);
 
 	return c.render(
 		"blog.index",
