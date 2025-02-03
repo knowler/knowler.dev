@@ -10,8 +10,26 @@ block content
 	+h-entry("Blog")
 		p This is my blog.
 		unless posts.length > 0
-			p There are no posts.
+			p There are no posts. #[a(href="/blog") Show latest]?
 		else 
+			nav(aria-label="blog pagination")
+				p Showing posts from #{pagination.currentRangePretty}.
+				ol
+					style.
+						@scope {
+							:scope {
+								list-style: none;
+								display: inline-flex;
+								gap: 1rem;
+								padding-inline-start: 0;
+							}
+						}
+					unless pagination.isLatest
+						li: a(href="/blog") Latest
+						li: a(href=`/blog?after=${pagination.mostRecent}`) Newer
+					unless pagination.isOldest
+						li: a(href=`/blog?before=${pagination.leastRecent}`) Older
+						li: a(href="/blog?oldest") Oldest
 			ol(reversed role="list")
 				each post in posts
 					li: article

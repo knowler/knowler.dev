@@ -1,4 +1,4 @@
-.h-entry ol {
+.h-entry ol:not(nav ol) {
 	list-style: none;
 	padding-inline-start: 0;
 	columns: max(24rem, 25vw) auto;
