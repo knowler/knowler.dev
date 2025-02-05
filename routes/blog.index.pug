@@ -12,6 +12,18 @@ block content
 		unless posts.length > 0
 			p There are no posts. #[a(href="/blog") Show latest]?
 		else 
+			ol(reversed role="list")
+				each post in posts
+					li: article
+						mixin blog-post-title
+							h2(style=`view-transition-name: post-title--${post.slug}`): a(href=`/blog/${post.slug}`)= post.title
+						if post.subtitle
+							hgroup: +blog-post-title
+						else
+							+blog-post-title
+						if post.description
+							p= post.description
+						time(datetime=post.publishedAt)= post.prettyDateString
 			nav(aria-label="blog pagination")
 				p Showing posts from #{pagination.currentRangePretty}.
 				ol
@@ -30,15 +42,3 @@ block content
 					unless pagination.isOldest
 						li: a(href=`/blog?before=${pagination.leastRecent}`) Older
 						li: a(href="/blog?oldest") Oldest
-			ol(reversed role="list")
-				each post in posts
-					li: article
-						mixin blog-post-title
-							h2(style=`view-transition-name: post-title--${post.slug}`): a(href=`/blog/${post.slug}`)= post.title
-						if post.subtitle
-							hgroup: +blog-post-title
-						else
-							+blog-post-title
-						if post.description
-							p= post.description
-						time(datetime=post.publishedAt)= post.prettyDateString
