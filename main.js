@@ -4,21 +4,18 @@ import { Hono } from "hono";
 import { serveStatic } from "hono/deno";
 import { logger } from "hono/logger";
 import { cache as cacheMiddleware } from "hono/cache";
-
+import { trimTrailingSlash } from "hono/trailing-slash";
 import { pugRenderer } from "~/middleware/pug-renderer.js";
-import { rewriteWithoutTrailingSlashes } from "~/middleware/rewrite-without-trailing-slashes.js";
-import { noRobots } from "~/middleware/no-robots.js";
+import { cssNakedDay } from "~/middleware/css-naked-day.js";
 
 /** Utils */
 import { invariant } from "~/utils/invariant.js";
-import { isCSSNakedDay } from "~/utils/is-css-naked-day.js";
 
 import { Posts } from "~/models/posts.js";
 
 const ENV = Deno.env.get("ENV");
 const DEPLOYMENT_ID = Deno.env.get("DENO_DEPLOYMENT_ID") ?? Date.now();
 const SITE_URL = Deno.env.get("SITE_URL");
-const SUPER_SECRET_CACHE_PURGE_ROUTE = Deno.env.get("SUPER_SECRET_CACHE_PURGE_ROUTE");
 
 invariant(SITE_URL);
 
@@ -45,28 +42,19 @@ app.use(
 	"*",
 	async (c, next) => {
 		c.set("kv", kv);
-
 		c.set("posts", new Posts(kv));
-
 		await next();
 	},
 	pugRenderer(),
-	logger(),
+	logger(log),
 	async (c, next) => {
 		const referer = c.req.header("referer");
-		if (referer) console.log("Referer:", referer);
-		console.log("user agent", c.req.header("User-Agent"));
+		if (referer) log(`Referer: ${referer}`);
+		log(`User agent: ${c.req.header("User-Agent")}`);
 		await next();
 	},
-	rewriteWithoutTrailingSlashes(),
-
-	// CSS Naked Day
-	async (c, next) => {
-		if (isCSSNakedDay()) {
-			c.res.headers.append("content-security-policy", "style-src 'none'");
-		}
-		await next();
-	},
+	trimTrailingSlash(),
+	cssNakedDay(),
 );
 
 app.notFound(async (...args) => {
@@ -96,7 +84,6 @@ const ignoreList = [
 
 	// Might add these 
 	"/contact",
-	"/sitemap.xml",
 ];
 for (const ignoredRoute of ignoreList) app.get(ignoredRoute, c => c.notFound());
 
@@ -108,6 +95,12 @@ app.get("/feed.xml", contentCache);
 app.get("/feed.xml", async (...args) => {
 	console.log("cache miss");
 	const { get } = await import ("~/routes/feed.xml.js");
+	return get(...args);
+});
+app.get("/sitemap.xml", contentCache);
+app.get("/sitemap.xml", async (...args) => {
+	console.log("cache miss");
+	const { get } = await import ("~/routes/sitemap.xml.js");
 	return get(...args);
 });
 app.get("/", contentCache);
@@ -187,3 +180,4 @@ async function watchCacheVersions() {
 	}
 }
 
+function log() { console.log(...arguments); }
