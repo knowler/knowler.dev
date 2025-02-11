@@ -1,7 +1,0 @@
-{
-  "id": "4518d6f0-d2c5-4400-833f-36d79ee85f2a",
-  "slug": "accessibility",
-  "title": "Accessibility Statement",
-  "published": true,
-  "html": "<p>I want this website to be as accessible as possible. I am building this website\nwith this goal in mind. This page will be used to document how I intend on\nmeeting this goal, how I am testing the accessibility of this website, and if\nthere are any known accessibility issues.</p>\n<h2 id=\"features\">Features</h2>\n<p>This site uses <abbr title=\"Accessible Rich Internet Applications\">ARIA</abbr>\nattributes when necessary to improve the experience.</p>\n<h2 id=\"testing\">Testing</h2>\n<p>Currently, I am testing with macOS’ VoiceOver screen reader. In the future I’d\nlike to test on Windows as well.</p>\n<h2 id=\"issues\">Issues</h2>\n<p>I’ve done my best with ensuring sufficient WCAG 2.1 AA contrast so far.</p>\n<h2 id=\"feedback\">Feedback</h2>\n<p>If you find any other issues that I haven’t accounted for, please help me\naddress them by <a href=\"https://github.com/knowler/knowler.dev/issues/new\">submitting an issue on GitHub</a>.</p>"
-}

@@ -1,8 +1,0 @@
-{
-  "id": "e643cc2f-204f-4c12-926a-c53da0ef472d",
-  "slug": "now",
-  "title": "Now",
-  "description": "What Nathan Knowler is up to right now.",
-  "published": true,
-  "html": "<ul>\n<li>Spending time with my family.</li>\n<li>Building my website.</li>\n<li>Improving my pizza making skills.</li>\n<li>Learning how to bake bread.\n<ul>\n<li>Starting a sourdough starter. Need to research more.</li>\n</ul>\n</li>\n<li>Thinking of use cases and building examples for the <a href=\"https://github.com/w3c/csswg-drafts/issues/9792\">“Host layerable shadow roots” proposal</a>.</li>\n<li>Learning drums.</li>\n</ul>"
-}

@@ -1,8 +1,0 @@
-{
-  "id": "01HD4KEGHB9AX9GN5XCVT6XE39",
-  "slug": "setting-your-nb-notebook-based-on-context-with-direnv",
-  "title": "Setting your nb notebook based on context with direnv",
-  "publishedAt": "2023-10-19T18:34:00.107Z",
-  "published": true,
-  "html": "<p>I use <a href=\"https://github.com/xwmx/nb\"><code>nb</code></a> for taking notes. I love that it allows me to write with <a href=\"https://neovim.io\">Neovim</a>, my text editor of choice. It also can sync to a Git repository which is nice for revision control.</p>\n<p>As much as I love <code>nb</code>, I’m not the most consistent with it. Sometimes I use the Apple Notes app or <a href=\"https://ia.net/writer\">iA Writer</a> since they both sync with my phone. Another hurdle is remembering to change which notebook I am writing in depending on the context. I end up writing a note in the wrong notebook, which can put me off from using the tool.</p>\n<p>Today, I realized a nice little trick to do this for me. It involves another tool I use daily. <a href=\"https://github.com/direnv/direnv\"><code>direnv</code></a> is a shell extension that loads and unloads environment variables based on your current directory. In addition to setting environment variables, it can run commands.</p>\n<p>Inside the <code>.envrc</code> file for the context I’m working in (e.g. a repo or topical parent directory), I run the <code>nb use</code> command with the name of the appropriate notebook. For example, for my website, where I’m generally doing a lot of thinking about the Web, I set it to my <code>magic-paper</code> notebook. After editing the <code>.envrc</code> file, I give <code>direnv</code> permission to run the edited file using <code>direnv allow</code> and that’s it!</p>\n"
-}
