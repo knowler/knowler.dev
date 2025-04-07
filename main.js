@@ -7,6 +7,7 @@ import { cache as cacheMiddleware } from "hono/cache";
 import { trimTrailingSlash } from "hono/trailing-slash";
 import { pugRenderer } from "~/middleware/pug-renderer.js";
 import { cssNakedDay } from "~/middleware/css-naked-day.js";
+import { isCSSNakedDay } from "~/utils/is-css-naked-day.js";
 
 /** Utils */
 import { invariant } from "~/utils/invariant.js";
@@ -31,7 +32,8 @@ watchCacheVersions();
 
 const contentCache = cacheMiddleware({
 	cacheName: c => {
-		const cacheName = `${DEPLOYMENT_ID}.${Deno.env.get("CONTENT_VERSION")}`;
+		let cacheName = `${DEPLOYMENT_ID}.${Deno.env.get("CONTENT_VERSION")}`;
+		if (isCSSNakedDay()) cacheName = `${cacheName}.${new Date().getFullYear()}-css-naked-day`;
 		console.log(cacheName);
 		return cacheName;
 	},
