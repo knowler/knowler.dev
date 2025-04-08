@@ -26,7 +26,7 @@ include /_mixins/site-header
 block body
 	a(href=`${currentPath}#content`).skip-link.visually-hidden Skip to content
 	if isCSSNakedDay
-		p Happy #[a(href="https://css-naked-day.github.io") CSS Naked Day], enjoy!
+		p Happy #[a(href="https://css-naked-day.org") CSS Naked Day], enjoy!
 	+site-header
 	main#content(tabindex="-1")
 		block content
