@@ -145,7 +145,7 @@ async function editDemo(urlOrId) {
 		await kv.set(["demos", demoId], demo);
 		const url = `https://knowler.dev/demos/${demoId}`;
 
-		await kv.set(["demos_version"], Date.now());
+		await bustDemosCache();
 
 		console.log(`Updated: ${url}`);
 
@@ -173,7 +173,7 @@ async function deleteDemo() {
 		if (confirm(`${url}\nAre you sure you’d like to delete this demo?`)) {
 			await kv.delete(["demos", demoId]);
 
-			await kv.set(["demos_version"], Date.now());
+			await bustDemosCache();
 
 			console.log(`Deleted: ${url}`);
 		} else console.log(`${url} will see another day.`)
@@ -313,4 +313,13 @@ async function forkDemo(urlOrId) {
 	} else {
 		console.log("Nothing to fork");
 	}
+}
+
+async function bustDemosCache() {
+	const { kv } = await import("./utils/production-kv.js");
+	const { value: cache_versions } = await kv.get(["cache_versions"]);
+	await kv.set(["cache_versions"], {
+		...cache_versions,
+		demos_version: Date.now(),
+	});
 }
