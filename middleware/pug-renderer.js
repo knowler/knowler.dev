@@ -5,12 +5,13 @@ import { invariant } from "~/utils/invariant.js";
 import { isCSSNakedDay } from "~/utils/is-css-naked-day.js";
 import { library, icon, findIconDefinition } from "npm:@fortawesome/fontawesome-svg-core";
 import { fab } from "npm:@fortawesome/free-brands-svg-icons";
+import { fas } from "npm:@fortawesome/free-solid-svg-icons";
 
 const SITE_URL = Deno.env.get("SITE_URL");
 invariant(SITE_URL);
 
 // Add brand icons to library
-library.add(fab);
+library.add(fab, fas);
 
 export function pugRenderer() {
 	return async (c, next) => {
