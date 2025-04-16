@@ -16,7 +16,11 @@
 		"test": "deno run -A npm:playwright test"
 	},
 	"imports": {
+		"@fortawesome/free-brands-svg-icons": "npm:@fortawesome/free-brands-svg-icons",
+		"@fortawesome/pro-solid-svg-icons": "npm:@fortawesome/pro-solid-svg-icons",
+		"@fortawesome/pro-regular-svg-icons": "npm:@fortawesome/pro-regular-svg-icons",
 		"@playwright/test": "npm:@playwright/test@^1.49.1",
+		"@std/cli": "jsr:@std/cli@^1.0.16",
 		"~/": "./",
 		"case/paramCase": "https://deno.land/x/case@2.2.0/paramCase.ts",
 		"feed": "https://esm.sh/feed@4.2.2",

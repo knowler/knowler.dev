@@ -1759,6 +1759,9 @@
     "dependencies": [
       "jsr:@hono/hono@^4.6.16",
       "jsr:@std/cli@^1.0.16",
+      "npm:@fortawesome/free-brands-svg-icons@*",
+      "npm:@fortawesome/pro-regular-svg-icons@*",
+      "npm:@fortawesome/pro-solid-svg-icons@*",
       "npm:@playwright/test@^1.49.1"
     ]
   }

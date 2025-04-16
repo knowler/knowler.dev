@@ -4,9 +4,9 @@ import { trimTrailingSlash } from "~/utils/trim-trailing-slash.js";
 import { invariant } from "~/utils/invariant.js";
 import { isCSSNakedDay } from "~/utils/is-css-naked-day.js";
 import { library, icon, findIconDefinition } from "npm:@fortawesome/fontawesome-svg-core";
-import { fab } from "npm:@fortawesome/free-brands-svg-icons";
-import { fas } from "npm:@fortawesome/pro-solid-svg-icons";
-import { far } from "npm:@fortawesome/pro-regular-svg-icons";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+import { fas } from "@fortawesome/pro-solid-svg-icons";
+import { far } from "@fortawesome/pro-regular-svg-icons";
 
 const SITE_URL = Deno.env.get("SITE_URL");
 invariant(SITE_URL);
