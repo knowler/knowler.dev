@@ -35,8 +35,14 @@ block body
 		mixin license-link
 			a(rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/").
 				CC BY-NC-SA 4.0 license
-		p #[a(href="https://github.com/knowler/knowler.dev") Code] and content by Nathan Knowler.
-		p Except if noted otherwise, content on this website is licensed under a #[+license-link].
+		p #[a(href="https://github.com/knowler/knowler.dev") Code] and content by Nathan Knowler without the use of an LLM.
+		p
+			div(style="display: flex; gap: 0.25em; margin-block-end: 0.25em;")
+				+fa-icon("creative-commons", "fab")(width="1.5em" height="1.5em")
+				+fa-icon("creative-commons-by", "fab")(width="1.5em" height="1.5em")
+				+fa-icon("creative-commons-nc", "fab")(width="1.5em" height="1.5em")
+				+fa-icon("creative-commons-sa", "fab")(width="1.5em" height="1.5em")
+			| Except if noted otherwise, content on this website is licensed under a #[+license-link].
 		+nav-list("secondary")
 			li: +nav-link(href="/accessibility") Accessibility
 			li: +nav-link(href="/privacy") Privacy
