@@ -16,6 +16,7 @@
 		"test": "deno run -A npm:playwright test"
 	},
 	"imports": {
+		"@fortawesome/fontawesome-common-types": "npm:@fortawesome/fontawesome-common-types@^6.7.2",
 		"@fortawesome/free-brands-svg-icons": "npm:@fortawesome/free-brands-svg-icons",
 		"@fortawesome/pro-solid-svg-icons": "npm:@fortawesome/pro-solid-svg-icons",
 		"@fortawesome/pro-regular-svg-icons": "npm:@fortawesome/pro-regular-svg-icons",

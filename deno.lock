@@ -5,6 +5,7 @@
     "jsr:@libs/xml@*": "6.0.4",
     "jsr:@std/cli@^1.0.16": "1.0.16",
     "jsr:@std/data-structures@*": "1.0.6",
+    "npm:@fortawesome/fontawesome-common-types@^6.7.2": "6.7.2",
     "npm:@fortawesome/fontawesome-svg-core@*": "6.7.2",
     "npm:@fortawesome/free-brands-svg-icons@*": "6.7.2",
     "npm:@fortawesome/free-solid-svg-icons@*": "6.7.2",
@@ -1759,6 +1760,7 @@
     "dependencies": [
       "jsr:@hono/hono@^4.6.16",
       "jsr:@std/cli@^1.0.16",
+      "npm:@fortawesome/fontawesome-common-types@^6.7.2",
       "npm:@fortawesome/free-brands-svg-icons@*",
       "npm:@fortawesome/pro-regular-svg-icons@*",
       "npm:@fortawesome/pro-solid-svg-icons@*",
