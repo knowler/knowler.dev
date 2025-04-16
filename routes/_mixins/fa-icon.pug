@@ -1,2 +1,4 @@
 mixin fa-icon(iconName, prefix)
-	| !{icon({ iconName, prefix }, { attributes }).html}
+	- const i = icon({ iconName, prefix }, { attributes })
+	- if (!i) console.error(`Can’t find icon: ${iconName} (${prefix})`)
+	| !{i.html}
