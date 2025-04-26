@@ -46,6 +46,7 @@ export async function get(c) {
 		"blog.index",
 		{
 			title: "Blog",
+			description: "Blegh!",
 			posts: posts.map((post) => {
 				post.prettyDateString = winnipegDateTime(new Date(post.publishedAt));
 				return post;
