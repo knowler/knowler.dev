@@ -1,0 +1,2 @@
+[start]
+cmd = "deno task start"
