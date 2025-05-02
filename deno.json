@@ -3,6 +3,7 @@
 		"useTabs": true
 	},
 	"tasks": {
+		"start": "deno run --unstable-kv --unstable-broadcast-channel --unstable-temporal --allow-all main.js",
 		"dev": "deno run --unstable-kv --unstable-broadcast-channel --unstable-temporal --allow-all --watch main.js",
 		"seed": "deno run --unstable-kv --allow-all tools/seed-local.js",
 		"publish-post": "deno run --unstable-kv --allow-all --no-lock tools/publish-post.js",
