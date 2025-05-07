@@ -7,6 +7,7 @@
 	}
 
 	:root {
+		--hello: world;
 		--color-accent: hsl(160 80% 20%);
 		--color-canvas: hsl(220 40% 90%);
 		--color-canvas-muted: hsl(220 40% 85%);
