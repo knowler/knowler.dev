@@ -93,6 +93,11 @@ for (const ignoredRoute of ignoreList) app.get(ignoredRoute, c => c.notFound());
  * PUBLIC ROUTES
  */
 
+app.get("/cv.pdf", async (c, next) => {
+	await next();
+	c.header("content-disposition", `attachment; filename="Nathan Knowler - CV.pdf"`);
+});
+
 app.get("/feed.xml", contentCache);
 app.get("/feed.xml", async (...args) => {
 	console.log("cache miss");
