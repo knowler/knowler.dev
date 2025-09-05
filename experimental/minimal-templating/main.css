@@ -8,7 +8,7 @@ body {
 	margin: 0;
 }
 
-body > aside:first-of-type {
+::part(opt-out) {
 	padding-block: 8px;
 	padding-inline: 8px;
 	text-align: center;
@@ -18,16 +18,17 @@ body > aside:first-of-type {
 	);
 }
 
-site-header,
-main,
-site-footer {
+::part(site-header),
+::part(main),
+::part(site-footer) {
 	padding: 16px;
 }
 
-site-header, site-footer {
+::part(site-header),
+::part(site-footer) {
 	display: block;
 }
 
-site-header {
+::part(site-header) {
 	font-size: 2rem;
 }

@@ -2,12 +2,16 @@
 <html lang=en-ca>
 	<meta charset=utf-8>
 	<meta name=viewport content=width=device-width,initial-scale=1>
-	<title>Site navigation – Nathan Knowler</title>
+	<title>Site Navigation – Nathan Knowler</title>
 	<link rel=stylesheet href=/main.css>
-	<aside>You are viewing an experiment. <a href=/toggle-minimal>Opt-out?</a></aside>
-	<site-header role=banner>Nathan Knowler</site-header>
-	<main>
-		<h1>Site navigation</h1>
+	<body>
+		<template shadowrootmode=open>
+			<aside part=opt-out>You are viewing an experiment. <a href=/toggle-minimal>Opt-out?</a></aside>
+			<site-header part=site-header role=banner>Nathan Knowler</site-header>
+			<main part=main><slot></slot></main>
+			<site-footer part=site-footer role=contentinfo><a href=/colophon>Colophon</a></site-footer>
+		</template>
+		<h1>Site Navigation</h1>
 		<nav>
 			<ul>
 				<li><a href=/>Welcome</a>
@@ -18,5 +22,3 @@
 				<li><a href=/privacy>Privacy Policy</a>
 			</ul>
 		</nav>
-	</main>
-	<site-footer role=contentinfo><a href=/colophon>Colophon</a></site-footer>
