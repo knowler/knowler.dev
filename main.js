@@ -9,8 +9,12 @@ import { pugRenderer } from "~/middleware/pug-renderer.js";
 import { cssNakedDay } from "~/middleware/css-naked-day.js";
 import { isCSSNakedDay } from "~/utils/is-css-naked-day.js";
 
+import { minimal } from "~/experimental/minimal";
+
 /** Utils */
 import { invariant } from "~/utils/invariant.js";
+
+import { getCookie, setCookie, deleteCookie } from "hono/cookie";
 
 import { Posts } from "~/models/posts.js";
 
@@ -32,8 +36,10 @@ watchCacheVersions();
 
 const contentCache = cacheMiddleware({
 	cacheName: c => {
+		const minimal = getCookie(c, "minimal-templating-flag");
 		let cacheName = `${DEPLOYMENT_ID}.${Deno.env.get("CONTENT_VERSION")}`;
 		if (isCSSNakedDay()) cacheName = `${cacheName}.${new Date().getFullYear()}-css-naked-day`;
+		if (minimal === "enabled") cacheName = `${cacheName}.minimal`;
 		console.log(cacheName);
 		return cacheName;
 	},
@@ -58,6 +64,17 @@ app.use(
 	trimTrailingSlash(),
 	cssNakedDay(),
 );
+
+app.get("/toggle-minimal", (c) => {
+	const cookie = getCookie(c, "minimal-templating-flag");
+
+	if (cookie === "enabled") deleteCookie(c, "minimal-templating-flag");
+	else setCookie(c, "minimal-templating-flag", "enabled");
+
+	return c.redirect("/", 303);
+});
+
+app.route("/", minimal);
 
 app.notFound(async (...args) => {
 	const { get } = await import("~/routes/404.js");

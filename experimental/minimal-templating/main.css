@@ -1,0 +1,33 @@
+:root {
+	color-scheme: light dark;
+	font-family: system-ui, sans-serif;
+	font-feature-settings: "ss06";
+}
+
+body {
+	margin: 0;
+}
+
+body > aside:first-of-type {
+	padding-block: 8px;
+	padding-inline: 8px;
+	text-align: center;
+	background-color: light-dark(
+		hsl(from Canvas h s calc(l * 0.95)),
+		hsl(from Canvas h s calc(l * 2))
+	);
+}
+
+site-header,
+main,
+site-footer {
+	padding: 16px;
+}
+
+site-header, site-footer {
+	display: block;
+}
+
+site-header {
+	font-size: 2rem;
+}
