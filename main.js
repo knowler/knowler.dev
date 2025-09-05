@@ -9,7 +9,7 @@ import { pugRenderer } from "~/middleware/pug-renderer.js";
 import { cssNakedDay } from "~/middleware/css-naked-day.js";
 import { isCSSNakedDay } from "~/utils/is-css-naked-day.js";
 
-import { minimal } from "~/experimental/minimal";
+import { minimal } from "~/experimental/minimal.js";
 
 /** Utils */
 import { invariant } from "~/utils/invariant.js";
