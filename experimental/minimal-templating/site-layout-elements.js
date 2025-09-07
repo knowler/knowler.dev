@@ -27,7 +27,10 @@ customElements.define("site-header", class extends HTMLElement {
 			</nav>
 		`;
 		for (const link of this.shadowRoot.querySelectorAll(":any-link")) {
-			if (link.pathname === location.pathname) link.ariaCurrent = "page";
+			if (link.pathname === location.pathname) {
+				link.ariaCurrent = "page";
+				link.part = "active-link";
+			}
 		}
 	}
 });
