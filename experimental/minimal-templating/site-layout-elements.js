@@ -43,6 +43,7 @@
 		constructor() {
 			super();
 			this.attachShadow({ mode: "open" });
+			this.shadowRoot.adoptedStyleSheets = [commonStyles];
 			this.shadowRoot.innerHTML = `
 				<p><a href=https://github.com/knowler/knowler.dev>Code</a> and content by Nathan Knowler without the use of an LLM
 				<p>Except if noted otherwise, content on this website is licensed under a <a rel=license href=https://creativecommons.org/licenses/by-nc-sa/4.0/>CC BY-NC-SA 4.0 license</a>.
