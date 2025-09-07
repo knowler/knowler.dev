@@ -11,11 +11,7 @@ minimal.use("*", async (c, next) => {
 });
 
 const pages = [
-	"about",
 	"blog",
-	"uses",
-	"accessibility",
-	"privacy",
 	"navigation",
 	"colophon",
 ];
@@ -27,5 +23,20 @@ for (const page of pages) {
 		await next();
 	});
 }
+
+minimal.get("/:page", async (c, next) => {
+	const enabled = getCookie(c, "minimal-templating-flag") === "enabled";
+	if (enabled) {
+		const params = c.req.param();
+		const html = await Deno.readTextFile(`./experimental/minimal-templating/${params.page}.html`);
+		const kv = c.get("kv");
+		const { value: id } = await kv.get(["pagesBySlug", params.page]);
+		if (!id) throw "Page not found";
+		const { value: page } = await kv.get(["pages", id]);
+
+		return c.html(html + page.html);
+	}
+	await next();
+});
 
 export { minimal };
