@@ -3,6 +3,8 @@
   "specifiers": {
     "jsr:@hono/hono@^4.9.7": "4.9.7",
     "jsr:@std/cli@^1.0.16": "1.0.22",
+    "jsr:@std/collections@^1.1.3": "1.1.3",
+    "jsr:@std/toml@^1.0.10": "1.0.10",
     "jsr:@std/ulid@1": "1.0.0",
     "npm:@fortawesome/fontawesome-svg-core@*": "6.7.2",
     "npm:@fortawesome/free-brands-svg-icons@*": "6.7.2",
@@ -17,6 +19,15 @@
     },
     "@std/cli@1.0.22": {
       "integrity": "50d1e4f87887cb8a8afa29b88505ab5081188f5cad3985460c3b471fa49ff21a"
+    },
+    "@std/collections@1.1.3": {
+      "integrity": "bf8b0818886df6a32b64c7d3b037a425111f28278d69fd0995aeb62777c986b0"
+    },
+    "@std/toml@1.0.10": {
+      "integrity": "87b2b7ff95afe7209a868732eb013a2707be29a15229f5b57bb13eededff4655",
+      "dependencies": [
+        "jsr:@std/collections"
+      ]
     },
     "@std/ulid@1.0.0": {
       "integrity": "d41c3d27a907714413649fee864b7cde8d42ee68437d22b79d5de4f81d808780"
@@ -425,6 +436,7 @@
     "dependencies": [
       "jsr:@hono/hono@^4.9.7",
       "jsr:@std/cli@^1.0.16",
+      "jsr:@std/toml@^1.0.10",
       "jsr:@std/ulid@1",
       "npm:@fortawesome/fontawesome-svg-core@*",
       "npm:@fortawesome/free-brands-svg-icons@*",
