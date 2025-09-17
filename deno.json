@@ -22,6 +22,7 @@
 		"@fortawesome/free-solid-svg-icons": "npm:@fortawesome/free-solid-svg-icons",
 		"@playwright/test": "npm:@playwright/test@^1.49.1",
 		"@std/cli": "jsr:@std/cli@^1.0.16",
+		"@std/front-matter": "jsr:@std/front-matter@^1.0.9",
 		"@std/toml": "jsr:@std/toml@^1.0.10",
 		"@std/ulid": "jsr:@std/ulid@^1.0.0",
 		"~/": "./",
@@ -30,10 +31,7 @@
 		"hono": "jsr:@hono/hono@^4.9.7",
 		"hono_sessions": "https://deno.land/x/hono_sessions@v0.3.3/mod.ts",
 		"nanoid": "https://esm.sh/nanoid@4.0.0/async",
-		"pug": "https://deno.land/x/pug@v0.1.6/mod.ts",
-		"std/front_matter/toml": "https://deno.land/std@0.216.0/front_matter/toml.ts",
-		"std/http": "https://deno.land/std@0.216.0/http/mod.ts",
-		"std/media_types": "https://deno.land/std@0.216.0/media_types/mod.ts"
+		"pug": "https://deno.land/x/pug@v0.1.6/mod.ts"
 	},
 	"nodeModulesDir": "auto"
 }

@@ -1,7 +1,7 @@
 import { htmlToMarkdown } from "~/utils/html-to-markdown.js";
 
 import { stringify } from "@std/toml";
-import { extract } from "std/front_matter/toml";
+import { extractToml as extract } from "@std/front-matter";
 
 import { kv } from "./utils/production-kv.js";
 import { markdownToHTML } from "../utils/markdown-to-html.js";
