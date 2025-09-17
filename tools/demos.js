@@ -1,6 +1,6 @@
 import { render, renderFile } from "pug";
-import en from "npm:nanoid-good/locale/en.js";
-import nanoidGood from "npm:nanoid-good/index.js";
+import en from "nanoid-good/locale/en.js";
+import nanoidGood from "nanoid-good/index.js";
 import { invariant } from "../utils/invariant.js";
 
 const EDITOR = Deno.env.get("EDITOR");

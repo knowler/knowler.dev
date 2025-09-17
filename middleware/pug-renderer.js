@@ -1,5 +1,5 @@
 import { renderFile } from "pug";
-import kebabCase from "case/paramCase";
+import { toKebabCase as kebabCase } from "@std/text/to-kebab-case";
 import { trimTrailingSlash } from "~/utils/trim-trailing-slash.js";
 import { invariant } from "~/utils/invariant.js";
 import { isCSSNakedDay } from "~/utils/is-css-naked-day.js";
