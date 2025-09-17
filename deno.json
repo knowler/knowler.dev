@@ -1,4 +1,5 @@
 {
+	"workspace": ["demos-app"],
 	"fmt": {
 		"useTabs": true
 	},
@@ -21,7 +22,6 @@
 		"@fortawesome/free-brands-svg-icons": "npm:@fortawesome/free-brands-svg-icons",
 		"@fortawesome/free-solid-svg-icons": "npm:@fortawesome/free-solid-svg-icons",
 		"@playwright/test": "npm:@playwright/test@^1.49.1",
-		"@std/cli": "jsr:@std/cli@^1.0.16",
 		"@std/front-matter": "jsr:@std/front-matter@^1.0.9",
 		"@std/text": "jsr:@std/text@^1.0.16",
 		"@std/toml": "jsr:@std/toml@^1.0.10",
