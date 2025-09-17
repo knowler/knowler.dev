@@ -7,7 +7,7 @@
     "npm:@fortawesome/free-brands-svg-icons@*": "6.7.2",
     "npm:@fortawesome/free-solid-svg-icons@*": "6.7.2",
     "npm:@playwright/test@^1.49.1": "1.50.0",
-    "npm:feed@4.2.2": "4.2.2"
+    "npm:feed@5.1.0": "5.1.0"
   },
   "jsr": {
     "@hono/hono@4.9.7": {
@@ -46,8 +46,8 @@
       ],
       "bin": true
     },
-    "feed@4.2.2": {
-      "integrity": "sha512-u5/sxGfiMfZNtJ3OvQpXcvotFpYkL0n9u9mM2vkui2nGo8b4wvDkJ8gAkYqbA8QpGyFCv3RK0Z+Iv+9veCS9bQ==",
+    "feed@5.1.0": {
+      "integrity": "sha512-qGNhgYygnefSkAHHrNHqC7p3R8J0/xQDS/cYUud8er/qD9EFGWyCdUDfULHTJQN1d3H3WprzVwMc9MfB4J50Wg==",
       "dependencies": [
         "xml-js"
       ]
@@ -382,7 +382,7 @@
       "npm:@fortawesome/free-brands-svg-icons@*",
       "npm:@fortawesome/free-solid-svg-icons@*",
       "npm:@playwright/test@^1.49.1",
-      "npm:feed@4.2.2"
+      "npm:feed@5.1.0"
     ]
   }
 }
