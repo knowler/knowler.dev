@@ -3,10 +3,12 @@
   "specifiers": {
     "jsr:@hono/hono@^4.9.7": "4.9.7",
     "jsr:@std/cli@^1.0.16": "1.0.22",
+    "jsr:@std/ulid@1": "1.0.0",
     "npm:@fortawesome/fontawesome-svg-core@*": "6.7.2",
     "npm:@fortawesome/free-brands-svg-icons@*": "6.7.2",
     "npm:@fortawesome/free-solid-svg-icons@*": "6.7.2",
     "npm:@playwright/test@^1.49.1": "1.50.0",
+    "npm:@types/node@*": "24.2.0",
     "npm:feed@5.1.0": "5.1.0"
   },
   "jsr": {
@@ -15,6 +17,9 @@
     },
     "@std/cli@1.0.22": {
       "integrity": "50d1e4f87887cb8a8afa29b88505ab5081188f5cad3985460c3b471fa49ff21a"
+    },
+    "@std/ulid@1.0.0": {
+      "integrity": "d41c3d27a907714413649fee864b7cde8d42ee68437d22b79d5de4f81d808780"
     }
   },
   "npm": {
@@ -46,6 +51,12 @@
       ],
       "bin": true
     },
+    "@types/node@24.2.0": {
+      "integrity": "sha512-3xyG3pMCq3oYCNg7/ZP+E1ooTaGB4cG8JWRsqqOYQdbWNY4zbaV0Ennrd7stjiJEFZCaybcIgpTjJWHRfBSIDw==",
+      "dependencies": [
+        "undici-types"
+      ]
+    },
     "feed@5.1.0": {
       "integrity": "sha512-qGNhgYygnefSkAHHrNHqC7p3R8J0/xQDS/cYUud8er/qD9EFGWyCdUDfULHTJQN1d3H3WprzVwMc9MfB4J50Wg==",
       "dependencies": [
@@ -73,6 +84,9 @@
     },
     "sax@1.4.1": {
       "integrity": "sha512-+aWOz7yVScEGoKNd4PA10LZ8sk0A/z5+nXQG5giUO5rprX9jgYsTdov9qCchZiPIZezbZH+jRut8nPodFAX4Jg=="
+    },
+    "undici-types@7.10.0": {
+      "integrity": "sha512-t5Fy/nfn+14LuOc2KNYg75vZqClpAiqscVvMygNnlsHBFpSXdJaYtXMcdNLpl/Qvc3P2cB3s6lOV51nqsFq4ag=="
     },
     "xml-js@1.6.11": {
       "integrity": "sha512-7rVi2KMfwfWFl+GpPg6m80IVMWXLRjO+PxTq7V2CDhoGak0wzYzFgUY2m4XJ47OGdXd8eLE8EmwfAmdjw7lC1g==",
@@ -355,9 +369,42 @@
     "https://deno.land/x/case@2.2.0/vendor/camelCaseRegexp.ts": "7d9ff02aad4ab6429eeab7c7353f7bcdd6cc5909a8bd3dda97918c8bbb7621ae",
     "https://deno.land/x/case@2.2.0/vendor/camelCaseUpperRegexp.ts": "292de54a698370f90adcdf95727993d09888b7f33d17f72f8e54ba75f7791787",
     "https://deno.land/x/case@2.2.0/vendor/nonWordRegexp.ts": "c1a052629a694144b48c66b0175a22a83f4d61cb40f4e45293fc5d6b123f927e",
+    "https://deno.land/x/hono@v3.5.8/client/client.ts": "e56bef190db745f83b3560562e4ef3716df372b416c6a05c2a8038b854fd2eb3",
+    "https://deno.land/x/hono@v3.5.8/client/index.ts": "3ff4cf246f3543f827a85a2c84d66a025ac350ee927613629bda47e854bfb7ba",
+    "https://deno.land/x/hono@v3.5.8/client/types.ts": "779bdaa77b0e3c8d77008301c096c9380911dcd4bd046752327eca73c160ffb4",
+    "https://deno.land/x/hono@v3.5.8/client/utils.ts": "053273c002963b549d38268a1b423ac8ca211a8028bdab1ed0b781a62aa5e661",
+    "https://deno.land/x/hono@v3.5.8/compose.ts": "e55ed7be2134f363ff3c8e8e2f520ff682c6a11a47d7189100ed69704ce10b9e",
+    "https://deno.land/x/hono@v3.5.8/context.ts": "87b2017a3396e1d84c91229ad7c3016670425508572c9855ec6c70fc4b9d1b84",
     "https://deno.land/x/hono@v3.5.8/helper/cookie/index.ts": "cef46836d186d9d920f620519f7e96fbe7326c19576b86e1e555ed2229476091",
+    "https://deno.land/x/hono@v3.5.8/hono-base.ts": "3594dd4622a295505da7e806f5af8f6ff2bf7481372a630b0e42893ed5957422",
+    "https://deno.land/x/hono@v3.5.8/hono.ts": "4bb8574697129ccab8b3a0e457cdc78468c31e3330fece8a7d8850e9314bf5ef",
+    "https://deno.land/x/hono@v3.5.8/http-exception.ts": "6071df078b5f76d279684d52fe82a590f447a64ffe1b75eb5064d0c8a8d2d676",
+    "https://deno.land/x/hono@v3.5.8/mod.ts": "eee0818e5c557b72863abdd68dcf6fd5277e6e85851a685c7398566f2c12947c",
+    "https://deno.land/x/hono@v3.5.8/request.ts": "758d0662198a2f015101ec0b4f14c8757e3609ec6f97958214823edf765cac83",
+    "https://deno.land/x/hono@v3.5.8/router.ts": "d03e2a9e862c898e8555b451ba80c65b1f39d487230815229e1f046dbd8546cb",
+    "https://deno.land/x/hono@v3.5.8/router/linear-router/index.ts": "8a2a7144c50b1f4a92d9ee99c2c396716af144c868e10608255f969695efccd0",
+    "https://deno.land/x/hono@v3.5.8/router/linear-router/router.ts": "90d4afc052b72f53dafbcf97fd32f24299b985f8a35dbdc70b28048201b3dcbc",
+    "https://deno.land/x/hono@v3.5.8/router/pattern-router/index.ts": "304a66c50e243872037ed41c7dd79ed0c89d815e17e172e7ad7cdc4bc07d3383",
+    "https://deno.land/x/hono@v3.5.8/router/pattern-router/router.ts": "8107b92cb713ba3727639c76fab44fd26883d5f2fa7dd39242150a0f269d4835",
+    "https://deno.land/x/hono@v3.5.8/router/reg-exp-router/index.ts": "52755829213941756159b7a963097bafde5cc4fc22b13b1c7c9184dc0512d1db",
+    "https://deno.land/x/hono@v3.5.8/router/reg-exp-router/node.ts": "8006b5bccb83d9fc98e0562a5545f6dd0be639ce445b089a6171c9c617aa8693",
+    "https://deno.land/x/hono@v3.5.8/router/reg-exp-router/router.ts": "aeddd88e16a7ec3cf088a13ee952cfcb3319f97559767253e1a600f72fc70f27",
+    "https://deno.land/x/hono@v3.5.8/router/reg-exp-router/trie.ts": "567493b301c44174f0895aedb8d055bbecf88f8a25626fa8ca61333bbd0c882c",
+    "https://deno.land/x/hono@v3.5.8/router/smart-router/index.ts": "74f9b4fe15ea535900f2b9b048581915f12fe94e531dd2b0032f5610e61c3bef",
+    "https://deno.land/x/hono@v3.5.8/router/smart-router/router.ts": "38209165dadea4182b42807a0a6c84a9258532a07ebf87262dc2b5b09d25a2a2",
+    "https://deno.land/x/hono@v3.5.8/router/trie-router/index.ts": "3eb75e7f71ba81801631b30de6b1f5cefb2c7239c03797e2b2cbab5085911b41",
+    "https://deno.land/x/hono@v3.5.8/router/trie-router/node.ts": "a52111dea7436d6817ffca04018eb65e552e9d7b15fba11b367016334dcb1b0f",
+    "https://deno.land/x/hono@v3.5.8/router/trie-router/router.ts": "ad0b3fdabc33abd11a9f5819734aec743602a743cfc9f90ddad73787cd5e7727",
+    "https://deno.land/x/hono@v3.5.8/types.ts": "aea3f80e883fbfa45c71d7fd4ac6f7f0cd37e1e25a54bb056f9aa9e3830ec9ab",
+    "https://deno.land/x/hono@v3.5.8/utils/body.ts": "05843f155222c7c5906845e9478f9a97e44f290a26ba3214d042760b9138bbd6",
+    "https://deno.land/x/hono@v3.5.8/utils/buffer.ts": "3fe5647e30e8350d16cad3b0d851c7d138d744812f6325b3aac2bcf56fa997aa",
     "https://deno.land/x/hono@v3.5.8/utils/cookie.ts": "3585fd451de104e7e090d5b4d685f71b528873b21a634cb96b19fed622fe4384",
+    "https://deno.land/x/hono@v3.5.8/utils/crypto.ts": "bda0e141bbe46d3a4a20f8fbcb6380d473b617123d9fdfa93e4499410b537acc",
+    "https://deno.land/x/hono@v3.5.8/utils/http-status.ts": "e0c4343ea7717c314dc600131e16b636c29d61cfdaf9df93b267258d1729d1a0",
+    "https://deno.land/x/hono@v3.5.8/utils/types.ts": "634ee00ae271302b2decf73edb91d843feb9fc7bfd43ea643d1b14861914577d",
     "https://deno.land/x/hono@v3.5.8/utils/url.ts": "5fc3307ef3cb2e6f34ec2a03e3d7f2126c6a9f5f0eab677222df3f0e40bd7567",
+    "https://deno.land/x/hono@v3.5.8/validator/index.ts": "6c986e8b91dcf857ecc8164a506ae8eea8665792a4ff7215471df669c632ae7c",
+    "https://deno.land/x/hono@v3.5.8/validator/validator.ts": "9f3ef3ab2310cb1348019e1d8bbdf866543358eb9053b4bdc7285335a4fd6916",
     "https://deno.land/x/hono_sessions@v0.3.3/deps.ts": "5cc9422b7ac58c59506277cec93dd791c78573e16483da364a2115319eb14dce",
     "https://deno.land/x/hono_sessions@v0.3.3/mod.ts": "67e89aebb3c0e87e7e6065aefb56606d2f1017dd8ed030ef742f5bb73398abda",
     "https://deno.land/x/hono_sessions@v0.3.3/src/Crypto.ts": "87a223b7deace49241e5e2d844be09156f0779c7326d5ce4d065c04c2c084077",
@@ -378,6 +425,7 @@
     "dependencies": [
       "jsr:@hono/hono@^4.9.7",
       "jsr:@std/cli@^1.0.16",
+      "jsr:@std/ulid@1",
       "npm:@fortawesome/fontawesome-svg-core@*",
       "npm:@fortawesome/free-brands-svg-icons@*",
       "npm:@fortawesome/free-solid-svg-icons@*",

@@ -1,7 +1,7 @@
 import { markdownToHTML } from "../utils/markdown-to-html.js";
 import { extract } from "https://deno.land/std@0.204.0/front_matter/toml.ts";
 import paramCase from "https://deno.land/x/case@2.1.1/paramCase.ts";
-import { ulid } from "https://deno.land/x/ulid@v0.3.0/mod.ts";
+import { ulid } from "@std/ulid";
 import { kv } from "./utils/production-kv.js"
 
 const [contentFile] = Deno.args;
