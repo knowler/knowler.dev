@@ -1,5 +1,4 @@
 {
-	"workspace": ["demos-app"],
 	"fmt": {
 		"useTabs": true
 	},
