@@ -74,6 +74,20 @@ main > .h-entry ~ aside li a {
 	}
 }
 
+.h-entry aside[role="note"] {
+	padding: 16px;
+	border-radius: 8px;
+	background-color: light-dark(
+		hsl(from var(--color-canvas) h s calc(l * 0.95)),
+		hsl(from var(--color-canvas) h s calc(l * 1.5))
+	);
+	border: 2px solid light-dark(
+		hsl(from var(--color-canvas) h s calc(l * 0.9)),
+		hsl(from var(--color-canvas) h s calc(l * 2))
+	);
+	max-inline-size: max-content;
+}
+
 pre {
   background: #ffffff;
 	padding: var(--padding);
