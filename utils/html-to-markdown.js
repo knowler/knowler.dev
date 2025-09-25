@@ -47,7 +47,7 @@ export function htmlToMarkdown(html) {
 					let result;
 					if (node.properties.role === "note") {
 						const { role, ariaLabelledBy, ...attributes } = node.properties;
-						const [labelId] = ariaLabelledBy;
+						const labelId = ariaLabelledBy?.[0];
 						result = {
 							name: "note",
 							type: "containerDirective",

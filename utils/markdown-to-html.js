@@ -5,15 +5,20 @@ import remarkDirective from "npm:remark-directive";
 import rehypeHighlight from "npm:rehype-highlight";
 import rehypeSlug from "npm:rehype-slug";
 import rehypeStringify from "npm:rehype-stringify";
-import {visit} from "npm:unist-util-visit"
-import {h} from "npm:hastscript"
+import { visit } from "npm:unist-util-visit"
+import { h } from "npm:hastscript"
 import { toKebabCase } from "@std/text";
 
 export function markdownToHTML(markdown) {
 	return unified()
 		.use(remarkParse)
 		.use(remarkDirective)
+		
+		// Custom directives
 		.use(noteDirective)
+		.use(asideDirective)
+		.use(demoDirective)
+
 		.use(remarkRehype, { allowDangerousHtml: true })
 		.use(rehypeHighlight)
 		.use(rehypeSlug)
@@ -47,13 +52,6 @@ function noteDirective() {
 				}
 			}
 
-			if (node.type === "containerDirective" && node.name === "aside") {
-				const data = node.data || (node.data = {});
-				const hast = h(node.name, node.attributes ?? {});
-				data.hName = node.name;
-				data.hProperties = hast.properties;
-			}
-
 			if (node.type === "textDirective" && node.name === "label" && labelsWithinNotes.has(node)) {
 				const data = node.data || (node.data = {});
 				const hast = h(node.name, node.attributes ?? {});
@@ -61,7 +59,26 @@ function noteDirective() {
 				data.hName = "strong";
 				data.hProperties = { id: toKebabCase(node.children[0].value), ...hast.properties };
 			}
+		});
+	}
+}
 
+function asideDirective() {
+	return function(tree) {
+		visit(tree, function(node) {
+			if (node.type === "containerDirective" && node.name === "aside") {
+				const data = node.data || (node.data = {});
+				const hast = h(node.name, node.attributes ?? {});
+				data.hName = node.name;
+				data.hProperties = hast.properties;
+			}
+		});
+	}
+}
+
+function demoDirective() {
+	return function(tree) {
+		visit(tree, function(node) {
 			if (node.type === "leafDirective" && node.name === "demo") {
 				const data = node.data || (node.data = {});
 				const hast = h(node.name, node.attributes ?? {});
