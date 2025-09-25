@@ -47,12 +47,37 @@ function noteDirective() {
 				}
 			}
 
+			if (node.type === "containerDirective" && node.name === "aside") {
+				const data = node.data || (node.data = {});
+				const hast = h(node.name, node.attributes ?? {});
+				data.hName = node.name;
+				data.hProperties = hast.properties;
+			}
+
 			if (node.type === "textDirective" && node.name === "label" && labelsWithinNotes.has(node)) {
 				const data = node.data || (node.data = {});
 				const hast = h(node.name, node.attributes ?? {});
 
 				data.hName = "strong";
 				data.hProperties = { id: toKebabCase(node.children[0].value), ...hast.properties };
+			}
+
+			if (node.type === "leafDirective" && node.name === "demo") {
+				const data = node.data || (node.data = {});
+				const hast = h(node.name, node.attributes ?? {});
+
+				const url = new URL(`https://knowler.dev/demos/${hast.properties.id}`);
+
+				if (hast.properties?.codepen === "") {
+					url.search = "?codepen";
+				}
+
+				data.hName = "iframe";
+				data.hProperties = {
+					src: url.href,
+					width: hast.properties.width ?? "100%",
+					height: hast.properties.height ?? "300px",
+				};
 			}
 		});
 	}

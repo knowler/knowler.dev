@@ -75,14 +75,54 @@ export function htmlToMarkdown(html) {
 						};
 						state.patch(node, result);
 					} else {
-						result = { type: "html", value: toHtml(node) };
+						result = {
+							type: "containerDirective",
+							name: "aside",
+							attributes: node.properties,
+							children: toMdast({ type: "root", children: node.children }, {
+								handlers: state.options.handlers,
+							}).children,
+						};
 						state.patch(node, result);
 					}
 					return result;
 				},
 				iframe(state, node) {
-					const result = { type: "html", value: toHtml(node) };
-					state.patch(node, result);
+					let result;
+					const demosPattern = new URLPattern("https://knowler.dev/demos/:demoId");
+
+					const { src, ...attributes } = node.properties;
+
+					const match = demosPattern.exec(src);
+
+					if (match) {
+						const {
+							pathname: { groups: { demoId } },
+							search: { input: search },
+						} = match;
+
+						result = {
+							name: "demo",
+							type: "leafDirective",
+							children: [],
+							attributes: {
+								id: demoId,
+							},
+						};
+
+						if (search === "codepen")
+							result.attributes.codepen = "";
+						if (attributes.width && attributes.width !== "100%")
+							result.attributes.width = attributes.width;
+						if (attributes.height && attributes.height !== "300")
+							result.attributes.height = attributes.height;
+
+						state.patch(node, result);
+					} else {
+						result = { type: "html", value: toHtml(node) };
+						state.patch(node, result);
+					}
+
 					return result;
 				},
 			},
