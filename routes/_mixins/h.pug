@@ -3,7 +3,7 @@ mixin h1(content)
 		if block
 			block
 		else
-			= content
+			!= content
 
 mixin h2(content)
 	h2(id=kebabCase(content))&attributes(attributes)
