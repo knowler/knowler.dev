@@ -11,7 +11,7 @@ export async function get(c, next) {
 		return c.render("blog.[slug]", {
 			title: parseHTML(`<h1>${post.title}</h1>`)?.document.querySelector("h1")?.textContent ?? post.title,
 			headline: post.title, 
-			description: post.description,
+			description: parseHTML(`<p>${post.description}</p>`)?.document.querySelector("p")?.textContent ?? post.description,
 			post,
 			canonical: trimTrailingSlash(c.req.url),
 			prettyDateString: winnipegDateTime(new Date(post.publishedAt)),
