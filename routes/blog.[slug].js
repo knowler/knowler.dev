@@ -9,8 +9,8 @@ export async function get(c, next) {
 		if (!post) throw `Post with slug "${slug}" not found`;
 
 		return c.render("blog.[slug]", {
-			title: post.title,
-			headline: parseHTML(`<h1>${post.title}</h1>`)?.document.querySelector("h1")?.textContent ?? title,
+			title: parseHTML(`<h1>${post.title}</h1>`)?.document.querySelector("h1")?.textContent ?? title,
+			headline: title, 
 			description: post.description,
 			post,
 			canonical: trimTrailingSlash(c.req.url),
