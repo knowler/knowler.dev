@@ -1,5 +1,6 @@
 import { trimTrailingSlash } from "~/utils/trim-trailing-slash.js";
 import { winnipegDateTime } from "~/utils/winnipeg-datetime.js";
+import { parseHTML } from "npm:linkedom";
 
 export async function get(c, next) {
 	try {
@@ -9,7 +10,7 @@ export async function get(c, next) {
 
 		return c.render("blog.[slug]", {
 			title: post.title,
-			htmlTitle: post.htmlTitle,
+			headline: parseHTML(`<h1>${post.title}</h1>`)?.document.querySelector("h1")?.textContent ?? title,
 			description: post.description,
 			post,
 			canonical: trimTrailingSlash(c.req.url),
