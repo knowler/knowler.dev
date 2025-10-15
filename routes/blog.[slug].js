@@ -9,6 +9,7 @@ export async function get(c, next) {
 
 		return c.render("blog.[slug]", {
 			title: post.title,
+			htmlTitle: post.htmlTitle,
 			description: post.description,
 			post,
 			canonical: trimTrailingSlash(c.req.url),

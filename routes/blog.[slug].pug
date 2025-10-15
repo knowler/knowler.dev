@@ -7,6 +7,6 @@ append head
 
 block content
 	article.h-entry
-		+h1(title)(style=`view-transition-name: post-title--${post.slug}`).p-name
+		+h1(htmlTitle ? htmlTitle : title)(style=`view-transition-name: post-title--${post.slug}`).p-name
 		p #[time(datetime=post.publishedAt).dt-published= prettyDateString] – #[a(href=canonical).u-url Permalink]
 		.e-content !{post.html}
