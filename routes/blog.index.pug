@@ -16,13 +16,13 @@ block content
 				each post in posts
 					li: article
 						mixin blog-post-title
-							h2(style=`view-transition-name: post-title--${post.slug}`): a(href=`/blog/${post.slug}`)= post.title
+							h2(style=`view-transition-name: post-title--${post.slug}`): a(href=`/blog/${post.slug}`)!= post.title
 						if post.subtitle
 							hgroup: +blog-post-title
 						else
 							+blog-post-title
 						if post.description
-							p= post.description
+							p!= post.description
 						time(datetime=post.publishedAt)= post.prettyDateString
 			nav(aria-label="blog pagination")
 				p Showing posts from #{pagination.currentRangePretty}.
