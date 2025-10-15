@@ -14,6 +14,7 @@ main > .h-entry ~ aside li a {
 	max-inline-size: 18ch;
 	text-wrap: balance;
 	line-height: 1.1;
+	hyphens: auto;
 }
 
 .h-entry h2 {
@@ -31,8 +32,7 @@ main > .h-entry ~ aside li a {
 }
 
 .h-entry :is(h1, h2, h3) code {
-	hyphens: auto;
-	hyphenate-character: "";
+	word-break: break-word;
 }
 
 .h-entry h1 + p {
