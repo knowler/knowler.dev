@@ -31,7 +31,7 @@ export async function get(c) {
 		feed.addItem({
 			id: post.slug,
 			title: parseHTML(`<h1>${post.title}</h1>`).document.querySelector("h1").textContent,
-			description: post.description ? parseHTML(`<p>${post.description}</p>`).document.querySelector("p").textContent : undefined;
+			description: post.description ? parseHTML(`<p>${post.description}</p>`).document.querySelector("p").textContent : undefined,
 			link: `https://knowler.dev/blog/${post.slug}`,
 			date: new Date(post.publishedAt),
 			content: post.html,
