@@ -31,6 +31,10 @@ main > .h-entry ~ aside li a {
 	text-wrap: pretty;
 }
 
+.h-entry code {
+	hyphens: manual;
+}
+
 .h-entry :is(h1, h2, h3) code {
 	word-break: break-word;
 }
