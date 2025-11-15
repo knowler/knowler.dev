@@ -9,6 +9,7 @@ append head
 		meta(name="description" content=demo.description)
 	style!= demo.css
 	script(type="module")!= demo.js
+	| !{demo.head}
 
 block body
 	if codepen
