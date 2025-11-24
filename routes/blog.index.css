@@ -21,10 +21,13 @@
 }
 
 .h-entry ol a {
-	text-decoration-thickness: 0.2em;
 	text-decoration-color: hsl(from var(--color-accent) h s calc(l * 0.2));
-	text-decoration-skip-ink: none;
-	text-underline-offset: -0.15em;
+
+	@media (forced-colors: none) {
+		text-decoration-thickness: 0.2em;
+		text-decoration-skip-ink: none;
+		text-underline-offset: -0.15em;
+	}
 
 	@media (prefers-color-scheme: light) {
 		text-decoration-color: hsl(from var(--color-accent) calc(h * 1.4) s calc(l * 4.3));
