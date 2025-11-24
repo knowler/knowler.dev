@@ -9,6 +9,7 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 //import { far } from "@fortawesome/pro-regular-svg-icons";
 
 const SITE_URL = Deno.env.get("SITE_URL");
+console.log({ SITE_URL });
 invariant(SITE_URL);
 
 // Add brand icons to library
