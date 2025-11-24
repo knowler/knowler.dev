@@ -26,7 +26,7 @@ invariant(SITE_URL);
 
 const oldKv = await Deno.openKv(`https://api.deno.com/databases/${Deno.env.get("OLD_KV")}/connect`);
 
-for await (const page of oldKv.list({ prefix: ["pagesBySlug"] })) console.log(page.value.id);
+for await (const result of oldKv.list({ prefix: ["pagesBySlug"] })) console.log(result.key);
 
 const app = new Hono();
 
