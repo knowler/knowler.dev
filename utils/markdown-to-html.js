@@ -18,12 +18,39 @@ export function markdownToHTML(markdown) {
 		.use(noteDirective)
 		.use(asideDirective)
 		.use(demoDirective)
+		.use(detailsDirective)
 
 		.use(remarkRehype, { allowDangerousHtml: true })
 		.use(rehypeHighlight)
 		.use(rehypeSlug)
 		.use(rehypeStringify, { allowDangerousHtml: true })
 		.process(markdown);
+}
+
+function detailsDirective() {
+	return function(tree) {
+		visit(tree, function(node) {
+			if (node.type === "containerDirective" && node.name === "details") {
+				const data = node.data || (node.data = {});
+				const hast = h(node.name, node.attributes ?? {});
+
+				const [maybeLabel] = node.children;
+				if (maybeLabel?.data?.directiveLabel) {
+					const labelData = maybeLabel.data;
+					const labelHast = h("summary", labelData.attributes ?? {});
+
+					labelData.hName = "summary";
+					labelData.hProperties = labelHast.properties;
+				}
+
+				data.hName = "details";
+				data.hProperties = hast.properties;
+
+				// TODO: create a summary node to prepend to the content.
+				console.log(node);
+			}
+		});
+	}
 }
 
 function noteDirective() {
