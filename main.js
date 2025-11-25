@@ -207,6 +207,10 @@ app.use(
 		wait: true,
 	}),
 );
+app.get("/banners/anti-javascript-javascript-club-member-88x31.png", (c, next) => {
+	c.header("cache-control", "public, max-age=31536000, immutable");
+	next();
+});
 app.use("*", serveStatic({ root: "./assets" }));
 
 Deno.serve({ port: ENV === "production" ? 8000 : new URL(SITE_URL).port }, app.fetch);
