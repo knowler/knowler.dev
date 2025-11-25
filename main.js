@@ -5,7 +5,7 @@ import { serveStatic } from "hono/deno";
 import { logger } from "hono/logger";
 import { cache as cacheMiddleware } from "hono/cache";
 import { trimTrailingSlash } from "hono/trailing-slash";
-import { bearerAuth } from "hono/bearer-auth"
+import { bearerAuth } from "hono/bearer-auth";
 import { uaBlocker } from "hono/ua-blocker";
 import { aiBots, useAiRobotsTxt } from "hono/ua-blocker/ai-bots";
 
@@ -22,6 +22,8 @@ import { getCookie, setCookie, deleteCookie } from "hono/cookie";
 
 import { Posts } from "~/models/posts.js";
 
+import { api } from "~/api/mod.js";
+
 const ENV = Deno.env.get("ENV");
 const DEPLOYMENT_ID = Deno.env.get("DENO_DEPLOYMENT_ID") ?? Date.now();
 const SITE_URL = Deno.env.get("SITE_URL");
@@ -31,18 +33,8 @@ invariant(SITE_URL);
 const app = new Hono();
 
 const MIGRATION_PATH = Deno.env.get("MIGRATION_PATH");
-const MIGRATION_TOKEN = Deno.env.get("MIGRATION_TOKEN");
 
-if (MIGRATION_PATH && MIGRATION_TOKEN) {
-	app.use(`/${MIGRATION_PATH}`, bearerAuth({ token: MIGRATION_TOKEN }));
-	app.post(`/${MIGRATION_PATH}`, async (c, next) => {
-		const { key, value } = await c.req.json();
-
-		await kv.set(key, value);
-
-		return c.json({ key, message: "success" });
-	});
-}
+invariant(MIGRATION_PATH);
 
 const kv = await Deno.openKv();
 
@@ -85,6 +77,8 @@ app.use(
 );
 
 app.get("/robots.txt", useAiRobotsTxt());
+
+app.route(MIGRATION_PATH, api);
 
 app.get("/toggle-minimal", (c) => {
 	const cookie = getCookie(c, "minimal-templating-flag");
