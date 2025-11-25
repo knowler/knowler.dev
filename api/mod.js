@@ -29,16 +29,30 @@ api.get("/pages", async (c, next) => {
 	return c.json(pages);
 });
 
-api.get("/pages/:id", async (c, next) => {
-	const page = await c.get("kv").get(["pages", c.req.param("id")]);
+api.get("/pages/:idOrSlug", async (c, next) => {
+	const kv = c.get("kv");
+	const isBySlug = c.req.query("by") === "slug";
 
-	return c.json(page.value);
+	const id = isBySlug
+		? await pageBySlug(kv, c.req.param("idOrSlug"))
+		: c.req.param("idOrSlug");
+
+	const { value: page } = await kv.get(["pages", id]);
+
+	return c.json(page);
 });
 
-api.post("/pages/:id/update", async (c, next) => {
+api.post("/pages/:idOrSlug/update", async (c, next) => {
 	const page = await c.req.json();
 
-	await c.get("kv").set(["pages", c.req.param("id")], { id, ...page });
+	const kv = c.get("kv");
+	const isBySlug = c.req.query("by") === "slug";
+
+	const id = isBySlug
+		? await pagesBySlug(kv, c.req.param("idOrSlug"))
+		: c.req.param("idOrSlug");
+
+	await c.get("kv").set(["pages", id], { id, ...page });
 
 	await bustContentCache(c.get("kv"));
 
@@ -64,8 +78,15 @@ api.get("/posts", async (c, next) => {
 	return c.json(posts);
 });
 
-api.get("/posts/:id", async (c, next) => {
-	const post = await c.get("kv").get(["posts", c.req.param("id")]);
+api.get("/posts/:idOrSlug", async (c, next) => {
+	const kv = c.get("kv");
+	const isBySlug = c.req.query("by") === "slug";
+
+	const id = isBySlug
+		? await postBySlug(kv, c.req.param("idOrSlug"))
+		: c.req.param("idOrSlug");
+
+	const post = await c.get("kv").get(["posts", id]);
 
 	return c.json(post.value);
 });
@@ -147,4 +168,14 @@ async function bustDemosCache(kv) {
 	const { value: cache_versions } = await kv.get(["cache_versions"]);
 	cache_versions.demos_version = Date.now();
 	await kv.set(["cache_versions"], cache_versions);
+}
+
+async function pageBySlug(kv, slug) {
+	const result = await kv.get(["pagesBySlug", slug]);
+	return result.value;
+}
+
+async function postBySlug(kv, slug) {
+	const result = await kv.get(["postsBySlug", slug]);
+	return result.value;
 }
