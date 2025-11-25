@@ -30,6 +30,7 @@
 		"feed": "npm:feed@5.1.0",
 		"hono": "jsr:@hono/hono@^4.9.7",
 		"hono/ua-blocker": "npm:@hono/ua-blocker@^0.1.18",
+		"linkedom": "npm:linkedom@^0.18.12",
 		"pug": "npm:pug@^3.0.3"
 	},
 	"nodeModulesDir": "auto"

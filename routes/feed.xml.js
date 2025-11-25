@@ -1,5 +1,5 @@
 import { Feed } from "feed";
-import { parseHTML } from "npm:linkedom";
+import { parseHTML } from "linkedom";
 
 const me = {
 	name: "Nathan Knowler",
