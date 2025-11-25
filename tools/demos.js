@@ -27,6 +27,7 @@ async function createDemo() {
 		Deno.writeTextFile(`${tempDir}/demo.css`, ":root {\n\tcolor-scheme: dark light;\n}"),
 		Deno.create(`${tempDir}/demo.js`),
 		Deno.writeTextFile(`${tempDir}/demo.json`, "{}"),
+		Deno.writeTextFile(`${tempDir}/head.html`),
 	]);
 
 	let demo, id, readyToPublish;
@@ -50,6 +51,7 @@ async function createDemo() {
 			pug: await Deno.readTextFile(`${tempDir}/demo.pug`),
 			css: await Deno.readTextFile(`${tempDir}/demo.css`),
 			js: await Deno.readTextFile(`${tempDir}/demo.js`),
+			head: await Deno.readTextFile(`${tempDir}/head.html`)
 		};
 
 		console.log(demo);
@@ -102,6 +104,7 @@ async function editDemo(urlOrId) {
 			Deno.writeTextFile(`${tempDir}/demo.pug`, demo.pug),
 			Deno.writeTextFile(`${tempDir}/demo.css`, demo.css),
 			Deno.writeTextFile(`${tempDir}/demo.js`, demo.js),
+			Deno.writeTextFile(`${tempDir}/head.html`, demo.head),
 			Deno.writeTextFile(`${tempDir}/demo.json`, JSON.stringify({ "title": demo.title, "description": demo.description }, null, 2)),
 		]);
 
@@ -118,13 +121,14 @@ async function editDemo(urlOrId) {
 				Deno.exit();
 			}
 
-			const [pug, css, js, meta] = await Promise.all([
+			const [pug, css, js, head, meta] = await Promise.all([
 				Deno.readTextFile(`${tempDir}/demo.pug`),
 				Deno.readTextFile(`${tempDir}/demo.css`),
 				Deno.readTextFile(`${tempDir}/demo.js`),
+				Deno.readTextFile(`${tempDir}/head.html`),
 				Deno.readTextFile(`${tempDir}/demo.json`).then(text => JSON.parse(text)),
 			]);
-			demo.pug = pug; demo.css = css; demo.js = js; demo.title = meta.title; demo.description = meta.description;
+			demo.pug = pug; demo.css = css; demo.js = js; demo.title = meta.title; demo.description = meta.description; demo.head = head;
 
 			console.log(demo);
 			readyToSave = confirm("Ready to save and publish these changes?");
@@ -190,6 +194,7 @@ html(lang="en-ca")
 		title= title
 		style!= demo.css
 		script(type="module")!= demo.js
+		| !{demo.head}
 	body
 		| !{demo.html}
 		script (new WebSocket("ws://localhost:4000")).onmessage = e => e.data === "reload" && location.reload();
@@ -223,6 +228,7 @@ html(lang="en-ca")
 						html: renderFile(`${tempDir}/demo.pug`),
 						css: await Deno.readTextFile(`${tempDir}/demo.css`),
 						js: await Deno.readTextFile(`${tempDir}/demo.js`),
+						head: await Deno.readTextFile(`${tempDir}/head.html`),
 					},
 				});
 				return new Response(html, {
