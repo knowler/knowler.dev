@@ -58,7 +58,7 @@ const contentCache = cacheMiddleware({
 		console.log(cacheName);
 		return cacheName;
 	},
-	cacheControl: 's-maxage=60',
+	cacheControl: 'maxage=60, stale-while-revalidate=30',
 	wait: true,
 });
 
