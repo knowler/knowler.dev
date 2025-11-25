@@ -1,5 +1,5 @@
 mixin text-field
-	- let {id, optional, description, ...inputAttributes} = attributes
+	- let {id, optional, description, multiline, ...inputAttributes} = attributes
 	- let inputId = id ?? attributes.name
 	- let descriptionId = description && `${inputId}-description`
 	- let error = issues.find(issue => issue.field === attributes.name)
@@ -12,11 +12,20 @@ mixin text-field
 			.field-description(id=descriptionId)= description
 		if errorId
 			.field-error(id=errorId)= error.message
-		input(
-			id=inputId
-			required=!optional
-			aria-describedby=descriptionId
-			aria-invalid=!!error
-			aria-errormessage=errorId
-			value=formData[attributes.name]
-		)&attributes(inputAttributes)
+		if multiline
+			textarea(
+				id=inputId
+				required=!optional
+				aria-describedby=descriptionId
+				aria-invalid=!!error
+				aria-errormessage=errorId
+			)&attributes(inputAttributes)=formData[attributes.name]
+		else
+			input(
+				id=inputId
+				required=!optional
+				aria-describedby=descriptionId
+				aria-invalid=!!error
+				aria-errormessage=errorId
+				value=formData[attributes.name]
+			)&attributes(inputAttributes)
