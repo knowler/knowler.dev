@@ -105,7 +105,7 @@ api.get("/demos", async (c, next) => {
 api.get("/demos/:id", async (c, next) => {
 	const demo = await c.get("kv").get(["demos", c.req.param("id")]);
 
-	return c.json(demo);
+	return c.json(demo.value);
 });
 
 api.post("/demos/create", async (c, next) => {
