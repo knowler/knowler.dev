@@ -1,10 +1,22 @@
 import { render, renderFile } from "pug";
-import en from "nanoid-good/locale/en.js";
-import nanoidGood from "nanoid-good/index.js";
 import { invariant } from "../utils/invariant.js";
 
 const EDITOR = Deno.env.get("EDITOR");
 invariant(EDITOR);
+
+const PRODUCTION_URL = Deno.env.get("PRODUCTION_URL");
+invariant(PRODUCTION_URL);
+
+const MIGRATION_PATH = Deno.env.get("MIGRATION_PATH");
+invariant(MIGRATION_PATH);
+
+const MIGRATION_TOKEN = Deno.env.get("MIGRATION_TOKEN");
+invariant(MIGRATION_TOKEN);
+
+const ENDPOINT = new URL(
+	`${MIGRATION_PATH}/demos`,
+	PRODUCTION_URL,
+);
 
 switch (Deno.args[0]) {
 	case undefined:
@@ -30,7 +42,7 @@ async function createDemo() {
 		Deno.writeTextFile(`${tempDir}/head.html`),
 	]);
 
-	let demo, id, readyToPublish;
+	let demo, readyToPublish;
 	while (!readyToPublish) {
 		const server = createDemoServer(tempDir);
 		const editor = new Deno.Command(EDITOR, { args: [ `${tempDir}/demo.pug` ], cwd: tempDir }).spawn();
@@ -42,10 +54,6 @@ async function createDemo() {
 			console.log("files at:", tempDir);
 			Deno.exit();
 		}
-
-		const nanoid = nanoidGood.nanoid(en);
-
-		id = await nanoid(7);
 
 		demo = {
 			pug: await Deno.readTextFile(`${tempDir}/demo.pug`),
@@ -71,20 +79,28 @@ async function createDemo() {
 
 	demo.html = render(demo.pug, { pretty: true });
 
-	const { kv } = await import("./utils/production-kv.js");
+	const response = await fetch(`${ENDPOINT}/create`, {
+		method: "POST",
+		body: JSON.stringify(demo),
+		headers: {
+			"content-type": "application/json",
+			authorization: `Bearer ${MIGRATION_TOKEN}`,
+		},
+	});
 
-	await kv.set(["demos", id], demo);
-
-	await Deno.remove(tempDir, { recursive: true });
-	const url = `https://knowler.dev/demos/${id}`;
-	console.log(url);
-	new Deno.Command("open", { args: [ url ] }).spawn();
+	if (response.ok) {
+		const { id } = await response.json();
+		await Deno.remove(tempDir, { recursive: true });
+		const url = `${PRODUCTION_URL}/demos/${id}`;
+		console.log(url);
+		new Deno.Command("open", { args: [ url ] }).spawn();
+	} else {
+		console.log("Something went wrong. See files at: ", tempDir);
+	}
 }
 
 async function editDemo(urlOrId) {
 	let demoId;
-
-	const { kv } = await import("./utils/production-kv.js");
 
 	if (urlOrId) {
 		const pattern = new URLPattern({ pathname: "/demos/:demoId" });
@@ -93,10 +109,15 @@ async function editDemo(urlOrId) {
 			else throw "Invalid demo URL pattern";
 		} else demoId = urlOrId;
 
-		const record = await kv.get(["demos", demoId]);
+		let response = await fetch(`${ENDPOINT}/${demoId}`, {
+			method: "GET",
+			headers: {
+				authorization: `Bearer ${MIGRATION_TOKEN}`,
+			},
+		});
 
-		if (!record) throw "Can’t find demo";
-		const demo = record.value;
+		if (!response.ok) throw "Can’t find demo";
+		const demo = await response.json();
 
 		const tempDir = await Deno.makeTempDir();
 
@@ -146,22 +167,28 @@ async function editDemo(urlOrId) {
 
 		demo.html = render(demo.pug, { pretty: true });
 
-		await kv.set(["demos", demoId], demo);
-		const url = `https://knowler.dev/demos/${demoId}`;
+		response = await fetch(`${ENDPOINT}/${demoId}/update`, {
+			method: "POST",
+			body: JSON.stringify(demo),
+			headers: {
+				"content-type": "application/json",
+				authorization: `Bearer ${MIGRATION_TOKEN}`,
+			},
+		});
 
-		await bustDemosCache();
-
-		console.log(`Updated: ${url}`);
-
-		await Deno.remove(tempDir, { recursive: true });
+		if (response.ok) {
+			const url = `${PRODUCTION_URL}/demos/${demoId}`;
+			console.log(`Updated: ${url}`);
+			await Deno.remove(tempDir, { recursive: true });
+		} else {
+			console.error(`Error updating: ${url}. Files at: ${tempDir}`);
+		}
 	} else {
 		console.log("todo: implement fzf list");
 	}
 }
 
 async function deleteDemo() {
-	const { kv } = await import("./utils/production-kv.js");
-
 	const [_, urlOrId] = Deno.args;
 	let demoId;
 	let url;
@@ -173,13 +200,18 @@ async function deleteDemo() {
 			else throw "Invalid demo URL pattern";
 		} else demoId = urlOrId;
 
-		url ??= `https://knowler.dev/demos/${demoId}`;
+		url ??= `${PRODUCTION_URL}/demos/${demoId}`;
 		if (confirm(`${url}\nAre you sure you’d like to delete this demo?`)) {
-			await kv.delete(["demos", demoId]);
 
-			await bustDemosCache();
+			const response = await fetch(`${ENDPOINT}/${demoId}/delete`, {
+				method: "POST",
+				headers: {
+					authorization: `Bearer ${MIGRATION_TOKEN}`,
+				},
+			});
 
-			console.log(`Deleted: ${url}`);
+			if (response.ok) console.log(`Deleted: ${url}`);
+			else console.error(`Issue deleting: ${url}`);
 		} else console.log(`${url} will see another day.`)
 	} else console.error("No demo URL or ID provided");
 }
@@ -248,8 +280,6 @@ async function forkDemo(urlOrId) {
 	// Work as if we’re saving a new one.
 	let demoId;
 
-	const { kv } = await import("./utils/production-kv.js");
-
 	if (urlOrId) {
 		const pattern = new URLPattern({ pathname: "/demos/:demoId" });
 		if (URL.canParse(urlOrId)) {
@@ -257,10 +287,15 @@ async function forkDemo(urlOrId) {
 			else throw "Invalid demo URL pattern";
 		} else demoId = urlOrId;
 
-		const record = await kv.get(["demos", demoId]);
+		let response = await fetch(`${ENDPOINT}/${demoId}`, {
+			method: "GET",
+			headers: {
+				authorization: `Bearer ${MIGRATION_TOKEN}`,
+			},
+		});
 
-		if (!record) throw "Can’t find demo to fork";
-		const demo = record.value;
+		if (!response.ok) throw "Can’t find demo to fork";
+		const demo = await response.json();
 
 		const tempDir = await Deno.makeTempDir();
 
@@ -308,24 +343,24 @@ async function forkDemo(urlOrId) {
 
 		demo.html = render(demo.pug, { pretty: true });
 
-		const nanoid = nanoidGood.nanoid(en);
-		const id = await nanoid(7);
+		response = await fetch(`${ENDPOINT}/create`, {
+			method: "POST",
+			body: JSON.stringify(demo),
+			headers: {
+				"content-type": "application/json",
+				authorization: `Bearer ${MIGRATION_TOKEN}`,
+			},
+		});
 
-		await kv.set(["demos", id], demo);
-		const url = `https://knowler.dev/demos/${id}`;
-		console.log(`Created fork: ${url}`);
-
-		await Deno.remove(tempDir, { recursive: true });
+		if (response.ok) {
+			const { id } = await response.json();
+			const url = `https://knowler.dev/demos/${id}`;
+			console.log(`Created fork: ${url}`);
+			await Deno.remove(tempDir, { recursive: true });
+		} else {
+			console.error(`Forking failed. Files at ${tempDir}.`);
+		}
 	} else {
 		console.log("Nothing to fork");
 	}
-}
-
-async function bustDemosCache() {
-	const { kv } = await import("./utils/production-kv.js");
-	const { value: cache_versions } = await kv.get(["cache_versions"]);
-	await kv.set(["cache_versions"], {
-		...cache_versions,
-		demos_version: Date.now(),
-	});
 }
