@@ -114,7 +114,7 @@ api.post("/demos/create", async (c, next) => {
 
 	await c.get("kv").set(["demos", id], demo);
 
-	return c.json({ message: "success" });
+	return c.json({ message: "success", id });
 });
 
 api.post("/demos/:id/update", async (c, next) => {
