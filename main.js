@@ -5,6 +5,7 @@ import { serveStatic } from "hono/deno";
 import { logger } from "hono/logger";
 import { cache as cacheMiddleware } from "hono/cache";
 import { trimTrailingSlash } from "hono/trailing-slash";
+import { bearerAuth } from "hono/bearer-auth"
 import { pugRenderer } from "~/middleware/pug-renderer.js";
 import { cssNakedDay } from "~/middleware/css-naked-day.js";
 import { isCSSNakedDay } from "~/utils/is-css-naked-day.js";
@@ -24,11 +25,21 @@ const SITE_URL = Deno.env.get("SITE_URL");
 
 invariant(SITE_URL);
 
-const oldKv = await Deno.openKv(`https://api.deno.com/databases/${Deno.env.get("OLD_KV")}/connect`);
-
-for await (const result of oldKv.list({ prefix: ["pagesBySlug"] })) console.log(result.key);
-
 const app = new Hono();
+
+const MIGRATION_PATH = Deno.env.get("MIGRATION_PATH");
+const MIGRATION_TOKEN = Deno.env.get("MIGRATION_TOKEN");
+
+if (MIGRATION_PATH && MIGRATION_TOKEN) {
+	app.use(`/${MIGRATION_PATH}`, bearerAuth({ token: MIGRATION_TOKEN }));
+	app.post(`/${MIGRATION_PATH}`, async (c, next) => {
+		const { key, value } = await c.req.json();
+
+		await kv.set(key, value);
+
+		return c.json({ key, message: "success" });
+	});
+}
 
 const kv = await Deno.openKv();
 
