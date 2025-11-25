@@ -58,6 +58,7 @@ const contentCache = cacheMiddleware({
 		console.log(cacheName);
 		return cacheName;
 	},
+	cacheControl: 's-maxage=60',
 	wait: true,
 });
 
