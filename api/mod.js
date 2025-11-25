@@ -93,8 +93,9 @@ api.get("/posts/:idOrSlug", async (c, next) => {
 
 api.post("/posts/:id/update", async (c, next) => {
 	const post = await c.req.json();
+	const id = c.req.param("id");
 
-	await c.get("kv").set(["posts", c.req.param("id")], { id, ...post });
+	await c.get("kv").set(["posts", id], { id, ...post });
 
 	await bustContentCache(c.get("kv"));
 
