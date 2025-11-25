@@ -3,13 +3,28 @@ import { htmlToMarkdown } from "~/utils/html-to-markdown.js";
 import { stringify } from "@std/toml";
 import { extractToml as extract } from "@std/front-matter";
 
-import { kv } from "./utils/production-kv.js";
 import { markdownToHTML } from "../utils/markdown-to-html.js";
+import { invariant } from "../utils/invariant.js";
 
-const pages = await Array.fromAsync(
-	kv.list({ prefix: ["pages"] }),
-	(entry) => entry.value,
-);
+const MIGRATION_PATH = Deno.env.get("MIGRATION_PATH");
+invariant(MIGRATION_PATH);
+
+const MIGRATION_TOKEN = Deno.env.get("MIGRATION_TOKEN");
+invariant(MIGRATION_TOKEN);
+
+const PRODUCTION_URL = Deno.env.get("PRODUCTION_URL");
+invariant(PRODUCTION_URL);
+
+const ENDPOINT = new URL(`${MIGRATION_PATH}/pages`, PRODUCTION_URL);
+
+let response = await fetch(ENDPOINT, {
+	method: "GET",
+	headers: {
+		authorization: `Bearer ${MIGRATION_TOKEN}`,
+	},
+});
+
+const pages = await response.json();
 const slugs = pages.map((page) => page.slug).join("\n");
 
 const echo = new Deno.Command("echo", { args: [slugs] });
@@ -32,7 +47,18 @@ if (!fzfOutput.success) {
 }
 
 const slug = new TextDecoder().decode(fzfOutput.stdout).trim();
-const page = pages.find((p) => p.slug === slug);
+
+response = await fetch(`${ENDPOINT}/${slug}?by=slug`, {
+	method: "GET",
+	headers: {
+		authorization: `Bearer ${MIGRATION_TOKEN}`,
+	},
+});
+
+if (!response.ok) throw `Page not found with slug: ${slug}`;
+
+const page = await response.json();
+
 const { html, ...pageWithoutHtml } = page;
 
 const markdown = String(await htmlToMarkdown(html));
@@ -60,14 +86,23 @@ const updatedPage = {
 	html: String(await markdownToHTML(body)),
 };
 
-const url = updatedPage.slug === "welcome" ? "https://knowler.dev/" : `https://knowler.dev/${updatedPage.slug}`;
+const url = updatedPage.slug === "welcome" ? `${PRODUCTION_URL}/` : `${PRODUCTION_URL}/${updatedPage.slug}`;
 
-await kv.set(["pages", page.id], updatedPage);
+response = await fetch(`${ENDPOINT}/${page.id}/update`, {
+	method: "POST",
+	body: JSON.stringify(updatedPage),
+	headers: {
+		"content-type": "application/json",
+		authorization: `Bearer ${MIGRATION_TOKEN}`,
+	},
+});
 
-await import("./utils/bust-content-cache.js");
+if (response.ok) {
+	await Deno.remove(fileName);
+	console.log(
+		`Successfully updated page: ${url}`,
+	);
+} else {
+	console.error(`Could not update page. Edits are here: ${fileName}`)
+}
 
-await Deno.remove(fileName);
-
-console.log(
-	`Successfully updated page: ${url}`,
-);
