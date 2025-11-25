@@ -6,6 +6,9 @@ import { logger } from "hono/logger";
 import { cache as cacheMiddleware } from "hono/cache";
 import { trimTrailingSlash } from "hono/trailing-slash";
 import { bearerAuth } from "hono/bearer-auth"
+import { uaBlocker } from "hono/ua-blocker";
+import { aiBots, useAiRobotsTxt } from "hono/ua-blocker/ai-bots";
+
 import { pugRenderer } from "~/middleware/pug-renderer.js";
 import { cssNakedDay } from "~/middleware/css-naked-day.js";
 import { isCSSNakedDay } from "~/utils/is-css-naked-day.js";
@@ -63,6 +66,7 @@ const contentCache = cacheMiddleware({
 
 app.use(
 	"*",
+	uaBlocker({ blocklist: aiBots }),
 	async (c, next) => {
 		c.set("kv", kv);
 		c.set("posts", new Posts(kv));
@@ -79,6 +83,8 @@ app.use(
 	trimTrailingSlash(),
 	cssNakedDay(),
 );
+
+app.get("/robots.txt", useAiRobotsTxt());
 
 app.get("/toggle-minimal", (c) => {
 	const cookie = getCookie(c, "minimal-templating-flag");
