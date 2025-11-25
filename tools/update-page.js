@@ -63,8 +63,8 @@ const updatedPage = {
 const url = updatedPage.slug === "welcome" ? "https://knowler.dev/" : `https://knowler.dev/${updatedPage.slug}`;
 
 await kv.set(["pages", page.id], updatedPage);
-const { value: caches_version } = await kv.get(["caches_version"]);
-await kv.set(["caches_version"], { ...caches_version, content_version: Date.now() });
+
+await import("./utils/bust-content-cache.js");
 
 await Deno.remove(fileName);
 
