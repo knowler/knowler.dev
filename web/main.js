@@ -97,30 +97,8 @@ app.notFound(async (...args) => {
 	return get(...args);
 });
 
-/* Some common requests not to process */
-const ignoreList = [
-	"//:path{.+\/*}",
-	"*.php",
-	"/.env",
-	"/.git",
-	"/.git/*",
-	"/admin",
-	"/admin/*",
-	"/web/*",
-	"/wp/*",
-	"/wp-admin/*",
-	"/wp-content/*",
-	"/wp-includes/*",
-	"/cgi-bin/*",
-
-	// TODO: cache bad URL requests like this so they don’t keep reading.
-	"/blog/MjAyNC1jc3",
-	"/blog/2024-css-wishlistW",
-
-	// Might add these 
-	"/contact",
-];
-for (const ignoredRoute of ignoreList) app.get(ignoredRoute, c => c.notFound());
+for (const ignoredRoute of Deno.env.get("PATH_DENY_LIST").split(" "))
+	app.get(ignoredRoute, c => c.notFound());
 
 /**
  * PUBLIC ROUTES
