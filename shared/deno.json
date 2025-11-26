@@ -1,0 +1,6 @@
+{
+	"name": "@knowler/shared",
+	"exports": {
+		"./invariant": "./invariant.js"
+	}
+}

@@ -1,7 +1,7 @@
 import { renderFile } from "pug";
 import { toKebabCase as kebabCase } from "@std/text/to-kebab-case";
 import { trimTrailingSlash } from "~/utils/trim-trailing-slash.js";
-import { invariant } from "~/utils/invariant.js";
+import { invariant } from "@knowler/shared/invariant";
 import { isCSSNakedDay } from "~/utils/is-css-naked-day.js";
 import { library, icon, findIconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";

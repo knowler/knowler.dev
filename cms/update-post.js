@@ -1,10 +1,10 @@
-import { htmlToMarkdown } from "~/utils/html-to-markdown.js";
-
 import { stringify } from "@std/toml";
 import { extractToml as extract } from "@std/front-matter";
 
-import { markdownToHTML } from "../utils/markdown-to-html.js";
-import { invariant } from "../utils/invariant.js";
+import { invariant } from "@knowler/shared/invariant";
+
+import { htmlToMarkdown } from "./utils/html-to-markdown.js";
+import { markdownToHTML } from "./utils/markdown-to-html.js";
 
 const MIGRATION_PATH = Deno.env.get("MIGRATION_PATH");
 invariant(MIGRATION_PATH);

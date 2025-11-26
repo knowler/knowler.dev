@@ -1,5 +1,5 @@
 import { render, renderFile } from "pug";
-import { invariant } from "../utils/invariant.js";
+import { invariant } from "@knowler/shared/invariant";
 
 const EDITOR = Deno.env.get("EDITOR");
 invariant(EDITOR);
@@ -354,7 +354,7 @@ async function forkDemo(urlOrId) {
 
 		if (response.ok) {
 			const { id } = await response.json();
-			const url = `https://knowler.dev/demos/${id}`;
+			const url = `${PRODUCTION_URL}/demos/${id}`;
 			console.log(`Created fork: ${url}`);
 			await Deno.remove(tempDir, { recursive: true });
 		} else {

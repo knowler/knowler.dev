@@ -16,7 +16,7 @@ import { isCSSNakedDay } from "~/utils/is-css-naked-day.js";
 import { minimal } from "~/experimental/minimal.js";
 
 /** Utils */
-import { invariant } from "~/utils/invariant.js";
+import { invariant } from "@knowler/shared/invariant";
 
 import { getCookie, setCookie, deleteCookie } from "hono/cookie";
 

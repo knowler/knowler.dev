@@ -1,4 +1,5 @@
-import { markdownToHTML } from "../utils/markdown-to-html.js";
+import { markdownToHTML } from "./utils/markdown-to-html.js";
+
 import { extract } from "https://deno.land/std@0.204.0/front_matter/toml.ts";
 import paramCase from "https://deno.land/x/case@2.1.1/paramCase.ts";
 
@@ -11,7 +12,7 @@ invariant(MIGRATION_TOKEN);
 const PRODUCTION_URL = Deno.env.get("PRODUCTION_URL");
 invariant(PRODUCTION_URL);
 
-const ENDPOINT = new URL(`${MIGRATION_PATH}/pages/create`, PRODUCTION_URL);
+const ENDPOINT = new URL(`${MIGRATION_PATH}/posts/create`, PRODUCTION_URL);
 
 const [contentFile] = Deno.args;
 
@@ -19,10 +20,13 @@ const text = await Deno.readTextFile(contentFile);
 
 const { attrs, body } = extract(text);
 
-const page = {
+const publishedAt = new Date();
+
+const post = {
 	slug: attrs.slug ?? paramCase(attrs.title),
 	title: attrs.title,
 	description: attrs.description,
+	publishedAt: publishedAt.toISOString(),
 	published: attrs.published ?? true,
 	html: String(await markdownToHTML(body)),
 };
@@ -37,7 +41,7 @@ const response = await fetch(ENDPOINT, {
 });
 
 if (response.ok) {
-	console.log(`Page published: ${PRODUCTION_URL}/${page.slug}`);
+	console.log(`Post published: ${PRODUCTION_URL}/${post.slug}`);
 } else {
-	console.error("Issue creating page");
+	console.error("Issue creating post");
 }

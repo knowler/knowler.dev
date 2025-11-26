@@ -7,7 +7,7 @@ import { ulid } from "@std/ulid";
 import en from "nanoid-good/locale/en.js";
 import nanoidGood from "nanoid-good/index.js";
 
-import { invariant } from "~/utils/invariant.js";
+import { invariant } from "@knowler/shared/invariant";
 
 const nanoid = nanoidGood.nanoid(en);
 

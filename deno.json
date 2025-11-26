@@ -1,37 +1,20 @@
 {
+	"workspace": [
+		"cms",
+		"demos",
+		"shared",
+		"web"
+	],
+	"tasks": {
+		"dev": "deno task --cwd=web dev",
+		"demos": "deno run -A @knowler/demos",
+		"publish-page": "deno run -A @knowler/cms/publish-page",
+		"publish-post": "deno run -A @knowler/cms/publish-post",
+		"update-page": "deno run -A @knowler/cms/update-page",
+		"update-post": "deno run -A @knowler/cms/update-post"
+	},
+	"nodeModulesDir": "auto",
 	"fmt": {
 		"useTabs": true
-	},
-	"tasks": {
-		"start": "deno run --unstable-kv --unstable-broadcast-channel --unstable-temporal --allow-all main.js",
-		"dev": "deno run --unstable-kv --unstable-broadcast-channel --unstable-temporal --allow-all --watch main.js",
-		"seed": "deno run --unstable-kv --allow-all tools/seed-local.js",
-		"publish-post": "deno run --unstable-kv --allow-all --no-lock tools/publish-post.js",
-		"update-post": "deno run --unstable-kv --allow-all --no-lock tools/update-post.js",
-		"publish-page": "deno run --unstable-kv --allow-all --no-lock tools/publish-page.js",
-		"update-page": "deno run --unstable-kv --allow-all --no-lock tools/update-page.js",
-		"clear-cache": "deno run --unstable-kv --allow-all --no-lock tools/clear-cache.js",
-		"demos": "deno run --unstable-kv --allow-all tools/demos.js",
-		"demos-app": "deno run --unstable-kv --allow-net --allow-env --allow-read --allow-write --watch tools/demos/main.js",
-		"garden": "deno run --unstable-kv --unstable-temporal --allow-all garden.js",
-		"test": "deno run -A npm:playwright test"
-	},
-	"imports": {
-		"@fortawesome/fontawesome-svg-core": "npm:@fortawesome/fontawesome-svg-core",
-		"@fortawesome/free-brands-svg-icons": "npm:@fortawesome/free-brands-svg-icons",
-		"@fortawesome/free-solid-svg-icons": "npm:@fortawesome/free-solid-svg-icons",
-		"@playwright/test": "npm:@playwright/test@^1.49.1",
-		"@std/front-matter": "jsr:@std/front-matter@^1.0.9",
-		"@std/text": "jsr:@std/text@^1.0.16",
-		"@std/toml": "jsr:@std/toml@^1.0.10",
-		"@std/ulid": "jsr:@std/ulid@^1.0.0",
-		"nanoid-good": "npm:nanoid-good@^3.1.0",
-		"~/": "./",
-		"feed": "npm:feed@5.1.0",
-		"hono": "jsr:@hono/hono@^4.9.7",
-		"hono/ua-blocker": "npm:@hono/ua-blocker@^0.1.18",
-		"linkedom": "npm:linkedom@^0.18.12",
-		"pug": "npm:pug@^3.0.3"
-	},
-	"nodeModulesDir": "auto"
+	}
 }

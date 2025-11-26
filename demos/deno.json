@@ -1,0 +1,10 @@
+{
+	"name": "@knowler/demos",
+	"exports": "./main.js",
+	"tasks": {
+		"start": "deno run --allow-all ./main.js"
+	},
+	"imports": {
+		"pug": "npm:pug@^3.0.3"
+	}
+}
