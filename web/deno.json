@@ -9,7 +9,7 @@
 	"imports": {
 		"@fortawesome/fontawesome-svg-core": "npm:@fortawesome/fontawesome-svg-core",
 		"@fortawesome/free-brands-svg-icons": "npm:@fortawesome/free-brands-svg-icons",
-		"@fortawesome/free-solid-svg-icons": "npm:@fortawesome/free-solid-svg-icons",
+		"@fortawesome/pro-solid-svg-icons": "npm:@fortawesome/pro-solid-svg-icons",
 		"@playwright/test": "npm:@playwright/test@^1.49.1",
 		"@std/front-matter": "jsr:@std/front-matter@^1.0.9",
 		"@std/text": "jsr:@std/text@^1.0.16",
