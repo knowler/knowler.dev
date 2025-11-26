@@ -20,7 +20,7 @@ export function pugRenderer() {
 		c.setRenderer((template, data = {}) =>
 			c.html(
 				renderFile(
-					`./routes/${template}.pug`,
+					`./web/routes/${template}.pug`,
 					{
 						filters: {
 							css(text) {
@@ -31,7 +31,7 @@ export function pugRenderer() {
 						icon,
 						styles,
 						flags: c.get("flags"),
-						basedir: "./routes",
+						basedir: "./web/routes",
 						isCurrentPath(path) {
 							return trimTrailingSlash(path) === trimTrailingSlash(c.req.path);
 						},
