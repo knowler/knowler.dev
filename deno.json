@@ -16,5 +16,9 @@
 	"nodeModulesDir": "auto",
 	"fmt": {
 		"useTabs": true
+	},
+	"imports": {
+		"lightningcss": "npm:lightningcss@^1.30.2",
+		"lightningcss-cli": "npm:lightningcss-cli@^1.30.2"
 	}
 }
