@@ -24,6 +24,8 @@ import { Posts } from "~/models/posts.js";
 
 import { api } from "~/api/mod.js";
 
+console.log(Deno.env.get("DENO_DEPLOY_BUILD_ID"));
+
 const ENV = Deno.env.get("ENV");
 const DEPLOYMENT_ID = Deno.env.get("DENO_DEPLOYMENT_ID") ?? Date.now();
 const SITE_URL = Deno.env.get("SITE_URL");
