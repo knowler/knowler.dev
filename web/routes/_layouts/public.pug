@@ -13,11 +13,11 @@ append head
 	base(href=SITE_URL)
 	if canonical
 		link(rel="canonical" href=canonical)
+	style: include layers.css
 	link(rel="stylesheet" href="/main.css")
 	link(rel="author" href="/about" title="About the author")
 	link(rel="alternate" href="/feed.xml" type="application/rss+xml" title="RSS")
 	meta(name="fediverse:creator" content="@knowler@sunny.garden")
-	style @media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; } }
 	+styles
 
 include /_mixins/nav-list

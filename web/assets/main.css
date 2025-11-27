@@ -1,6 +1,3 @@
-/** @see http://cube.fyi */
-@layer base, composition, utility, block, exception;
-
 @layer base {
 	*, ::before, ::after {
 		box-sizing: border-box;
