@@ -1,0 +1,61 @@
+*, ::before, ::after {
+	box-sizing: border-box;
+}
+
+:root {
+	--color-accent: hsl(160 80% 20%);
+	--color-canvas: hsl(220 40% 90%);
+	--color-canvas-muted: hsl(220 40% 85%);
+
+	@media (prefers-color-scheme: dark) {
+		--color-canvas: hsl(220 20% 10%);
+		--color-canvas-muted: hsl(220 20% 8%);
+		--color-text: hsl(160 0% 90%);
+		--color-accent: hsl(160 54% 70%);
+	}
+}
+
+html {
+	color: var(--color-text);
+	background-color: var(--color-canvas);
+	color-scheme: light dark;
+	font-family: system-ui;
+	font-feature-settings: "ss06";
+}
+
+body {
+	--padding: clamp(1rem, 0.9rem + 4vw, 2rem);
+	padding: var(--padding);
+}
+
+:focus-visible {
+	outline: 0.125em dashed var(--color-accent, currentColor);
+	outline-offset: 0.125em;
+	border-radius: 0.25em;
+}
+
+/* Text Elements */
+
+/** NOT ALL USED: The last three aren’t used on every page */
+h1, h2, h3, h4 {
+	font-weight: 300;
+	font-variation-settings: "wdth" var(--fvs-wdth, 100);
+}
+
+h1 { --fvs-wdth: 120; }
+h2 { --fvs-wdth: 110; }
+
+a {
+	color: var(--color-accent);
+}
+a[aria-current="page"] {
+	text-decoration: none;
+}
+
+:is(a, button, label, input[type="checkbox"], input[type="radio"]) {
+	cursor: pointer;
+}
+
+a svg {
+	pointer-events: none;
+}
