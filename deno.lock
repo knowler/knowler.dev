@@ -2,20 +2,12 @@
   "version": "5",
   "specifiers": {
     "jsr:@hono/hono@^4.9.7": "4.9.12",
-    "jsr:@std/collections@^1.1.3": "1.1.3",
-    "jsr:@std/front-matter@^1.0.9": "1.0.9",
-    "jsr:@std/regexp@^1.0.1": "1.0.1",
     "jsr:@std/text@^1.0.16": "1.0.16",
-    "jsr:@std/toml@^1.0.10": "1.0.11",
-    "jsr:@std/toml@^1.0.3": "1.0.11",
     "jsr:@std/ulid@1": "1.0.0",
-    "jsr:@std/yaml@^1.0.5": "1.0.6",
     "npm:@fortawesome/fontawesome-svg-core@*": "7.1.0",
     "npm:@fortawesome/free-brands-svg-icons@*": "7.1.0",
     "npm:@fortawesome/pro-solid-svg-icons@*": "7.1.0",
     "npm:@hono/ua-blocker@~0.1.18": "0.1.18_hono@4.10.7",
-    "npm:@playwright/test@^1.49.1": "1.57.0",
-    "npm:browserslist@*": "4.28.0",
     "npm:browserslist@^4.28.0": "4.28.0",
     "npm:feed@5.1.0": "5.1.0",
     "npm:lightningcss@^1.30.2": "1.30.2",
@@ -28,36 +20,11 @@
     "@hono/hono@4.9.12": {
       "integrity": "d4a0fe012c2f890bb514e539b37393ed352c173957038e44e2e45457b0a8256f"
     },
-    "@std/collections@1.1.3": {
-      "integrity": "bf8b0818886df6a32b64c7d3b037a425111f28278d69fd0995aeb62777c986b0"
-    },
-    "@std/front-matter@1.0.9": {
-      "integrity": "ee6201d06674cbef137dda2252f62477450b48249e7d8d9ab57a30f85ff6f051",
-      "dependencies": [
-        "jsr:@std/toml@^1.0.3",
-        "jsr:@std/yaml"
-      ]
-    },
-    "@std/regexp@1.0.1": {
-      "integrity": "5179d823465085c5480dafb44438466e83c424fadc61ba31f744050ecc0f596d"
-    },
     "@std/text@1.0.16": {
-      "integrity": "ddb9853b75119a2473857d691cf1ec02ad90793a2e8b4a4ac49d7354281a0cf8",
-      "dependencies": [
-        "jsr:@std/regexp"
-      ]
-    },
-    "@std/toml@1.0.11": {
-      "integrity": "e084988b872ca4bad6aedfb7350f6eeed0e8ba88e9ee5e1590621c5b5bb8f715",
-      "dependencies": [
-        "jsr:@std/collections"
-      ]
+      "integrity": "ddb9853b75119a2473857d691cf1ec02ad90793a2e8b4a4ac49d7354281a0cf8"
     },
     "@std/ulid@1.0.0": {
       "integrity": "d41c3d27a907714413649fee864b7cde8d42ee68437d22b79d5de4f81d808780"
-    },
-    "@std/yaml@1.0.6": {
-      "integrity": "c9a5a914e1d51c46756cb10e356710035cfa905e713c90d3b711413fd3aead27"
     }
   },
   "npm": {
@@ -111,13 +78,6 @@
       "dependencies": [
         "hono"
       ]
-    },
-    "@playwright/test@1.57.0": {
-      "integrity": "sha512-6TyEnHgd6SArQO8UO2OMTxshln3QMWBtPGrOCgs3wVEmQmwyuNtB10IZMfmYDE0riwNR1cu4q+pPcxMVtaG3TA==",
-      "dependencies": [
-        "playwright"
-      ],
-      "bin": true
     },
     "acorn@7.4.1": {
       "integrity": "sha512-nQyp0o1/mNdbTO1PO6kHkwSrmgZ0MT/jCCpNiwbUjGoRN4dlBhqJtoQuCnEOKzgTVwg0ZWiCoQy6SxMebQVh8A==",
@@ -267,11 +227,6 @@
       "dependencies": [
         "xml-js"
       ]
-    },
-    "fsevents@2.3.2": {
-      "integrity": "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==",
-      "os": ["darwin"],
-      "scripts": true
     },
     "function-bind@1.1.2": {
       "integrity": "sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA=="
@@ -485,20 +440,6 @@
     "picocolors@1.1.1": {
       "integrity": "sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA=="
     },
-    "playwright-core@1.57.0": {
-      "integrity": "sha512-agTcKlMw/mjBWOnD6kFZttAAGHgi/Nw0CZ2o6JqWSbMlI219lAFLZZCyqByTsvVAJq5XA5H8cA6PrvBRpBWEuQ==",
-      "bin": true
-    },
-    "playwright@1.57.0": {
-      "integrity": "sha512-ilYQj1s8sr2ppEJ2YVadYBN0Mb3mdo9J0wQ+UuDhzYqURwSoW4n1Xs5vs7ORwgDGmyEh33tRMeS8KhdkMoLXQw==",
-      "dependencies": [
-        "playwright-core"
-      ],
-      "optionalDependencies": [
-        "fsevents"
-      ],
-      "bin": true
-    },
     "promise@7.3.1": {
       "integrity": "sha512-nolQXZ/4L+bP/UGlkfaIujX9BKxGwmQ9OT4mOt5yvy8iK1h3wqTEJCijzGANTCCl9nWjY41juyAn2K3Q1hLLTg==",
       "dependencies": [
@@ -669,7 +610,6 @@
           "npm:@fortawesome/free-brands-svg-icons@*",
           "npm:@fortawesome/pro-solid-svg-icons@*",
           "npm:@hono/ua-blocker@~0.1.18",
-          "npm:@playwright/test@^1.49.1",
           "npm:browserslist@^4.28.0",
           "npm:feed@5.1.0",
           "npm:lightningcss@^1.30.2",
