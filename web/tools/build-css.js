@@ -1,5 +1,5 @@
 import { bundle, browserslistToTargets, Features } from "lightningcss";
-import browserslist from "npm:browserslist";
+import browserslist from "browserslist";
 
 const DENO_DEPLOY_BUILD_ID = Deno.env.get("DENO_DEPLOY_BUILD_ID");
 
