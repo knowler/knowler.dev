@@ -13,13 +13,10 @@
 		"update-page": "deno run -A @knowler/cms/update-page",
 		"update-post": "deno run -A @knowler/cms/update-post"
 	},
-	"nodeModulesDir": "auto",
+	"imports": {
+		"browserslist": "npm:browserslist@^4.28.0"
+	},
 	"fmt": {
 		"useTabs": true
-	},
-	"imports": {
-		"browserslist": "npm:browserslist@^4.28.0",
-		"lightningcss": "npm:lightningcss@^1.30.2",
-		"lightningcss-cli": "npm:lightningcss-cli@^1.30.2"
 	}
 }
