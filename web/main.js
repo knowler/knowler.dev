@@ -187,7 +187,9 @@ app.use(
 		wait: true,
 	}),
 );
-app.use("*", serveStatic({ root: "./web/assets" }));
+app.use("*", serveStatic({
+	root: new URL(import.meta.resolve("./public")).pathname,
+}));
 
 Deno.serve({ port: ENV === "production" ? 8000 : new URL(SITE_URL).port }, app.fetch);
 

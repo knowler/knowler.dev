@@ -13,13 +13,15 @@ invariant(SITE_URL);
 // Add brand icons to library
 library.add(fab, fas);
 
+const ROUTES_URL = new URL(import.meta.resolve("../routes/"));
+
 export function pugRenderer() {
 	return async (c, next) => {
 		const styles = new Set();
 		c.setRenderer((template, data = {}) =>
 			c.html(
 				renderFile(
-					`./web/routes/${template}.pug`,
+					new URL(`${template}.pug`, ROUTES_URL).pathname,
 					{
 						filters: {
 							css(text) {
@@ -30,7 +32,7 @@ export function pugRenderer() {
 						icon,
 						styles,
 						flags: c.get("flags"),
-						basedir: "./web/routes",
+						basedir: ROUTES_URL.pathname,
 						isCurrentPath(path) {
 							return trimTrailingSlash(path) === trimTrailingSlash(c.req.path);
 						},
