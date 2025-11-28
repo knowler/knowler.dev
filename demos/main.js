@@ -303,6 +303,7 @@ async function forkDemo(urlOrId) {
 			Deno.writeTextFile(`${tempDir}/demo.pug`, demo.pug),
 			Deno.writeTextFile(`${tempDir}/demo.css`, demo.css),
 			Deno.writeTextFile(`${tempDir}/demo.js`, demo.js),
+			Deno.writeTextFile(`${tempDir}/head.html`, demo.head),
 			Deno.writeTextFile(`${tempDir}/demo.json`, JSON.stringify({ "title": demo.title, "description": demo.description }, null, 2)),
 		]);
 
@@ -319,13 +320,14 @@ async function forkDemo(urlOrId) {
 				Deno.exit();
 			}
 
-			const [pug, css, js, meta] = await Promise.all([
+			const [pug, css, js, head, meta] = await Promise.all([
 				Deno.readTextFile(`${tempDir}/demo.pug`),
 				Deno.readTextFile(`${tempDir}/demo.css`),
 				Deno.readTextFile(`${tempDir}/demo.js`),
+				Deno.readTextFile(`${tempDir}/head.html`, demo.head),
 				Deno.readTextFile(`${tempDir}/demo.json`).then(text => JSON.parse(text)),
 			]);
-			demo.pug = pug; demo.css = css; demo.js = js; demo.title = meta.title; demo.description = meta.description;
+			demo.pug = pug; demo.css = css; demo.js = js; demo.title = meta.title; demo.description = meta.description; demo.head = head;
 
 			console.log(demo);
 			readyToSave = confirm("Ready to save and publish these changes?");
