@@ -1,0 +1,9 @@
+{
+	"name": "@knowler/api",
+	"exports": "./main.js",
+	"imports": {
+		"hono": "jsr:@hono/hono@^4.9.7",
+		"@std/ulid": "jsr:@std/ulid@^1.0.0",
+		"nanoid-good": "npm:nanoid-good@^3.1.0"
+	}
+}

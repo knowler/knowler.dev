@@ -11,16 +11,14 @@ import { aiBots, useAiRobotsTxt } from "hono/ua-blocker/ai-bots";
 
 import { pugRenderer } from "~/middleware/pug-renderer.js";
 import { cssNakedDay } from "~/middleware/css-naked-day.js";
-import { isCSSNakedDay } from "~/utils/is-css-naked-day.js";
 
 /** Utils */
 import { invariant } from "@knowler/shared/invariant";
-
-import { getCookie, setCookie, deleteCookie } from "hono/cookie";
+import { isCSSNakedDay } from "~/utils/is-css-naked-day.js";
 
 import { Posts } from "~/models/posts.js";
 
-import { api } from "~/api/mod.js";
+import { api } from "@knowler/api";
 
 console.log(Deno.env.get("DENO_DEPLOY_BUILD_ID"));
 

@@ -1257,6 +1257,13 @@
   },
   "workspace": {
     "members": {
+      "api": {
+        "dependencies": [
+          "jsr:@hono/hono@^4.9.7",
+          "jsr:@std/ulid@1",
+          "npm:nanoid-good@^3.1.0"
+        ]
+      },
       "cms": {
         "dependencies": [
           "jsr:@hono/hono@^4.9.7",
