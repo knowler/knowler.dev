@@ -19,12 +19,54 @@ export function markdownToHTML(markdown) {
 		.use(asideDirective)
 		.use(demoDirective)
 		.use(detailsDirective)
+		.use(figureDirective)
+
+		.use(elementDirective)
 
 		.use(remarkRehype, { allowDangerousHtml: true })
 		.use(rehypeHighlight)
 		.use(rehypeSlug)
 		.use(rehypeStringify, { allowDangerousHtml: true })
 		.process(markdown);
+}
+
+function elementDirective() {
+	return function(tree) {
+		visit(tree, function(node) {
+			if (node.type === "textDirective" && node.name === "element") {
+				const data = node.data || (node.data = {});
+				const hast = h(node.name, node.attributes ?? {});
+
+				data.hName = "code";
+				data.hProperties = {
+					className: "element",
+					...hast.properties,
+				}
+			}
+		});
+	}
+}
+
+function figureDirective() {
+	return function(tree) {
+		visit(tree, function(node) {
+			if (node.type === "containerDirective" && node.name === "figure") {
+				const data = node.data || (node.data = {});
+				const hast = h(node.name, node.attributes ?? {});
+
+				data.hName = "figure";
+				data.hProperties = hast.properties;
+			}
+
+			if (node.type === "leafDirective" && node.name === "figcaption") {
+				const data = node.data || (node.data = {});
+				const hast = h(node.name, node.attributes ?? {});
+
+				data.hName = "figcaption";
+				data.hProperties = hast.properties;
+			}
+		});
+	}
 }
 
 function detailsDirective() {
