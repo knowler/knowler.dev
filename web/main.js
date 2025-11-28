@@ -102,6 +102,25 @@ app.notFound(async (...args) => {
 for (const ignoredRoute of Deno.env.get("PATH_DENY_LIST").split(" "))
 	app.get(ignoredRoute, c => c.notFound());
 
+
+/**
+ * DEMOS
+ */
+
+app.get("/demos/*", async (c, next) => {
+	c.res.headers.delete("content-security-policy");
+	await next();
+});
+
+const demosCache = cacheMiddleware({
+	cacheName: c => {
+		const cacheName = `${DEPLOYMENT_ID}.demos.${Deno.env.get("DEMOS_VERSION")}`;
+		console.log(cacheName);
+		return cacheName;
+	},
+	wait: true,
+});
+
 /**
  * PUBLIC ROUTES
  */
@@ -111,14 +130,19 @@ app.get("/cv.pdf", async (c, next) => {
 	c.header("content-disposition", `attachment; filename="Nathan Knowler - CV.pdf"`);
 });
 
-for (const [pattern, filename] of [
-	["/feed.xml", "feed.xml"],
-	["/sitemap.xml", "sitemap.xml"],
-	["/", "index"],
-	["/blog", "blog.index"],
-	["/blog/:slug", "blog.[slug]"],
+for (const [pattern, filename, cache] of [
+	["/feed.xml", "feed.xml", contentCache],
+	["/sitemap.xml", "sitemap.xml", contentCache],
+	["/", "index", contentCache],
+	["/blog", "blog.index", contentCache],
+	["/blog/:slug", "blog.[slug]", contentCache],
+	["/demos/:slug", "demos.[slug]", demosCache],
+	["/:page{[a-z0-9-]+}", "[page]", contentCache],
+	// Paused
+	["/webmention", "webmention"],
+	["/flags", "flags"],
 ]) {
-	app.get(pattern, contentCache);
+	if (cache) app.get(pattern, cache);
 	app.get(pattern, async (...args) => {
 		console.log("cache miss");
 		const { get } = await import (`~/routes/${filename}.js`);
@@ -126,45 +150,8 @@ for (const [pattern, filename] of [
 	});
 }
 
-/* ------------ START PAUSED ------------ */
+/** ASSETS */
 
-app.get("/webmention", async (...args) => {
-	const { get } = await import("~/routes/webmention.js");
-	return get(...args);
-});
-app.get("/flags", async (...args) => {
-	const { get } = await import("~/routes/flags.js");
-	return get(...args);
-});
-
-/* ------------ END PAUSED ------------ */
-
-app.get("/demos/*", async (c, next) => {
-	c.res.headers.delete("content-security-policy");
-	await next();
-});
-
-app.get("/demos/:slug", cacheMiddleware({
-	cacheName: c => {
-		const cacheName = `${DEPLOYMENT_ID}.demos.${Deno.env.get("DEMOS_VERSION")}`;
-		console.log(cacheName);
-		return cacheName;
-	},
-	wait: true,
-}))
-app.get("/demos/:slug", async (...args) => {
-	console.log("cache miss");
-	const { get } = await import ("~/routes/demos.[slug].js");
-	return get(...args);
-});
-
-/* Page and static asset routes */
-app.get("/:page{[a-z0-9-]+}", contentCache);
-app.get("/:page{[a-z0-9-]+}", async (...args) => {
-	console.log("cache miss");
-	const { get } = await import ("~/routes/[page].js");
-	return get(...args);
-});
 app.use(
 	"*",
 	cacheMiddleware({
