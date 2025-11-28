@@ -1,10 +1,7 @@
 {
 	"name": "@knowler/web",
 	"tasks": {
-		"dev": "deno run --unstable-kv --unstable-temporal --allow-all --watch main.js",
-		"build": "deno run --allow-all tools/build-css.js",
-		"seed": "deno run --unstable-kv --allow-all tools/seed-local.js",
-		"test": "deno run -A npm:playwright test"
+		"dev": "deno run --unstable-kv --unstable-temporal --allow-all --watch main.js"
 	},
 	"exports": "./main.js",
 	"imports": {

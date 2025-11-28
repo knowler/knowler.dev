@@ -33,6 +33,14 @@ main > .h-entry ~ aside li a {
 
 .h-entry code {
 	hyphens: manual;
+
+	&.element::before {
+		content: "<" / "";
+	}
+
+	&.element::after {
+		content: ">" / "";
+	}
 }
 
 .h-entry :is(h1, h2, h3) code {
@@ -90,6 +98,15 @@ main > .h-entry ~ aside li a {
 		hsl(from var(--color-canvas) h s calc(l * 2))
 	);
 	max-inline-size: max-content;
+}
+
+.h-entry figure {
+	margin: 0;
+}
+
+.h-entry figcaption {
+	font-size: 1rem;
+	max-inline-size: 48em;
 }
 
 pre {

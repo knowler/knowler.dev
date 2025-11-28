@@ -13,9 +13,6 @@
 		"update-page": "deno run -A @knowler/cms/update-page",
 		"update-post": "deno run -A @knowler/cms/update-post"
 	},
-	"imports": {
-		"browserslist": "npm:browserslist@^4.28.0"
-	},
 	"fmt": {
 		"useTabs": true
 	}

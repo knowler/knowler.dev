@@ -1,6 +1,0 @@
-.banners :where(img[width="88"][height="31"]) {
-	filter: grayscale(1) brightness(1.1);
-	mix-blend-mode: difference;
-	image-rendering: pixelated;
-	image-rendering: crisp-edges;
-}
