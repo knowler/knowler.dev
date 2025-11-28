@@ -111,35 +111,20 @@ app.get("/cv.pdf", async (c, next) => {
 	c.header("content-disposition", `attachment; filename="Nathan Knowler - CV.pdf"`);
 });
 
-app.get("/feed.xml", contentCache);
-app.get("/feed.xml", async (...args) => {
-	console.log("cache miss");
-	const { get } = await import ("~/routes/feed.xml.js");
-	return get(...args);
-});
-app.get("/sitemap.xml", contentCache);
-app.get("/sitemap.xml", async (...args) => {
-	console.log("cache miss");
-	const { get } = await import ("~/routes/sitemap.xml.js");
-	return get(...args);
-});
-app.get("/", contentCache);
-app.get("/", async (...args) => {
-	console.log("cache miss");
-	const { get } = await import ("~/routes/index.js");
-	return get(...args);
-});
-app.get("/blog", contentCache);
-app.get("/blog", async (...args) => {
-	const { get } = await import ("~/routes/blog.index.js");
-	return get(...args);
-});
-app.get("/blog/:slug", contentCache);
-app.get("/blog/:slug", async (...args) => {
-	console.log("cache miss");
-	const { get } = await import ("~/routes/blog.[slug].js");
-	return get(...args);
-});
+for (const [pattern, filename] of [
+	["/feed.xml", "feed.xml"],
+	["/sitemap.xml", "sitemap.xml"],
+	["/", "index"],
+	["/blog", "blog.index"],
+	["/blog/:slug", "blog.[slug]"],
+]) {
+	app.get(pattern, contentCache);
+	app.get(pattern, async (...args) => {
+		console.log("cache miss");
+		const { get } = await import (`~/routes/${filename}.js`);
+		return get(...args);
+	});
+}
 
 /* ------------ START PAUSED ------------ */
 
