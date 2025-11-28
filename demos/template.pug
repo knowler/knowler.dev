@@ -1,0 +1,12 @@
+doctype html
+html(lang="en-ca")
+	head
+		meta(charset="utf-8")
+		meta(name="viewport" content="width=device-width, initial-scale=1")
+		title= title
+		style!= demo.css
+		script(type="module")!= demo.js
+		| !{demo.head}
+	body
+		| !{demo.html}
+		script (new WebSocket("ws://localhost:4000")).onmessage = e => e.data === "reload" && location.reload();
