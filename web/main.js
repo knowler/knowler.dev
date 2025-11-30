@@ -136,6 +136,11 @@ for (const [pattern, filename, cache] of [
 
 /** ASSETS */
 
+app.get(`/:filename.${BUILD_ID}.css`, async (c, next) => {
+	c.header("cache-control", "max-age=31536000, immutable");
+	await next();
+});
+
 app.use(
 	"*",
 	cacheMiddleware({
@@ -143,11 +148,6 @@ app.use(
 		wait: true,
 	}),
 );
-
-app.use(`*.${BUILD_ID}.*`, (c, next) => {
-	c.header("cache-control", "max-age=31536000, immutable");
-	next();
-});
 
 app.use("*", serveStatic({
 	root: new URL(import.meta.resolve("./public")).pathname,
