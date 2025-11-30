@@ -4,3 +4,4 @@
 .demos/tmp
 node_modules
 test-results
+web/public/main.*.css

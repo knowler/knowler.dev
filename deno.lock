@@ -20,6 +20,7 @@
     "npm:hast-util-to-mdast@*": "10.1.2",
     "npm:hast-util-to-text@*": "4.0.2",
     "npm:hastscript@*": "9.0.1",
+    "npm:lightningcss-wasm@*": "1.30.2",
     "npm:linkedom@*": "0.18.12",
     "npm:linkedom@~0.18.12": "0.18.12",
     "npm:nanoid-good@^3.1.0": "3.1.0",
@@ -595,6 +596,9 @@
         "is-promise",
         "promise"
       ]
+    },
+    "lightningcss-wasm@1.30.2": {
+      "integrity": "sha512-3QB24h07oFTwiXI/wItgEv5De1prsmrZFWluuTyLO7/CFk4kEC5zgG7V6qQNGLBB5+QhSnGMixUALWHXj+J3Ug=="
     },
     "linkedom@0.18.12": {
       "integrity": "sha512-jalJsOwIKuQJSeTvsgzPe9iJzyfVaEJiEXl+25EkKevsULHvMJzpNqwvj1jOESWdmgKDiXObyjOYwlUqG7wo1Q==",
@@ -1290,7 +1294,6 @@
           "npm:@hono/ua-blocker@~0.1.18",
           "npm:feed@5.1.0",
           "npm:linkedom@~0.18.12",
-          "npm:nanoid-good@^3.1.0",
           "npm:pug@^3.0.3"
         ]
       }

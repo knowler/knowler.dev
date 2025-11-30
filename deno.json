@@ -7,8 +7,9 @@
 		"web"
 	],
 	"tasks": {
-		"dev": "deno run -A --unstable-kv --unstable-temporal @knowler/web ",
+		"dev": "deno task --cwd=web dev",
 		"demos": "deno run -A @knowler/demos",
+		"build-css": "deno run -A web/tools/build-css.js",
 		"publish-page": "deno run -A @knowler/cms/publish-page",
 		"publish-post": "deno run -A @knowler/cms/publish-post",
 		"update-page": "deno run -A @knowler/cms/update-page",
