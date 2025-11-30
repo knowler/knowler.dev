@@ -142,6 +142,12 @@ app.use(
 		wait: true,
 	}),
 );
+
+app.use(`*.${BUILD_ID}.*`, (c, next) => {
+	c.header("cache-control", "max-age=31536000, immutable");
+	next();
+});
+
 app.use("*", serveStatic({
 	root: new URL(import.meta.resolve("./public")).pathname,
 }));
