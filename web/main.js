@@ -31,6 +31,7 @@ invariant(SITE_URL);
 const app = new Hono();
 
 const MIGRATION_PATH = Deno.env.get("MIGRATION_PATH");
+const BUILD_ID = Deno.env.get("DENO_DEPLOY_BUILD_ID");
 
 invariant(MIGRATION_PATH);
 
