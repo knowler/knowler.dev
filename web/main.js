@@ -136,7 +136,10 @@ for (const [pattern, filename, cache] of [
 
 /** ASSETS */
 
-app.get(`/:filename.${BUILD_ID}.css`, async (c, next) => {
+app.on("GET", [
+	`/:filename.${BUILD_ID}.css`,
+	"/banners/anti-javascript-javascript-club-member-88x31.png",
+], async (c, next) => {
 	c.header("cache-control", "max-age=31536000, immutable");
 	await next();
 });
