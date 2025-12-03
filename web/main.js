@@ -121,10 +121,14 @@ for (const [pattern, filename, cache] of [
 	["/blog", "blog.index", contentCache],
 	["/blog/:slug", "blog.[slug]", contentCache],
 	["/demos/:slug", "demos.[slug]", demosCache],
-	["/:page{[a-z0-9-]+}", "[page]", contentCache],
-	// Paused
+
+	/* Start paused */
 	["/webmention", "webmention"],
 	["/flags", "flags"],
+	/* End paused */
+
+	// Fallback
+	["/:page{[a-z0-9-]+}", "[page]", contentCache],
 ]) {
 	if (cache) app.get(pattern, cache);
 	app.get(pattern, async (...args) => {
