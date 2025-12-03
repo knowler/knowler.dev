@@ -114,6 +114,12 @@ app.get("/cv.pdf", async (c, next) => {
 	c.header("content-disposition", `attachment; filename="Nathan Knowler - CV.pdf"`);
 });
 
+// lol
+app.get(
+	"/blog/an-intro-to-manual-slot-assign",
+	c => c.redirect("/blog/an-intro-to-manual-slot-assignment", 301),
+);
+
 for (const [pattern, filename, cache] of [
 	["/feed.xml", "feed.xml", contentCache],
 	["/sitemap.xml", "sitemap.xml", contentCache],
