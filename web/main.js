@@ -5,7 +5,6 @@ import { serveStatic } from "hono/deno";
 import { logger } from "hono/logger";
 import { cache as cacheMiddleware } from "hono/cache";
 import { trimTrailingSlash } from "hono/trailing-slash";
-import { bearerAuth } from "hono/bearer-auth";
 import { uaBlocker } from "hono/ua-blocker";
 import { aiBots, useAiRobotsTxt } from "hono/ua-blocker/ai-bots";
 
@@ -54,6 +53,8 @@ const contentCache = cacheMiddleware({
 	wait: true,
 });
 
+app.get("/robots.txt", useAiRobotsTxt());
+
 app.use(
 	"*",
 	uaBlocker({ blocklist: aiBots }),
@@ -73,8 +74,6 @@ app.use(
 	trimTrailingSlash(),
 	cssNakedDay(),
 );
-
-app.get("/robots.txt", useAiRobotsTxt());
 
 app.route(MIGRATION_PATH, api);
 
