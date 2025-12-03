@@ -1,3 +1,7 @@
+include /_mixins/fa-icon
+
 mixin open-with-codepen
 	form(method="POST" action="https://codepen.io/pen/define" target="_blank")
-		button(name="data" value=demo) Open with CodePen
+		button(name="data" value=demo)
+			| Open with CodePen 
+			+fa-icon("codepen", "fab")(width="1em" height="1em")
