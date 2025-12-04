@@ -9,7 +9,7 @@ const { code } = await bundleAsync({
 	exclude: Features.Colors,
 });
 
-const fingerprint = new Uint8Array(await crypto.subtle.digest("BLAKE2B", data)).toHex().substring(0, 8);
+const hash = new Uint8Array(await crypto.subtle.digest("BLAKE2B", code)).toHex().substring(0, 8);
 
 await Deno.writeFile(
 	new URL(
