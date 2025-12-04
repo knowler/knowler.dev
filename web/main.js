@@ -24,19 +24,16 @@ import assets from "~/assets.json" with { type: "json" };
 const ENV = Deno.env.get("ENV");
 const DEPLOYMENT_ID = Deno.env.get("DENO_DEPLOYMENT_ID") ?? Date.now();
 const SITE_URL = Deno.env.get("SITE_URL");
+const MIGRATION_PATH = Deno.env.get("MIGRATION_PATH");
 
 invariant(SITE_URL);
-
-const app = new Hono();
-
-const MIGRATION_PATH = Deno.env.get("MIGRATION_PATH");
-const BUILD_ID = Deno.env.get("DENO_DEPLOY_BUILD_ID");
-
 invariant(MIGRATION_PATH);
 
+const app = new Hono();
 const kv = await Deno.openKv();
 
 const { value: cache_versions } = await kv.get(["cache_versions"]);
+console.log(cache_versions);
 Deno.env.set("CONTENT_VERSION", cache_versions?.content_version);
 Deno.env.set("DEMOS_VERSION", cache_versions?.demos_version);
 
@@ -50,6 +47,15 @@ const contentCache = cacheMiddleware({
 		return cacheName;
 	},
 	cacheControl: "s-maxage=60, stale-while-revalidate=30",
+	wait: true,
+});
+
+const demosCache = cacheMiddleware({
+	cacheName: c => {
+		const cacheName = `${DEPLOYMENT_ID}.demos.${Deno.env.get("DEMOS_VERSION")}`;
+		console.log(cacheName);
+		return cacheName;
+	},
 	wait: true,
 });
 
@@ -85,7 +91,6 @@ app.notFound(async (...args) => {
 for (const ignoredRoute of Deno.env.get("PATH_DENY_LIST").split(" "))
 	app.get(ignoredRoute, c => c.notFound());
 
-
 /**
  * DEMOS
  */
@@ -93,15 +98,6 @@ for (const ignoredRoute of Deno.env.get("PATH_DENY_LIST").split(" "))
 app.get("/demos/*", async (c, next) => {
 	c.res.headers.delete("content-security-policy");
 	await next();
-});
-
-const demosCache = cacheMiddleware({
-	cacheName: c => {
-		const cacheName = `${DEPLOYMENT_ID}.demos.${Deno.env.get("DEMOS_VERSION")}`;
-		console.log(cacheName);
-		return cacheName;
-	},
-	wait: true,
 });
 
 /**
@@ -137,7 +133,7 @@ for (const [pattern, filename, cache] of [
 ]) {
 	if (cache) app.get(pattern, cache);
 	app.get(pattern, async (...args) => {
-		console.log("cache miss");
+		if (cache) console.log("cache miss");
 		const { get } = await import (`~/routes/${filename}.js`);
 		return get(...args);
 	});
@@ -162,7 +158,7 @@ app.use("*", serveStatic({
 	root: new URL(import.meta.resolve("./public")).pathname,
 }));
 
-Deno.serve({ port: ENV === "production" ? 8000 : new URL(SITE_URL).port }, app.fetch);
+export default app;
 
 async function watchCacheVersions() {
 	for await (const entries of kv.watch([["cache_versions"]])) {
