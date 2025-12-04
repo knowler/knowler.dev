@@ -19,7 +19,7 @@ import { Posts } from "~/models/posts.js";
 
 import { api } from "@knowler/api";
 
-console.log(Deno.env.get("DENO_DEPLOY_BUILD_ID"));
+import assets from "~/assets.json" with { type: "json" };
 
 const ENV = Deno.env.get("ENV");
 const DEPLOYMENT_ID = Deno.env.get("DENO_DEPLOYMENT_ID") ?? Date.now();
@@ -146,8 +146,8 @@ for (const [pattern, filename, cache] of [
 /** ASSETS */
 
 app.on("GET", [
-	`/:filename.${BUILD_ID}.css`,
 	"/banners/anti-javascript-javascript-club-member-88x31.png",
+	...Object.values(assets),
 ], async (c, next) => {
 	c.header("cache-control", "max-age=31536000, immutable");
 	await next();
