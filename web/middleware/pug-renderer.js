@@ -7,6 +7,8 @@ import { library, icon, findIconDefinition } from "@fortawesome/fontawesome-svg-
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { fas } from "@fortawesome/pro-solid-svg-icons";
 
+import assets from "~/assets.json" with { type: "json" };
+
 const SITE_URL = Deno.env.get("SITE_URL");
 invariant(SITE_URL);
 
@@ -41,6 +43,7 @@ export function pugRenderer() {
 						SITE_URL,
 						isCSSNakedDay: isCSSNakedDay(),
 						BUILD_ID: Deno.env.get("DENO_DEPLOY_BUILD_ID") ?? "bundled",
+						asset: path => assets[path] ?? path,
 						...data,
 					},
 				),

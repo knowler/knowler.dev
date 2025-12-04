@@ -1,4 +1,5 @@
 import init, { bundleAsync, Features } from "npm:lightningcss-wasm";
+import { crypto } from "jsr:@std/crypto";
 
 await init();
 
@@ -8,10 +9,20 @@ const { code } = await bundleAsync({
 	exclude: Features.Colors,
 });
 
+const fingerprint = new Uint8Array(await crypto.subtle.digest("BLAKE2B", data)).toHex().substring(0, 8);
+
 await Deno.writeFile(
 	new URL(
-		`./public/main.${Deno.env.get("DENO_DEPLOY_BUILD_ID") ?? "bundled"}.css`,
+		`./public/main.${hash}.css`,
 		import.meta.resolve("@knowler/web"),
 	).pathname,
 	code,
 );
+
+const assets = {
+	"/main.css": `/main.${hash}.css`,
+};
+
+await Deno.writeTextFile("./web/assets.json", JSON.stringify(assets));
+
+console.log(assets);
