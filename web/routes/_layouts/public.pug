@@ -14,6 +14,7 @@ append head
 	if canonical
 		link(rel="canonical" href=canonical)
 	style: include layers.css
+	link(rel="manifest" href="/manifest.json")
 	link(rel="stylesheet" href=asset("/main.css"))
 	link(rel="author" href="/about" title="About the author")
 	link(rel="alternate" href="/feed.xml" type="application/rss+xml" title="RSS")
