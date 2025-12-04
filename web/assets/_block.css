@@ -70,6 +70,26 @@ header > a:only-of-type {
 
 main {
 	grid-area: main;
+	margin-block: 32px;
+	scroll-margin-block-start: 20px;
+
+	&:focus-visible {
+		outline-offset: 16px;
+		border-radius: 4px;
+	}
+
+	> article:only-of-type {
+		margin-trim: block;
+
+		@supports not (margin-trim: block) {
+			> :first-child {
+				margin-block-start: 0;
+			}
+			> :last-child {
+				margin-block-end: 0;
+			}
+		}
+	}
 }
 
 footer {
@@ -80,7 +100,6 @@ footer {
 	padding-inline: var(--padding);
 	margin-inline: calc(-1 * var(--padding));
 	margin-block-end: calc(-1 * var(--padding));
-	margin-block-start: 1rem;
 	margin-trim: block;
 }
 
