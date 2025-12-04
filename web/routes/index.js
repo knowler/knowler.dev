@@ -6,6 +6,7 @@ export async function get(c) {
 
 	return c.render("[page]", {
 		title: page.title,
+		description: page.description,
 		page,
 		canonical: c.req.url,
 	});
