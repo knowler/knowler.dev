@@ -23,7 +23,7 @@ await Deno.writeFile(
 
 assets["/main.css"] = `/main.${cssHash}.css`;
 
-for (const filePath of ["favicon.ico", "favicon.png", "banners/anti-javascript-javascript-club-member-88x31.png"]) {
+for (const filePath of ["favicon.ico", "favicon.png", "banners/anti-javascript-javascript-club-member-88x31.webp"]) {
 	const sourcePath = webPath(`./assets/${filePath}`);
 
 	const parsed = path.parse(filePath);
