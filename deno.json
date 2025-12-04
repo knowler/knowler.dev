@@ -17,5 +17,9 @@
 	},
 	"fmt": {
 		"useTabs": true
+	},
+	"deploy": {
+		"org": "kn-wler",
+		"app": "knowlerdev"
 	}
 }
