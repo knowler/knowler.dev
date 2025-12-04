@@ -42,7 +42,6 @@ export function pugRenderer() {
 						kebabCase,
 						SITE_URL,
 						isCSSNakedDay: isCSSNakedDay(),
-						BUILD_ID: Deno.env.get("DENO_DEPLOY_BUILD_ID") ?? "bundled",
 						asset: path => assets[path] ?? path,
 						...data,
 					},

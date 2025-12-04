@@ -45,17 +45,18 @@ h1, h2, h3, h4 {
 h1 { --fvs-wdth: 120; }
 h2 { --fvs-wdth: 110; }
 
-a {
+:any-link:where(a) {
 	color: var(--color-accent);
-}
-a[aria-current="page"] {
-	text-decoration: none;
+
+	&:where([aria-current="page"]) {
+		text-decoration: none;
+	}
 }
 
-:is(a, button, label, input[type="checkbox"], input[type="radio"]) {
-	cursor: pointer;
-}
-
-a svg {
+:any-link svg {
 	pointer-events: none;
+}
+
+:is(:any-link, button, label, input[type="checkbox"], input[type="radio"]) {
+	cursor: pointer;
 }

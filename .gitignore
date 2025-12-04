@@ -5,4 +5,7 @@
 node_modules
 test-results
 web/public/main.*.css
+web/public/favicon.*
+web/public/banners/*
+!web/public/banners/.gitkeep
 web/assets.json

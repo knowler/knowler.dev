@@ -145,10 +145,7 @@ for (const [pattern, filename, cache] of [
 
 /** ASSETS */
 
-app.on("GET", [
-	"/banners/anti-javascript-javascript-club-member-88x31.png",
-	...Object.values(assets),
-], async (c, next) => {
+app.on("GET", Object.values(assets), async (c, next) => {
 	c.header("cache-control", "max-age=31536000, immutable");
 	await next();
 });
