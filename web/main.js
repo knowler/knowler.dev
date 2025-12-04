@@ -121,6 +121,7 @@ for (const [pattern, filename, cache] of [
 	["/", "index", contentCache],
 	["/blog", "blog.index", contentCache],
 	["/blog/:slug", "blog.[slug]", contentCache],
+	["/projects", "projects.index"],
 	["/demos/:slug", "demos.[slug]", demosCache],
 
 	/* Start paused */

@@ -1,0 +1,15 @@
+extends /_layouts/public
+
+include /_mixins/h-entry
+include /_mixins/h
+
+block content
+	+h-entry(title)
+		each projects, category in projectsByCategory
+			section
+				+h2(category)
+
+				each project in projects
+					h3: a(href=project.link)!=project.name
+					p!=project.description
+				
