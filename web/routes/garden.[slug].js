@@ -1,3 +1,4 @@
+import { trimTrailingSlash } from "~/utils/trim-trailing-slash.js";
 import { parseHTML } from "npm:linkedom";
 
 export async function get(c, next) {
