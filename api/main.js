@@ -157,6 +157,79 @@ api.post("/demos/:id/delete", async (c, next) => {
 	return c.json({ message: "success" });
 });
 
+/** GARDEN */
+
+api.get("/garden", async (c, next) => {
+	const garden = await Array.fromAsync(
+		c.get("kv").list({ prefix: ["garden"] }),
+		result => ({
+			id: result.key[1],
+			...result.value,
+		}),
+	);
+
+	return c.json(garden);
+});
+
+api.post("/garden/create", async (c, next) => {
+	const kv = c.get("kv");
+	const content = await c.req.json();
+
+	const id = ulid(Number(content.createdAt));
+	const slug = content.slug ?? await nanoid(7);
+
+	await kv.set(["garden", id], content);
+	await kv.set(["gardenBySlug", slug], id);
+
+	return c.json({ message: "success", id, slug });
+});
+
+api.get("/garden/:idOrSlug", async (c, next) => {
+	const kv = c.get("kv");
+	const isBySlug = c.req.query("by") === "slug";
+
+	const id = isBySlug
+		? await gardenBySlug(kv, c.req.param("idOrSlug"))
+		: c.req.param("idOrSlug");
+
+	const { value: content } = await kv.get(["garden", id]);
+
+	return c.json(content);
+});
+
+api.post("/garden/:idOrSlug/update", async (c, next) => {
+	const kv = c.get("kv");
+	const isBySlug = c.req.query("by") === "slug";
+
+	const id = isBySlug
+		? await gardenBySlug(kv, c.req.param("idOrSlug"))
+		: c.req.param("idOrSlug");
+
+	const { value: content } = await kv.get(["garden", id]);
+
+	await kv.set(["garden", id], content);
+
+	return c.json({ message: "success" });
+});
+
+api.post("/garden/:idOrSlug/delete", async (c, next) => {
+	const kv = c.get("kv");
+	const isBySlug = c.req.query("by") === "slug";
+
+	const id = isBySlug
+		? await gardeBySlug(kv, c.req.param("idOrSlug"))
+		: c.req.param("idOrSlug");
+
+	const { value: content } = await kv.get(["garden", id]);
+
+	await kv.delete(["garden", id]);
+	await kv.delete(["gardenBySlug", content.slug]);
+
+	return c.json({ message: "success" });
+});
+
+/** EXPORTS */
+
 export { api };
 
 async function bustContentCache(kv) {
@@ -178,5 +251,10 @@ async function pageBySlug(kv, slug) {
 
 async function postBySlug(kv, slug) {
 	const result = await kv.get(["postsBySlug", slug]);
+	return result.value;
+}
+
+async function gardenBySlug(kv, slug) {
+	const result = await kv.get(["gardenBySlug", slug]);
 	return result.value;
 }
