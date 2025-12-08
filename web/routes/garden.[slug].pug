@@ -1,5 +1,10 @@
 extends /_layouts/public
 
+include /_mixins/h
+
+append head
+	style: include blog.[slug].css
+
 block content
 	article.hentry
 		if headline
