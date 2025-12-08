@@ -14,6 +14,6 @@ block content
 				+h1("Untitled note").p-name.visually-hidden
 			if content.createdAt
 				p Planted on #[time(datetime=content.createdAt)=prettyCreatedAt]
-			if content.updatedAt
+			if content.updatedAt && content.prettyUpdatedAt !== content.prettyCreatedAt
 				p Updated on #[time(datetime=content.updatedAt)=prettyUpdatedAt]
 		.e-content !{content.html}
