@@ -53,13 +53,13 @@ body aside:only-of-type > p:only-of-type {
 	margin-block: 0;
 }
 
-header {
+header:not(main header) {
 	display: grid;
 	gap: 0.5rem;
 	grid-area: header;
 }
 
-header > a:only-of-type {
+header:not(main header) > a:only-of-type {
 	text-decoration: none;
 	justify-self: start;
 	text-transform: lowercase;
@@ -92,7 +92,7 @@ main {
 	}
 }
 
-footer {
+footer:not(main footer) {
 	content-visibility: auto;
 	background-color: var(--color-canvas-muted);
 	grid-area: footer;
@@ -103,22 +103,22 @@ footer {
 	margin-trim: block;
 }
 
-footer :any-link:has(svg) {
+footer:not(main footer) :any-link:has(svg) {
 	display: inline-flex;
 	align-items: center;
 	gap: 0.25em;
 }
 
 @supports not (margin-trim: block) {
-	footer > :first-child {
+	footer:not(main footer) > :first-child {
 		margin-block-start: 0;
 	}
-	footer > :last-child {
+	footer:not(main footer) > :last-child {
 		margin-block-end: 0;
 	}
 }
 
-:where(header, footer) > nav > ul {
+:where(header, footer):not(main *) > nav > ul {
 	list-style: none;
 	padding-inline-start: 0;
 	margin-block: 0;
