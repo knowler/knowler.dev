@@ -176,7 +176,7 @@ api.post("/garden/create", async (c, next) => {
 	const content = await c.req.json();
 
 	const id = ulid(Number(new Date(content.createdAt)));
-	const slug = content.slug ?? await nanoid(7);
+	const slug = content.slug ??= await nanoid(7);
 
 	await kv.set(["garden", id], content);
 	await kv.set(["gardenBySlug", slug], id);
