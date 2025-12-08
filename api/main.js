@@ -205,7 +205,7 @@ api.post("/garden/:idOrSlug/update", async (c, next) => {
 		? await gardenBySlug(kv, c.req.param("idOrSlug"))
 		: c.req.param("idOrSlug");
 
-	const { value: content } = await kv.get(["garden", id]);
+	const content = await c.req.json();
 
 	await kv.set(["garden", id], content);
 
