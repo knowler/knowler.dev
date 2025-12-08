@@ -13,5 +13,7 @@ block content
 			else
 				+h1("Untitled note").p-name.visually-hidden
 			if content.createdAt
-				p Planted at #[time(datetime=content.createdAt)=prettyCreatedAt]
+				p Planted on #[time(datetime=content.createdAt)=prettyCreatedAt]
+			if content.updatedAt
+				p Updated on #[time(datetime=content.updatedAt)=prettyUpdatedAt]
 		.e-content !{content.html}

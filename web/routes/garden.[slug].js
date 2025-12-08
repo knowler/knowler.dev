@@ -9,6 +9,9 @@ export async function get(c, next) {
 		const { value: id } = await kv.get(["gardenBySlug", params.slug]);
 		const { value: content } = await kv.get(["garden", id]);
 
+		if (content.updatedAt)
+			content.prettyUpdatedAt = winnipegDateTime(new Date(content.updatedAt));
+
 		return c.render("garden.[slug]", {
 			title: parseHTML(`<h1>${content.title}</h1>`)?.document.querySelector("h1")?.textContent ?? content.title ?? "Untitled note",
 			headline: content.title, 
