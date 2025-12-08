@@ -7,8 +7,11 @@ append head
 
 block content
 	article.hentry
-		if headline
-			+h1(headline).p-name
-		else
-			+h1("Untitled note").p-name.visually-hidden
+		header
+			if headline
+				+h1(headline).p-name
+			else
+				+h1("Untitled note").p-name.visually-hidden
+			if content.createdAt
+				p Planted at #[time(datetime=content.createdAt)=prettyCreatedAt]
 		.e-content !{content.html}

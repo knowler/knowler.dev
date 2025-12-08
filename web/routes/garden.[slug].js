@@ -1,4 +1,5 @@
 import { trimTrailingSlash } from "~/utils/trim-trailing-slash.js";
+import { winnipegDateTime } from "~/utils/winnipeg-datetime.js";
 import { parseHTML } from "npm:linkedom";
 
 export async function get(c, next) {
@@ -13,6 +14,7 @@ export async function get(c, next) {
 			headline: content.title, 
 			content,
 			canonical: trimTrailingSlash(c.req.url),
+			prettyCreatedAt: winnipegDateTime(new Date(content.createdAt)),
 		});
 	} catch (e) {
 		console.error(e);
