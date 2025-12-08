@@ -1,4 +1,9 @@
 extends /_layouts/public
 
 block content
-	| !=content.html
+	article.hentry
+		if headline
+			+h1(headline).p-name
+		else
+			+h1("Untitled note").p-name.visually-hidden
+		.e-content !{content.html}
