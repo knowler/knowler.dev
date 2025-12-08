@@ -69,6 +69,24 @@ api.post("/pages/create", async (c, next) => {
 	return c.json({ message: "success" });
 });
 
+api.post("/pages/:idOrSlug/delete", async (c, next) => {
+	const kv = c.get("kv");
+	const isBySlug = c.req.query("by") === "slug";
+
+	const id = isBySlug
+		? await pagesBySlug(kv, c.req.param("idOrSlug"))
+		: c.req.param("idOrSlug");
+
+	const { value: page } = await kv.get(["pages", id]);
+
+	await kv.delete(["pages", page.id]);
+	await kv.delete(["pagesBySlug", page.slug]);
+
+	await bustContentCache(c.get("kv"));
+
+	return c.json({ message: "success" });
+});
+
 api.get("/posts", async (c, next) => {
 	const posts = await Array.fromAsync(
 		c.get("kv").list({ prefix: ["postsBySlug"] }),
