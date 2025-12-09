@@ -354,3 +354,9 @@ pre {
 		/* purposely ignored */
 	}
 }
+
+iframe {
+	border-radius: 3px;
+	border: 10px solid hsl(from var(--color-canvas) h s calc(l * 1.5));
+	box-shadow: 0 0 0px 3px hsl(from var(--color-canvas) h s calc(l * 2.5));
+}
