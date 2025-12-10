@@ -1,7 +1,8 @@
 {
   "version": "5",
   "specifiers": {
-    "jsr:@hono/hono@^4.9.7": "4.10.7",
+    "jsr:@hono/hono@^4.10.8": "4.10.8",
+    "jsr:@hono/hono@^4.9.7": "4.10.8",
     "jsr:@std/collections@^1.1.3": "1.1.3",
     "jsr:@std/front-matter@^1.0.9": "1.0.9",
     "jsr:@std/regexp@^1.0.1": "1.0.1",
@@ -10,10 +11,10 @@
     "jsr:@std/toml@^1.0.3": "1.0.11",
     "jsr:@std/ulid@1": "1.0.0",
     "jsr:@std/yaml@^1.0.5": "1.0.6",
-    "npm:@fortawesome/fontawesome-svg-core@*": "7.1.0",
-    "npm:@fortawesome/free-brands-svg-icons@*": "7.1.0",
-    "npm:@fortawesome/pro-solid-svg-icons@*": "7.1.0",
-    "npm:@hono/ua-blocker@~0.1.18": "0.1.18_hono@4.10.7",
+    "npm:@fortawesome/fontawesome-svg-core@7.1.0": "7.1.0",
+    "npm:@fortawesome/free-brands-svg-icons@7.1.0": "7.1.0",
+    "npm:@fortawesome/pro-solid-svg-icons@7.1.0": "7.1.0",
+    "npm:@hono/ua-blocker@~0.1.21": "0.1.21_hono@4.10.8",
     "npm:@types/node@*": "24.2.0",
     "npm:feed@5.1.0": "5.1.0",
     "npm:hast-util-to-html@*": "9.0.5",
@@ -41,6 +42,9 @@
   "jsr": {
     "@hono/hono@4.10.7": {
       "integrity": "b60512559d554f20a945e07a6c5f115e57cbd4c024da9217833c8e7b2c90355d"
+    },
+    "@hono/hono@4.10.8": {
+      "integrity": "afdbfc8d3028faa79d0d23096265cb41863f7f49cbf8542959bbdffc4c71365a"
     },
     "@std/collections@1.1.3": {
       "integrity": "bf8b0818886df6a32b64c7d3b037a425111f28278d69fd0995aeb62777c986b0"
@@ -120,8 +124,8 @@
       ],
       "tarball": "https://npm.fontawesome.com/@fortawesome/pro-solid-svg-icons/-/pro-solid-svg-icons-7.1.0.tgz"
     },
-    "@hono/ua-blocker@0.1.18_hono@4.10.7": {
-      "integrity": "sha512-iI6j/Q7Aiy61FFo1xxbu/cJwE/QuMydIvOTq5WBTo9uQphltoNJmMA6trMDDau86Z7UDhs0jx0uIMQ+5qb5Yig==",
+    "@hono/ua-blocker@0.1.21_hono@4.10.8": {
+      "integrity": "sha512-qKqLnwvAQzrCthtNGbtLy1KzRePUtSMgoyFUKH6zqJmChNq62ThYo4/7Z3Dyk3nu7tFPyyqpuFqdYh/28NMnmQ==",
       "dependencies": [
         "hono"
       ]
@@ -525,8 +529,8 @@
     "highlight.js@11.11.1": {
       "integrity": "sha512-Xwwo44whKBVCYoliBQwaPvtd/2tYFkRQtXDWj1nackaV2JPXx3L0+Jvd8/qCJ2p+ML0/XVkJ2q+Mr+UVdpJK5w=="
     },
-    "hono@4.10.7": {
-      "integrity": "sha512-icXIITfw/07Q88nLSkB9aiUrd8rYzSweK681Kjo/TSggaGbOX4RRyxxm71v+3PC8C/j+4rlxGeoTRxQDkaJkUw=="
+    "hono@4.10.8": {
+      "integrity": "sha512-DDT0A0r6wzhe8zCGoYOmMeuGu3dyTAE40HHjwUsWFTEy5WxK1x2WDSsBPlEXgPbRIFY6miDualuUDbasPogIww=="
     },
     "html-escaper@3.0.3": {
       "integrity": "sha512-RuMffC89BOWQoY0WKGpIhn5gX3iI54O6nRA0yC124NYVtzjmFWBIiFd8M0x+ZdX0P9R4lADg1mgP8C7PxGOWuQ=="
@@ -1263,7 +1267,7 @@
     "members": {
       "api": {
         "dependencies": [
-          "jsr:@hono/hono@^4.9.7",
+          "jsr:@hono/hono@^4.10.8",
           "jsr:@std/ulid@1",
           "npm:nanoid-good@^3.1.0"
         ]
@@ -1284,14 +1288,14 @@
       },
       "web": {
         "dependencies": [
-          "jsr:@hono/hono@^4.9.7",
+          "jsr:@hono/hono@^4.10.8",
           "jsr:@std/front-matter@^1.0.9",
           "jsr:@std/text@^1.0.16",
           "jsr:@std/ulid@1",
-          "npm:@fortawesome/fontawesome-svg-core@*",
-          "npm:@fortawesome/free-brands-svg-icons@*",
-          "npm:@fortawesome/pro-solid-svg-icons@*",
-          "npm:@hono/ua-blocker@~0.1.18",
+          "npm:@fortawesome/fontawesome-svg-core@7.1.0",
+          "npm:@fortawesome/free-brands-svg-icons@7.1.0",
+          "npm:@fortawesome/pro-solid-svg-icons@7.1.0",
+          "npm:@hono/ua-blocker@~0.1.21",
           "npm:feed@5.1.0",
           "npm:linkedom@~0.18.12",
           "npm:pug@^3.0.3"
