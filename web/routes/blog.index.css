@@ -5,6 +5,16 @@
 	column-gap: 4rem;
 }
 
+@supports (display: grid-lanes) {
+	.h-entry ol:not(nav ol) {
+		display: grid-lanes;
+		grid-template-columns: repeat(auto-fill, minmax(32rem, 1fr));
+		column-gap: 48px;
+		row-gap: 48px;
+		columns: unset;
+	}
+}
+
 .h-entry ol li {
 	break-inside: avoid;
 	margin-block: 0;
