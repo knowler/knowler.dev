@@ -121,7 +121,7 @@ pre {
 
 @supports (initial-letter: 2) {
 	.e-content > p:first-of-type::first-letter {
-		initial-letter: 2;
+		initial-letter: 2 3;
 		margin-inline-end: 0.5em;
 	}
 }
