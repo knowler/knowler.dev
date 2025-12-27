@@ -57,6 +57,11 @@
 	font-style: italic;
 }
 
+.e-content > p:first-of-type::first-letter {
+	initial-letter: 2;
+	margin-inline-end: 0.5em;
+}
+
 nav[aria-label="pagination"] ol {
 	display: flex;
 	column-gap: 0.5rem;
