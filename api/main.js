@@ -122,7 +122,7 @@ api.post("/posts/:id/update", async (c, next) => {
 
 api.post("/posts/create", async (c, next) => {
 	const post = await c.req.json();
-	const id = ulid(Number(post.publishedAt));
+	const id = ulid(Number(new Date(post.publishedAt)));
 
 	await c.get("kv").set(["posts", id], { id, ...post });
 	await c.get("kv").set(["postsBySlug", post.slug], id);
