@@ -1,4 +1,5 @@
 import { markdownToHTML } from "./utils/markdown-to-html.js";
+import { invariant } from "@knowler/shared/invariant";
 
 import { extract } from "https://deno.land/std@0.204.0/front_matter/toml.ts";
 import paramCase from "https://deno.land/x/case@2.1.1/paramCase.ts";
@@ -33,7 +34,7 @@ const post = {
 
 const response = await fetch(ENDPOINT, {
 	method: "POST",
-	body: JSON.stringify(page),
+	body: JSON.stringify(post),
 	headers: {
 		"content-type": "application/json",
 		authorization: `Bearer ${MIGRATION_TOKEN}`,
@@ -43,5 +44,5 @@ const response = await fetch(ENDPOINT, {
 if (response.ok) {
 	console.log(`Post published: ${PRODUCTION_URL}/${post.slug}`);
 } else {
-	console.error("Issue creating post");
+	console.error("Issue creating post", await response.text());
 }

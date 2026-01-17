@@ -43,6 +43,31 @@ export function htmlToMarkdown(html) {
 					state.patch(node, result);
 					return result;
 				},
+				figure(state, node) {
+					const result = {
+						name: "figure",
+						type: "containerDirective",
+						children: toMdast({ type: "root", children: node.children }, {
+							handlers: {
+								...state.options.handlers,
+								figcaption(state, node) {
+									const result = {
+										name: "figcaption",
+										type: "leafDirective",
+										children: toMdast({ type: "root", children: node.children }, {
+											handlers: state.options.handlers,
+										}).children,
+									};
+									state.patch(node, result);
+									return result;
+
+								},
+							},
+						}).children,
+					};
+					state.patch(node, result);
+					return result;
+				},
 				aside(state, node) {
 					let result;
 					if (node.properties.role === "note") {
