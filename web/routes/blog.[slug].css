@@ -119,12 +119,14 @@ pre {
 	line-height: 2;
 }
 
+/*
 @supports (initial-letter: 2) {
 	.e-content > p:first-of-type::first-letter {
 		initial-letter: 2;
 		margin-inline-end: 0.5em;
 	}
 }
+*/
 
 .hljs {
   color: #24292e;
