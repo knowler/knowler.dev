@@ -12,7 +12,7 @@ export async function get(c) {
 			title: page.title,
 			page,
 			canonical: trimTrailingSlash(c.req.url),
-			semiPrivate: page.semiPrivate,
+			semiPrivate: !!page.semiPrivate,
 		});
 	} catch (_) {
 		return c.notFound();
