@@ -60,3 +60,9 @@ h2 { --fvs-wdth: 110; }
 :is(:any-link, button, label, input[type="checkbox"], input[type="radio"]) {
 	cursor: pointer;
 }
+
+@scope (main) to (nav) {
+	li:not(li li) {
+		margin-block: 1.25em;
+	}
+}
