@@ -10,6 +10,9 @@ append head
 	base(href=SITE_URL)
 	if canonical
 		link(rel="canonical" href=canonical)
+	if semiPrivate
+		meta(name="robots" content="noindex, nofollow, noarchive")
+		meta(name="referrer" content="strict-origin-when-cross-origin")
 	style: include layers.css
 	link(rel="manifest" href="/manifest.json")
 	link(rel="stylesheet" href=asset("/main.css"))
