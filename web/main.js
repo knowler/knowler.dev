@@ -115,6 +115,11 @@ app.get(
 	c => c.redirect("/blog/an-intro-to-manual-slot-assignment", 301),
 );
 
+app.use("/feed.xml", (c, next) => {
+	c.header("access-control-allow-origin", "*");
+	await next();
+});
+
 for (const [pattern, filename, cache] of [
 	["/feed.xml", "feed.xml", contentCache],
 	["/sitemap.xml", "sitemap.xml", contentCache],

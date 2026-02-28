@@ -42,7 +42,6 @@ export async function get(c) {
 
 	c.header("content-type", "text/xml; charset=UTF-8");
 	c.header("cache-control", "s-maxage=14400");
-	c.header("access-control-allow-origin", "*");
 
 	return c.body(feed.rss2());
 }
