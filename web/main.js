@@ -4,6 +4,7 @@ import { Hono } from "hono";
 import { serveStatic } from "hono/deno";
 import { logger } from "hono/logger";
 import { cache as cacheMiddleware } from "hono/cache";
+import { cors } from "hono/cors";
 import { trimTrailingSlash } from "hono/trailing-slash";
 import { uaBlocker } from "hono/ua-blocker";
 import { aiBots, useAiRobotsTxt } from "hono/ua-blocker/ai-bots";
@@ -115,10 +116,7 @@ app.get(
 	c => c.redirect("/blog/an-intro-to-manual-slot-assignment", 301),
 );
 
-app.use("/feed.xml", async (c, next) => {
-	c.header("access-control-allow-origin", "*");
-	await next();
-});
+app.use("/feed.xml", cors());
 
 for (const [pattern, filename, cache] of [
 	["/feed.xml", "feed.xml", contentCache],
